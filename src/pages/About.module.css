@@ -1,0 +1,83 @@
+/* ── Snapshot grid ── */
+.snapshot {
+  border-top: 0.5px solid var(--color-border-soft);
+  border-bottom: 0.5px solid var(--color-border-soft);
+}
+
+.snapshotInner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.snapItem {
+  padding: 22px 24px;
+  border-right: 0.5px solid var(--color-border-soft);
+}
+
+.snapItem:last-child {
+  border-right: none;
+}
+
+.snapLabel {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: 7px;
+}
+
+.snapVal {
+  font-size: var(--font-size-sm);
+  color: #7a7068;
+  line-height: 1.5;
+}
+
+.snapVal strong {
+  color: #a09088;
+  font-weight: 500;
+}
+
+/* ── Bio ── */
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 36px var(--space-6);
+}
+
+.secHeader {
+  margin-bottom: 22px;
+}
+
+.secTitle {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 620px;
+}
+
+.bio {
+  font-size: var(--font-size-sm);
+  color: #504a44;
+  line-height: 1.75;
+}
+
+/* ── tablet ── */
+@media (min-width: 768px) {
+  .snapItem {
+    padding: 22px 36px;
+  }
+
+  .bio {
+    font-size: var(--font-size-base);
+  }
+}

@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar/Navbar';
 import Hero from './pages/Hero';
+import About from './pages/About';
 import styles from './App.module.css';
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
       <Navbar />
       <main>
         <Hero />
+        <About />
       </main>
     </div>
   );
