@@ -50,8 +50,17 @@
   margin: 0 auto;
   padding: 18px var(--space-6);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: var(--space-3);
   align-items: center;
+}
+
+@media (min-width: 768px) {
+  .footerInner {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+  }
 }
 
 .copy {
