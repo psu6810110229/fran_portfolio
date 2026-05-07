@@ -5,6 +5,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.no-transition *, .no-transition *::before, .no-transition *::after {
+  transition: none !important;
 }
 
 /* ── CSS Variables (dark default) ── */
@@ -81,6 +86,7 @@
 /* ── Base ── */
 html {
   scroll-behavior: smooth;
+  background-color: var(--color-bg);
 }
 
 body {
@@ -111,7 +117,7 @@ button {
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
 .reveal.show {
