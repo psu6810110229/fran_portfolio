@@ -1,4 +1,5 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useLanguage } from '../hooks/useLanguage';
 import styles from './Skills.module.css';
 
 interface Skill {
@@ -22,6 +23,7 @@ const tools: Skill[] = [
 
 function Skills() {
   const { ref, isVisible } = useScrollReveal<HTMLElement>();
+  const { lang } = useLanguage();
 
   return (
     <section
@@ -31,7 +33,7 @@ function Skills() {
     >
       <div className={styles.inner}>
         <div className={styles.secHeader}>
-          <span className={styles.secTitle}>Stack</span>
+          <span className={styles.secTitle}>{lang === 'th' ? 'ทักษะ' : 'Stack'}</span>
         </div>
 
         <div className={styles.section}>

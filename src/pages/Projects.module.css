@@ -235,6 +235,26 @@
 
 .lbtnAcc i { color: #fff; }
 
+/* ── More Projects ── */
+.otherSection {
+  margin-top: 48px;
+}
+
+.otherTitle {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: 20px;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
 /* ── Mobile ── */
 @media (max-width: 767px) {
   .feature {
@@ -244,5 +264,9 @@
 
   .media {
     height: 280px;
+  }
+
+  .cardGrid {
+    grid-template-columns: 1fr;
   }
 }

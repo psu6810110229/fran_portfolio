@@ -1,0 +1,113 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  border: 0.5px solid var(--color-border);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+/* ── Thumbnail ── */
+.thumb {
+  height: 200px;
+  background: var(--color-surface-alt);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.thumbLabel {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-dim);
+  letter-spacing: -0.01em;
+}
+
+/* ── Body ── */
+.body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.tag {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.title {
+  font-family: 'Syne', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.desc {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+  flex: 1;
+}
+
+/* ── Badges ── */
+.badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 3px 10px;
+  border: 0.5px solid var(--color-border);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--color-text-sub);
+}
+
+/* ── Links ── */
+.links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.lbtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 0.5px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--color-text-sub);
+  white-space: nowrap;
+}
+
+.lbtn i {
+  font-size: 13px;
+  color: var(--color-text-dim);
+}
+
+.lbtnAcc {
+  background: var(--color-accent);
+  border-color: var(--color-accent-dark);
+  color: #fff;
+}
+
+.lbtnAcc i { color: #fff; }
