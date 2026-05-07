@@ -117,7 +117,7 @@
   background: rgba(255, 255, 255, 0.08);
   border: 0.5px solid rgba(255, 255, 255, 0.15);
   color: rgba(255, 255, 255, 0.75);
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.04em;
   padding: 6px 14px;
   border-radius: 20px;
@@ -130,7 +130,7 @@
   bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 12px;
+  font-size: 13px;
   color: rgba(255, 255, 255, 0.45);
   letter-spacing: 0.08em;
   pointer-events: none;

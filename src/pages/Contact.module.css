@@ -18,6 +18,10 @@
   color: var(--color-text-sub);
 }
 
+:global([data-lang="th"]) .heading {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
 .sub {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);

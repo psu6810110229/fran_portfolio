@@ -1,8 +1,24 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useLanguage } from '../hooks/useLanguage';
 import styles from './Contact.module.css';
+
+const content = {
+  en: {
+    heading: "Let's work together.",
+    sub: 'Always open to new opportunities and conversations.',
+    btn: 'Get in touch →',
+  },
+  th: {
+    heading: 'หวังว่าเราจะได้ร่วมงานกันนะครับ',
+    sub: 'พร้อมรับฟังโอกาสและพูดคุยเสมอครับ',
+    btn: 'ติดต่อผม →',
+  },
+};
 
 function Contact() {
   const { ref, isVisible } = useScrollReveal<HTMLElement>();
+  const { lang } = useLanguage();
+  const c = content[lang];
 
   return (
     <section
@@ -12,13 +28,13 @@ function Contact() {
     >
       <div className={styles.cta}>
         <div className={styles.inner}>
-          <h2 className={styles.heading}>Let's work together.</h2>
-          <p className={styles.sub}>Always open to new opportunities and conversations.</p>
+          <h2 className={styles.heading}>{c.heading}</h2>
+          <p className={styles.sub}>{c.sub}</p>
           <a
             href="mailto:farnpatcharapon@gmail.com"
             className={styles.btnPrimary}
           >
-            Get in touch →
+            {c.btn}
           </a>
         </div>
       </div>

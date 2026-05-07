@@ -1,14 +1,23 @@
 import { useTheme } from '../../hooks/useTheme';
+import { useLanguage } from '../../hooks/useLanguage';
 import styles from './Navbar.module.css';
 
-const navLinks = [
-  { label: 'about', href: '#about' },
-  { label: 'work', href: '#projects' },
-  { label: 'contact', href: '#contact' },
-];
+const navLinks = {
+  en: [
+    { label: 'about', href: '#about' },
+    { label: 'work', href: '#projects' },
+    { label: 'contact', href: '#contact' },
+  ],
+  th: [
+    { label: 'เกี่ยวกับ', href: '#about' },
+    { label: 'ผลงาน', href: '#projects' },
+    { label: 'ติดต่อ', href: '#contact' },
+  ],
+};
 
 function Navbar() {
   const { theme, toggleTheme } = useTheme();
+  const { lang, toggleLang } = useLanguage();
 
   return (
     <nav className={styles.navbar} aria-label="Main navigation">
@@ -16,12 +25,20 @@ function Navbar() {
         <a href="#hero" className={styles.logo}>fran.</a>
         <div className={styles.right}>
           <ul className={styles.navList}>
-            {navLinks.map((link) => (
+            {navLinks[lang].map((link) => (
               <li key={link.href}>
                 <a href={link.href} className={styles.navLink}>{link.label}</a>
               </li>
             ))}
           </ul>
+          <button
+            className={styles.langToggle}
+            onClick={toggleLang}
+            aria-label={`Switch to ${lang === 'en' ? 'Thai' : 'English'}`}
+            title="Toggle language"
+          >
+            {lang === 'en' ? 'EN' : 'TH'}
+          </button>
           <button
             className={styles.themeToggle}
             onClick={toggleTheme}

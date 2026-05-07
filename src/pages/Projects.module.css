@@ -9,7 +9,7 @@
 .secHeader { margin-bottom: 28px; }
 
 .secTitle {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-text-faint);
@@ -29,6 +29,7 @@
   overflow: hidden;
   border: 0.5px solid var(--color-border);
   height: 520px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
 }
 
 .thumb {
@@ -70,7 +71,7 @@
   background: rgba(0, 0, 0, 0.5);
   border: 1.5px solid rgba(255, 255, 255, 0.3);
   color: #fff;
-  font-size: 20px;
+  font-size: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,7 +92,7 @@
   right: 16px;
   background: var(--color-accent);
   color: #fff;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -106,7 +107,7 @@
   background: var(--color-surface);
   border: 0.5px solid var(--color-border);
   color: var(--color-text-muted);
-  font-size: 12px;
+  font-size: 14px;
   padding: 5px 12px;
   border-radius: 20px;
 }
@@ -125,7 +126,7 @@
 }
 
 .projDesc {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--color-text-muted);
   line-height: 1.7;
 }
@@ -134,7 +135,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-text-muted);
   flex-wrap: wrap;
 }
@@ -151,7 +152,7 @@
 }
 
 .sectionLbl {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-muted);
@@ -168,7 +169,7 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--color-text-sub);
   line-height: 1.6;
 }
@@ -192,7 +193,7 @@
   padding: 4px 12px;
   border: 0.5px solid var(--color-border);
   border-radius: 20px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-text-sub);
 }
 
@@ -217,13 +218,13 @@
   padding: 9px 18px;
   border: 0.5px solid var(--color-border);
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-text-sub);
   white-space: nowrap;
 }
 
 .lbtn i {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--color-text-dim);
 }
 
@@ -235,6 +236,26 @@
 
 .lbtnAcc i { color: #fff; }
 
+/* ── More Projects ── */
+.otherSection {
+  margin-top: 48px;
+}
+
+.otherTitle {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: 20px;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
 /* ── Mobile ── */
 @media (max-width: 767px) {
   .feature {
@@ -244,5 +265,9 @@
 
   .media {
     height: 280px;
+  }
+
+  .cardGrid {
+    grid-template-columns: 1fr;
   }
 }
