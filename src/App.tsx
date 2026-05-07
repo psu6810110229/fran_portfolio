@@ -1,8 +1,13 @@
+import Navbar from './components/Navbar/Navbar';
+
 function App() {
   return (
-    <div>
-      {/* pages will be added here */}
-    </div>
+    <>
+      <Navbar />
+      <main>
+        {/* pages will be added here */}
+      </main>
+    </>
   );
 }
 
