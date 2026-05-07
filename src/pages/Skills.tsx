@@ -1,3 +1,4 @@
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import styles from './Skills.module.css';
 
 interface Skill {
@@ -18,8 +19,14 @@ const skills: Skill[] = [
 ];
 
 function Skills() {
+  const { ref, isVisible } = useScrollReveal<HTMLElement>();
+
   return (
-    <section id="skills" className={styles.skills}>
+    <section
+      id="skills"
+      className={`${styles.skills} reveal ${isVisible ? 'show' : ''}`}
+      ref={ref}
+    >
       <div className={styles.inner}>
         <div className={styles.secHeader}>
           <span className={styles.secTitle}>Stack</span>

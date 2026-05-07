@@ -1,8 +1,15 @@
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import styles from './Contact.module.css';
 
 function Contact() {
+  const { ref, isVisible } = useScrollReveal<HTMLElement>();
+
   return (
-    <section id="contact">
+    <section
+      id="contact"
+      className={`reveal ${isVisible ? 'show' : ''}`}
+      ref={ref}
+    >
       <div className={styles.cta}>
         <div className={styles.inner}>
           <h2 className={styles.heading}>Let's work together.</h2>

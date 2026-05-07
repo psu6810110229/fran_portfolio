@@ -1,3 +1,4 @@
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import styles from './About.module.css';
 
 const snapshot = [
@@ -7,8 +8,14 @@ const snapshot = [
 ];
 
 function About() {
+  const { ref, isVisible } = useScrollReveal<HTMLElement>();
+
   return (
-    <section id="about" className={styles.about}>
+    <section
+      id="about"
+      className={`${styles.about} reveal ${isVisible ? 'show' : ''}`}
+      ref={ref}
+    >
       <div className={styles.snapshot}>
         <div className={styles.snapshotInner}>
           {snapshot.map((item) => (
