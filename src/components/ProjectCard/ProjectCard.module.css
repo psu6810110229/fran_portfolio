@@ -7,11 +7,25 @@
 /* ── Thumbnail ── */
 .thumb {
   height: 160px;
-  background: linear-gradient(135deg, #1a1614, #201810);
+  background: var(--color-surface-alt);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-size: 10px;
+  color: var(--color-accent);
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .thumbImg {
@@ -21,26 +35,12 @@
   object-position: top;
 }
 
-.badge {
-  position: absolute;
-  top: 12px;
-  left: 14px;
-  font-size: 10px;
-  color: var(--color-accent);
-  background: #1a1208cc;
-  border: 0.5px solid #3a2818;
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
 .thumbInner {
   width: 85%;
   height: 75%;
   border-radius: 6px;
-  background: #1e1a16;
-  border: 0.5px solid #282420;
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
   display: flex;
   flex-direction: column;
   padding: 12px 14px;
@@ -62,14 +62,14 @@
   border-radius: 50%;
 }
 
-.dot1 { background: #d4651a55; }
-.dot2 { background: #44403a; }
-.dot3 { background: #44403a; }
+.dot1 { background: var(--color-accent); opacity: 0.4; }
+.dot2 { background: var(--color-border); }
+.dot3 { background: var(--color-border); }
 
 .bar {
   height: 8px;
   border-radius: 3px;
-  background: #2a2420;
+  background: var(--color-border);
 }
 
 /* ── Body ── */
@@ -89,13 +89,13 @@
   font-family: var(--font-heading);
   font-size: var(--font-size-md);
   font-weight: 700;
-  color: #cec6bc;
+  color: var(--color-text);
 }
 
 .tag {
   font-size: 10px;
-  color: #3a3632;
-  border: 0.5px solid #201e1a;
+  color: var(--color-text-dim);
+  border: 0.5px solid var(--color-border);
   padding: 3px 9px;
   border-radius: var(--radius-full);
   letter-spacing: 0.05em;
@@ -103,7 +103,7 @@
 
 .desc {
   font-size: var(--font-size-sm);
-  color: #504a44;
+  color: var(--color-text-muted);
   line-height: 1.65;
   margin-bottom: 14px;
 }
@@ -122,8 +122,9 @@
 
 .tech {
   font-size: var(--font-size-xs);
-  color: #3a3430;
-  background: #1a1816;
+  color: var(--color-text-dim);
+  background: var(--color-surface-alt);
+  border: 0.5px solid var(--color-border);
   padding: 3px 8px;
   border-radius: var(--radius-sm);
 }

@@ -17,12 +17,12 @@
   font-family: var(--font-heading);
   font-size: var(--font-size-xl);
   font-weight: 700;
-  color: #cec6bc;
+  color: var(--color-text);
 }
 
 .sub {
   font-size: var(--font-size-sm);
-  color: #444038;
+  color: var(--color-text-muted);
 }
 
 .btnPrimary {
@@ -42,7 +42,7 @@
 
 /* ── Footer ── */
 .footer {
-  border-top: 0.5px solid #181614;
+  border-top: 0.5px solid var(--color-border-soft);
 }
 
 .footerInner {
@@ -55,17 +55,9 @@
   align-items: center;
 }
 
-@media (min-width: 768px) {
-  .footerInner {
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 0;
-  }
-}
-
 .copy {
   font-size: var(--font-size-xs);
-  color: #252220;
+  color: var(--color-text-faint);
 }
 
 .socials {
@@ -75,10 +67,18 @@
 
 .socials a {
   font-size: var(--font-size-xs);
-  color: #2e2a26;
+  color: var(--color-text-dim);
   letter-spacing: 0.04em;
 }
 
 .socials a:hover {
   color: var(--color-accent);
+}
+
+@media (min-width: 768px) {
+  .footerInner {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+  }
 }

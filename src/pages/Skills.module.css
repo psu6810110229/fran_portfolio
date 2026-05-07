@@ -46,12 +46,12 @@
 
 .item i {
   font-size: 26px;
-  color: #5a5248;
+  color: var(--color-text-muted);
 }
 
 .item span {
   font-size: var(--font-size-xs);
-  color: #3e3c38;
+  color: var(--color-text-dim);
   letter-spacing: 0.04em;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .main span {
-  color: #7a5040;
+  color: var(--color-accent-dark);
 }
 
 /* ── mobile: 2 columns ── */
