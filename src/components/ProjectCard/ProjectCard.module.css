@@ -1,0 +1,137 @@
+.card {
+  border: 0.5px solid var(--color-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ── Thumbnail ── */
+.thumb {
+  height: 160px;
+  background: linear-gradient(135deg, #1a1614, #201810);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-size: 10px;
+  color: var(--color-accent);
+  background: #1a1208cc;
+  border: 0.5px solid #3a2818;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.thumbInner {
+  width: 85%;
+  height: 75%;
+  border-radius: 6px;
+  background: #1e1a16;
+  border: 0.5px solid #282420;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px;
+  gap: 8px;
+  position: relative;
+}
+
+.thumbDots {
+  display: flex;
+  gap: 4px;
+  position: absolute;
+  top: 10px;
+  right: 12px;
+}
+
+.thumbDots span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.dot1 { background: #d4651a55; }
+.dot2 { background: #44403a; }
+.dot3 { background: #44403a; }
+
+.bar {
+  height: 8px;
+  border-radius: 3px;
+  background: #2a2420;
+}
+
+/* ── Body ── */
+.body {
+  padding: 18px 22px;
+  background: var(--color-surface);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: #cec6bc;
+}
+
+.tag {
+  font-size: 10px;
+  color: #3a3632;
+  border: 0.5px solid #201e1a;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.05em;
+}
+
+.desc {
+  font-size: var(--font-size-sm);
+  color: #504a44;
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.techs {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.tech {
+  font-size: var(--font-size-xs);
+  color: #3a3430;
+  background: #1a1816;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.links {
+  display: flex;
+  gap: 14px;
+}
+
+.link {
+  font-size: 12px;
+  color: var(--color-accent-dark);
+  letter-spacing: 0.02em;
+}
+
+.link:hover {
+  color: var(--color-accent-hover);
+}

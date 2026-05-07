@@ -1,0 +1,35 @@
+.projects {
+  border-bottom: 0.5px solid var(--color-border-soft);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 36px var(--space-6);
+}
+
+.secHeader {
+  margin-bottom: 22px;
+}
+
+.secTitle {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── tablet: 2 columns ── */
+@media (min-width: 768px) {
+  .list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
