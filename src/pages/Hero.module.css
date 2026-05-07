@@ -18,8 +18,8 @@
 .avatarWrapper {
   position: relative;
   flex-shrink: 0;
-  width: 160px;
-  height: 160px;
+  width: 140px;
+  height: 140px;
 }
 
 .avatarRing {
@@ -31,8 +31,8 @@
 }
 
 .avatar {
-  width: 160px;
-  height: 160px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   border: 2px solid var(--color-border);
   object-fit: cover;
