@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { projects } from '../data/projects';
 import GalleryModal from '../components/GalleryModal/GalleryModal';
+import shot456 from '../assets/9tours/user/Screenshot (456).png';
+import shot463 from '../assets/9tours/admin/Screenshot (463).png';
+import toursLogo from '../assets/9tours/logo.png';
 import styles from './Projects.module.css';
 
 const primaryTechs = new Set(['React', 'TypeScript', 'CSS']);
@@ -14,9 +17,15 @@ const roleItems = [
 
 function Projects() {
   const project = projects[0];
-  const [isHovered, setIsHovered]   = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
+  const [isHovered, setIsHovered]     = useState(false);
+  const [videoReady, setVideoReady]   = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
+
+  const openGallery = (index: number) => { setGalleryIndex(index); setGalleryOpen(true); };
+  // video occupies modal index 0 when previewVideo exists, so images are offset by 1
+  const videoOffset = project.previewVideo ? 1 : 0;
+  const imgIndex = (src: string) => (project.gallery?.indexOf(src) ?? 0) + videoOffset;
 
   return (
     <section id="projects" className={styles.projects}>
@@ -33,7 +42,7 @@ function Projects() {
               className={styles.thumb}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => { setIsHovered(false); setVideoReady(false); }}
-              onClick={() => project.gallery && setGalleryOpen(true)}
+              onClick={() => project.gallery && openGallery(0)}
             >
               {project.thumbnail && (
                 <img src={project.thumbnail} alt={project.title} className={`${styles.thumbImg} ${videoReady ? styles.hidden : ''}`} />
@@ -46,10 +55,14 @@ function Projects() {
               )}
               <div className={styles.thumbOverlay} aria-hidden="true" />
               {project.badge && <span className={styles.featBadge}>{project.badge}</span>}
-              {project.gallery && <span className={styles.ssCount}>{project.gallery.length} screenshots ↗</span>}
+              {project.gallery && (
+                <span className={styles.ssCount}>
+                  {project.previewVideo ? `1 video · ${project.gallery.length} screenshots` : `${project.gallery.length} screenshots`} ↗
+                </span>
+              )}
             </div>
             <div className={styles.mainFoot}>
-              <h3 className={styles.projName}>{project.title}</h3>
+              <img src={toursLogo} alt="9tours" className={styles.projLogo} />
               <p className={styles.projDesc}>{project.description}</p>
             </div>
           </div>
@@ -66,34 +79,18 @@ function Projects() {
                 </div>
               ))}
             </div>
-            <div className={styles.teamRow}>
-              <span>3 developers · 2 months</span>
-            </div>
           </div>
 
           {/* ── Screenshot 1 ── */}
-          <div className={`${styles.cell} ${styles.cS1}`}>
-            <div className={styles.ph}>
-              <div className={`${styles.phBar} ${styles.ph70}`} />
-              <div className={`${styles.phBar} ${styles.ph45}`} />
-              <div className={styles.phRow}>
-                <div className={styles.phCard} /><div className={styles.phCard} /><div className={styles.phCard} />
-              </div>
-              <div className={`${styles.phBar} ${styles.ph55}`} />
-            </div>
-            <span className={styles.screenLabel}>Booking flow</span>
+          <div className={`${styles.cell} ${styles.cS1} ${styles.clickable}`} onClick={() => openGallery(imgIndex(shot456))}>
+            <img src={shot456} alt="Booking flow" className={styles.screenImg} />
+            <span className={styles.screenLabel}>Booking flow ↗</span>
           </div>
 
           {/* ── Screenshot 2 ── */}
-          <div className={`${styles.cell} ${styles.cS2}`}>
-            <div className={styles.ph}>
-              <div className={`${styles.phBar} ${styles.ph60}`} />
-              <div className={`${styles.phRow} ${styles.phRowTall}`}>
-                <div className={`${styles.phCard} ${styles.phCardWide}`} /><div className={styles.phCard} />
-              </div>
-              <div className={`${styles.phBar} ${styles.ph40}`} />
-            </div>
-            <span className={styles.screenLabel}>Admin panel</span>
+          <div className={`${styles.cell} ${styles.cS2} ${styles.clickable}`} onClick={() => openGallery(imgIndex(shot463))}>
+            <img src={shot463} alt="Admin panel" className={styles.screenImg} />
+            <span className={styles.screenLabel}>Admin panel ↗</span>
           </div>
 
           {/* ── Stats ── */}
@@ -129,7 +126,7 @@ function Projects() {
       </div>
 
       {galleryOpen && project.gallery && (
-        <GalleryModal images={project.gallery} initialIndex={0} onClose={() => setGalleryOpen(false)} />
+        <GalleryModal images={project.gallery} video={project.previewVideo} initialIndex={galleryIndex} onClose={() => setGalleryOpen(false)} />
       )}
     </section>
   );
