@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 — Page Not Found</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500&display=swap');
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background: #131110;
+        color: #b8b0a8;
+        font-family: 'Inter', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .code {
+        font-family: 'Syne', sans-serif;
+        font-size: 6rem;
+        font-weight: 800;
+        color: #d4651a;
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      .title {
+        font-family: 'Syne', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #ddd4ca;
+      }
+
+      .sub {
+        font-size: 0.875rem;
+        color: #3e3a36;
+        max-width: 320px;
+        line-height: 1.6;
+      }
+
+      .link {
+        margin-top: 8px;
+        display: inline-block;
+        padding: 10px 24px;
+        background: #d4651a;
+        color: #fdf8f4;
+        border-radius: 7px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+      }
+
+      .link:hover { background: #e07030; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p class="code">404</p>
+      <h1 class="title">Page not found.</h1>
+      <p class="sub">The page you're looking for doesn't exist or has been moved.</p>
+      <a href="/" class="link">Back to home →</a>
+    </div>
+  </body>
+</html>

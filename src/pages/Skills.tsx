@@ -31,7 +31,7 @@ function Skills() {
               key={skill.label}
               className={`${styles.item} ${skill.main ? styles.main : ''}`}
             >
-              <i className={skill.icon} />
+              <i className={skill.icon} aria-hidden="true" />
               <span>{skill.label}</span>
             </div>
           ))}
