@@ -5,14 +5,12 @@
 }
 
 .snapshotInner {
-  max-width: var(--max-width);
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
 }
 
 .snapItem {
-  padding: 16px var(--space-6);
+  padding: 16px 5vw;
   border-bottom: 0.5px solid var(--color-border-soft);
 }
 
@@ -42,9 +40,7 @@
 
 /* ── Bio ── */
 .inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 36px var(--space-6);
+  padding: 36px 5vw;
 }
 
 .secHeader {
@@ -78,7 +74,7 @@
   }
 
   .snapItem {
-    padding: 22px 36px;
+    padding: 22px 5vw;
     border-bottom: none;
     border-right: 0.5px solid var(--color-border-soft);
   }
