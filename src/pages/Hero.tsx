@@ -11,9 +11,9 @@ function Hero() {
     <section id="hero" className={styles.hero}>
       <div className={styles.inner}>
         <div className={styles.avatarWrapper}>
-          <div className={styles.avatarRing} />
+          <div className={styles.avatarRing} aria-hidden="true" />
           <img src={franImg} alt="Fran" className={styles.avatar} />
-          <div className={styles.avatarDot} />
+          <div className={styles.avatarDot} aria-hidden="true" />
         </div>
 
         <div className={styles.text}>
@@ -23,8 +23,9 @@ function Hero() {
           <h1 className={styles.heading}>
             Hi, I'm <em className={styles.accent}>Fran</em>.
           </h1>
-          <p className={styles.role}>
-            {typed}<span className={styles.caret} />
+          <p className={styles.role} aria-label={typed}>
+            <span aria-hidden="true">{typed}</span>
+            <span className={styles.caret} aria-hidden="true" />
           </p>
           <div className={styles.btns}>
             <a href="#projects" className={styles.btnPrimary}>View Projects</a>

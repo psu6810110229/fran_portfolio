@@ -19,7 +19,7 @@ function ProjectCard({ project }: Props) {
             className={styles.thumbImg}
           />
         ) : (
-          <div className={styles.thumbInner}>
+          <div className={styles.thumbInner} aria-hidden="true">
             <div className={styles.thumbDots}>
               <span className={styles.dot1} />
               <span className={styles.dot2} />
@@ -46,10 +46,10 @@ function ProjectCard({ project }: Props) {
             ))}
           </div>
           <div className={styles.links}>
-            <a href={project.githubUrl} target="_blank" rel="noreferrer" className={styles.link}>
+            <a href={project.githubUrl} target="_blank" rel="noreferrer" className={styles.link} aria-label={`${project.title} GitHub (opens in new tab)`}>
               GitHub ↗
             </a>
-            <a href={project.liveUrl} target="_blank" rel="noreferrer" className={styles.link}>
+            <a href={project.liveUrl} target="_blank" rel="noreferrer" className={styles.link} aria-label={`${project.title} live demo (opens in new tab)`}>
               Live ↗
             </a>
           </div>

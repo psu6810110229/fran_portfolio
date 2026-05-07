@@ -8,7 +8,7 @@ const navLinks = [
 
 function Navbar() {
   return (
-    <nav className={styles.navbar}>
+    <nav className={styles.navbar} aria-label="Main navigation">
       <div className={styles.inner}>
         <a href="#hero" className={styles.logo}>fran.</a>
         <ul className={styles.navList}>
