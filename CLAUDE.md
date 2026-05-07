@@ -160,20 +160,26 @@ style: update CSS variables
 
 ---
 
-## Implementation Order
+## Pending Tasks
 
-Complete in this order. Do not skip or reorder.
+```
+### 🔴 Critical
+5. [ ] Fix About section text — add max-width: 600px, center align
+6. [ ] Fix theme toggle icon — replace star icon with clear moon/sun icon, add tooltip "Toggle theme"
+7. [ ] Fix "Open to internship" pill spacing — move closer to h1
 
-- [ ] 1\. Vite \+ React TS setup \+ push to GitHub  
-- [ ] 2\. Create full file structure \+ global.css variables  
-- [ ] 3\. Navbar component  
-- [ ] 4\. Hero section  
-- [ ] 5\. About section  
-- [ ] 6\. Skills section  
-- [ ] 7\. Projects section \+ ProjectCard component  
-- [ ] 8\. Contact section  
-- [ ] 9\. Responsive check all sections (375px, 768px, 1280px)  
-- [ ] 10\. Deploy to Vercel
+### 🟡 Important
+8. [ ] Increase avatar size from 110px to 130px
+9. [ ] Fix CSS3 icon color — change to dim gray same as SQL/Docker, not orange
+10. [ ] Fix hero-to-snapshot spacing — reduce padding between sections
+11. [ ] Fix FEATURED badge — change to orange or white for better contrast
+12. [ ] Fix project card width — make full width or max-width 720px centered
+13. [ ] Fix CTA text color — reduce brightness to match overall tone
+14. [ ] Fix CTA button size — reduce padding to match section scale
+15. [ ] Fix project card alignment — center or match section width on desktop
+16. [ ] Fix About text indent — align with ABOUT label
+17. [ ] Fix CTA button width on mobile — max-width: 280px
+```
 
 ---
 

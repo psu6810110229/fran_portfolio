@@ -17,12 +17,14 @@ function Hero() {
         </div>
 
         <div className={styles.text}>
-          <div className={styles.badge}>
-            <span>Open to internship · 2025</span>
+          <div className={styles.titleGroup}>
+            <h1 className={styles.heading}>
+              Hi, I'm <em className={styles.accent}>Fran</em>.
+            </h1>
+            <div className={styles.badge}>
+              <span>Open to internship · 2025</span>
+            </div>
           </div>
-          <h1 className={styles.heading}>
-            Hi, I'm <em className={styles.accent}>Fran</em>.
-          </h1>
           <p className={styles.role} aria-label={typed}>
             <span aria-hidden="true">{typed}</span>
             <span className={styles.caret} aria-hidden="true" />

@@ -1,26 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&display=swap');
 
 /* ── Reset ── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
-/* ── CSS Variables ── */
+.no-transition *, .no-transition *::before, .no-transition *::after {
+  transition: none !important;
+}
+
+/* ── CSS Variables (dark default) ── */
 :root {
-  /* Colors */
   --color-bg:           #131110;
   --color-surface:      #161412;
   --color-surface-alt:  #1a1816;
   --color-border:       #1e1c18;
   --color-border-soft:  #1a1816;
 
-  --color-text:         #ddd4ca;
-  --color-text-sub:     #b8b0a8;
-  --color-text-muted:   #5a5250;
-  --color-text-dim:     #3e3a36;
-  --color-text-faint:   #2e2c28;
+  --color-text:         #f0e8e0;
+  --color-text-sub:     #d0c8c0;
+  --color-text-muted:   #9a9088;
+  --color-text-dim:     #6a6058;
+  --color-text-faint:   #5a5248;
 
   --color-accent:       #d4651a;
   --color-accent-hover: #e07030;
@@ -28,15 +32,15 @@
 
   /* Typography */
   --font-heading: 'Syne', sans-serif;
-  --font-body:    'Inter', sans-serif;
+  --font-body:    'Satoshi', sans-serif;
 
-  --font-size-xs:   0.6875rem;  /* 11px */
-  --font-size-sm:   0.8125rem;  /* 13px */
-  --font-size-base: 0.875rem;   /* 14px */
-  --font-size-md:   1rem;       /* 16px */
-  --font-size-lg:   1.0625rem;  /* 17px */
-  --font-size-xl:   1.5rem;     /* 24px */
-  --font-size-2xl:  2.25rem;    /* 36px */
+  --font-size-xs:   0.8125rem;
+  --font-size-sm:   0.9375rem;
+  --font-size-base: 1rem;
+  --font-size-md:   1rem;
+  --font-size-lg:   1.0625rem;
+  --font-size-xl:   1.5rem;
+  --font-size-2xl:  2.25rem;
 
   /* Spacing */
   --space-1:  0.25rem;
@@ -60,9 +64,29 @@
   --radius-full: 9999px;
 }
 
+/* ── Light mode overrides (must come after :root) ── */
+[data-theme="light"] {
+  --color-bg:           #faf8f5;
+  --color-surface:      #f0ebe4;
+  --color-surface-alt:  #ede8e1;
+  --color-border:       #e0d8d0;
+  --color-border-soft:  #e8e2da;
+
+  --color-text:         #1a1614;
+  --color-text-sub:     #3a3430;
+  --color-text-muted:   #5a4a40;
+  --color-text-dim:     #6a5a50;
+  --color-text-faint:   #7a6a60;
+
+  --color-accent:       #c4551a;
+  --color-accent-hover: #d4651a;
+  --color-accent-dark:  #b04010;
+}
+
 /* ── Base ── */
 html {
   scroll-behavior: smooth;
+  background-color: var(--color-bg);
 }
 
 body {
@@ -93,7 +117,7 @@ button {
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
 .reveal.show {

@@ -11,7 +11,7 @@ const skills: Skill[] = [
   { icon: 'devicon-react-original',     label: 'React',      main: true },
   { icon: 'devicon-typescript-plain',   label: 'TypeScript', main: true },
   { icon: 'devicon-vitejs-plain',       label: 'Vite',       main: true },
-  { icon: 'devicon-css3-plain',         label: 'CSS',        main: true },
+  { icon: 'devicon-css3-plain',         label: 'CSS' },
   { icon: 'devicon-mysql-plain',        label: 'SQL' },
   { icon: 'devicon-docker-plain',       label: 'Docker' },
   { icon: 'devicon-git-plain',          label: 'Git' },

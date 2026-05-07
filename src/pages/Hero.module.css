@@ -6,7 +6,7 @@
 .inner {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 56px var(--space-6) 48px;
+  padding: 56px var(--space-6) 28px;
   display: flex;
   flex-direction: column;
   gap: 36px;
@@ -18,22 +18,23 @@
 .avatarWrapper {
   position: relative;
   flex-shrink: 0;
-  width: 110px;
-  height: 110px;
+  width: 140px;
+  height: 140px;
 }
 
 .avatarRing {
   position: absolute;
   inset: -6px;
   border-radius: 50%;
-  border: 1px solid #d4651a18;
+  border: 1px solid var(--color-accent);
+  opacity: 0.1;
 }
 
 .avatar {
-  width: 110px;
-  height: 110px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  border: 2px solid #2a2018;
+  border: 2px solid var(--color-border);
   object-fit: cover;
   object-position: center top;
 }
@@ -57,19 +58,25 @@
   gap: var(--space-4);
 }
 
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: #1c1510;
-  border: 0.5px solid #2e2018;
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
   border-radius: var(--radius-full);
   padding: 5px 14px;
 }
 
 .badge span {
   font-size: var(--font-size-xs);
-  color: #6a5040;
+  color: var(--color-text-muted);
   letter-spacing: 0.04em;
 }
 
@@ -131,15 +138,15 @@
 .btnGhost {
   padding: 10px 20px;
   background: transparent;
-  color: #4a4440;
-  border: 0.5px solid #242220;
+  color: var(--color-text-dim);
+  border: 0.5px solid var(--color-border);
   border-radius: 7px;
   font-size: var(--font-size-sm);
 }
 
 .btnGhost:hover {
-  color: #8a7a70;
-  border-color: #3a3430;
+  color: var(--color-text-muted);
+  border-color: var(--color-border-soft);
 }
 
 /* ── tablet ── */
@@ -167,7 +174,7 @@
 /* ── desktop ── */
 @media (min-width: 1280px) {
   .inner {
-    padding: 72px var(--space-6) 64px;
+    padding: 72px var(--space-6) 40px;
   }
 
   .heading {
