@@ -10,7 +10,7 @@ interface Props {
   thumbnail?: string;
 }
 
-function CompactCard({ title, description, tag, techs, githubUrl, liveUrl, thumbnail }: Props) {
+function CompactCard({ title, description, techs, githubUrl, liveUrl, thumbnail }: Props) {
   return (
     <div className={styles.card}>
       <div className={styles.thumb}>
