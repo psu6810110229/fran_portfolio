@@ -1,24 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap');
 
-/* ── Light mode overrides ── */
-[data-theme="light"] {
-  --color-bg:           #faf8f5;
-  --color-surface:      #f0ebe4;
-  --color-surface-alt:  #ede8e1;
-  --color-border:       #e0d8d0;
-  --color-border-soft:  #e8e2da;
-
-  --color-text:         #1a1614;
-  --color-text-sub:     #3a3430;
-  --color-text-muted:   #6a5a50;
-  --color-text-dim:     #8a7a70;
-  --color-text-faint:   #a09088;
-
-  --color-accent:       #c4551a;
-  --color-accent-hover: #d4651a;
-  --color-accent-dark:  #b04010;
-}
-
 /* ── Reset ── */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -26,9 +7,8 @@
   padding: 0;
 }
 
-/* ── CSS Variables ── */
+/* ── CSS Variables (dark default) ── */
 :root {
-  /* Colors */
   --color-bg:           #131110;
   --color-surface:      #161412;
   --color-surface-alt:  #1a1816;
@@ -49,13 +29,13 @@
   --font-heading: 'Syne', sans-serif;
   --font-body:    'Inter', sans-serif;
 
-  --font-size-xs:   0.6875rem;  /* 11px */
-  --font-size-sm:   0.8125rem;  /* 13px */
-  --font-size-base: 0.875rem;   /* 14px */
-  --font-size-md:   1rem;       /* 16px */
-  --font-size-lg:   1.0625rem;  /* 17px */
-  --font-size-xl:   1.5rem;     /* 24px */
-  --font-size-2xl:  2.25rem;    /* 36px */
+  --font-size-xs:   0.6875rem;
+  --font-size-sm:   0.8125rem;
+  --font-size-base: 0.875rem;
+  --font-size-md:   1rem;
+  --font-size-lg:   1.0625rem;
+  --font-size-xl:   1.5rem;
+  --font-size-2xl:  2.25rem;
 
   /* Spacing */
   --space-1:  0.25rem;
@@ -77,6 +57,25 @@
   --radius-md:  0.5rem;
   --radius-lg:  0.875rem;
   --radius-full: 9999px;
+}
+
+/* ── Light mode overrides (must come after :root) ── */
+[data-theme="light"] {
+  --color-bg:           #faf8f5;
+  --color-surface:      #f0ebe4;
+  --color-surface-alt:  #ede8e1;
+  --color-border:       #e0d8d0;
+  --color-border-soft:  #e8e2da;
+
+  --color-text:         #1a1614;
+  --color-text-sub:     #3a3430;
+  --color-text-muted:   #6a5a50;
+  --color-text-dim:     #8a7a70;
+  --color-text-faint:   #a09088;
+
+  --color-accent:       #c4551a;
+  --color-accent-hover: #d4651a;
+  --color-accent-dark:  #b04010;
 }
 
 /* ── Base ── */
