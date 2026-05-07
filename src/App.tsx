@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar/Navbar';
 import Hero from './pages/Hero';
 import About from './pages/About';
+import Skills from './pages/Skills';
 import styles from './App.module.css';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <main>
         <Hero />
         <About />
+        <Skills />
       </main>
     </div>
   );
