@@ -160,27 +160,55 @@ style: update CSS variables
 
 ---
 
-## Pending Tasks
-
 ```
-### 🔴 Critical
-5. [ ] Fix About section text — add max-width: 600px, center align
-6. [ ] Fix theme toggle icon — replace star icon with clear moon/sun icon, add tooltip "Toggle theme"
-7. [ ] Fix "Open to internship" pill spacing — move closer to h1
+## Current Task
+Redesign Projects section as Apple-style bento grid.
 
-### 🟡 Important
-8. [ ] Increase avatar size from 110px to 130px
-9. [ ] Fix CSS3 icon color — change to dim gray same as SQL/Docker, not orange
-10. [ ] Fix hero-to-snapshot spacing — reduce padding between sections
-11. [ ] Fix FEATURED badge — change to orange or white for better contrast
-12. [ ] Fix project card width — make full width or max-width 720px centered
-13. [ ] Fix CTA text color — reduce brightness to match overall tone
-14. [ ] Fix CTA button size — reduce padding to match section scale
-15. [ ] Fix project card alignment — center or match section width on desktop
-16. [ ] Fix About text indent — align with ABOUT label
-17. [ ] Fix CTA button width on mobile — max-width: 280px
+Layout (12-column grid):
+- Row 1: main card (col 1-7) + role card (col 8-12)
+- Row 2: screenshot cell 1 (col 1-4) + screenshot cell 2 (col 5-8) + stats cell orange (col 9-12)
+- Row 3: stack badges + links full width
+
+Main card:
+- Browser mockup thumbnail at top (height 170px), dark bg #0e0c0a
+- Project name: Syne 22px weight 800 color #e0d4c8
+- Description: Inter 15px color #7a6e66 line-height 1.6
+
+Role card:
+- Label, role title (Syne 16px), bullet list (Inter 13px)
+- Team pill at bottom: "3 developers · 2 months"
+
+Screenshot cells:
+- "Booking flow" and "Admin panel" labels
+- Placeholder bars and cards using border color
+
+Stats cell:
+- Background: #d4651a solid
+- 3 stats: 5 pages / 3 developers / 2mo — Syne 30px white
+
+Bottom row:
+- Stack badges: primary (orange border) + secondary (dim)
+- Links: GitHub (ghost) + Live demo (orange filled)
+
+Typography:
+- Section label: 11px
+- Metadata / tags: 11-12px
+- Role items: 13px
+- Project description: 15px
+- Project title: 22px
+- Stat numbers: 30px
+
+Colors (hardcoded — match site exactly):
+- bg: #141210
+- surface: #1c1916
+- border: #2a2520
+- orange: #d4651a
+- text: #e0d4c8
+- text-mid: #7a6e66
+- text-dim: #403a34
+
+Do not use CSS variables. Do not add hover effects. Do not modify any other component.
 ```
-
 ---
 
 ## What Claude Must NOT Do
