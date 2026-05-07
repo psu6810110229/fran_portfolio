@@ -1,11 +1,11 @@
 .projects {
-  border-bottom: 0.5px solid var(--color-border-soft);
+  border-bottom: 0.5px solid #2a2520;
 }
 
 .inner {
-  max-width: var(--max-width);
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 36px var(--space-6);
+  padding: 36px 24px;
 }
 
 .secHeader {
@@ -13,29 +13,245 @@
 }
 
 .secTitle {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-text-faint);
 }
 
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 720px;
-  margin: 0 auto;
+/* ── Bento grid ── */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 320px 200px 72px;
+  gap: 8px;
 }
 
-/* ── tablet: 2 columns ── */
-@media (min-width: 768px) {
-  .list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+.cell {
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
+  border-radius: 10px;
+}
+
+/* ── Column spans ── */
+.mainCard  { grid-column: 1 / 8;  overflow: hidden; }
+.roleCard  { grid-column: 8 / 13; padding: 18px 20px; display: flex; flex-direction: column; }
+.shot1     { grid-column: 1 / 5;  padding: 14px 16px; position: relative; overflow: hidden; }
+.shot2     { grid-column: 5 / 9;  padding: 14px 16px; position: relative; overflow: hidden; }
+.statsCard { grid-column: 9 / 13; border-radius: 10px; background: #d4651a; padding: 20px; display: flex; flex-direction: column; justify-content: center; gap: 16px; }
+.bottomRow { grid-column: 1 / 13; padding: 0 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+
+/* ── Main card ── */
+.mockup {
+  height: 170px;
+  background: #0e0c0a;
+  overflow: hidden;
+}
+
+.mockupImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.mainBody {
+  padding: 18px 20px;
+}
+
+.projectTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #e0d4c8;
+  margin-bottom: 8px;
+}
+
+.projectDesc {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ── Role card ── */
+.cardLabel {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: 10px;
+}
+
+.roleTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #e0d4c8;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.roleList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.roleList li {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  padding-left: 14px;
+  position: relative;
+}
+
+.roleList li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--color-text-dim);
+}
+
+.teamPill {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 11px;
+  color: var(--color-text-dim);
+  border: 0.5px solid var(--color-border);
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+/* ── Screenshot cells — label overlays content ── */
+.shot1 .cardLabel,
+.shot2 .cardLabel {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  margin-bottom: 0;
+}
+
+/* ── Screenshot placeholder ── */
+.placeholder {
+  margin-top: 0;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+}
+
+.mockBar {
+  height: 8px;
+  border-radius: 3px;
+  background: #2a2520;
+}
+
+.barFull { width: 100%; }
+.barLong { width: 75%; }
+.barMid  { width: 55%; }
+
+.mockCard {
+  height: 48px;
+  border-radius: 6px;
+  background: #141210;
+  border: 0.5px solid #2a2520;
+}
+
+/* ── Stats card ── */
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statNum {
+  font-family: 'Syne', sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.04em;
+}
+
+/* ── Bottom row ── */
+.techs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tech {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 0.5px solid;
+}
+
+.techPrimary {
+  color: #d4651a;
+  border-color: #d4651a;
+  background: rgba(212, 101, 26, 0.08);
+}
+
+.techDim {
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+.links {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.linkGhost {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  border: 0.5px solid var(--color-border);
+  padding: 6px 14px;
+  border-radius: 6px;
+}
+
+.linkFilled {
+  font-size: 13px;
+  color: #fff;
+  background: #d4651a;
+  padding: 6px 14px;
+  border-radius: 6px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  .bento {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
   }
 
-  .list > *:only-child {
-    grid-column: 1 / -1;
+  .mainCard,
+  .roleCard,
+  .shot1,
+  .shot2,
+  .statsCard,
+  .bottomRow {
+    grid-column: 1 / 2;
+  }
+
+  .statsCard {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .bottomRow {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
