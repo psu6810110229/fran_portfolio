@@ -160,20 +160,15 @@ style: update CSS variables
 
 ---
 
-## Implementation Order
+## Pending Tasks
 
-Complete in this order. Do not skip or reorder.
+### 🟢 Nice to have
+1. [ ] Expand About section — more personal story
+2. [ ] Add new projects when available
 
-- [ ] 1\. Vite \+ React TS setup \+ push to GitHub  
-- [ ] 2\. Create full file structure \+ global.css variables  
-- [ ] 3\. Navbar component  
-- [ ] 4\. Hero section  
-- [ ] 5\. About section  
-- [ ] 6\. Skills section  
-- [ ] 7\. Projects section \+ ProjectCard component  
-- [ ] 8\. Contact section  
-- [ ] 9\. Responsive check all sections (375px, 768px, 1280px)  
-- [ ] 10\. Deploy to Vercel
+### 🔧 In Progress
+3. [ ] Improve readability — bump font sizes, increase light mode text contrast
+
 
 ---
 

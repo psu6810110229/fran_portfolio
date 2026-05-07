@@ -29,9 +29,9 @@
   --font-heading: 'Syne', sans-serif;
   --font-body:    'Inter', sans-serif;
 
-  --font-size-xs:   0.6875rem;
-  --font-size-sm:   0.8125rem;
-  --font-size-base: 0.875rem;
+  --font-size-xs:   0.75rem;
+  --font-size-sm:   0.875rem;
+  --font-size-base: 0.9375rem;
   --font-size-md:   1rem;
   --font-size-lg:   1.0625rem;
   --font-size-xl:   1.5rem;
@@ -69,9 +69,9 @@
 
   --color-text:         #1a1614;
   --color-text-sub:     #3a3430;
-  --color-text-muted:   #6a5a50;
-  --color-text-dim:     #8a7a70;
-  --color-text-faint:   #a09088;
+  --color-text-muted:   #5a4a40;
+  --color-text-dim:     #6a5a50;
+  --color-text-faint:   #7a6a60;
 
   --color-accent:       #c4551a;
   --color-accent-hover: #d4651a;
