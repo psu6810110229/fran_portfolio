@@ -96,11 +96,13 @@ function Projects() {
           {/* ── Stats ── */}
           <div className={`${styles.cell} ${styles.cStats}`}>
             <span className={styles.statLbl}>Impact</span>
-            <div className={styles.statGroup}><span className={styles.statN}>5</span><span className={styles.statD}>pages built</span></div>
-            <div className={styles.statDiv} />
-            <div className={styles.statGroup}><span className={styles.statN}>3</span><span className={styles.statD}>developers</span></div>
-            <div className={styles.statDiv} />
-            <div className={styles.statGroup}><span className={styles.statN}>2mo</span><span className={styles.statD}>timeline</span></div>
+            <div className={styles.statsRow}>
+              <div className={styles.statGroup}><span className={styles.statN}>5</span><span className={styles.statD}>pages</span></div>
+              <div className={styles.statDiv} />
+              <div className={styles.statGroup}><span className={styles.statN}>3</span><span className={styles.statD}>devs</span></div>
+              <div className={styles.statDiv} />
+              <div className={styles.statGroup}><span className={styles.statN}>2mo</span><span className={styles.statD}>time</span></div>
+            </div>
           </div>
 
           {/* ── Bottom row ── */}

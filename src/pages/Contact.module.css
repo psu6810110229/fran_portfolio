@@ -3,9 +3,7 @@
 }
 
 .inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 48px var(--space-6);
+  padding: 48px 5vw;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -49,9 +47,7 @@
 }
 
 .footerInner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 18px var(--space-6);
+  padding: 18px 5vw;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);

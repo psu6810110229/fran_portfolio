@@ -4,9 +4,7 @@
 }
 
 .inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 56px var(--space-6) 28px;
+  padding: 56px 5vw 28px;
   display: flex;
   flex-direction: column;
   gap: 36px;
@@ -174,7 +172,7 @@
 /* ── desktop ── */
 @media (min-width: 1280px) {
   .inner {
-    padding: 72px var(--space-6) 40px;
+    padding: 72px 5vw 40px;
   }
 
   .heading {
