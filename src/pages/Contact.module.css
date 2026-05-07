@@ -17,7 +17,7 @@
   font-family: var(--font-heading);
   font-size: var(--font-size-xl);
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-text-sub);
 }
 
 .sub {
@@ -27,7 +27,7 @@
 
 .btnPrimary {
   display: inline-block;
-  padding: 12px 32px;
+  padding: 10px 24px;
   background: var(--color-accent);
   color: #fdf8f4;
   border-radius: 7px;

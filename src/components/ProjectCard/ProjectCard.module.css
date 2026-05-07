@@ -19,9 +19,8 @@
   top: 12px;
   left: 14px;
   font-size: 10px;
-  color: var(--color-accent);
-  background: var(--color-surface);
-  border: 0.5px solid var(--color-border);
+  color: #fff;
+  background: var(--color-accent);
   padding: 3px 10px;
   border-radius: var(--radius-full);
   letter-spacing: 0.06em;
