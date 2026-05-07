@@ -1,0 +1,9 @@
+.screen {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  background: var(--color-bg);
+  border: 0.5px solid var(--color-border);
+  border-radius: 14px;
+  overflow: hidden;
+  min-height: 100vh;
+}

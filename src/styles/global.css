@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap');
+
 /* ── Reset ── */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -8,45 +10,54 @@
 /* ── CSS Variables ── */
 :root {
   /* Colors */
-  --color-primary: #3b82f6;
-  --color-primary-dark: #2563eb;
-  --color-secondary: #64748b;
-  --color-background: #0f172a;
-  --color-surface: #1e293b;
-  --color-text: #f1f5f9;
-  --color-text-muted: #94a3b8;
-  --color-border: #334155;
-  --color-accent: #38bdf8;
+  --color-bg:           #131110;
+  --color-surface:      #161412;
+  --color-surface-alt:  #1a1816;
+  --color-border:       #1e1c18;
+  --color-border-soft:  #1a1816;
+
+  --color-text:         #ddd4ca;
+  --color-text-sub:     #b8b0a8;
+  --color-text-muted:   #5a5250;
+  --color-text-dim:     #3e3a36;
+  --color-text-faint:   #2e2c28;
+
+  --color-accent:       #d4651a;
+  --color-accent-hover: #e07030;
+  --color-accent-dark:  #c4551a;
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
+  --font-heading: 'Syne', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  --font-size-xs:   0.6875rem;  /* 11px */
+  --font-size-sm:   0.8125rem;  /* 13px */
+  --font-size-base: 0.875rem;   /* 14px */
+  --font-size-md:   1rem;       /* 16px */
+  --font-size-lg:   1.0625rem;  /* 17px */
+  --font-size-xl:   1.5rem;     /* 24px */
+  --font-size-2xl:  2.25rem;    /* 36px */
 
   /* Spacing */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
   --space-12: 3rem;
-  --space-16: 4rem;
-  --space-24: 6rem;
 
   /* Layout */
-  --max-width: 1100px;
-  --nav-height: 64px;
+  --max-width:  680px;
+  --nav-height: 58px;
 
   /* Border radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
+  --radius-sm:  0.25rem;
+  --radius-md:  0.5rem;
+  --radius-lg:  0.875rem;
+  --radius-full: 9999px;
 }
 
 /* ── Base ── */
@@ -55,10 +66,10 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--font-size-base);
-  background-color: var(--color-background);
-  color: var(--color-text);
+  background-color: var(--color-bg);
+  color: var(--color-text-sub);
   line-height: 1.6;
 }
 
@@ -70,4 +81,10 @@ a {
 img {
   max-width: 100%;
   display: block;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+  border: none;
 }
