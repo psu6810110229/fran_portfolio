@@ -1,5 +1,6 @@
 import ProjectCard from '../components/ProjectCard/ProjectCard';
 import type { Project } from '../types';
+import toursThumb from '../assets/9tours/user/Screenshot (452).png';
 import styles from './Projects.module.css';
 
 const projects: Project[] = [
@@ -11,6 +12,7 @@ const projects: Project[] = [
     githubUrl: '#',
     liveUrl: '#',
     badge: 'Featured',
+    thumbnail: toursThumb,
   },
 ];
 

@@ -12,17 +12,25 @@ function ProjectCard({ project }: Props) {
         {project.badge && (
           <span className={styles.badge}>{project.badge}</span>
         )}
-        <div className={styles.thumbInner}>
-          <div className={styles.thumbDots}>
-            <span className={styles.dot1} />
-            <span className={styles.dot2} />
-            <span className={styles.dot3} />
+        {project.thumbnail ? (
+          <img
+            src={project.thumbnail}
+            alt={project.title}
+            className={styles.thumbImg}
+          />
+        ) : (
+          <div className={styles.thumbInner}>
+            <div className={styles.thumbDots}>
+              <span className={styles.dot1} />
+              <span className={styles.dot2} />
+              <span className={styles.dot3} />
+            </div>
+            <div className={styles.bar} style={{ width: '40%' }} />
+            <div className={styles.bar} style={{ width: '70%' }} />
+            <div className={styles.bar} style={{ width: '55%' }} />
+            <div className={styles.bar} style={{ width: '45%' }} />
           </div>
-          <div className={styles.bar} style={{ width: '40%' }} />
-          <div className={styles.bar} style={{ width: '70%' }} />
-          <div className={styles.bar} style={{ width: '55%' }} />
-          <div className={styles.bar} style={{ width: '45%' }} />
-        </div>
+        )}
       </div>
 
       <div className={styles.body}>

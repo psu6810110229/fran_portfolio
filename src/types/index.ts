@@ -6,4 +6,5 @@ export interface Project {
   githubUrl: string;
   liveUrl: string;
   badge?: string;
+  thumbnail?: string;
 }
