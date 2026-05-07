@@ -21,7 +21,6 @@ function Contact() {
           <span className={styles.copy}>© 2025 Fran</span>
           <div className={styles.socials}>
             <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer">GitHub</a>
-            <a href="#" target="_blank" rel="noreferrer">LinkedIn</a>
             <a href="mailto:farnpatcharapon@gmail.com">Email</a>
           </div>
         </div>
