@@ -11,7 +11,7 @@
 }
 
 .secTitle {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-text-faint);
@@ -28,7 +28,7 @@
 
 .rowLabel {
   display: block;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #9a8878;
@@ -55,11 +55,11 @@
 }
 
 .item i {
-  font-size: 26px;
+  font-size: 28px;
 }
 
 .item span {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-text-muted);
   letter-spacing: 0.02em;
 }

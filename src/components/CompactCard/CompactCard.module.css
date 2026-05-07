@@ -5,6 +5,7 @@
   border: 0.5px solid var(--color-border);
   background: var(--color-surface);
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* ── Thumbnail ── */
@@ -27,7 +28,7 @@
 
 .thumbLabel {
   font-family: 'Syne', sans-serif;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 700;
   color: var(--color-text-dim);
   letter-spacing: -0.01em;
@@ -43,7 +44,7 @@
 }
 
 .tag {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-faint);
@@ -51,14 +52,14 @@
 
 .title {
   font-family: 'Syne', sans-serif;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--color-text);
   line-height: 1.2;
 }
 
 .desc {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-text-muted);
   line-height: 1.65;
   flex: 1;
@@ -75,7 +76,7 @@
   padding: 3px 10px;
   border: 0.5px solid var(--color-border);
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-text-sub);
 }
 
@@ -94,13 +95,13 @@
   padding: 7px 14px;
   border: 0.5px solid var(--color-border);
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-text-sub);
   white-space: nowrap;
 }
 
 .lbtn i {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-text-dim);
 }
 

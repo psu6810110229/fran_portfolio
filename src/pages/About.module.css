@@ -1,30 +1,63 @@
-/* ── Snapshot grid ── */
-.snapshot {
-  border-top: 0.5px solid var(--color-border-soft);
+.about {
   border-bottom: 0.5px solid var(--color-border-soft);
 }
 
-.snapshotInner {
-  display: grid;
-  grid-template-columns: 1fr;
+.inner {
+  padding: 36px 5vw;
 }
 
-.snapItem {
-  padding: 16px 5vw;
-  border-bottom: 0.5px solid var(--color-border-soft);
+.secHeader {
+  margin-bottom: 28px;
 }
 
-.snapItem:last-child {
-  border-bottom: none;
-}
-
-.snapLabel {
-  display: block;
-  font-size: 10px;
+.secTitle {
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-text-faint);
-  margin-bottom: 7px;
+}
+
+/* ── Two-column layout ── */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 760px) 200px auto;
+  gap: 48px;
+  align-items: start;
+}
+
+/* ── Bio ── */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.bio {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: 1.75;
+}
+
+/* ── Snapshot ── */
+.snapshot {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-left: 32px;
+  border-left: 0.5px solid var(--color-border-soft);
+}
+
+.snapItem {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.snapLabel {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
 }
 
 .snapVal {
@@ -38,52 +71,47 @@
   font-weight: 500;
 }
 
-/* ── Bio ── */
-.inner {
-  padding: 36px 5vw;
-}
-
-.secHeader {
-  margin-bottom: 22px;
-}
-
-.secTitle {
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-text-faint);
-}
-
-.content {
+/* ── Links ── */
+.links {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  max-width: 600px;
+  gap: 12px;
+  padding-left: 32px;
+  border-left: 0.5px solid var(--color-border-soft);
 }
 
-.bio {
+.link {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
-  line-height: 1.75;
 }
 
-/* ── tablet ── */
-@media (min-width: 768px) {
-  .snapshotInner {
-    grid-template-columns: repeat(3, 1fr);
+.link:hover {
+  color: var(--color-accent);
+}
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 
-  .snapItem {
-    padding: 22px 5vw;
-    border-bottom: none;
-    border-right: 0.5px solid var(--color-border-soft);
+  .snapshot {
+    padding-left: 0;
+    border-left: none;
+    border-top: 0.5px solid var(--color-border-soft);
+    padding-top: 28px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px 32px;
   }
 
-  .snapItem:last-child {
-    border-right: none;
-  }
-
-  .bio {
-    font-size: var(--font-size-base);
+  .links {
+    padding-left: 0;
+    border-left: none;
+    border-top: 0.5px solid var(--color-border-soft);
+    padding-top: 28px;
+    flex-direction: row;
+    gap: 20px;
   }
 }

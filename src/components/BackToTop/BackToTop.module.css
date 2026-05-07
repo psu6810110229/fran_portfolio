@@ -1,0 +1,22 @@
+.btn {
+  position: fixed;
+  bottom: 48px;
+  right: 48px;
+  width: 63px;
+  height: 63px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 50;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+  background: var(--color-accent-hover);
+}

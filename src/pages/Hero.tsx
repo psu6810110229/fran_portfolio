@@ -6,7 +6,7 @@ import styles from './Hero.module.css';
 const roles = ['Front-end Developer', 'Problem Solver', 'Builder', 'Learner'];
 
 const content = {
-  en: { badge: 'Open to internship · 2025', btnPrimary: 'View Projects', btnGhost: 'Say hello →' },
+  en: { badge: 'Open to internship · 2026', btnPrimary: 'View Projects', btnGhost: 'Say hello →' },
   th: { badge: 'ผมพร้อมที่จะออกจากคอมฟอร์ทโซนและเรียนรู้อยู่เสมอครับ', btnPrimary: 'รายละเอียด', btnGhost: 'ติดต่อผมได้ที่นี่' },
 };
 

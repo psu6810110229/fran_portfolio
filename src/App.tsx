@@ -5,6 +5,7 @@ import Skills from './pages/Skills';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import { LanguageProvider } from './hooks/useLanguage';
+import BackToTop from './components/BackToTop/BackToTop';
 import styles from './App.module.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Projects />
           <Contact />
         </main>
+        <BackToTop />
       </div>
     </LanguageProvider>
   );
