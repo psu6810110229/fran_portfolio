@@ -25,7 +25,7 @@ export const projects: Project[] = [
     title: '9tours',
     description: 'Tour booking platform built at PSU. Led front-end architecture, routing, and component design for the team.',
     tag: 'Team · 240-124',
-    techs: ['React', 'CSS', 'SQL'],
+    techs: ['React', 'TypeScript', 'CSS', 'SQL', 'Git'],
     githubUrl: '#',
     liveUrl: '#',
     badge: 'Featured',

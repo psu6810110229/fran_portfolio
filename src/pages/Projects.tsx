@@ -1,10 +1,22 @@
+import { useState } from 'react';
 import { projects } from '../data/projects';
+import GalleryModal from '../components/GalleryModal/GalleryModal';
 import styles from './Projects.module.css';
 
-const primaryTechs = new Set(['React', 'TypeScript', 'Vite']);
+const primaryTechs = new Set(['React', 'TypeScript', 'CSS']);
+
+const roleItems = [
+  'Led front-end architecture',
+  'Component design system',
+  'Client-side routing',
+  'Team collaboration',
+];
 
 function Projects() {
   const project = projects[0];
+  const [isHovered, setIsHovered]   = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const [galleryOpen, setGalleryOpen] = useState(false);
 
   return (
     <section id="projects" className={styles.projects}>
@@ -14,90 +26,111 @@ function Projects() {
         </div>
 
         <div className={styles.bento}>
-          {/* Main card */}
-          <div className={`${styles.cell} ${styles.mainCard}`}>
-            <div className={styles.mockup}>
+
+          {/* ── Main card ── */}
+          <div className={`${styles.cell} ${styles.cMain}`}>
+            <div
+              className={styles.thumb}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => { setIsHovered(false); setVideoReady(false); }}
+              onClick={() => project.gallery && setGalleryOpen(true)}
+            >
               {project.thumbnail && (
-                <img src={project.thumbnail} alt={project.title} className={styles.mockupImg} />
+                <img src={project.thumbnail} alt={project.title} className={`${styles.thumbImg} ${videoReady ? styles.hidden : ''}`} />
               )}
+              {isHovered && project.previewVideo && (
+                <video src={project.previewVideo} className={styles.thumbVideo} autoPlay muted loop playsInline aria-hidden="true"
+                  onLoadedMetadata={(e) => { e.currentTarget.currentTime = 2; }}
+                  onCanPlay={() => setVideoReady(true)}
+                />
+              )}
+              <div className={styles.thumbOverlay} aria-hidden="true" />
+              {project.badge && <span className={styles.featBadge}>{project.badge}</span>}
+              {project.gallery && <span className={styles.ssCount}>{project.gallery.length} screenshots ↗</span>}
             </div>
-            <div className={styles.mainBody}>
-              <h3 className={styles.projectTitle}>{project.title}</h3>
-              <p className={styles.projectDesc}>{project.description}</p>
-            </div>
-          </div>
-
-          {/* Role card */}
-          <div className={`${styles.cell} ${styles.roleCard}`}>
-            <span className={styles.cardLabel}>Role</span>
-            <h4 className={styles.roleTitle}>Front-end Developer</h4>
-            <ul className={styles.roleList}>
-              <li>Led front-end architecture</li>
-              <li>Component design system</li>
-              <li>Client-side routing</li>
-              <li>Team collaboration</li>
-            </ul>
-            <span className={styles.teamPill}>3 developers · 2 months</span>
-          </div>
-
-          {/* Screenshot cell 1 */}
-          <div className={`${styles.cell} ${styles.shot1}`}>
-            <span className={styles.cardLabel}>Booking flow</span>
-            <div className={styles.placeholder}>
-              <div className={`${styles.mockBar} ${styles.barFull}`} />
-              <div className={`${styles.mockBar} ${styles.barLong}`} />
-              <div className={styles.mockCard} />
-              <div className={`${styles.mockBar} ${styles.barMid}`} />
+            <div className={styles.mainFoot}>
+              <h3 className={styles.projName}>{project.title}</h3>
+              <p className={styles.projDesc}>{project.description}</p>
             </div>
           </div>
 
-          {/* Screenshot cell 2 */}
-          <div className={`${styles.cell} ${styles.shot2}`}>
-            <span className={styles.cardLabel}>Admin panel</span>
-            <div className={styles.placeholder}>
-              <div className={`${styles.mockBar} ${styles.barFull}`} />
-              <div className={`${styles.mockBar} ${styles.barMid}`} />
-              <div className={styles.mockCard} />
-              <div className={`${styles.mockBar} ${styles.barLong}`} />
-            </div>
-          </div>
-
-          {/* Stats card */}
-          <div className={styles.statsCard}>
-            <div className={styles.stat}>
-              <span className={styles.statNum}>5</span>
-              <span className={styles.statLabel}>pages</span>
-            </div>
-            <div className={styles.stat}>
-              <span className={styles.statNum}>3</span>
-              <span className={styles.statLabel}>developers</span>
-            </div>
-            <div className={styles.stat}>
-              <span className={styles.statNum}>2mo</span>
-              <span className={styles.statLabel}>timeline</span>
-            </div>
-          </div>
-
-          {/* Bottom row */}
-          <div className={`${styles.cell} ${styles.bottomRow}`}>
-            <div className={styles.techs}>
-              {project.techs.map((t) => (
-                <span key={t} className={`${styles.tech} ${primaryTechs.has(t) ? styles.techPrimary : styles.techDim}`}>
-                  {t}
-                </span>
+          {/* ── Role card ── */}
+          <div className={`${styles.cell} ${styles.cRole}`}>
+            <span className={styles.roleLbl}>Role</span>
+            <h4 className={styles.roleTitle}>Front-end<br />Developer</h4>
+            <div className={styles.roleList}>
+              {roleItems.map((item) => (
+                <div key={item} className={styles.ri}>
+                  <span className={styles.riLine} aria-hidden="true" />
+                  {item}
+                </div>
               ))}
             </div>
+            <div className={styles.teamRow}>
+              <span>3 developers · 2 months</span>
+            </div>
+          </div>
+
+          {/* ── Screenshot 1 ── */}
+          <div className={`${styles.cell} ${styles.cS1}`}>
+            <div className={styles.ph}>
+              <div className={`${styles.phBar} ${styles.ph70}`} />
+              <div className={`${styles.phBar} ${styles.ph45}`} />
+              <div className={styles.phRow}>
+                <div className={styles.phCard} /><div className={styles.phCard} /><div className={styles.phCard} />
+              </div>
+              <div className={`${styles.phBar} ${styles.ph55}`} />
+            </div>
+            <span className={styles.screenLabel}>Booking flow</span>
+          </div>
+
+          {/* ── Screenshot 2 ── */}
+          <div className={`${styles.cell} ${styles.cS2}`}>
+            <div className={styles.ph}>
+              <div className={`${styles.phBar} ${styles.ph60}`} />
+              <div className={`${styles.phRow} ${styles.phRowTall}`}>
+                <div className={`${styles.phCard} ${styles.phCardWide}`} /><div className={styles.phCard} />
+              </div>
+              <div className={`${styles.phBar} ${styles.ph40}`} />
+            </div>
+            <span className={styles.screenLabel}>Admin panel</span>
+          </div>
+
+          {/* ── Stats ── */}
+          <div className={`${styles.cell} ${styles.cStats}`}>
+            <span className={styles.statLbl}>Impact</span>
+            <div className={styles.statGroup}><span className={styles.statN}>5</span><span className={styles.statD}>pages built</span></div>
+            <div className={styles.statDiv} />
+            <div className={styles.statGroup}><span className={styles.statN}>3</span><span className={styles.statD}>developers</span></div>
+            <div className={styles.statDiv} />
+            <div className={styles.statGroup}><span className={styles.statN}>2mo</span><span className={styles.statD}>timeline</span></div>
+          </div>
+
+          {/* ── Bottom row ── */}
+          <div className={`${styles.cell} ${styles.cBot}`}>
+            <div className={styles.badges}>
+              {project.techs.map((t) => (
+                <span key={t} className={`${styles.badge} ${primaryTechs.has(t) ? styles.badgePrimary : ''}`}>{t}</span>
+              ))}
+            </div>
+            <div className={styles.dividerV} />
             <div className={styles.links}>
-              <a href={project.githubUrl} target="_blank" rel="noreferrer" className={styles.linkGhost}>
-                GitHub ↗
+              <a href={project.githubUrl} target="_blank" rel="noreferrer" className={styles.lbtn} aria-label="GitHub">
+                <i className="devicon-github-original" aria-hidden="true" />
+                GitHub
               </a>
-              <a href={project.liveUrl} target="_blank" rel="noreferrer" className={styles.linkFilled}>
+              <a href={project.liveUrl} target="_blank" rel="noreferrer" className={`${styles.lbtn} ${styles.lbtnAcc}`} aria-label="Live demo">
                 Live demo ↗
               </a>
             </div>
           </div>
+
         </div>
       </div>
+
+      {galleryOpen && project.gallery && (
+        <GalleryModal images={project.gallery} initialIndex={0} onClose={() => setGalleryOpen(false)} />
+      )}
     </section>
   );
 }
