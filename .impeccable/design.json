@@ -155,7 +155,7 @@
       "Don't gate content visibility purely on a JS-added class; content must stay readable if the reveal never fires.",
       "Don't ship animations without a prefers-reduced-motion fallback (not yet implemented for reveals, typing, icon swap).",
       "Don't assume the fonts load from one place: Satoshi loads from the Fontshare CDN (index.html), Syne/IBM Plex Sans Thai via @import in global.css; keep both wired and keep the sans-serif fallback.",
-      "Don't drop sustained text onto the faintest neutrals (#5a5248, #6a6058); verify >=4.5:1 in both themes."
+      "Don't set sustained text dimmer than the dim/faint tokens (#978b7f / #8a8077), which clear AA on the dark canvas; verify >=4.5:1 in both themes."
     ]
   }
 }

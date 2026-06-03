@@ -13,8 +13,8 @@ colors:
   text: "#f0e8e0"
   text-sub: "#d0c8c0"
   text-muted: "#9a9088"
-  text-dim: "#6a6058"
-  text-faint: "#5a5248"
+  text-dim: "#978b7f"
+  text-faint: "#8a8077"
   light-bg: "#faf8f5"
   light-surface: "#f0ebe4"
   light-text: "#1a1614"
@@ -146,7 +146,7 @@ A monochrome warm-neutral field with a single saturated accent — a **Committed
 - **Hairline** (`#1e1c18`) / **Hairline Soft** (`#1a1816`): Border and divider colors. Almost imperceptible at 0.5px; they define structure without drawing attention.
 - **Warm Bone** (`#f0e8e0`): Primary text and headings. A warm off-white, never pure `#fff`.
 - **Stone** (`#d0c8c0` → `#9a9088`): Sub-text and muted body copy.
-- **Driftwood** (`#6a6058` → `#5a5248`): Dim text and faint labels. The faintest end is for decorative metadata only, never sustained reading.
+- **Driftwood** (`#978b7f` → `#8a8077`): Dim text and faint labels. Both now clear WCAG AA on the dark canvas (~5.7:1 and ~4.9:1), so they carry small labels and secondary copy safely.
 
 ### Light Theme (secondary surface)
 - **Warm Paper** (`#faf8f5`) canvas, **Linen** (`#f0ebe4`) surfaces, **Espresso Ink** (`#1a1614`) text, **Ember Deep** (`#c4551a`) accent. The light theme keeps the same warm temperature and the same single-accent discipline; it is the same room with the lights on, not a different brand.
@@ -258,4 +258,4 @@ The role line cycles through "Front-end Developer / Problem Solver / Builder / L
 - **Don't** gate content visibility purely on a JS-added class. The current `.reveal` starts at `opacity: 0` and only shows when JavaScript runs — content must remain readable if the reveal never fires (headless render, disabled JS, reduced motion).
 - **Don't** ship animations without a `@media (prefers-reduced-motion: reduce)` fallback. Reduced motion is a stated accessibility expectation and is not yet implemented across reveals, the typing effect, and the icon swap.
 - **Don't** assume the fonts all load from one place. Satoshi loads from the Fontshare CDN (`index.html`); Syne and IBM Plex Sans Thai load via `@import` in `global.css`. Keep both wired and keep the `sans-serif` fallback when adding body styles.
-- **Don't** drop body or label text onto the faintest neutrals (`#5a5248`, `#6a6058`) for anything beyond short decorative metadata; verify ≥4.5:1 for sustained reading in both themes.
+- **Don't** set sustained text dimmer than the dim/faint tokens (`#978b7f` / `#8a8077`, which clear AA on the dark canvas). Anything fainter fails ≥4.5:1; verify contrast in both themes.
