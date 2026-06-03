@@ -227,6 +227,18 @@ No text inputs exist yet (contact is mailto/social links, not a form). When a fi
 ### Signature: The Projects Bento
 A 12-column CSS grid (≥768px) of asymmetric cells: a main project card (cols 1–7) with a browser-chrome mockup thumbnail, a role card (cols 8–12) with a bulleted contribution list and a "team" pill, two screenshot cells, and one **drenched ember stats panel** (`#d4651a`) carrying 30px Syne white numbers. On mobile it collapses to a single stacked column. This is the one place the palette is intentionally **hardcoded** (its own slightly warmer `#1c1916`/`#2a2520`/`#e0d4c8` set) and the one place that does **not** theme-switch — a deliberate, self-contained art-directed island, per its original brief.
 
+### Projects: Content & Storytelling (non-visual)
+
+*Guidance for the words in Projects, not its visual layout. Full positioning lives in PRODUCT.md.*
+
+Projects are the core of the pitch and are read by a mixed, partly non-technical audience (recruiters, clients), with depth available for reviewers. Treat each project as a short, plain-language case study:
+- **Lead with the problem and what the product does for a person**, in language a non-developer follows. Screens illustrate that story; they are not the story on their own.
+- **Make Fran's contribution explicit** — the thinking, the building across the stack, the debugging, the shipping — especially on team projects.
+- **Keep technical depth on demand:** stack, links, and the gallery serve reviewers without making the first read technical.
+- **No metrics theater.** Any number shown must reflect a real outcome; never invent scale or stats for decoration.
+
+This keeps the visual signature intact while making sure the copy argues that Fran ships usable products, not only polished front-ends.
+
 ### Signature: Hero Typing Effect
 The role line cycles through "Front-end Developer / Problem Solver / Builder / Learner" via a typewriter effect with a blinking 2px ember caret. The visible typed text carries `aria-label` with the full string so it is announced sensibly.
 
