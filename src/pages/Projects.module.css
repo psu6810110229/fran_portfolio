@@ -1,4 +1,5 @@
 .projects {
+  background: var(--color-bg);
   border-bottom: 0.5px solid var(--color-border-soft);
 }
 
@@ -6,268 +7,343 @@
   padding: 36px 5vw;
 }
 
-.secHeader { margin-bottom: 28px; }
+.secHeader {
+  margin-bottom: 28px;
+}
 
-.secTitle {
+.secTitle,
+.cardLabel,
+.otherTitle {
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+.secTitle,
+.otherTitle {
   color: var(--color-text-faint);
 }
 
-/* ── Feature layout ── */
-.feature {
-  display: grid;
-  grid-template-columns: 1.85fr 1fr;
-  gap: 40px;
-  align-items: start;
-}
-
-/* ── Media area ── */
-.media {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 0.5px solid var(--color-border);
-  height: 520px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
-}
-
-.thumb {
+.cardLabel {
   position: relative;
+  z-index: 1;
+  color: var(--color-text-dim);
+}
+
+.grid {
+  display: grid;
+  gap: 14px;
+}
+
+.card {
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.mainCard,
+.roleCard,
+.bottomBar,
+.highlightsCard {
+  padding: 18px;
+}
+
+.mainCard {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.browserMockup {
   width: 100%;
-  height: 100%;
-  background: #0a0907;
-  cursor: pointer;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
   overflow: hidden;
 }
 
-.thumbImg {
+.browserBar {
+  display: flex;
+  gap: 6px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.browserBar span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--color-text-faint);
+}
+
+.browserImage {
+  width: 100%;
+  height: calc(100% - 33px);
+  object-fit: cover;
+  object-position: top;
+}
+
+.projectTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.projectDescription {
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.roleCard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.roleTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+:global([data-lang="th"]) .roleTitle {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.roleList {
+  list-style: disc;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+  color: var(--color-text-sub);
+}
+
+.roleList li {
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.teamPill {
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* ── Screenshot tiles: real screenshot foregrounded, label on a scrim ── */
+.shotCard {
+  position: relative;
+  min-height: 168px;
+}
+
+.shotImage {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top;
-  opacity: 0.9;
-  transition: opacity 0.2s;
 }
 
-.thumbOverlay {
+.shotLabel {
   position: absolute;
-  bottom: 0;
   left: 0;
   right: 0;
-  height: 80px;
-  background: linear-gradient(to top, var(--color-surface), transparent);
-  pointer-events: none;
-}
-
-.playBtn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  font-size: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding-left: 4px;
-  z-index: 2;
-  transition: background 0.2s, border-color 0.2s;
-}
-
-.playBtn:hover {
-  background: rgba(0, 0, 0, 0.7);
-  border-color: rgba(255, 255, 255, 0.55);
-}
-
-.featBadge {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: var(--color-accent);
-  color: #fff;
-  font-size: 10px;
+  bottom: 0;
+  z-index: 1;
+  padding: 28px 14px 12px;
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  padding: 3px 9px;
-  border-radius: 20px;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0));
 }
 
-.ssCount {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  background: var(--color-surface);
-  border: 0.5px solid var(--color-border);
-  color: var(--color-text-muted);
-  font-size: 14px;
-  padding: 5px 12px;
-  border-radius: 20px;
-}
-
-/* ── Sidebar ── */
-.sidebar {
+/* ── Highlights (replaces the metrics panel) ── */
+.highlightsCard {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 14px;
 }
 
-.projLogo {
-  height: 66px;
-  width: auto;
-  align-self: center;
-}
-
-.projDesc {
-  font-size: 15px;
-  color: var(--color-text-muted);
-  line-height: 1.7;
-}
-
-.metaRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--color-text-muted);
-  flex-wrap: wrap;
-}
-
-.metaDot {
-  color: var(--color-text-dim);
-}
-
-/* ── Sidebar sections ── */
-.section {
-  display: flex;
-  flex-direction: column;
+.highlightList {
+  list-style: none;
+  display: grid;
   gap: 10px;
 }
 
-.sectionLbl {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-}
-
-/* ── Role list ── */
-.roleList {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.ri {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 15px;
+.highlightList li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.5;
   color: var(--color-text-sub);
-  line-height: 1.6;
 }
 
-.riLine {
-  width: 14px;
-  height: 0.5px;
-  background: var(--color-border);
-  flex-shrink: 0;
-  margin-top: 10px;
+.highlightList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-accent);
 }
 
-/* ── Stack badges ── */
+.bottomBar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.stackBlock {
+  display: grid;
+  gap: 12px;
+}
+
 .badges {
   display: flex;
-  gap: 6px;
   flex-wrap: wrap;
+  gap: 8px;
 }
 
-.badge {
-  padding: 4px 12px;
-  border: 0.5px solid var(--color-border);
-  border-radius: 20px;
-  font-size: 14px;
-  color: var(--color-text-sub);
+.badgePrimary,
+.badgeSecondary,
+.githubLink,
+.liveLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.badgePrimary,
+.badgeSecondary {
+  border: 1px solid var(--color-border);
 }
 
 .badgePrimary {
-  border-color: rgba(212, 101, 26, 0.35);
-  color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-text);
 }
 
-/* ── Links ── */
+.badgeSecondary {
+  color: var(--color-text-muted);
+}
+
 .links {
   display: flex;
-  gap: 8px;
-  align-items: center;
   flex-wrap: wrap;
-  margin-top: auto;
+  gap: 10px;
 }
 
-.lbtn {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 9px 18px;
-  border: 0.5px solid var(--color-border);
-  border-radius: 10px;
-  font-size: 14px;
-  color: var(--color-text-sub);
-  white-space: nowrap;
+.githubLink,
+.liveLink {
+  font-family: inherit;
 }
 
-.lbtn i {
-  font-size: 15px;
-  color: var(--color-text-dim);
+.githubLink {
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
 }
 
-.lbtnAcc {
+.liveLink {
   background: var(--color-accent);
-  border-color: var(--color-accent-dark);
-  color: #fff;
+  border: 1px solid var(--color-accent);
+  color: #fdf8f4;
 }
 
-.lbtnAcc i { color: #fff; }
-
-/* ── More Projects ── */
 .otherSection {
-  margin-top: 48px;
+  margin-top: 40px;
 }
 
 .otherTitle {
   display: block;
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-text-faint);
   margin-bottom: 20px;
 }
 
 .cardGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 16px;
 }
 
-/* ── Mobile ── */
-@media (max-width: 767px) {
-  .feature {
-    grid-template-columns: 1fr;
-    gap: 28px;
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 
-  .media {
-    height: 280px;
+  .mainCard {
+    grid-column: 1 / span 7;
+  }
+
+  .roleCard {
+    grid-column: 8 / span 5;
+  }
+
+  .bookingCard {
+    grid-column: 1 / span 4;
+  }
+
+  .adminCard {
+    grid-column: 5 / span 4;
+  }
+
+  .highlightsCard {
+    grid-column: 9 / span 4;
+  }
+
+  .bottomBar {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .links {
+    justify-content: flex-end;
   }
 
   .cardGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .inner {
+    padding: 48px 5vw;
+  }
+
+  .grid {
+    gap: 16px;
+  }
+
+  .mainCard,
+  .roleCard,
+  .bottomBar,
+  .highlightsCard {
+    padding: 22px;
+  }
+
+  .shotCard {
+    min-height: 184px;
   }
 }
