@@ -24,8 +24,6 @@ import g14 from '../assets/9tours/opt/gallery-14.webp';
 import g15 from '../assets/9tours/opt/gallery-15.webp';
 import userFlow from '../assets/9tours/opt/user-flow.mp4';
 import userFlowPoster from '../assets/9tours/opt/user-flow-poster.webp';
-import adminFlow from '../assets/9tours/opt/admin-flow.mp4';
-import adminFlowPoster from '../assets/9tours/opt/admin-flow-poster.webp';
 
 // Gallery order preserved from the original screenshots: user 452-462 (0-10), admin 463-467 (11-15).
 const tours9Gallery = [g00, g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g12, g13, g14, g15];
@@ -98,8 +96,6 @@ export const projects: Project[] = [
         gallery: tours9Gallery,
         video: userFlow,
         videoPoster: userFlowPoster,
-        adminVideo: adminFlow,
-        adminVideoPoster: adminFlowPoster,
       },
     },
   },

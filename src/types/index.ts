@@ -9,8 +9,6 @@ export interface CaseStudyMedia {
   gallery: string[];
   video: string;
   videoPoster: string;
-  adminVideo?: string;
-  adminVideoPoster?: string;
 }
 
 export interface CaseStudy {
