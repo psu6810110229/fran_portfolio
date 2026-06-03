@@ -143,3 +143,26 @@
   70%  { opacity: 1; }
   100% { opacity: 0; }
 }
+
+/* ── Media swap crossfade (re-fires on navigation via the keyed element) ── */
+@media (prefers-reduced-motion: no-preference) {
+  .image,
+  .video {
+    animation: galleryFade 0.25s ease-out;
+  }
+}
+
+@keyframes galleryFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Honour reduced motion across this overlay's animations. */
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .image,
+  .video,
+  .swipeHint {
+    animation: none;
+  }
+}

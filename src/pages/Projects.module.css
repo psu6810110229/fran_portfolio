@@ -272,3 +272,25 @@
     font-size: 30px;
   }
 }
+
+/* ── Hover / focus lift on the case media ── */
+.heroFrame:hover,
+.heroFrame:focus-visible,
+.thumb:hover,
+.thumb:focus-visible {
+  border-color: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .heroFrame,
+  .thumb {
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+  }
+
+  .heroFrame:hover,
+  .heroFrame:focus-visible,
+  .thumb:hover,
+  .thumb:focus-visible {
+    transform: translateY(-2px);
+  }
+}
