@@ -44,7 +44,7 @@ function Contact() {
 
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
-          <span className={styles.copy}>© 2025 Fran</span>
+          <span className={styles.copy}>© 2026 Fran</span>
           <div className={styles.socials}>
             <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer">GitHub</a>
             <a href="https://www.linkedin.com/in/fran-patcharapon-864883413" target="_blank" rel="noreferrer">LinkedIn</a>
