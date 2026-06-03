@@ -14,7 +14,7 @@ interface Props {
 
 const labels = {
   en: { eyebrow: 'Case study', problem: 'The problem', role: 'My role', built: 'What the team built', mine: 'What I led and built', hardest: 'The hardest part', decisions: 'Product and design decisions', collab: 'Working across the stack', result: 'The result', viewAll: 'View all 16 screens', talk: 'Talk to me', code: 'View team code', close: 'Close' },
-  th: { eyebrow: 'เคสสตัดดี้', problem: 'ปัญหา', role: 'บทบาทของผม', built: 'สิ่งที่ทีมสร้าง', mine: 'สิ่งที่ผมนำและลงมือทำ', hardest: 'จุดที่ยากที่สุด', decisions: 'การตัดสินใจด้านโปรดักต์และดีไซน์', collab: 'การทำงานข้ามทั้งระบบ', result: 'ผลลัพธ์', viewAll: 'ดูภาพทั้งหมด 16 จอ', talk: 'คุยกับผม', code: 'ดูโค้ดของทีม', close: 'ปิด' },
+  th: { eyebrow: 'กรณีศึกษา', problem: 'โจทย์', role: 'บทบาทของผม', built: 'สิ่งที่ทีมสร้าง', mine: 'สิ่งที่ผมดูแลและลงมือทำ', hardest: 'จุดที่ยากที่สุด', decisions: 'การตัดสินใจด้านโปรดักต์และดีไซน์', collab: 'การทำงานร่วมกันทั้งระบบ', result: 'ผลลัพธ์', viewAll: 'ดูภาพทั้งหมด 16 จอ', talk: 'คุยกับผม', code: 'ดูโค้ดของทีม', close: 'ปิด' },
 };
 
 function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {

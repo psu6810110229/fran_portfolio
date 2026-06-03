@@ -72,7 +72,7 @@ export const projects: Project[] = [
         },
         whatWeDid: {
           en: 'I made the server the single source of truth. The screen now waits for the server to confirm a booking before it shows success and recalculates how many seats are left, instead of trusting what the browser assumed. We worked through it across the front-end and the API together.',
-          th: 'ผมแก้โดยให้เซิร์ฟเวอร์เป็นแหล่งความจริงเพียงหนึ่งเดียว จอจะรอให้เซิร์ฟเวอร์ยืนยันก่อน ค่อยขึ้นว่าสำเร็จและคำนวณที่นั่งที่เหลือใหม่ แทนที่จะเชื่อค่าที่เบราว์เซอร์เดาเอง โดยเราช่วยกันไล่แก้ทั้งฝั่ง front-end และ API',
+          th: 'ผมแก้โดยให้เซิร์ฟเวอร์เป็นตัวตัดสินความถูกต้องเพียงจุดเดียว จอจะรอให้เซิร์ฟเวอร์ยืนยันก่อน ค่อยขึ้นว่าสำเร็จและคำนวณที่นั่งที่เหลือใหม่ แทนที่จะเชื่อค่าที่เบราว์เซอร์เดาไว้เอง โดยเราช่วยกันไล่แก้ทั้งฝั่ง front-end และ API',
         },
       },
       // Draft examples from the brief. Confirm the real specifics before shipping copy.

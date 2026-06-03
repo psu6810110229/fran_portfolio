@@ -10,7 +10,7 @@ const primaryTechs = new Set(['React', 'TypeScript', 'CSS']);
 
 const ui = {
   en: { secTitle: 'Projects', eyebrow: 'Featured case study', more: 'More projects', stack: 'Stack', readCase: 'Read the full case', viewCode: 'View team code' },
-  th: { secTitle: 'โปรเจกต์', eyebrow: 'เคสสตัดดี้', more: 'โปรเจกต์อื่น', stack: 'เทคโนโลยี', readCase: 'อ่านเคสแบบเต็ม', viewCode: 'ดูโค้ดของทีม' },
+  th: { secTitle: 'โปรเจกต์', eyebrow: 'กรณีศึกษา', more: 'โปรเจกต์อื่น ๆ', stack: 'เทคโนโลยี', readCase: 'อ่านฉบับเต็ม', viewCode: 'ดูโค้ดของทีม' },
 };
 
 // Short, honest at-a-glance points so the preview communicates value without opening the full case.
