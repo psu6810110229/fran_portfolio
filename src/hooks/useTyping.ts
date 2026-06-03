@@ -1,12 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 
 export function useTyping(roles: string[]): string {
-  const [displayed, setDisplayed] = useState('');
+  const prefersReducedMotion =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [displayed, setDisplayed] = useState(prefersReducedMotion ? roles[0] : '');
   const roleIdx = useRef(0);
   const charIdx = useRef(0);
   const deleting = useRef(false);
 
   useEffect(() => {
+    if (prefersReducedMotion) return; // static role, no typewriter under reduced motion
     let timeout: ReturnType<typeof setTimeout>;
 
     function tick() {
