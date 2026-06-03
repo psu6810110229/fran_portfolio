@@ -7,36 +7,44 @@ import styles from './Projects.module.css';
 
 const primaryTechs = new Set(['React', 'TypeScript', 'CSS']);
 
-const roleItems = {
-  en: ['Led front-end architecture', 'Component design system', 'Client-side routing', 'Team collaboration'],
-  th: ['ดูแลสถาปัตยกรรมฝั่ง Front-end', 'ออกแบบระบบคอมโพเนนต์', 'จัดการ routing ฝั่ง client', 'ทำงานร่วมกับทีม'],
+const ui = {
+  en: { secTitle: 'Projects', eyebrow: 'Featured case study', more: 'More projects', stack: 'Stack', readCase: 'Read the full case', viewCode: 'View team code' },
+  th: { secTitle: 'โปรเจกต์', eyebrow: 'เคสสตัดดี้', more: 'โปรเจกต์อื่น', stack: 'เทคโนโลยี', readCase: 'อ่านเคสแบบเต็ม', viewCode: 'ดูโค้ดของทีม' },
 };
 
-const highlights = {
-  en: ['End-to-end booking flow', 'Admin dashboard', 'Responsive, accessible UI'],
-  th: ['ระบบจองครบทั้งกระบวนการ', 'แดชบอร์ดสำหรับผู้ดูแล', 'UI ที่รองรับทุกอุปกรณ์และเข้าถึงง่าย'],
-};
-
-const shots = [
-  { key: 'booking', index: 1, label: { en: 'Booking flow', th: 'หน้าจอง' } },
-  { key: 'admin', index: 11, label: { en: 'Admin panel', th: 'หน้าผู้ดูแล' } },
-];
-
-const labels = {
-  en: { secTitle: 'Projects', more: 'More Projects', role: 'Role', roleTitle: 'Front-end Developer', team: '3 developers · 2 months', stack: 'Stack', highlights: 'Highlights', open: 'Open', live: 'Live demo' },
-  th: { secTitle: 'โปรเจกต์', more: 'โปรเจกต์อื่น', role: 'บทบาท', roleTitle: 'นักพัฒนา Front-end', team: '3 คน · 2 เดือน', stack: 'เทคโนโลยี', highlights: 'จุดเด่น', open: 'เปิดดู', live: 'เดโม' },
+// Short, honest at-a-glance points so the preview communicates value without opening the full case.
+const previewPoints = {
+  en: [
+    'Group lead and project manager, from wireframe to production',
+    'Solved a booking race condition across the front-end and API',
+    'Built the booking flow and admin side with the team',
+  ],
+  th: [
+    'หัวหน้ากลุ่มและดูแลภาพรวมโปรเจกต์ ตั้งแต่ wireframe ถึงเวอร์ชันจริง',
+    'แก้ปัญหา race condition ของการจอง ทั้งฝั่ง front-end และ API',
+    'สร้างระบบจองและฝั่ง admin ร่วมกับทีม',
+  ],
 };
 
 function Projects() {
-  const project = projects[0];
+  const featured = projects[0];
+  const cs = featured.caseStudy;
   const { lang } = useLanguage();
-  const t = labels[lang];
+  const t = ui[lang];
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
-  const openGallery = (index: number) => {
-    setGalleryIndex(index);
-    setGalleryOpen(true);
-  };
+
+  // GalleryModal puts the video at slide 0 when present, so image array index i maps to slide i + offset.
+  const videoOffset = featured.previewVideo ? 1 : 0;
+  const openAt = (slide: number) => { setGalleryIndex(slide); setGalleryOpen(true); };
+  const openImage = (i: number) => openAt(i + videoOffset);
+  const openVideo = () => openAt(0);
+
+  const thumbs = cs ? [
+    { src: cs.media.thumbs[0], index: 1 },
+    { src: cs.media.thumbs[1], index: 2 },
+    { src: cs.media.thumbs[2], index: 11 },
+  ] : [];
 
   return (
     <section id="projects" className={styles.projects}>
@@ -44,68 +52,75 @@ function Projects() {
         <div className={styles.secHeader}>
           <span className={styles.secTitle}>{t.secTitle}</span>
         </div>
-        <div className={styles.grid}>
-          <article className={`${styles.card} ${styles.mainCard}`}>
-            <button type="button" className={styles.browserMockup} onClick={() => openGallery(1)} aria-label={`${t.open} ${project.title}`}>
-              <div className={styles.browserBar}>
-                <span />
-                <span />
-                <span />
+
+        {cs && (
+          <article className={styles.feature}>
+            <button
+              type="button"
+              className={styles.heroFrame}
+              onClick={openVideo}
+              aria-label={`${t.readCase}: ${featured.title}`}
+            >
+              <span className={styles.heroBar} aria-hidden="true"><span /><span /><span /></span>
+              <img src={cs.media.hero} alt={`${featured.title} booking screen`} className={styles.heroImg} />
+            </button>
+
+            <div className={styles.body}>
+              <span className={styles.eyebrow}>{t.eyebrow}</span>
+              <h3 className={styles.title}>{featured.title}</h3>
+              <p className={styles.lead}>
+                {lang === 'th' ? (featured.descriptionTh ?? featured.description) : featured.description}
+              </p>
+
+              <ul className={styles.points}>
+                {previewPoints[lang].map((p) => <li key={p}>{p}</li>)}
+              </ul>
+
+              <div className={styles.thumbs}>
+                {thumbs.map((th, i) => (
+                  <button key={th.index} type="button" className={styles.thumb} onClick={() => openImage(th.index)} aria-label={`${featured.title} screenshot ${i + 1}`}>
+                    <img src={th.src} alt="" className={styles.thumbImg} />
+                  </button>
+                ))}
               </div>
-              {project.thumbnail && <img src={project.thumbnail} alt={project.title} className={styles.browserImage} />}
-            </button>
-            <h3 className={styles.projectTitle}>{project.title}</h3>
-            <p className={styles.projectDescription}>{lang === 'th' ? (project.descriptionTh ?? project.description) : project.description}</p>
-          </article>
 
-          <article className={`${styles.card} ${styles.roleCard}`}>
-            <span className={styles.cardLabel}>{t.role}</span>
-            <h4 className={styles.roleTitle}>{t.roleTitle}</h4>
-            <ul className={styles.roleList}>
-              {roleItems[lang].map((item) => <li key={item}>{item}</li>)}
-            </ul>
-            <span className={styles.teamPill}>{t.team}</span>
-          </article>
+              <div className={styles.stackRow}>
+                <span className={styles.stackLabel}>{t.stack}</span>
+                <div className={styles.badges}>
+                  {featured.techs.map((tech) => (
+                    <span key={tech} className={primaryTechs.has(tech) ? styles.badgePrimary : styles.badgeSecondary}>{tech}</span>
+                  ))}
+                </div>
+              </div>
 
-          {shots.map((shot) => (
-            <button key={shot.key} type="button" className={`${styles.card} ${styles.shotCard} ${shot.key === 'booking' ? styles.bookingCard : styles.adminCard}`} onClick={() => openGallery(shot.index)} aria-label={`${t.open} ${shot.label[lang]}`}>
-              {project.gallery?.[shot.index] && <img src={project.gallery[shot.index]} alt={shot.label[lang]} className={styles.shotImage} />}
-              <span className={styles.shotLabel}>{shot.label[lang]}</span>
-            </button>
-          ))}
-
-          <article className={`${styles.card} ${styles.highlightsCard}`}>
-            <span className={styles.cardLabel}>{t.highlights}</span>
-            <ul className={styles.highlightList}>
-              {highlights[lang].map((item) => <li key={item}>{item}</li>)}
-            </ul>
-          </article>
-
-          <div className={`${styles.card} ${styles.bottomBar}`}>
-            <div className={styles.stackBlock}>
-              <span className={styles.cardLabel}>{t.stack}</span>
-              <div className={styles.badges}>
-                {project.techs.map((tech) => <span key={tech} className={primaryTechs.has(tech) ? styles.badgePrimary : styles.badgeSecondary}>{tech}</span>)}
+              <div className={styles.actions}>
+                {/* TODO Phase 3: open the full CaseReader here instead of the gallery. */}
+                <button type="button" className={styles.btnPrimary} onClick={openVideo}>{t.readCase}</button>
+                <a href={featured.githubUrl} target="_blank" rel="noreferrer" className={styles.btnGhost}>{t.viewCode}</a>
               </div>
             </div>
-            <div className={styles.links}>
-              <a href={project.githubUrl} target="_blank" rel="noreferrer" className={styles.githubLink}>GitHub</a>
-              {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noreferrer" className={styles.liveLink}>{t.live}</a>}
-            </div>
-          </div>
-        </div>
+          </article>
+        )}
 
         {projects.length > 1 && (
           <div className={styles.otherSection}>
             <span className={styles.otherTitle}>{t.more}</span>
             <div className={styles.cardGrid}>
-              {projects.slice(1).map((projectItem) => <CompactCard key={projectItem.title} {...projectItem} description={lang === 'th' ? (projectItem.descriptionTh ?? projectItem.description) : projectItem.description} />)}
+              {projects.slice(1).map((projectItem) => (
+                <CompactCard
+                  key={projectItem.title}
+                  {...projectItem}
+                  description={lang === 'th' ? (projectItem.descriptionTh ?? projectItem.description) : projectItem.description}
+                />
+              ))}
             </div>
           </div>
         )}
       </div>
 
-      {galleryOpen && project.gallery && <GalleryModal images={project.gallery} video={project.previewVideo} initialIndex={galleryIndex} onClose={() => setGalleryOpen(false)} />}
+      {galleryOpen && featured.gallery && (
+        <GalleryModal images={featured.gallery} video={featured.previewVideo} initialIndex={galleryIndex} onClose={() => setGalleryOpen(false)} />
+      )}
     </section>
   );
 }
