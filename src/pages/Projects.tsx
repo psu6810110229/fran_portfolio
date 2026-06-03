@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import GalleryModal from '../components/GalleryModal/GalleryModal';
+import CaseReader from '../components/CaseReader/CaseReader';
 import CompactCard from '../components/CompactCard/CompactCard';
 import { projects } from '../data/projects';
 import { useLanguage } from '../hooks/useLanguage';
@@ -33,12 +34,11 @@ function Projects() {
   const t = ui[lang];
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [caseOpen, setCaseOpen] = useState(false);
 
   // GalleryModal puts the video at slide 0 when present, so image array index i maps to slide i + offset.
   const videoOffset = featured.previewVideo ? 1 : 0;
-  const openAt = (slide: number) => { setGalleryIndex(slide); setGalleryOpen(true); };
-  const openImage = (i: number) => openAt(i + videoOffset);
-  const openVideo = () => openAt(0);
+  const openImage = (i: number) => { setGalleryIndex(i + videoOffset); setGalleryOpen(true); };
 
   const thumbs = cs ? [
     { src: cs.media.thumbs[0], index: 1 },
@@ -58,7 +58,7 @@ function Projects() {
             <button
               type="button"
               className={styles.heroFrame}
-              onClick={openVideo}
+              onClick={() => setCaseOpen(true)}
               aria-label={`${t.readCase}: ${featured.title}`}
             >
               <span className={styles.heroBar} aria-hidden="true"><span /><span /><span /></span>
@@ -94,8 +94,7 @@ function Projects() {
               </div>
 
               <div className={styles.actions}>
-                {/* TODO Phase 3: open the full CaseReader here instead of the gallery. */}
-                <button type="button" className={styles.btnPrimary} onClick={openVideo}>{t.readCase}</button>
+                <button type="button" className={styles.btnPrimary} onClick={() => setCaseOpen(true)}>{t.readCase}</button>
                 <a href={featured.githubUrl} target="_blank" rel="noreferrer" className={styles.btnGhost}>{t.viewCode}</a>
               </div>
             </div>
@@ -117,6 +116,10 @@ function Projects() {
           </div>
         )}
       </div>
+
+      {caseOpen && cs && (
+        <CaseReader title={featured.title} githubUrl={featured.githubUrl} caseStudy={cs} lang={lang} onClose={() => setCaseOpen(false)} />
+      )}
 
       {galleryOpen && featured.gallery && (
         <GalleryModal images={featured.gallery} video={featured.previewVideo} initialIndex={galleryIndex} onClose={() => setGalleryOpen(false)} />

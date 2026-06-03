@@ -1,0 +1,229 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: rgba(8, 7, 6, 0.72);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.dialog {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding: 56px 6vw 64px;
+  outline: none;
+}
+
+.close {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-sub);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 28px;
+  border-bottom: 0.5px solid var(--color-border-soft);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-accent);
+}
+
+.title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+:global([data-lang="th"]) .title {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  letter-spacing: normal;
+  line-height: 1.25;
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 0;
+  border-bottom: 0.5px solid var(--color-border-soft);
+}
+
+.blockLabel {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+:global([data-lang="th"]) .blockLabel {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 68ch;
+}
+
+.prose p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-text-sub);
+  text-wrap: pretty;
+}
+
+.hardLead {
+  font-size: 19px !important;
+  line-height: 1.4 !important;
+  font-weight: 500;
+  color: var(--color-text) !important;
+}
+
+.video {
+  width: 100%;
+  max-width: 68ch;
+  margin-top: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: #000;
+}
+
+.handoff {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 36px 0 0;
+}
+
+.handoffText {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.25rem, 3.5vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-text);
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+:global([data-lang="th"]) .handoffText {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btnPrimary,
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.btnPrimary {
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  color: #fdf8f4;
+}
+
+.btnGhost {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+@media (min-width: 768px) {
+  .overlay {
+    padding: 5vh 0;
+    align-items: flex-start;
+  }
+
+  .dialog {
+    max-width: 760px;
+    min-height: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 48px 56px 56px;
+    overflow: hidden;
+  }
+
+  .close {
+    position: absolute;
+  }
+}
+
+/* Restrained entrance; full lamp-up + section reveals arrive in Phase 4. */
+@media (prefers-reduced-motion: no-preference) {
+  .overlay {
+    animation: caseFade 0.22s ease-out;
+  }
+
+  .dialog {
+    animation: caseRise 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+@keyframes caseFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes caseRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
