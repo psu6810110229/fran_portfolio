@@ -6,6 +6,8 @@
   background: var(--color-bg);
   z-index: 10;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+  /* anchor the mobile dropdown */
+  isolation: isolate;
 }
 
 .inner {
@@ -42,14 +44,45 @@
 }
 
 .navList {
-  display: flex;
-  gap: 16px;
+  display: none;
   list-style: none;
+}
+
+.navListOpen {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-bg);
+  border-bottom: 0.5px solid var(--color-border-soft);
+  padding: 8px 0 12px;
+  z-index: 9;
+}
+
+.navListOpen .navLink {
+  display: block;
+  width: 100%;
+  padding: 12px 4vw;
 }
 
 @media (min-width: 768px) {
   .navList {
+    display: flex;
+    flex-direction: row;
     gap: 28px;
+    position: static;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .navListOpen .navLink {
+    padding: 0;
+    width: auto;
   }
 }
 
@@ -113,4 +146,62 @@
 @keyframes iconSwap {
   from { transform: rotate(-45deg) scale(0.6); opacity: 0; }
   to   { transform: rotate(0deg)   scale(1);   opacity: 1; }
+}
+
+/* Hamburger */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  gap: 5px;
+}
+
+.bar,
+.bar::before,
+.bar::after {
+  display: block;
+  width: 14px;
+  height: 1.5px;
+  background: var(--color-text-sub);
+  border-radius: 2px;
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+
+.bar {
+  position: relative;
+}
+
+.bar::before,
+.bar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.bar::before { top: -5px; }
+.bar::after  { top:  5px; }
+
+.barOpen {
+  background: transparent;
+}
+
+.barOpen::before {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.barOpen::after {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+@media (min-width: 768px) {
+  .hamburger {
+    display: none;
+  }
 }
