@@ -10,7 +10,9 @@ interface OwnItem {
 
 interface AboutCopy {
   secTitle: string;
-  lead: string;
+  leadPre: string;
+  leadAccent: string;
+  leadPost: string;
   body: string;
   own: OwnItem[];
   basedLabel: string;
@@ -20,7 +22,9 @@ interface AboutCopy {
 const content: Record<'en' | 'th', AboutCopy> = {
   en: {
     secTitle: 'About',
-    lead: "I'm a first-year Computer Engineering student at Prince of Songkla University who builds web products end to end.",
+    leadPre: "I'm a first-year Computer Engineering student at Prince of Songkla University who builds web products ",
+    leadAccent: 'end to end',
+    leadPost: '.',
     body: "I take an idea, plan it, design the interface, and write the front-end and the APIs behind it, thinking about the person using the product rather than only the screen. I've led a team build from first sketch to a working result, and I'm now looking for an internship to keep building with people who do this every day.",
     own: [
       { num: '01', title: 'Plan', desc: 'Turn a rough idea into a clear scope and a path to build it.' },
@@ -32,7 +36,9 @@ const content: Record<'en' | 'th', AboutCopy> = {
   },
   th: {
     secTitle: 'เกี่ยวกับ',
-    lead: 'ผมเป็นนักศึกษาชั้นปีที่ 1 สาขาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยสงขลานครินทร์ ที่สร้างเว็บโปรดักต์ได้ตั้งแต่ต้นจนจบ',
+    leadPre: 'ผมเป็นนักศึกษาปี 1 วิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยสงขลานครินทร์ ที่ลงมือสร้างเว็บ product ',
+    leadAccent: 'จากไอเดียถึงมือผู้ใช้',
+    leadPost: '',
     body: 'ผมรับโจทย์มาหนึ่งไอเดีย วางแผน ออกแบบหน้าจอ และเขียนทั้งฝั่ง front-end และ API ที่อยู่เบื้องหลัง โดยคิดถึงคนที่ใช้งานจริง ไม่ใช่แค่หน้าจอ ผมเคยนำทีมสร้างงานตั้งแต่ภาพร่างแรกจนออกมาเป็นผลงานที่ใช้ได้จริง และตอนนี้กำลังมองหาที่ฝึกงานเพื่อพัฒนาฝีมือไปกับคนที่ทำงานสายนี้ทุกวัน',
     own: [
       { num: '01', title: 'วางแผน', desc: 'เปลี่ยนไอเดียคร่าวๆ ให้เป็นขอบเขตงานที่ชัดและแผนที่ลงมือทำได้จริง' },
@@ -68,7 +74,9 @@ function About() {
 
         <div className={styles.grid}>
           <div className={styles.prose}>
-            <p className={styles.lead}>{c.lead}</p>
+            <p className={styles.lead}>
+              {c.leadPre}<span className={styles.leadAccent}>{c.leadAccent}</span>{c.leadPost}
+            </p>
             <p className={styles.body}>{c.body}</p>
           </div>
 
