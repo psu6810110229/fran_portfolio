@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import GalleryModal from '../GalleryModal/GalleryModal';
 import type { CaseStudy, Localized } from '../../types';
 import styles from './CaseReader.module.css';
@@ -71,8 +72,27 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
 
   return createPortal(
     <>
-      <div className={styles.overlay} onClick={onClose}>
-        <div ref={dialogRef} className={styles.dialog} role="dialog" aria-modal="true" aria-labelledby="case-title" tabIndex={-1} onClick={(e) => e.stopPropagation()}>
+      <motion.div
+        className={styles.overlay}
+        onClick={onClose}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.22 }}
+      >
+        <motion.div
+          ref={dialogRef}
+          className={styles.dialog}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="case-title"
+          tabIndex={-1}
+          onClick={(e) => e.stopPropagation()}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
           <button type="button" className={styles.close} onClick={onClose} aria-label={t.close}>✕</button>
 
           <header className={styles.head}>
@@ -103,12 +123,14 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
               </div>
             </section>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      {galleryOpen && (
-        <GalleryModal images={cs.media.gallery} video={cs.media.video} initialIndex={0} onClose={() => setGalleryOpen(false)} />
-      )}
+      <AnimatePresence>
+        {galleryOpen && (
+          <GalleryModal key="case-gallery" images={cs.media.gallery} video={cs.media.video} initialIndex={0} onClose={() => setGalleryOpen(false)} />
+        )}
+      </AnimatePresence>
     </>,
     document.body,
   );
