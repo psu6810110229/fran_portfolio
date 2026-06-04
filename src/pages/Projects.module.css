@@ -1,6 +1,6 @@
 .projects {
-  background: var(--color-bg);
-  border-bottom: 0.5px solid var(--color-border-soft);
+  background: #141210;
+  border-bottom: 1px solid #2a2520;
 }
 
 .inner {
@@ -12,162 +12,416 @@
 }
 
 .secTitle,
-.otherTitle,
-.eyebrow,
-.stackLabel {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.secTitle,
 .otherTitle {
-  color: var(--color-text-faint);
+  font-size: 11px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: #7a6e66;
 }
 
-/* ── Featured case preview ── */
-.feature {
+.bento {
   display: grid;
-  gap: 20px;
-  padding: 18px;
-  border: 1px solid var(--color-border);
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.bentoHeading {
+  margin: 0 0 20px;
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #e0d4c8;
+}
+
+:global([data-lang="th"]) .bentoHeading {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.bentoTopRow,
+.bentoMediaRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.bentoMain,
+.bentoRole,
+.bentoShot,
+.bentoBottom {
+  position: relative;
+  background: #1c1916;
+  border: 1px solid #2a2520;
   border-radius: 24px;
-  background: var(--color-surface);
-  overflow: hidden;
+  box-shadow:
+    0 0 0 0 rgba(212, 101, 26, 0),
+    0 0 0 0 rgba(212, 101, 26, 0);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
-.heroFrame {
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  background: var(--color-bg);
-  overflow: hidden;
-  cursor: pointer;
+.bentoMain:hover,
+.bentoRole:hover,
+.bentoShot:hover,
+.bentoStats:hover,
+.bentoBottom:hover {
+  border-color: #d4651a;
+  box-shadow:
+    0 0 0 2px rgba(212, 101, 26, 0.72),
+    0 0 0 7px rgba(212, 101, 26, 0.18);
+  z-index: 2;
 }
 
-.heroBar {
-  display: flex;
-  gap: 6px;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.heroBar span {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--color-text-faint);
-}
-
-.heroImg {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  object-position: top;
-}
-
-.body {
+.bentoMain {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  min-height: 240px;
+  overflow: hidden;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--color-text-dim);
+.bentoThumbWrap {
+  position: relative;
+  flex: 1;
+  min-height: 180px;
+  height: auto;
+  background: #0e0c0a;
+  overflow: hidden;
 }
 
-.eyebrow::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: var(--color-accent);
+.bentoHeroImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transform-origin: top center;
+  transition: transform 180ms ease;
 }
 
-.title {
-  font-family: 'IBM Plex Sans Thai', sans-serif;
-  font-size: 26px;
+.bentoMain.intentActive .bentoHeroImg,
+.bentoMain:focus-within .bentoHeroImg {
+  transform: scale(1);
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.bentoMainContent {
+  display: none;
+}
+
+.bentoTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
   font-weight: 800;
   line-height: 1.1;
-  color: var(--color-text);
+  color: #e0d4c8;
   text-wrap: balance;
 }
 
-.lead {
+.bentoDesc {
   font-size: 15px;
   line-height: 1.6;
-  color: var(--color-text-sub);
-  text-wrap: pretty;
+  color: #7a6e66;
 }
 
-.points {
+.bentoDetail {
+  display: block;
+  min-height: 30px;
+  margin-top: auto;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #7a6e66;
+  opacity: 0;
+  transform: translateY(4px);
+  visibility: hidden;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    visibility 180ms ease;
+}
+
+.bentoMain.intentActive .bentoDetail,
+.bentoRole.intentActive .bentoDetail,
+.bentoShot.intentActive .bentoDetail,
+.bentoStats.intentActive .bentoDetail,
+.bentoBottom.intentActive .bentoDetail,
+.bentoMain:focus-within .bentoDetail,
+.bentoRole:focus-within .bentoDetail,
+.bentoShot:focus-within .bentoDetail,
+.bentoStats:focus-within .bentoDetail,
+.bentoBottom:focus-within .bentoDetail {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.bentoRole {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px;
+}
+
+.bentoCellLabel {
+  font-size: 11px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: #7a6e66;
+}
+
+.bentoRoleTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #e0d4c8;
+}
+
+.bentoRoleList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
   list-style: none;
-  display: grid;
-  gap: 10px;
 }
 
-.points li {
+.bentoRoleList li {
   position: relative;
-  padding-left: 18px;
-  font-size: 14px;
+  padding-left: 14px;
+  font-size: 13px;
   line-height: 1.5;
-  color: var(--color-text-sub);
+  color: #7a6e66;
 }
 
-.points li::before {
+.bentoRoleList li::before {
   content: '';
   position: absolute;
-  left: 0;
   top: 7px;
-  width: 6px;
-  height: 6px;
+  left: 0;
+  width: 5px;
+  height: 5px;
   border-radius: 999px;
-  background: var(--color-accent);
+  background: #d4651a;
 }
 
-.thumbs {
+.bentoTeamPill {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 28px;
+  padding: 0 12px;
+  border: 1px solid #2a2520;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #7a6e66;
+}
+
+.bentoShot {
   display: flex;
-  gap: 10px;
-}
-
-.thumb {
-  flex: 1;
-  min-width: 0;
-  padding: 0;
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  background: var(--color-bg);
+  flex-direction: column;
+  gap: 12px;
+  min-height: 160px;
+  padding: 16px;
   overflow: hidden;
+  font-family: inherit;
+  text-align: left;
   cursor: pointer;
 }
 
-.thumbImg {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  object-position: top;
+.bentoMain .bentoDetail,
+.bentoRole .bentoDetail,
+.bentoShot .bentoDetail {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  min-height: 0;
+  margin-top: 0;
+  padding: 12px;
+  border: 1px solid rgba(42, 37, 32, 0.6);
+  border-radius: 12px;
+  background: rgba(14, 12, 10, 0.72);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  color: #e0d4c8;
 }
 
-.stackRow {
+.bentoMain .bentoDetail,
+.bentoRole .bentoDetail {
+  right: 18px;
+  bottom: 18px;
+  left: 18px;
+}
+
+.bentoDetailHeader {
+  display: block;
+  margin-bottom: 6px;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #e0d4c8;
+}
+
+.bentoDetailBody {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #b0a090;
 }
 
-.stackLabel {
-  color: var(--color-text-dim);
+.bentoShotImgWrap {
+  position: relative;
+  flex: 1;
+  min-height: 100px;
+  overflow: hidden;
+  border: 1px solid #2a2520;
+  border-radius: 14px;
+  background: #141210;
 }
 
-.badges {
+.bentoShotImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 100px;
+  object-fit: cover;
+  object-position: top;
+  transform-origin: top center;
+  transition: transform 180ms ease;
+}
+
+.bentoShot.intentActive .bentoShotImg,
+.bentoShot:focus-within .bentoShotImg {
+  transform: scale(1);
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.bentoStats {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 18px 14px;
+  border: 1px solid #d4651a;
+  border-radius: 24px;
+  background: #d4651a;
+  box-shadow:
+    0 0 0 0 rgba(212, 101, 26, 0),
+    0 0 0 0 rgba(212, 101, 26, 0);
+  text-align: center;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.bentoStats .bentoDetail {
+  position: absolute;
+  right: 14px;
+  bottom: 16px;
+  left: 14px;
+  min-height: 0;
+  margin-top: 0;
+  font-size: 13px;
+  line-height: 1.35;
+  color: #ffffff;
+  text-align: center;
+}
+
+.bentoStat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-width: 0;
+  text-align: center;
+  transition: gap 180ms ease;
+}
+
+.bentoStatNum {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.bentoStatLabel {
+  font-size: 11px;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.bentoStatBody {
+  display: flex;
+  flex-direction: column;
+  grid-column: 2;
+  gap: 2px;
+  max-height: 0;
+  overflow: hidden;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.25;
+  color: #ffffff;
+  opacity: 0;
+  text-align: left;
+  transform: translateX(-4px);
+  transition:
+    max-height 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.bentoStats.intentActive .bentoStat,
+.bentoStats:focus-within .bentoStat {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  column-gap: 10px;
+  align-items: start;
+  text-align: left;
+}
+
+.bentoStats.intentActive .bentoStatNum,
+.bentoStats:focus-within .bentoStatNum {
+  grid-row: 1 / 3;
+  text-align: left;
+}
+
+.bentoStats.intentActive .bentoStatLabel,
+.bentoStats:focus-within .bentoStatLabel {
+  grid-column: 2;
+  font-size: 13px;
+  text-align: left;
+}
+
+.bentoStats.intentActive .bentoStatBody,
+.bentoStats:focus-within .bentoStatBody {
+  max-height: 54px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.bentoBottom {
   display: flex;
   flex-wrap: wrap;
+  gap: 14px;
+  padding: 16px;
+}
+
+.bentoBadges {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 100%;
   gap: 8px;
 }
 
@@ -175,55 +429,64 @@
 .badgeSecondary {
   display: inline-flex;
   align-items: center;
-  min-height: 32px;
+  min-height: 30px;
   padding: 0 12px;
+  border: 1px solid #2a2520;
   border-radius: 999px;
   font-size: 12px;
-  border: 1px solid var(--color-border);
+  color: #7a6e66;
 }
 
 .badgePrimary {
-  border-color: var(--color-accent);
-  color: var(--color-text);
+  border-color: #d4651a;
+  color: #e0d4c8;
 }
 
-.badgeSecondary {
-  color: var(--color-text-muted);
-}
-
-.actions {
+.bentoLinks {
   display: flex;
   flex-wrap: wrap;
+  flex-basis: 100%;
   gap: 10px;
-  margin-top: 4px;
 }
 
-.btnPrimary,
-.btnGhost {
+.bentoBottom .bentoDetail {
+  flex-basis: 100%;
+}
+
+.btnGhost,
+.btnPrimary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 40px;
   padding: 0 18px;
   border-radius: 999px;
-  font-size: 13px;
   font-family: inherit;
+  font-size: 13px;
+  text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
 }
 
-.btnPrimary {
-  background: var(--color-accent);
-  border: 1px solid var(--color-accent);
-  color: #fdf8f4;
-}
-
 .btnGhost {
+  border: 1px solid #2a2520;
   background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text);
+  color: #e0d4c8;
 }
 
-/* ── Secondary projects ── */
+.btnPrimary {
+  border: 1px solid #d4651a;
+  background: #d4651a;
+  color: #ffffff;
+}
+
+.bentoShot:focus-visible,
+.btnGhost:focus-visible,
+.btnPrimary:focus-visible {
+  outline: 2px solid #d4651a;
+  outline-offset: 3px;
+}
+
 .otherSection {
   margin-top: 40px;
 }
@@ -239,21 +502,244 @@
   gap: 16px;
 }
 
-/* ── Thai heading face (Syne is Latin-only) ── */
-:global([data-lang="th"]) .title {
+:global([data-lang="th"]) .bentoTitle,
+:global([data-lang="th"]) .bentoRoleTitle,
+:global([data-lang="th"]) .bentoDetailHeader {
   font-family: 'IBM Plex Sans Thai', sans-serif;
 }
 
+:global([data-lang="th"]) .bento {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+:global([data-lang="th"]) .bentoStats.intentActive .bentoStatBody,
+:global([data-lang="th"]) .bentoStats:focus-within .bentoStatBody {
+  max-height: 72px;
+}
+
+:global([data-theme="light"]) .projects {
+  background: transparent;
+  border-bottom-color: #e0d8d0;
+}
+
+:global([data-theme="light"]) .secTitle,
+:global([data-theme="light"]) .otherTitle,
+:global([data-theme="light"]) .bentoCellLabel {
+  color: #9a8a80;
+}
+
+:global([data-theme="light"]) .bentoMain,
+:global([data-theme="light"]) .bentoRole,
+:global([data-theme="light"]) .bentoShot,
+:global([data-theme="light"]) .bentoBottom {
+  background: #f7f1ea;
+  border-color: #e0d8d0;
+}
+
+:global([data-theme="light"]) .bentoThumbWrap,
+:global([data-theme="light"]) .bentoShotImgWrap {
+  background: #e8e2da;
+  border-color: #e0d8d0;
+}
+
+:global([data-theme="light"]) .bentoMain .bentoDetail,
+:global([data-theme="light"]) .bentoRole .bentoDetail,
+:global([data-theme="light"]) .bentoShot .bentoDetail {
+  border-color: rgba(200, 190, 180, 0.6);
+  background: rgba(250, 245, 238, 0.72);
+  color: #1a1614;
+}
+
+:global([data-theme="light"]) .bentoDetailHeader {
+  color: #1a1614;
+}
+
+:global([data-theme="light"]) .bentoDetailBody {
+  color: #3a2e28;
+}
+
+:global([data-theme="light"]) .bentoHeading,
+:global([data-theme="light"]) .bentoTitle,
+:global([data-theme="light"]) .bentoRoleTitle,
+:global([data-theme="light"]) .btnGhost,
+:global([data-theme="light"]) .badgePrimary {
+  color: #1a1614;
+}
+
+:global([data-theme="light"]) .bentoDesc,
+:global([data-theme="light"]) .bentoRoleList li,
+:global([data-theme="light"]) .bentoTeamPill,
+:global([data-theme="light"]) .bentoDetail,
+:global([data-theme="light"]) .badgeSecondary {
+  color: #5a4a40;
+}
+
+:global([data-theme="light"]) .bentoTeamPill,
+:global([data-theme="light"]) .badgeSecondary,
+:global([data-theme="light"]) .btnGhost {
+  border-color: #e0d8d0;
+}
+
 @media (min-width: 768px) {
-  .feature {
-    grid-template-columns: 1.1fr 0.9fr;
-    align-items: start;
-    gap: 24px;
-    padding: 22px;
+  .bento {
+    grid-template-columns: 1fr;
+  }
+
+  .bentoTopRow,
+  .bentoMediaRow {
+    transition: grid-template-columns 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bentoTopRow {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    height: 318px;
+  }
+
+  .bentoTopRow > .bentoMain,
+  .bentoTopRow > .bentoRole {
+    height: 100%;
+  }
+
+  .bentoTopRowMainIntent,
+  .bentoTopRow:has(.bentoMain:focus-within) {
+    grid-template-columns: minmax(0, 7.6fr) minmax(0, 4.4fr);
+  }
+
+  .bentoTopRowRoleIntent,
+  .bentoTopRow:has(.bentoRole:focus-within) {
+    grid-template-columns: minmax(0, 6.3fr) minmax(0, 5.7fr);
+  }
+
+  .bentoMediaRow {
+    align-items: stretch;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(120px, 0.48fr);
+    height: 325px;
+  }
+
+  .bentoMediaRowBookingIntent,
+  .bentoMediaRow:has(.bentoShot1:focus-within) {
+    grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.94fr) minmax(120px, 0.44fr);
+  }
+
+  .bentoMediaRowAdminIntent,
+  .bentoMediaRow:has(.bentoShot2:focus-within) {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr) minmax(120px, 0.44fr);
+  }
+
+  .bentoMediaRowStatsIntent {
+    grid-template-columns: minmax(0, 0.98fr) minmax(0, 0.98fr) minmax(120px, 0.58fr);
+  }
+
+  .bentoTopRow > *,
+  .bentoMediaRow > * {
+    min-width: 0;
+  }
+
+  .bentoShot {
+    height: 100%;
+    min-height: auto;
+    padding: 14px;
+  }
+
+  .bentoShotImgWrap,
+  .bentoShotImg {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+
+  .bentoStats {
+    align-self: stretch;
+    grid-template-columns: 1fr;
+    align-content: center;
+    height: 100%;
+    min-height: 100%;
+    padding: 20px 14px 56px;
+  }
+
+  .bentoStatNum {
+    font-size: 38px;
+  }
+
+  .bentoStatLabel {
+    font-size: 14px;
+  }
+
+  .bentoMain {
+    min-height: 294px;
+  }
+
+  .bentoThumbWrap {
+    min-height: 260px;
+  }
+
+  .bentoBottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+  }
+
+  .bentoBadges,
+  .bentoLinks {
+    flex-basis: auto;
+  }
+
+  .bentoBottom.intentActive,
+  .bentoBottom:focus-within {
+    transform: scaleX(1.006);
   }
 
   .cardGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .bentoMain.intentActive .bentoHeroImg,
+  .bentoShot.intentActive .bentoShotImg {
+    transform: none;
+    transition-delay: 0ms;
+  }
+
+  .bentoMain.intentActive .bentoDetail,
+  .bentoRole.intentActive .bentoDetail,
+  .bentoShot.intentActive .bentoDetail,
+  .bentoStats.intentActive .bentoDetail,
+  .bentoBottom.intentActive .bentoDetail {
+    opacity: 0;
+    transform: translateY(4px);
+    visibility: hidden;
+    transition-delay: 0ms;
+  }
+
+  .bentoBottom.intentActive {
+    transform: none;
+    transition-delay: 0ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bentoMain,
+  .bentoRole,
+  .bentoShot,
+  .bentoStats,
+  .bentoBottom,
+  .bentoHeroImg,
+  .bentoShotImg,
+  .bentoDetail,
+  .bentoStat,
+  .bentoStatBody,
+  .bentoTopRow,
+  .bentoMediaRow {
+    transition-duration: 0ms;
+    transition-delay: 0ms;
+  }
+
+  .bentoMain.intentActive .bentoHeroImg,
+  .bentoShot.intentActive .bentoShotImg,
+  .bentoBottom.intentActive {
+    transform: none;
   }
 }
 
@@ -262,35 +748,8 @@
     padding: 48px 5vw;
   }
 
-  .feature {
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 28px;
-    padding: 26px;
-  }
-
-  .title {
-    font-size: 30px;
-  }
-}
-
-/* ── Hover / focus lift on the case media ── */
-.heroFrame:hover,
-.heroFrame:focus-visible,
-.thumb:hover,
-.thumb:focus-visible {
-  border-color: var(--color-accent);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .heroFrame,
-  .thumb {
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
-  }
-
-  .heroFrame:hover,
-  .heroFrame:focus-visible,
-  .thumb:hover,
-  .thumb:focus-visible {
-    transform: translateY(-2px);
+  .bentoMainContent,
+  .bentoRole {
+    padding: 20px;
   }
 }
