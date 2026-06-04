@@ -17,65 +17,75 @@
   color: var(--color-text-faint);
 }
 
-/* ── Row wrapper ── */
-.section {
-  margin-bottom: 20px;
-}
-
-.section:last-child {
-  margin-bottom: 0;
-}
-
-.rowLabel {
-  display: block;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #9a8878;
-  margin-bottom: 10px;
-}
-
-/* ── Grid ── */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-}
-
-/* ── Card ── */
-.item {
+/* ── Capability groups ── */
+.groups {
   display: flex;
   flex-direction: column;
+}
+
+.group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 20px 0;
+  border-top: 0.5px solid var(--color-border-soft);
+}
+
+.group:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.groupLabel {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+/* ── Chips ── */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 20px 8px;
+  padding: 7px 14px;
   background: var(--color-surface);
   border: 0.5px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-sub);
 }
 
-.item i {
-  font-size: 28px;
+.chip i {
+  font-size: 16px;
+  color: var(--color-text-dim);
 }
 
-.item span {
-  font-size: 14px;
-  color: var(--color-text-muted);
-  letter-spacing: 0.02em;
+.chipPrimary i {
+  color: var(--color-accent);
 }
 
-/* ── Icon colors ── */
-.iconPrimary {
-  color: #d4651a;
+.chip:hover {
+  border-color: var(--color-text-faint);
 }
 
-.iconTool {
-  color: #6a5e56;
-}
+/* ── Desktop: label column + chips ── */
+@media (min-width: 768px) {
+  .group {
+    grid-template-columns: 180px 1fr;
+    align-items: start;
+    gap: 28px;
+    padding: 22px 0;
+  }
 
-/* ── Mobile: 2 columns ── */
-@media (max-width: 767px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+  .groupLabel {
+    padding-top: 5px;
   }
 }

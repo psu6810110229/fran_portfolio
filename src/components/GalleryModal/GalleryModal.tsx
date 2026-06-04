@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { useLanguage } from '../../hooks/useLanguage';
 import styles from './GalleryModal.module.css';
+
+const labels = {
+  en: { close: 'Close gallery', prev: 'Previous', next: 'Next', swipe: 'swipe to navigate', screenshot: 'Screenshot' },
+  th: { close: 'ปิดแกลเลอรี', prev: 'ก่อนหน้า', next: 'ถัดไป', swipe: 'ปัดเพื่อเลื่อนดู', screenshot: 'ภาพหน้าจอ' },
+};
 
 interface Props {
   images: string[];
@@ -10,6 +17,8 @@ interface Props {
 }
 
 function GalleryModal({ images, video, initialIndex, onClose }: Props) {
+  const { lang } = useLanguage();
+  const t = labels[lang];
   const total = (video ? 1 : 0) + images.length;
   const [index, setIndex] = useState(initialIndex);
   const touchStartX = useRef<number | null>(null);
@@ -42,45 +51,59 @@ function GalleryModal({ images, video, initialIndex, onClose }: Props) {
   const imgSrc = video ? images[index - 1] : images[index];
 
   return createPortal(
-    <div
+    <motion.div
       className={styles.overlay}
       onClick={onClose}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
       role="dialog"
       aria-modal="true"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
     >
-      <button className={styles.close} onClick={onClose} aria-label="Close gallery">✕</button>
+      <button className={styles.close} onClick={onClose} aria-label={t.close}>✕</button>
 
       <span className={styles.counter}>{index + 1} / {total}</span>
 
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={`${styles.navBtn} ${styles.navPrev}`} onClick={prev} aria-label="Previous">‹</button>
+        <button className={`${styles.navBtn} ${styles.navPrev}`} onClick={prev} aria-label={t.prev}>‹</button>
 
-        {isVideoSlide ? (
-          <video
-            key="gallery-video"
-            src={video}
-            className={styles.video}
-            controls
-            autoPlay
-            muted
-            playsInline
-          />
-        ) : (
-          <img
-            key={imgSrc}
-            src={imgSrc}
-            alt={`Screenshot ${index + 1}`}
-            className={styles.image}
-          />
-        )}
+        <AnimatePresence mode="wait">
+          {isVideoSlide ? (
+            <motion.video
+              key="gallery-video"
+              src={video}
+              className={styles.video}
+              controls
+              autoPlay
+              muted
+              playsInline
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
+            />
+          ) : (
+            <motion.img
+              key={imgSrc}
+              src={imgSrc}
+              alt={`${t.screenshot} ${index + 1}`}
+              className={styles.image}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
+            />
+          )}
+        </AnimatePresence>
 
-        <button className={`${styles.navBtn} ${styles.navNext}`} onClick={next} aria-label="Next">›</button>
+        <button className={`${styles.navBtn} ${styles.navNext}`} onClick={next} aria-label={t.next}>›</button>
       </div>
 
-      <span className={styles.swipeHint} aria-hidden="true">swipe to navigate</span>
-    </div>,
+      <span className={styles.swipeHint} aria-hidden="true">{t.swipe}</span>
+    </motion.div>,
     document.body,
   );
 }

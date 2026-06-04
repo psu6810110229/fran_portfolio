@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap');
 
 /* ── Reset ── */
 *, *::before, *::after {
@@ -23,15 +23,15 @@
   --color-text:         #f0e8e0;
   --color-text-sub:     #d0c8c0;
   --color-text-muted:   #9a9088;
-  --color-text-dim:     #6a6058;
-  --color-text-faint:   #5a5248;
+  --color-text-dim:     #978b7f;
+  --color-text-faint:   #8a8077;
 
   --color-accent:       #d4651a;
   --color-accent-hover: #e07030;
   --color-accent-dark:  #c4551a;
 
   /* Typography */
-  --font-heading: 'Syne', sans-serif;
+  --font-heading: 'Syne', 'IBM Plex Sans Thai', sans-serif;
   --font-body:    'Satoshi', sans-serif;
 
   --font-size-xs:   0.8125rem;
@@ -114,19 +114,26 @@ button {
   border: none;
 }
 
+/* ── Keyboard focus ──
+   Visible ember focus ring for keyboard users only. The 2px offset keeps the
+   ring readable even on ember-filled controls (it sits on the dark surface
+   around the element, not on the accent fill). */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 /* ── Thai font ── */
 [data-lang="th"] {
   --font-body: 'IBM Plex Sans Thai', sans-serif;
 }
 
-/* ── Scroll reveal ── */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-}
-
-.reveal.show {
-  opacity: 1;
-  transform: none;
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

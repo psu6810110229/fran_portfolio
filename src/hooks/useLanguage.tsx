@@ -14,6 +14,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     try {
       const saved = (localStorage.getItem('lang') as Lang) || 'en';
       document.documentElement.setAttribute('data-lang', saved);
+      document.documentElement.lang = saved;
       return saved;
     } catch { return 'en'; }
   });
@@ -22,6 +23,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLang((l) => {
       const next = l === 'en' ? 'th' : 'en';
       document.documentElement.setAttribute('data-lang', next);
+      document.documentElement.lang = next;
       try { localStorage.setItem('lang', next); } catch {}
       return next;
     });

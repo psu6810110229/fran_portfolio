@@ -6,7 +6,29 @@
       "Bash(git commit *)",
       "Bash(git push *)",
       "PowerShell(New-Item *)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(node *)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(npm run *)",
+      "Bash(git diff *)",
+      "Bash(git *)",
+      "Bash(command -v ffmpeg)",
+      "Bash(ffmpeg -version)",
+      "Bash(command -v ffprobe)",
+      "Bash(command -v cwebp)",
+      "Bash(cwebp -version)",
+      "Bash(command -v magick)",
+      "Bash(command -v convert)",
+      "Bash(convert -version)",
+      "Bash(convert -list format)",
+      "Bash(echo \"\\(On Windows, C:\\\\\\\\Windows\\\\\\\\System32\\\\\\\\convert.exe is the disk-format tool, NOT ImageMagick. Do not use it on images.\\)\")",
+      "Bash(command -v npx)",
+      "Bash(npx -v)",
+      "Bash(npm install *)",
+      "Bash(npx eslint *)",
+      "Bash(npx playwright *)",
+      "Bash(NODE_PATH=\"C:\\\\Users\\\\farnp\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\705bc6b22212b352\\\\node_modules\" node shot.mjs)",
+      "Bash(kill %1)"
     ]
   }
 }

@@ -1,3 +1,4 @@
+import { MotionConfig } from 'motion/react';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './pages/Hero';
 import About from './pages/About';
@@ -10,6 +11,7 @@ import styles from './App.module.css';
 
 function App() {
   return (
+    <MotionConfig reducedMotion="user">
     <LanguageProvider>
       <div className={styles.screen}>
         <Navbar />
@@ -23,6 +25,7 @@ function App() {
         <BackToTop />
       </div>
     </LanguageProvider>
+    </MotionConfig>
   );
 }
 

@@ -6,6 +6,18 @@ You are a senior front-end engineer pair-programming with a junior developer (1s
 
 ---
 
+## Git Branch Safety
+
+- Never make code, UI, design, documentation, or configuration changes directly on `main` or `dev`.
+- Before editing any file, always check the current branch with `git branch --show-current`.
+- If the current branch is `main` or `dev`, stop and ask to create/switch to a feature branch first.
+- For Impeccable/design work, use `chore/impeccable-redesign` unless I specify another branch.
+- Do not commit, merge, rebase, reset, or force-push unless I explicitly ask.
+- If there are uncommitted changes on `main` or `dev`, preserve them and ask before moving them to another branch.
+- At the start of every new session, report the current branch before making edits.
+
+---
+
 ## Self-Check (run before every reply)
 
 - [ ] Did the user ask for this specifically?  
@@ -220,6 +232,12 @@ Do not use CSS variables. Do not add hover effects. Do not modify any other comp
 - Do not use `any` type.  
 - Do not write inline styles.  
 - Do not combine multiple tasks in one response.
+
+---
+
+## Design Context
+
+Before any UI/design work, read `PRODUCT.md` (strategy: users, brand personality, principles) and `DESIGN.md` (visual system: colors, type, components, rules).
 
 ---
 

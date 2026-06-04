@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-03T00:00:00.000Z",
+  "title": "Design System: Fran Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Ember Orange",
+        "canonical": "#d4651a",
+        "tonalRamp": ["#2a1206", "#4d220b", "#7a3611", "#a84a16", "#d4651a", "#e07030", "#ea8a52", "#f4b58c"]
+      },
+      "bg": {
+        "role": "neutral",
+        "displayName": "Forge Black",
+        "canonical": "#131110",
+        "tonalRamp": ["#131110", "#1a1816", "#262320", "#3a352f", "#5a5248", "#9a9088", "#d0c8c0", "#f0e8e0"]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Warm Bone",
+        "canonical": "#f0e8e0",
+        "tonalRamp": ["#1a1614", "#3a3430", "#5a5248", "#6a6058", "#9a9088", "#d0c8c0", "#f0e8e0", "#fdf8f4"]
+      },
+      "light-bg": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "#faf8f5",
+        "tonalRamp": ["#1a1614", "#3a3430", "#6a5a50", "#9a8878", "#c4b8ac", "#e0d8d0", "#f0ebe4", "#faf8f5"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero h1 only — the single largest type; the accented name is the one ember word." },
+      "stat": { "displayName": "Stat", "purpose": "Big Syne numbers on the drenched ember stats panel in the Projects bento." },
+      "title": { "displayName": "Title", "purpose": "Section headings, project titles, role titles, contact heading — always Syne." },
+      "body": { "displayName": "Body (EN)", "purpose": "Bio and prose. Satoshi, loaded from the Fontshare CDN in index.html (split strategy: Syne and IBM Plex Sans Thai load via @import in global.css). Cap measure 65-75ch." },
+      "body-th": { "displayName": "Body (TH)", "purpose": "Thai prose; IBM Plex Sans Thai, swapped under [data-lang=\"th\"]." },
+      "label": { "displayName": "Label", "purpose": "Uppercase tracked eyebrows, row labels, nav links, card tags. Four words or fewer." }
+    },
+    "shadows": [
+      { "name": "sticky-chrome", "value": "0 4px 24px rgba(0,0,0,0.18)", "purpose": "Sticky navbar, anchoring it above scrolling content." },
+      { "name": "floating-card", "value": "0 4px 20px rgba(0,0,0,0.15)", "purpose": "Compact project cards that read as lifted tiles." },
+      { "name": "floating-control", "value": "0 4px 16px rgba(0,0,0,0.2)", "purpose": "Fixed back-to-top button." }
+    ],
+    "motion": [
+      { "name": "theme-fade", "value": "background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease", "purpose": "Global crossfade applied to all elements for theme (dark/light) switching." },
+      { "name": "reveal", "value": "opacity 0.6s ease, transform 0.6s ease", "purpose": "Section scroll-reveal: translateY(24px) + fade, triggered by IntersectionObserver at 0.1 threshold. NEEDS a reduced-motion fallback." },
+      { "name": "caret-blink", "value": "blink 1s step-end infinite", "purpose": "Hero typing-effect caret." },
+      { "name": "icon-swap", "value": "iconSwap 0.3s ease", "purpose": "Theme-toggle sun/moon rotate-and-scale swap." },
+      { "name": "modal-fade", "value": "fadeIn 0.18s ease", "purpose": "Gallery modal overlay entrance." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "375px" },
+      { "name": "tablet", "value": "768px" },
+      { "name": "desktop", "value": "1280px" }
+    ],
+    "zIndex": [
+      { "name": "navbar", "value": 10 },
+      { "name": "back-to-top", "value": 50 },
+      { "name": "modal-overlay", "value": 100 },
+      { "name": "modal-controls", "value": 101 }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Compact ember-filled CTA — 'View Projects', Contact CTA.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">View Projects</a>",
+      "css": ".ds-btn-primary { display: inline-block; padding: 10px 22px; background: var(--color-accent, #d4651a); color: #fdf8f4; border-radius: 7px; font-family: 'Satoshi', sans-serif; font-size: 0.9375rem; font-weight: 500; text-decoration: none; transition: background 0.2s ease; } .ds-btn-primary:hover { background: var(--color-accent-hover, #e07030); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-accent, #d4651a); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Transparent hairline-bordered secondary action — 'Say hello'.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#\">Say hello →</a>",
+      "css": ".ds-btn-ghost { display: inline-block; padding: 10px 20px; background: transparent; color: var(--color-text-dim, #6a6058); border: 0.5px solid var(--color-border, #1e1c18); border-radius: 7px; font-family: 'Satoshi', sans-serif; font-size: 0.9375rem; text-decoration: none; transition: color 0.2s ease, border-color 0.2s ease; } .ds-btn-ghost:hover { color: var(--color-text-muted, #9a9088); border-color: var(--color-border-soft, #1a1816); }"
+    },
+    {
+      "name": "Status Pill",
+      "kind": "chip",
+      "refersTo": "pill-badge",
+      "description": "Hero availability badge — surface fill, hairline border, muted tracked text.",
+      "html": "<span class=\"ds-pill\">Open to internship · 2026</span>",
+      "css": ".ds-pill { display: inline-flex; align-items: center; gap: 7px; background: var(--color-surface, #161412); border: 0.5px solid var(--color-border, #1e1c18); border-radius: 9999px; padding: 5px 14px; font-family: 'Satoshi', sans-serif; font-size: 0.8125rem; color: var(--color-text-muted, #9a9088); letter-spacing: 0.04em; }"
+    },
+    {
+      "name": "Skill Tile",
+      "kind": "card",
+      "refersTo": "skill-card",
+      "description": "Icon + label tile in the Stack grid; flat, hairline-bordered, no shadow.",
+      "html": "<div class=\"ds-skill\"><span class=\"ds-skill-icon\" aria-hidden=\"true\">⚛</span><span class=\"ds-skill-label\">React</span></div>",
+      "css": ".ds-skill { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 8px; background: var(--color-surface, #161412); border: 0.5px solid var(--color-border, #1e1c18); border-radius: 12px; } .ds-skill-icon { font-size: 28px; color: var(--color-accent, #d4651a); } .ds-skill-label { font-family: 'Satoshi', sans-serif; font-size: 14px; color: var(--color-text-muted, #9a9088); letter-spacing: 0.02em; }"
+    },
+    {
+      "name": "Compact Project Card",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "Lifted project tile: thumbnail, title (Syne), description, tech badges, link buttons.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-thumb\"><span>Project</span></div><div class=\"ds-card-body\"><h3 class=\"ds-card-title\">Booking System</h3><p class=\"ds-card-desc\">A full booking flow with an admin panel, built in React and TypeScript.</p><div class=\"ds-card-badges\"><span class=\"ds-badge\">React</span><span class=\"ds-badge\">TypeScript</span></div></div></article>",
+      "css": ".ds-card { display: flex; flex-direction: column; border-radius: 14px; border: 0.5px solid var(--color-border, #1e1c18); background: var(--color-surface, #161412); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.15); } .ds-card-thumb { height: 120px; background: var(--color-surface-alt, #1a1816); display: flex; align-items: center; justify-content: center; } .ds-card-thumb span { font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 700; color: var(--color-text-dim, #6a6058); } .ds-card-body { padding: 20px; display: flex; flex-direction: column; gap: 10px; } .ds-card-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--color-text, #f0e8e0); line-height: 1.2; } .ds-card-desc { font-family: 'Satoshi', sans-serif; font-size: 14px; color: var(--color-text-muted, #9a9088); line-height: 1.65; } .ds-card-badges { display: flex; gap: 6px; flex-wrap: wrap; } .ds-badge { padding: 3px 10px; border: 0.5px solid var(--color-border, #1e1c18); border-radius: 20px; font-family: 'Satoshi', sans-serif; font-size: 13px; color: var(--color-text-sub, #d0c8c0); }"
+    },
+    {
+      "name": "Icon Toggle",
+      "kind": "nav",
+      "refersTo": "nav-toggle",
+      "description": "36px circular language/theme toggle in the navbar; hover warms to ember.",
+      "html": "<button class=\"ds-toggle\" aria-label=\"Toggle language\">EN</button>",
+      "css": ".ds-toggle { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--color-surface, #161412); border: 1px solid var(--color-border, #1e1c18); color: var(--color-text-sub, #d0c8c0); border-radius: 9999px; font-family: 'Satoshi', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; transition: color 0.2s ease, border-color 0.2s ease; } .ds-toggle:hover { color: var(--color-accent, #d4651a); border-color: var(--color-accent, #d4651a); } .ds-toggle:focus-visible { outline: 2px solid var(--color-accent, #d4651a); outline-offset: 2px; }"
+    },
+    {
+      "name": "Gallery Lightbox",
+      "kind": "custom",
+      "refersTo": "gallery-modal",
+      "description": "Full-screen portal overlay for project screenshots/video; the only true overlay in the system. Translucent-white circular controls on a dim scrim; Esc/arrow keys + swipe nav.",
+      "html": "<div class=\"ds-gallery\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Project gallery\"><button class=\"ds-gallery-close\" aria-label=\"Close gallery\">✕</button><span class=\"ds-gallery-counter\">2 / 5</span><button class=\"ds-gallery-nav ds-gallery-prev\" aria-label=\"Previous\">‹</button><div class=\"ds-gallery-media\">Screenshot</div><button class=\"ds-gallery-nav ds-gallery-next\" aria-label=\"Next\">›</button><span class=\"ds-gallery-hint\">swipe to navigate</span></div>",
+      "css": ".ds-gallery { position: relative; display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; min-height: 320px; background: rgba(0,0,0,0.85); border-radius: 12px; overflow: hidden; } .ds-gallery-media { width: 62%; height: 240px; display: flex; align-items: center; justify-content: center; background: var(--color-surface-alt, #1a1816); color: var(--color-text-dim, #6a6058); font-family: 'Syne', sans-serif; font-size: 18px; border-radius: 6px; } .ds-gallery-nav, .ds-gallery-close { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15); color: #fff; border-radius: 50%; cursor: pointer; transition: background 0.15s ease; } .ds-gallery-nav { width: 44px; height: 44px; font-size: 24px; } .ds-gallery-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; font-size: 14px; } .ds-gallery-nav:hover, .ds-gallery-close:hover { background: rgba(255,255,255,0.18); } .ds-gallery-counter { position: absolute; top: 16px; left: 16px; padding: 6px 14px; background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15); border-radius: 20px; color: rgba(255,255,255,0.75); font-family: 'Satoshi', sans-serif; font-size: 14px; letter-spacing: 0.04em; } .ds-gallery-hint { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.45); font-family: 'Satoshi', sans-serif; font-size: 13px; letter-spacing: 0.08em; pointer-events: none; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Ember Workshop",
+    "overview": "A single warm light in a dark, careful room. The interface is built on a near-black warm brown (#131110) and lit by exactly one color: a burnt-orange ember (#d4651a). Everything else is structure — hairline rules, restrained type, generous air. The mood is a workshop after hours: someone who takes pride in the joinery, working by lamplight, in no hurry to shout about it. The system is token-driven and flat: surfaces sit on 0.5px borders rather than heavy shadows, depth comes from tonal layering, and every section is separated by a single hairline rule. It rejects the generic template portfolio, the corporate SaaS landing page, and over-designed gimmickry.",
+    "keyCharacteristics": [
+      "Warm near-black canvas lit by one ember-orange accent; no second hue competes.",
+      "Hairline (0.5px) borders and section rules as the primary structural device.",
+      "Flat by default; soft ambient shadow only on truly floating surfaces.",
+      "Syne (display) paired with a humanist body sans; weight and size carry hierarchy.",
+      "Full-bleed layout, 5vw gutter, mobile-first at 375 -> 768 -> 1280.",
+      "Dual-theme (warm-dark default, warm-light) and dual-language (EN/TH), both first-class."
+    ],
+    "rules": [
+      { "name": "The One Ember Rule", "body": "Exactly one accent color exists. #d4651a is the only saturated hue anywhere, used on roughly <=10% of any screen. Its rarity is the point.", "section": "colors" },
+      { "name": "The No-Pure-Black, No-Pure-White Rule", "body": "The canvas is #131110, never #000. Text is #f0e8e0, never #fff. Warmth lives in the neutrals.", "section": "colors" },
+      { "name": "The Syne-for-Structure Rule", "body": "Headings, titles, the wordmark, and stat numbers are Syne; anything read in sentences is the body sans. The two never trade jobs.", "section": "typography" },
+      { "name": "The Short-Label Rule", "body": "Uppercase + letter-spacing is reserved for labels of four words or fewer. Body copy is never all-caps or tracked out.", "section": "typography" },
+      { "name": "The Hairline Rule", "body": "Structure is drawn with 0.5px borders and section rules. Reach for a hairline before a shadow; shadows are earned only by floating elements.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep #d4651a as the only accent — one ember, <=10% of any screen.",
+      "Do build structure with 0.5px hairline borders and section rules before reaching for a shadow.",
+      "Do use Syne for every structural/heading element and the body sans for every readable sentence.",
+      "Do keep the canvas warm near-black (#131110) and text warm bone (#f0e8e0) — never #000, never #fff.",
+      "Do set EN and TH as equals: correct lang/[data-lang] semantics, comfortable Thai line-height, IBM Plex Sans Thai swap.",
+      "Do slot new layered UI into the z-index ladder (10 / 50 / 100 / 101), never arbitrary 999s.",
+      "Do keep the full-bleed 5vw gutter and the mobile-first 375 -> 768 -> 1280 breakpoints."
+    ],
+    "donts": [
+      "Don't build a generic template portfolio: no identical card grid, no skill progress bars, no hero-plus-three-cards scaffold.",
+      "Don't drift toward a corporate SaaS landing page: no big gradient hero, no feature-metric template, no enterprise blue.",
+      "Don't over-design: no pile of competing animations or decorative effects that distract from the work.",
+      "Don't introduce a second accent hue, a gradient, or gradient text.",
+      "Don't use border-left/border-right as a colored accent stripe; structure is full hairline borders or nothing.",
+      "Don't gate content visibility purely on a JS-added class; content must stay readable if the reveal never fires.",
+      "Don't ship animations without a prefers-reduced-motion fallback (not yet implemented for reveals, typing, icon swap).",
+      "Don't assume the fonts load from one place: Satoshi loads from the Fontshare CDN (index.html), Syne/IBM Plex Sans Thai via @import in global.css; keep both wired and keep the sans-serif fallback.",
+      "Don't set sustained text dimmer than the dim/faint tokens (#978b7f / #8a8077), which clear AA on the dark canvas; verify >=4.5:1 in both themes."
+    ]
+  }
+}
