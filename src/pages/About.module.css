@@ -17,67 +17,103 @@
   color: var(--color-text-faint);
 }
 
-/* ── Two-column layout ── */
+/* ── Layout ── */
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 760px) 200px auto;
-  gap: 48px;
-  align-items: start;
+  grid-template-columns: 1fr;
+  gap: 36px;
 }
 
-/* ── Bio ── */
-.content {
+/* ── Prose ── */
+.prose {
+  max-width: 60ch;
+}
+
+.lead {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.375rem, 1rem + 1.6vw, 1.875rem);
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+.body {
+  margin-top: var(--space-5);
+  font-size: var(--font-size-md);
+  line-height: 1.7;
+  color: var(--color-text-sub);
+  text-wrap: pretty;
+}
+
+/* ── What I own ── */
+.own {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  list-style: none;
 }
 
-.bio {
+.ownItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 0.5px solid var(--color-border-soft);
+}
+
+.ownNum {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--color-accent);
+  padding-top: 3px;
+}
+
+.ownTitle {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.ownDesc {
+  margin-top: 5px;
   font-size: var(--font-size-sm);
+  line-height: 1.55;
   color: var(--color-text-muted);
-  line-height: 1.75;
 }
 
-/* ── Snapshot ── */
-.snapshot {
+/* ── Foot ── */
+.foot {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding-left: 32px;
-  border-left: 0.5px solid var(--color-border-soft);
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 24px;
+  padding-top: 22px;
+  border-top: 0.5px solid var(--color-border-soft);
 }
 
-.snapItem {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+.based {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-sub);
 }
 
-.snapLabel {
+.basedLabel {
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-text-faint);
+  margin-right: 4px;
 }
 
-.snapVal {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  line-height: 1.5;
-}
-
-.snapVal strong {
-  color: var(--color-text-sub);
-  font-weight: 500;
-}
-
-/* ── Links ── */
 .links {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-left: 32px;
-  border-left: 0.5px solid var(--color-border-soft);
+  gap: 20px;
+  margin-left: auto;
 }
 
 .link {
@@ -89,29 +125,24 @@
   color: var(--color-accent);
 }
 
-/* ── Mobile ── */
-@media (max-width: 767px) {
+/* ── Desktop: prose + rail, foot full width ── */
+@media (min-width: 768px) {
   .grid {
-    grid-template-columns: 1fr;
-    gap: 0;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+    column-gap: 56px;
+    row-gap: 36px;
+    align-items: start;
   }
 
-  .snapshot {
-    padding-left: 0;
-    border-left: none;
-    border-top: 0.5px solid var(--color-border-soft);
-    padding-top: 28px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px 32px;
+  .prose {
+    grid-column: 1;
   }
 
-  .links {
-    padding-left: 0;
-    border-left: none;
-    border-top: 0.5px solid var(--color-border-soft);
-    padding-top: 28px;
-    flex-direction: row;
-    gap: 20px;
+  .own {
+    grid-column: 2;
+  }
+
+  .foot {
+    grid-column: 1 / -1;
   }
 }
