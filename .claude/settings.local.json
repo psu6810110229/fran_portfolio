@@ -28,7 +28,14 @@
       "Bash(npx eslint *)",
       "Bash(npx playwright *)",
       "Bash(NODE_PATH=\"C:\\\\Users\\\\farnp\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\705bc6b22212b352\\\\node_modules\" node shot.mjs)",
-      "Bash(kill %1)"
+      "Bash(kill %1)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5199/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5200/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5201/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5202/)",
+      "Bash(curl -s http://localhost:5174)",
+      "Bash('#projects')",
+      "Bash(dir \"D:\\\\Fran's Folder\\\\Project-archive\\\\fran_portfolio\\\\*.md\" /b)"
     ]
   }
 }
