@@ -93,8 +93,10 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
+          <div className={styles.closeRow}>
+            <button type="button" className={styles.close} onClick={onClose} aria-label={t.close}>✕</button>
+          </div>
           <div className={styles.fadeTop} aria-hidden="true" />
-          <button type="button" className={styles.close} onClick={onClose} aria-label={t.close}>✕</button>
 
           <header className={styles.head}>
             <span className={styles.eyebrow}>{t.eyebrow}</span>
