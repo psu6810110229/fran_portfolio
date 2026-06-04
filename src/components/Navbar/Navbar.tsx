@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import { useLanguage } from '../../hooks/useLanguage';
 import styles from './Navbar.module.css';
@@ -18,16 +19,19 @@ const navLinks = {
 function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const { lang, toggleLang } = useLanguage();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <nav className={styles.navbar} aria-label="Main navigation">
       <div className={styles.inner}>
-        <a href="#hero" className={styles.logo}>fran.</a>
+        <a href="#hero" className={styles.logo} onClick={closeMenu}>fran.</a>
         <div className={styles.right}>
-          <ul className={styles.navList}>
+          <ul className={`${styles.navList} ${menuOpen ? styles.navListOpen : ''}`}>
             {navLinks[lang].map((link) => (
               <li key={link.href}>
-                <a href={link.href} className={styles.navLink}>{link.label}</a>
+                <a href={link.href} className={styles.navLink} onClick={closeMenu}>{link.label}</a>
               </li>
             ))}
           </ul>
@@ -64,6 +68,14 @@ function Navbar() {
                 </svg>
               )}
             </span>
+          </button>
+          <button
+            className={styles.hamburger}
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+          >
+            <span className={`${styles.bar} ${menuOpen ? styles.barOpen : ''}`} />
           </button>
         </div>
       </div>
