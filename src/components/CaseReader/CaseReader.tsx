@@ -93,6 +93,7 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
+          <div className={styles.fadeTop} aria-hidden="true" />
           <button type="button" className={styles.close} onClick={onClose} aria-label={t.close}>✕</button>
 
           <header className={styles.head}>
@@ -123,6 +124,7 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
               </div>
             </section>
           </div>
+          <div className={styles.fadeBottom} aria-hidden="true" />
         </motion.div>
       </motion.div>
 

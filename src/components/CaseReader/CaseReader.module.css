@@ -187,23 +187,67 @@
   color: var(--color-text);
 }
 
+.fadeTop,
+.fadeBottom {
+  display: none;
+}
+
 @media (min-width: 768px) {
   .overlay {
     padding: 5vh 0;
     align-items: flex-start;
+    overflow: hidden;
   }
 
   .dialog {
     max-width: 760px;
     min-height: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
     border: 1px solid var(--color-border);
     border-radius: 24px;
-    padding: 48px 56px 56px;
-    overflow: hidden;
+    padding: 0 56px 0;
+  }
+
+  .dialog::-webkit-scrollbar {
+    display: none;
   }
 
   .close {
-    position: absolute;
+    position: sticky;
+    top: 14px;
+    margin-top: 16px;
+    margin-left: auto;
+    margin-bottom: 16px;
+    z-index: 2;
+  }
+
+  .fadeTop {
+    display: block;
+    position: sticky;
+    top: 0;
+    height: 40px;
+    margin-bottom: -40px;
+    background: linear-gradient(to bottom, var(--color-bg), transparent);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .fadeBottom {
+    display: block;
+    position: sticky;
+    bottom: 0;
+    height: 28px;
+    margin-top: -28px;
+    background: linear-gradient(to top, var(--color-bg), transparent);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .sections {
+    padding-bottom: 84px;
   }
 }
 
