@@ -1,72 +1,105 @@
-import { useScrollReveal } from '../hooks/useScrollReveal';
+import { motion } from 'motion/react';
 import { useLanguage } from '../hooks/useLanguage';
 import styles from './About.module.css';
 
-const content = {
+interface OwnItem {
+  num: string;
+  title: string;
+  desc: string;
+}
+
+interface AboutCopy {
+  secTitle: string;
+  lead: string;
+  body: string;
+  own: OwnItem[];
+  basedLabel: string;
+  basedValue: string;
+}
+
+const content: Record<'en' | 'th', AboutCopy> = {
   en: {
     secTitle: 'About',
-    bio1: "I’m a first-year Computer Engineering student at Prince of Songkla University, Hat Yai campus. I’m interested in Front-end Development and creating simple, easy-to-use user experiences with attention to detail.",
-    bio2: "Right now, I build websites using React and TypeScript. I care about clean UI, good performance, and writing code that can grow in the future. I enjoy learning by building personal projects, trying new ideas, and finding ways to make websites work better.",
-    bio3: "I’m currently looking for an internship where I can gain real experience, learn from a development team, and improve my skills as a developer."
+    lead: "I'm a first-year Computer Engineering student at Prince of Songkla University who builds web products end to end.",
+    body: "I take an idea, plan it, design the interface, and write the front-end and the APIs behind it, thinking about the person using the product rather than only the screen. I've led a team build from first sketch to a working result, and I'm now looking for an internship to keep building with people who do this every day.",
+    own: [
+      { num: '01', title: 'Plan', desc: 'Turn a rough idea into a clear scope and a path to build it.' },
+      { num: '02', title: 'Build', desc: 'Write the front-end and the APIs behind it. Across the stack, not just the screen.' },
+      { num: '03', title: 'Ship', desc: 'Debug, deliver, and keep a team moving to something that works.' },
+    ],
+    basedLabel: 'Based in',
+    basedValue: 'Hat Yai, Songkhla',
   },
   th: {
     secTitle: 'เกี่ยวกับ',
-    bio1: 'ผมเป็นนักศึกษาชั้นปีที่ 1 สาขาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ สนใจด้าน Front-end Development และการออกแบบประสบการณ์ผู้ใช้ที่เรียบง่าย ใช้งานได้จริง และมีรายละเอียดที่ใส่ใจต่อผู้ใช้งาน',
-    bio2: 'ปัจจุบันพัฒนาเว็บด้วย React และ TypeScript โดยให้ความสำคัญกับทั้งด้าน UI, performance และโครงสร้างโค้ดที่สามารถต่อยอดได้ในระยะยาว ผมชอบเรียนรู้ผ่านการลงมือทำจริง ไม่ว่าจะเป็นการสร้างโปรเจกต์ส่วนตัว ทดลองแนวคิดใหม่ๆ หรือศึกษาวิธีพัฒนาเว็บให้มีประสิทธิภาพมากขึ้น',
-    bio3: 'ตอนนี้กำลังมองหาโอกาสฝึกงานที่เปิดโอกาสให้ได้ทำงานจริง ได้เรียนรู้จากทีมพัฒนา และพัฒนาทักษะของตัวเองให้เติบโตมากขึ้นในสายงานนี้'
+    lead: 'ผมเป็นนักศึกษาชั้นปีที่ 1 สาขาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยสงขลานครินทร์ ที่สร้างเว็บโปรดักต์ได้ตั้งแต่ต้นจนจบ',
+    body: 'ผมรับโจทย์มาหนึ่งไอเดีย วางแผน ออกแบบหน้าจอ และเขียนทั้งฝั่ง front-end และ API ที่อยู่เบื้องหลัง โดยคิดถึงคนที่ใช้งานจริง ไม่ใช่แค่หน้าจอ ผมเคยนำทีมสร้างงานตั้งแต่ภาพร่างแรกจนออกมาเป็นผลงานที่ใช้ได้จริง และตอนนี้กำลังมองหาที่ฝึกงานเพื่อพัฒนาฝีมือไปกับคนที่ทำงานสายนี้ทุกวัน',
+    own: [
+      { num: '01', title: 'วางแผน', desc: 'เปลี่ยนไอเดียคร่าวๆ ให้เป็นขอบเขตงานที่ชัดและแผนที่ลงมือทำได้จริง' },
+      { num: '02', title: 'ลงมือสร้าง', desc: 'เขียนทั้ง front-end และ API เบื้องหลัง ทำได้ทั้งสองฝั่ง ไม่ใช่แค่หน้าจอ' },
+      { num: '03', title: 'ส่งมอบ', desc: 'ไล่แก้บั๊ก ส่งงาน และพาทีมไปให้ถึงผลงานที่ใช้งานได้จริง' },
+    ],
+    basedLabel: 'อยู่ที่',
+    basedValue: 'หาดใหญ่ สงขลา',
   },
 };
 
-const snapshot = [
-  { label: 'Studying', value: 'Computer Eng.', sub: 'Year 1 · PSU' },
-  { label: 'Focus', value: 'Front-end', sub: 'React · TypeScript' },
-  { label: 'Based in', value: 'Hat Yai', sub: 'Songkhla, TH' },
-];
+const revealProps = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.1 },
+  transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
+};
 
 function About() {
-  const { ref, isVisible } = useScrollReveal<HTMLElement>();
   const { lang } = useLanguage();
   const c = content[lang];
 
   return (
-    <section
+    <motion.section
       id="about"
-      className={`${styles.about} reveal ${isVisible ? 'show' : ''}`}
-      ref={ref}
+      className={styles.about}
+      {...revealProps}
     >
       <div className={styles.inner}>
         <div className={styles.secHeader}>
           <span className={styles.secTitle}>{c.secTitle}</span>
         </div>
+
         <div className={styles.grid}>
-          <div className={styles.content}>
-            <p className={styles.bio}>{c.bio1}</p>
-            <p className={styles.bio}>{c.bio2}</p>
-            {'bio3' in c && <p className={styles.bio}>{(c as typeof content.th).bio3}</p>}
-          </div>
-          <div className={styles.snapshot}>
-            {snapshot.map((item) => (
-              <div key={item.label} className={styles.snapItem}>
-                <span className={styles.snapLabel}>{item.label}</span>
-                <p className={styles.snapVal}>
-                  <strong>{item.value}</strong><br />{item.sub}
-                </p>
-              </div>
-            ))}
+          <div className={styles.prose}>
+            <p className={styles.lead}>{c.lead}</p>
+            <p className={styles.body}>{c.body}</p>
           </div>
 
-          <div className={styles.links}>
-            <span className={styles.snapLabel}>Links</span>
-            <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer" className={styles.link}>
-              GitHub ↗
-            </a>
-            <a href="mailto:farnpatcharapon@gmail.com" className={styles.link}>
-              Email ↗
-            </a>
+          <ol className={styles.own}>
+            {c.own.map((item) => (
+              <li key={item.num} className={styles.ownItem}>
+                <span className={styles.ownNum}>{item.num}</span>
+                <div>
+                  <span className={styles.ownTitle}>{item.title}</span>
+                  <p className={styles.ownDesc}>{item.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div className={styles.foot}>
+            <span className={styles.based}>
+              <span className={styles.basedLabel}>{c.basedLabel}</span> {c.basedValue}
+            </span>
+            <span className={styles.links}>
+              <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer" className={styles.link}>
+                GitHub ↗
+              </a>
+              <a href="mailto:farnpatcharapon@gmail.com" className={styles.link}>
+                Email ↗
+              </a>
+            </span>
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
