@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AnimatePresence } from 'motion/react';
 import GalleryModal from '../components/GalleryModal/GalleryModal';
 import CaseReader from '../components/CaseReader/CaseReader';
 import CompactCard from '../components/CompactCard/CompactCard';
@@ -117,13 +118,17 @@ function Projects() {
         )}
       </div>
 
-      {caseOpen && cs && (
-        <CaseReader title={featured.title} githubUrl={featured.githubUrl} caseStudy={cs} lang={lang} onClose={() => setCaseOpen(false)} />
-      )}
+      <AnimatePresence>
+        {caseOpen && cs && (
+          <CaseReader key="case-reader" title={featured.title} githubUrl={featured.githubUrl} caseStudy={cs} lang={lang} onClose={() => setCaseOpen(false)} />
+        )}
+      </AnimatePresence>
 
-      {galleryOpen && featured.gallery && (
-        <GalleryModal images={featured.gallery} video={featured.previewVideo} initialIndex={galleryIndex} onClose={() => setGalleryOpen(false)} />
-      )}
+      <AnimatePresence>
+        {galleryOpen && featured.gallery && (
+          <GalleryModal key="gallery" images={featured.gallery} video={featured.previewVideo} initialIndex={galleryIndex} onClose={() => setGalleryOpen(false)} />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
