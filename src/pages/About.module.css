@@ -39,6 +39,10 @@
   text-wrap: balance;
 }
 
+.leadAccent {
+  color: var(--color-accent);
+}
+
 .body {
   margin-top: var(--space-5);
   font-size: var(--font-size-md);
