@@ -12,7 +12,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 5vw;
+  padding: 14px 4vw;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding: 18px 5vw;
+  }
 }
 
 .logo {
@@ -26,13 +32,25 @@
 .right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .right {
+    gap: 20px;
+  }
 }
 
 .navList {
   display: flex;
-  gap: 28px;
+  gap: 16px;
   list-style: none;
+}
+
+@media (min-width: 768px) {
+  .navList {
+    gap: 28px;
+  }
 }
 
 .navLink {
