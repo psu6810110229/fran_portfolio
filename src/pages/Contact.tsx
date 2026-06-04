@@ -1,4 +1,4 @@
-import { useScrollReveal } from '../hooks/useScrollReveal';
+import { motion } from 'motion/react';
 import { useLanguage } from '../hooks/useLanguage';
 import styles from './Contact.module.css';
 
@@ -19,15 +19,16 @@ const content = {
 const resumeUrl: string | null = null;
 
 function Contact() {
-  const { ref, isVisible } = useScrollReveal<HTMLElement>();
   const { lang } = useLanguage();
   const c = content[lang];
 
   return (
-    <section
+    <motion.section
       id="contact"
-      className={`reveal ${isVisible ? 'show' : ''}`}
-      ref={ref}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className={styles.cta}>
         <div className={styles.inner}>
@@ -55,7 +56,7 @@ function Contact() {
           </div>
         </div>
       </footer>
-    </section>
+    </motion.section>
   );
 }
 
