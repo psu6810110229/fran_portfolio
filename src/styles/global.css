@@ -55,7 +55,7 @@
   --space-12: 3rem;
 
   /* Layout */
-  --max-width:  none;
+  --max-width:  1280px;
   --nav-height: 58px;
 
   /* Border radius */

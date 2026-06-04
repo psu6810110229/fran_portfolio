@@ -20,6 +20,11 @@
   outline: none;
 }
 
+.closeRow {
+  height: 0;
+  overflow: visible;
+}
+
 .close {
   position: fixed;
   top: 14px;
@@ -215,13 +220,20 @@
     display: none;
   }
 
-  .close {
+  .closeRow {
     position: sticky;
-    top: 14px;
-    margin-top: 16px;
-    margin-left: auto;
-    margin-bottom: 16px;
-    z-index: 2;
+    top: 0;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: -42px;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .close {
+    position: static;
+    margin: 14px 14px 0 0;
+    pointer-events: all;
   }
 
   .fadeTop {

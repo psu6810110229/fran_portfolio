@@ -15,7 +15,7 @@ function App() {
     <LanguageProvider>
       <div className={styles.screen}>
         <Navbar />
-        <main>
+        <main className={styles.main}>
           <Hero />
           <About />
           <Skills />
