@@ -25,8 +25,21 @@ import g15 from '../assets/9tours/opt/gallery-15.webp';
 import userFlow from '../assets/9tours/opt/user-flow.mp4';
 import userFlowPoster from '../assets/9tours/opt/user-flow-poster.webp';
 
+// GO-OUT assets
+import goOutG00 from '../assets/GO-OUT/images/IMG_20260604_18495797.jpeg';
+import goOutG01 from '../assets/GO-OUT/images/IMG_20260604_18502263.jpeg';
+import goOutG02 from '../assets/GO-OUT/images/IMG_20260604_18504836.jpeg';
+import goOutG03 from '../assets/GO-OUT/images/IMG_20260604_18505443.jpeg';
+import goOutG04 from '../assets/GO-OUT/images/IMG_20260604_18510418.jpeg';
+import goOutG05 from '../assets/GO-OUT/images/IMG_20260604_18511376.jpeg';
+import goOutG06 from '../assets/GO-OUT/images/IMG_20260604_18512308.jpeg';
+import goOutG07 from '../assets/GO-OUT/images/IMG_20260604_18512589.jpeg';
+import goOutG08 from '../assets/GO-OUT/images/IMG_20260604_18513373.jpeg';
+import goOutVideo from '../assets/GO-OUT/vdo/GO-OUT preview.mp4';
+
 // Gallery order preserved from the original screenshots: user 452-462 (0-10), admin 463-467 (11-15).
 const tours9Gallery = [g00, g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g12, g13, g14, g15];
+const goOutGallery = [goOutG00, goOutG01, goOutG02, goOutG03, goOutG04, goOutG05, goOutG06, goOutG07, goOutG08];
 
 export const projects: Project[] = [
   {
@@ -96,6 +109,75 @@ export const projects: Project[] = [
         gallery: tours9Gallery,
         video: userFlow,
         videoPoster: userFlowPoster,
+      },
+    },
+  },
+  {
+    title: 'GO-OUT',
+    description:
+      'Mobile-first shared savings tracker for small groups. I designed and built it as a privacy-first scoreboard for goals, habits, and social accountability without connecting to real bank accounts.',
+    descriptionTh:
+      'แอปบันทึกการออมเงินร่วมกันบนมือถือสำหรับกลุ่มเล็ก ผมออกแบบและพัฒนาให้เป็นกระดานคะแนนที่ช่วยติดตามเป้าหมาย สร้างนิสัยการออม และสร้างแรงจูงใจร่วมกันโดยไม่เชื่อมต่อบัญชีธนาคารจริง',
+    tag: 'Full-stack · Mobile/PWA',
+    techs: ['React', 'TypeScript', 'Vite', 'Supabase', 'Capacitor', 'PWA', 'FCM'],
+    githubUrl: 'https://github.com/psu6810110229/Project_Saving',
+    badge: 'Featured',
+    thumbnail: goOutG00,
+    previewVideo: goOutVideo,
+    gallery: goOutGallery,
+    caseStudy: {
+      problem: {
+        en: 'Saving money together for a big goal can lose momentum when everyone tracks it alone, but sharing a real bank account creates privacy and trust concerns.',
+        th: 'การออมเงินร่วมกันเพื่อเป้าหมายใหญ่ มักขาดแรงจูงใจหากแต่ละคนติดตามเอง และการใช้บัญชีธนาคารร่วมกันก็ทำให้กังวลเรื่องความเป็นส่วนตัวและความน่าเชื่อถือ',
+      },
+      role: {
+        en: 'I designed and built GO-OUT as a mobile-first shared savings tracker for small groups of up to 7 people. The app does not hold money or connect to banks; it acts as a transparent scoreboard for progress, saving habits, and social accountability.',
+        th: 'ผมออกแบบและพัฒนา GO-OUT ให้เป็นแอปบันทึกการออมเงินร่วมกันบนมือถือสำหรับกลุ่มขนาดเล็กสูงสุด 7 คน แอปไม่ได้เก็บเงินจริงหรือเชื่อมต่อธนาคาร แต่ทำหน้าที่เป็นกระดานคะแนนที่โปร่งใสสำหรับติดตามความคืบหน้า นิสัยการออม และแรงจูงใจร่วมกัน',
+      },
+      whatTeamBuilt: {
+        en: 'The product supports project rooms, member buckets, saving plans, streak tracking, progress views, push notifications, and a mobile/PWA experience from one React codebase.',
+        th: 'ระบบรองรับห้องโปรเจกต์ กระเป๋าเงินของสมาชิก แผนการออม การติดตามสตรีก หน้าความคืบหน้า การแจ้งเตือน และประสบการณ์ใช้งานแบบมือถือ/PWA จากโค้ดเบส React เดียว',
+      },
+      personalContribution: {
+        en: 'I owned the product design, front-end build, Supabase data model, RLS/RPC security rules, saving-plan engine, and Capacitor/PWA delivery. I also built the Android home-screen widget by rendering the React UI through a hidden WebView and converting it to a widget image.',
+        th: 'ผมดูแลทั้งการออกแบบผลิตภัณฑ์ การพัฒนา front-end โมเดลข้อมูลบน Supabase กฎความปลอดภัย RLS/RPC ระบบแผนการออม และการต่อยอดเป็น Capacitor/PWA รวมถึงพัฒนา Android Home-Screen Widget ด้วยการเรนเดอร์ React UI ผ่าน WebView ที่ซ่อนไว้แล้วแปลงเป็นภาพสำหรับ widget',
+      },
+      hardestIssue: {
+        headline: {
+          en: 'The hardest part was the Money-State Model & Append-only Ledger.',
+          th: 'ส่วนที่ยากที่สุดคือ Money-State Model และ Append-only Ledger',
+        },
+        plain: {
+          en: 'Financial records need to stay trustworthy, so I avoided hard deletes, negative entries, and editing old logs. The app separates money into Recorded Deposits, Verified Balance, and Planned Balance.',
+          th: 'ข้อมูลทางการเงินต้องน่าเชื่อถือ ผมจึงไม่ให้มีการลบถาวร บันทึกยอดติดลบ หรือแก้ไขประวัติเก่าโดยตรง และแยกตัวเลขออกเป็น Recorded Deposits, Verified Balance และ Planned Balance',
+        },
+        whatWeDid: {
+          en: 'When numbers need correction, users go through a Reconcile flow that creates a signed adjustment checkpoint instead of rewriting history. Supabase Row-Level Security and Security-Definer RPCs enforce the rules at the database level.',
+          th: 'เมื่อจำเป็นต้องแก้ไขตัวเลข ผู้ใช้จะทำผ่าน Reconcile flow ที่สร้างรายการปรับปรุงพร้อมประวัติแทนการย้อนกลับไปแก้ข้อมูลเก่า โดยบังคับใช้กฎนี้ด้วย Supabase Row-Level Security และ Security-Definer RPCs ในระดับฐานข้อมูล',
+        },
+      },
+      decisions: {
+        en: 'I designed project rooms so members can share one goal while keeping individual buckets separate. Everyone can see high-level progress for motivation, while private notes and storage details stay personal.',
+        th: 'ผมออกแบบ Project Rooms ให้สมาชิกมีเป้าหมายร่วมกัน แต่แยก Buckets ของแต่ละคนออกจากกัน ทุกคนเห็นภาพรวมความคืบหน้าเพื่อสร้างแรงจูงใจ แต่บันทึกส่วนตัวและรายละเอียดการเก็บเงินยังเป็นส่วนตัว',
+      },
+      collaboration: {
+        en: 'The saving plan engine supports multiple rules such as fixed daily and increasing daily plans. To reduce burnout, I added streak tracking with monthly Streak Freezes for missed days.',
+        th: 'ระบบแผนการออมรองรับกฎหลายแบบ เช่น ออมเท่ากันทุกวัน หรือเพิ่มขึ้นทุกวัน และเพื่อลดความกดดัน ผมเพิ่มการติดตามสตรีกพร้อม Streak Freezes รายเดือนสำหรับวันที่พลาด',
+      },
+      result: {
+        en: 'GO-OUT became a mobile-first shared savings scoreboard that helps small groups track goals, keep each other motivated, and protect trust without touching real bank accounts.',
+        th: 'GO-OUT กลายเป็นกระดานคะแนนการออมร่วมกันบนมือถือที่ช่วยให้กลุ่มเล็กติดตามเป้าหมาย สร้างแรงจูงใจร่วมกัน และรักษาความน่าเชื่อถือโดยไม่แตะบัญชีธนาคารจริง',
+      },
+      contactHandoff: {
+        en: 'That is GO-OUT: a savings app built around trust, privacy, and steady progress. If you want to talk through a product like this, I am one message away.',
+        th: 'นี่คือ GO-OUT แอปออมเงินที่สร้างจากความน่าเชื่อถือ ความเป็นส่วนตัว และความคืบหน้าที่จับต้องได้ ถ้าอยากคุยเรื่องโปรดักต์แบบนี้ ทักผมมาได้เลย',
+      },
+      media: {
+        hero: goOutG00,
+        thumbs: [goOutG01, goOutG03, goOutG08],
+        gallery: goOutGallery,
+        video: goOutVideo,
+        videoPoster: goOutG00,
       },
     },
   },
