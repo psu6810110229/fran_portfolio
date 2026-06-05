@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import GalleryModal from '../GalleryModal/GalleryModal';
 import type { CaseStudy, Localized } from '../../types';
+import githubIcon from '../../assets/icons/github.svg';
 import styles from './CaseReader.module.css';
 
 interface Props {
@@ -14,8 +15,8 @@ interface Props {
 }
 
 const labels = {
-  en: { eyebrow: 'Case study', problem: 'The problem', role: 'My role', built: 'What the team built', mine: 'What I led and built', hardest: 'The hardest part', decisions: 'Product and design decisions', collab: 'Working across the stack', result: 'The result', viewAll: 'View all 16 screens', talk: 'Talk to me', code: 'View team code', close: 'Close' },
-  th: { eyebrow: 'กรณีศึกษา', problem: 'โจทย์', role: 'บทบาทของผม', built: 'สิ่งที่ทีมสร้าง', mine: 'สิ่งที่ผมดูแลและลงมือทำ', hardest: 'จุดที่ยากที่สุด', decisions: 'การตัดสินใจด้านโปรดักต์และดีไซน์', collab: 'การทำงานร่วมกันทั้งระบบ', result: 'ผลลัพธ์', viewAll: 'ดูภาพทั้งหมด 16 จอ', talk: 'คุยกับผม', code: 'ดูโค้ดของทีม', close: 'ปิด' },
+  en: { eyebrow: 'Case study', problem: 'The problem', role: 'My role', built: 'What the team built', soloBuilt: 'What I built', mine: 'What I led and built', soloMine: 'What I designed and built', hardest: 'The hardest part', decisions: 'Product and design decisions', collab: 'Working across the stack', result: 'The result', viewAll: (count: number) => `View all ${count} screens`, talk: 'Talk to me', code: 'View team code', soloCode: 'View code', close: 'Close' },
+  th: { eyebrow: 'กรณีศึกษา', problem: 'โจทย์', role: 'บทบาทของผม', built: 'สิ่งที่ทีมสร้าง', soloBuilt: 'สิ่งที่ผมสร้าง', mine: 'สิ่งที่ผมดูแลและลงมือทำ', soloMine: 'สิ่งที่ผมออกแบบและพัฒนา', hardest: 'จุดที่ยากที่สุด', decisions: 'การตัดสินใจด้านโปรดักต์และดีไซน์', collab: 'การทำงานร่วมกันทั้งระบบ', result: 'ผลลัพธ์', viewAll: (count: number) => `ดูภาพทั้งหมด ${count} จอ`, talk: 'คุยกับผม', code: 'ดูโค้ดของทีม', soloCode: 'ดูโค้ด', close: 'ปิด' },
 };
 
 function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
@@ -23,6 +24,7 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const L = (v: Localized) => v[lang];
+  const isSoloProject = title === 'GO-OUT';
 
   // Scroll lock + initial focus + focus restore (mount/unmount only).
   useEffect(() => {
@@ -55,8 +57,8 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
   const sections = [
     { k: 'problem', label: t.problem, body: <p>{L(cs.problem)}</p> },
     { k: 'role', label: t.role, body: <p>{L(cs.role)}</p> },
-    { k: 'built', label: t.built, body: <p>{L(cs.whatTeamBuilt)}</p> },
-    { k: 'mine', label: t.mine, body: <p>{L(cs.personalContribution)}</p> },
+    { k: 'built', label: isSoloProject ? t.soloBuilt : t.built, body: <p>{L(cs.whatTeamBuilt)}</p> },
+    { k: 'mine', label: isSoloProject ? t.soloMine : t.mine, body: <p>{L(cs.personalContribution)}</p> },
     {
       k: 'hardest', label: t.hardest, body: (
         <>
@@ -115,14 +117,17 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
               <h3 className={styles.blockLabel}>{t.result}</h3>
               <div className={styles.prose}><p>{L(cs.result)}</p></div>
               <video className={styles.video} src={cs.media.video} poster={cs.media.videoPoster} controls preload="none" playsInline />
-              <button type="button" className={styles.btnGhost} onClick={() => setGalleryOpen(true)}>{t.viewAll}</button>
+              <button type="button" className={styles.btnGhost} onClick={() => setGalleryOpen(true)}>{t.viewAll(cs.media.gallery.length)}</button>
             </section>
 
             <section className={styles.handoff}>
               <p className={styles.handoffText}>{L(cs.contactHandoff)}</p>
               <div className={styles.actions}>
                 <a href="#contact" className={styles.btnPrimary} onClick={onClose}>{t.talk}</a>
-                <a href={githubUrl} target="_blank" rel="noreferrer" className={styles.btnGhost}>{t.code}</a>
+                <a href={githubUrl} target="_blank" rel="noreferrer" className={styles.btnGhost}>
+                  <img src={githubIcon} alt="" aria-hidden="true" className={styles.btnIcon} />
+                  {isSoloProject ? t.soloCode : t.code}
+                </a>
               </div>
             </section>
           </div>
