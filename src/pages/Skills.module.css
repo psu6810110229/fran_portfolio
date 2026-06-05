@@ -1,91 +1,103 @@
 .skills {
+  border-top: 0.5px solid var(--color-border-soft);
   border-bottom: 0.5px solid var(--color-border-soft);
 }
 
 .inner {
-  padding: 36px 5vw;
+  padding: 40px 5vw;
 }
 
-.secHeader {
-  margin-bottom: 24px;
-}
-
-.secTitle {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-text-faint);
-}
-
-/* ── Capability groups ── */
-.groups {
+/* ── Two-zone layout ── */
+.layout {
   display: flex;
   flex-direction: column;
+  gap: 28px;
 }
 
-.group {
+/* ── Primary zone (Interface) ── */
+.zonePrimary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 28px;
+  border-bottom: 0.5px solid var(--color-border-soft);
+}
+
+.primaryChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.chipPrimary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.75rem;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.chipPrimary i {
+  font-size: 28px;
+  color: var(--color-accent);
+}
+
+/* ── Secondary zone ── */
+.zoneSecondary {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
-  padding: 20px 0;
-  border-top: 0.5px solid var(--color-border-soft);
+  gap: 20px;
 }
 
-.group:first-child {
-  border-top: none;
-  padding-top: 0;
+.secondaryGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.groupLabel {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.0625rem;
-  letter-spacing: -0.01em;
-  color: var(--color-text);
-}
-
-/* ── Chips ── */
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 7px 14px;
-  background: var(--color-surface);
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-sub);
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
 }
 
 .chip i {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--color-text-dim);
 }
 
-.chipPrimary i {
-  color: var(--color-accent);
+.chipImg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  object-fit: contain;
 }
 
-.chip:hover {
-  border-color: var(--color-text-faint);
+/* ── Group label ── */
+.groupLabel {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
 }
 
-/* ── Desktop: label column + chips ── */
 @media (min-width: 768px) {
-  .group {
-    grid-template-columns: 180px 1fr;
-    align-items: start;
-    gap: 28px;
-    padding: 22px 0;
-  }
-
-  .groupLabel {
-    padding-top: 5px;
+  .zoneSecondary {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
   }
 }
