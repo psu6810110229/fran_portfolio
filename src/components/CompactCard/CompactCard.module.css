@@ -73,6 +73,9 @@
 }
 
 .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 3px 10px;
   border: 0.5px solid var(--color-border);
   border-radius: 20px;
@@ -92,7 +95,8 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 14px;
+  min-height: 44px;
+  padding: 0 14px;
   border: 0.5px solid var(--color-border);
   border-radius: 8px;
   font-size: 13px;
@@ -100,9 +104,13 @@
   white-space: nowrap;
 }
 
-.lbtn i {
-  font-size: 14px;
-  color: var(--color-text-dim);
+.linkIcon {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: invert(1);
+  opacity: 0.86;
 }
 
 .lbtnAcc {
@@ -111,4 +119,7 @@
   color: #fff;
 }
 
-.lbtnAcc i { color: #fff; }
+:global([data-theme="light"]) .linkIcon {
+  filter: none;
+  opacity: 0.9;
+}
