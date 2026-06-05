@@ -12,19 +12,19 @@ Three audiences, in priority order. The first two are weighted equally and are *
 - **Freelance clients and people who might hire Fran directly.** Founders, small-business owners, and project leads who need someone to turn an idea into a working web product. They care about "can this person understand what I need and build it," not framework trivia.
 - **Technical reviewers** (secondary). Senior developers or leads who may look closer at the code and craft. They should find real depth when they dig, but the site is **not written for them first**.
 
-Everyone arrives skeptical and time-poor. The job to be done: in one scroll, make a mixed audience believe Fran can take an idea and turn it into a usable, well-built web product — and is worth contacting.
+Everyone arrives skeptical and time-poor. The job to be done: in one scroll, make a mixed audience believe Fran can take an idea and turn it into a usable, well-built web or mobile product — and is worth contacting.
 
 ## Product Purpose
 
-A bilingual (EN/TH) personal portfolio for Patcharapon ("Fran"), a first-year Computer Engineering student at Prince of Songkla University (Hat Yai). It exists to win conversations: internship interviews, freelance work, and direct hiring. The *site itself* is the primary proof — its design, build quality, and clarity are a live work sample. But the content must also make the **value plain to non-developers**: not just "look how polished this is," but "here is someone who understands a problem, plans it, builds it across the stack, and ships something people can use." Success is a recruiter, a client, or a reviewer walking away thinking "this person can build what I need" and reaching out.
+A bilingual (EN/TH) personal portfolio for Patcharapon ("Fran"), a first-year Computer Engineering student at Prince of Songkla University (Hat Yai). It exists to win conversations: internship interviews, freelance work, and direct hiring. The *site itself* is the primary proof — its design, build quality, and clarity are a live work sample. But the content must also make the **value plain to non-developers**: not just "look how polished this is," but "here is someone who understands a problem, plans it, builds it across the full stack and on mobile, and ships something people can use." Success is a recruiter, a client, or a reviewer walking away thinking "this person can build what I need" and reaching out.
 
 ## Positioning
 
-**Fran is a product-minded software developer who turns ideas into usable web products.**
+**Fran is a product-minded software developer who turns ideas into usable web and mobile products.**
 
-Not "a first-year student hoping for a front-end internship," and not "a front-end developer who makes pretty screens." The honest, fuller picture: someone who works across the stack (front-end and back-end), thinks about the product and the user rather than only the UI, and owns the path from idea to shipped — planning, building, debugging, delivering, and collaborating with others.
+Not "a first-year student hoping for a front-end internship," and not "a front-end developer who makes pretty screens." The honest, fuller picture: someone who works across the full stack (front-end, back-end, and mobile), thinks about the product and the user rather than only the UI, and owns the path from idea to shipped — planning, building, debugging, delivering, and collaborating with others.
 
-Front-end craft is the most visible evidence and stays the showcase, but it is presented as *one part* of a broader ability to ship real software, not the whole story.
+Front-end craft is the most visible evidence and stays the showcase, but it is presented as *one part* of a broader ability to ship real software — web and mobile — not the whole story.
 
 **Honesty guardrail.** Fran is early-career (a first-year Computer Engineering student). "Product-minded developer who can ship" describes how Fran works and thinks, not years of professional seniority. Stretch the framing, never the facts.
 
@@ -74,8 +74,8 @@ Projects are the heart of the pitch and should read as short, plain-language cas
 ## What the Site Should / Should Not Imply
 
 **Should imply:**
-- Fran can take an idea and turn it into a working, usable web product.
-- Fran works across the stack and thinks about the whole product, not only the UI.
+- Fran can take an idea and turn it into a working, usable web or mobile product.
+- Fran works across the full stack (front-end, back-end, mobile) and thinks about the whole product, not only the UI.
 - Fran owns delivery: plans, builds, debugs, ships, and collaborates with others.
 - Real craft and attention to detail, evidenced by the site itself.
 - A specific, warm, capable person who is easy to talk to and worth contacting.
@@ -84,7 +84,7 @@ Projects are the heart of the pitch and should read as short, plain-language cas
 - Years of senior or professional experience. Fran is early-career; don't dress that up.
 - A team, agency, or studio behind the work.
 - Invented scale, fake metrics, or clients and projects that don't exist.
-- That Fran is *only* a front-end developer, or *only* a student.
+- That Fran is *only* a front-end developer, *only* a web developer, or *only* a student.
 - Anything an honest conversation would contradict; every claim must survive a follow-up question.
 
 ## Accessibility & Inclusion
