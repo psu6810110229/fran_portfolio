@@ -437,7 +437,7 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
             th: 'เปลี่ยนแรงรับผิดชอบร่วมกันให้เป็น dashboard ที่ใช้ง่าย',
           },
         ],
-        galleryIndex: 8,
+        galleryIndex: 3,
       },
     ],
     stats: [
@@ -625,7 +625,7 @@ function Projects() {
   };
 
   const showcaseProjects = projects.filter((project) => project.caseStudy && showcaseConfigs[project.title]);
-  const otherProjects = projects.filter((project) => !project.caseStudy);
+  const otherProjects = projects.filter((project) => !(project.caseStudy && showcaseConfigs[project.title]));
 
   return (
     <section id="projects" className={styles.projects}>
@@ -733,6 +733,14 @@ function Projects() {
                     <span className={styles.bentoTeamPill}>{L(showcase.teamPill, lang)}</span>
                   )}
                 </div>
+
+                <button
+                  type="button"
+                  className={styles.bentoMoreMobile}
+                  onClick={() => setCaseProject(featured)}
+                >
+                  {t.liveDemo}
+                </button>
               </div>
 
               <div className={mediaRowClassName}>
@@ -825,6 +833,9 @@ function Projects() {
                   key={projectItem.title}
                   {...projectItem}
                   description={lang === 'th' ? (projectItem.descriptionTh ?? projectItem.description) : projectItem.description}
+                  onOpenGallery={projectItem.gallery ? () => openVideoGallery(projectItem) : undefined}
+                  onOpenCase={projectItem.caseStudy ? () => setCaseProject(projectItem) : undefined}
+                  caseLabel={t.liveDemo}
                 />
               ))}
             </div>

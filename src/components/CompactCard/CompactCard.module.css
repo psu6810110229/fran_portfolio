@@ -19,6 +19,32 @@
   justify-content: center;
 }
 
+.thumbButton {
+  width: 100%;
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.playBadge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
 .thumbImg {
   width: 100%;
   height: 100%;
@@ -122,4 +148,71 @@
 :global([data-theme="light"]) .linkIcon {
   filter: none;
   opacity: 0.9;
+}
+
+/* ---------------------------------------------------------------------------
+   Phone (<768px): compact 2-up cards. The preview is locked to 16:9, the body
+   is tightened, and the card shows a single primary action — GitHub drops out
+   whenever a richer action (More details / Live demo) exists, so cards stay
+   short enough to scan up to four projects at once. Desktop is unchanged.
+--------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .thumb {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .playBadge {
+    width: 30px;
+    height: 30px;
+    right: 8px;
+    bottom: 8px;
+    font-size: 12px;
+  }
+
+  .body {
+    padding: 13px;
+    gap: 7px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+
+  .desc {
+    flex: 0 0 auto;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .badges {
+    gap: 5px;
+  }
+
+  .badge {
+    padding: 2px 8px;
+    font-size: 11px;
+  }
+
+  .links {
+    gap: 6px;
+    margin-top: auto;
+  }
+
+  /* Drop GitHub when the card has a richer action; keep it as the lone fallback */
+  .links:has(.lbtnAcc) .lbtn:not(.lbtnAcc) {
+    display: none;
+  }
+
+  .lbtn {
+    flex: 1;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
 }

@@ -37,9 +37,25 @@ import goOutG07 from '../assets/GO-OUT/images/IMG_20260604_18512589.jpeg';
 import goOutG08 from '../assets/GO-OUT/images/IMG_20260604_18513373.jpeg';
 import goOutVideo from '../assets/GO-OUT/vdo/GO-OUT preview.mp4';
 
+// Gear Rental assets (optimised, see scripts/optimize-gear-rental-media.mjs)
+import gearCover from '../assets/Gear_Rental/opt/cover.webp';
+import gearG00 from '../assets/Gear_Rental/opt/gallery-00.webp';
+import gearG01 from '../assets/Gear_Rental/opt/gallery-01.webp';
+import gearG02 from '../assets/Gear_Rental/opt/gallery-02.webp';
+import gearG03 from '../assets/Gear_Rental/opt/gallery-03.webp';
+import gearG04 from '../assets/Gear_Rental/opt/gallery-04.webp';
+import gearG05 from '../assets/Gear_Rental/opt/gallery-05.webp';
+import gearG06 from '../assets/Gear_Rental/opt/gallery-06.webp';
+import gearG07 from '../assets/Gear_Rental/opt/gallery-07.webp';
+import gearG08 from '../assets/Gear_Rental/opt/gallery-08.webp';
+import gearG09 from '../assets/Gear_Rental/opt/gallery-09.webp';
+import gearVideo from '../assets/Gear_Rental/opt/gear-rental.mp4';
+
 // Gallery order preserved from the original screenshots: user 452-462 (0-10), admin 463-467 (11-15).
 const tours9Gallery = [g00, g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g12, g13, g14, g15];
 const goOutGallery = [goOutG00, goOutG01, goOutG02, goOutG03, goOutG04, goOutG05, goOutG06, goOutG07, goOutG08];
+// Gear Rental order: user flow (login -> rent -> my rentals), then admin (dashboard -> approve -> edit).
+const gearRentalGallery = [gearG00, gearG01, gearG02, gearG03, gearG04, gearG05, gearG06, gearG07, gearG08, gearG09];
 
 export const projects: Project[] = [
   {
@@ -173,7 +189,7 @@ export const projects: Project[] = [
         th: 'นี่คือ GO-OUT แอปออมเงินที่สร้างจากความน่าเชื่อถือ ความเป็นส่วนตัว และความคืบหน้าที่จับต้องได้ ถ้าอยากคุยเรื่องโปรดักต์แบบนี้ ทักผมมาได้เลย',
       },
       media: {
-        hero: goOutG00,
+        hero: goOutG08,
         thumbs: [goOutG01, goOutG03, goOutG08],
         gallery: goOutGallery,
         video: goOutVideo,
@@ -183,11 +199,73 @@ export const projects: Project[] = [
   },
   {
     title: 'Gear Rental',
-    description: 'Gear rental platform for the PSU photo club. Built as a paired warmup project before 9tours.',
-    descriptionTh: 'ระบบยืม-คืนอุปกรณ์สำหรับชมรมถ่ายภาพ ม.อ. พัฒนาเป็นโปรเจกต์จับคู่ก่อน 9tours',
+    description:
+      'Full-stack gear-rental system for the PSU photo club — React front-end with a NestJS + PostgreSQL API. Role-based JWT access, booking-overlap detection, and an audit log. A paired warmup project before 9tours.',
+    descriptionTh:
+      'ระบบยืม-คืนอุปกรณ์แบบ full-stack สำหรับชมรมถ่ายภาพ ม.อ. ส่วนหน้าเป็น React และ API เป็น NestJS + PostgreSQL มีระบบสิทธิ์ JWT ตามบทบาท ตรวจจับการจองซ้อนเวลา และบันทึกประวัติการใช้งาน เป็นโปรเจกต์จับคู่ก่อน 9tours',
     tag: 'Pair · 240-124',
-    techs: ['TypeScript', 'CSS', 'Docker'],
+    techs: ['React', 'TypeScript', 'SQL', 'Docker'],
     githubUrl: 'https://github.com/psu6810110229/mini_project',
+    thumbnail: gearCover,
+    previewVideo: gearVideo,
+    gallery: gearRentalGallery,
+    // Role/contribution reflect Fran's stated full-stack pair role; the rest is drawn from
+    // PROJECT_DOCUMENTATION.md. Confirm the personal specifics before relying on this copy.
+    caseStudy: {
+      problem: {
+        en: "Photo-club students need to borrow shared gear — cameras, lenses — for a set range of dates, but a single physical item can't be in two hands at once. Without a system, bookings collide and nobody knows who is holding what, while admins still have to track stock, approve requests, and keep a record.",
+        th: 'นักศึกษาชมรมถ่ายภาพต้องยืมอุปกรณ์ส่วนกลาง เช่น กล้องและเลนส์ ตามช่วงวันที่ที่ต้องการ แต่ของชิ้นเดียวกันอยู่กับสองคนพร้อมกันไม่ได้ ถ้าไม่มีระบบ การจองจะชนกันและไม่มีใครรู้ว่าใครถืออะไรอยู่ ส่วนแอดมินก็ยังต้องคอยติดตามสต๊อก อนุมัติคำขอ และเก็บประวัติ',
+      },
+      role: {
+        en: 'Gear Rental was a pair project at PSU (course 240-124) and our warmup before 9tours. I worked full-stack alongside my partner — roughly evenly across the React front-end and the NestJS + PostgreSQL API.',
+        th: 'Gear Rental เป็นโปรเจกต์จับคู่ที่ ม.อ. (วิชา 240-124) และเป็นงานวอร์มอัพก่อน 9tours ผมทำแบบ full-stack ร่วมกับเพื่อน ทั้งฝั่ง React และ API ที่เป็น NestJS + PostgreSQL ในสัดส่วนพอ ๆ กัน',
+      },
+      whatTeamBuilt: {
+        en: 'Together we built the rental lifecycle end to end: browse the gear, pick a specific item, request it for a date range, and an admin side to approve, check out, return, and audit. It runs on JWT auth with user and admin roles, plus pickup and return evidence uploads.',
+        th: 'ทั้งทีมสร้างระบบยืม-คืนครบทั้งวงจร ตั้งแต่ดูอุปกรณ์ เลือกชิ้นที่ต้องการ ขอยืมตามช่วงวันที่ ไปจนถึงฝั่งแอดมินที่อนุมัติ จ่ายของ รับคืน และดูประวัติ ทำงานบนระบบล็อกอิน JWT ที่แยกสิทธิ์ผู้ใช้กับแอดมิน พร้อมการอัปโหลดหลักฐานรับ-คืน',
+      },
+      personalContribution: {
+        en: 'I built across both sides with my partner: the React screens for browsing and requesting gear, and the NestJS API with its PostgreSQL data model — the rental rules, item stock, and the booking checks behind them.',
+        th: 'ผมลงมือทั้งสองฝั่งร่วมกับเพื่อน ทั้งหน้าจอ React สำหรับดูและขอยืมอุปกรณ์ และ API บน NestJS พร้อมโมเดลข้อมูล PostgreSQL ทั้งกฎการยืม การจัดการสต๊อกรายชิ้น และการตรวจสอบการจองที่อยู่เบื้องหลัง',
+      },
+      hardestIssue: {
+        headline: {
+          en: 'The hardest part was making sure one piece of gear could never be booked by two people over overlapping dates.',
+          th: 'ส่วนที่ยากที่สุดคือทำให้อุปกรณ์ชิ้นเดียวกันถูกจองโดยสองคนในช่วงวันที่ซ้อนกันไม่ได้',
+        },
+        plain: {
+          en: 'Each camera or lens is one real unit. If two requests for the same item overlapped in time, approving both would double-book it — so the booking had to understand date ranges, not just whether the item is free right now.',
+          th: 'กล้องหรือเลนส์แต่ละตัวคือของจริงหนึ่งชิ้น ถ้าคำขอสองคำขอของชิ้นเดียวกันมีช่วงวันที่คาบเกี่ยวกัน การอนุมัติทั้งคู่จะทำให้ของถูกจองซ้อน ระบบจองจึงต้องเข้าใจ "ช่วงวันที่" ไม่ใช่แค่ว่าตอนนี้ว่างหรือไม่',
+        },
+        whatWeDid: {
+          en: 'We treat an existing booking as a conflict when it starts before the new one ends and ends after the new one starts. When an admin approves a request, the API automatically rejects any other pending requests that overlap the same item and dates, so a unit is only ever promised to one person per window. Stock and item status update on checkout and return, so the catalog always matches reality.',
+          th: 'เราถือว่าการจองเดิมชนกันเมื่อมันเริ่มก่อนที่การจองใหม่จะจบ และจบหลังจากที่การจองใหม่เริ่ม เมื่อแอดมินอนุมัติคำขอหนึ่ง API จะปฏิเสธคำขอที่ยังค้างอยู่ซึ่งซ้อนทับชิ้นและช่วงวันที่เดียวกันโดยอัตโนมัติ ของชิ้นนั้นจึงถูกสัญญาให้คนเดียวต่อหนึ่งช่วงเวลา และสถานะสต๊อกจะอัปเดตตอนจ่ายของและรับคืน เพื่อให้แคตตาล็อกตรงกับความจริงเสมอ',
+        },
+      },
+      decisions: {
+        en: 'We modeled the catalog by individual unit: one equipment record (say, a Canon RF 70mm) owns several rentable items, each with its own code and status, so availability is tracked per physical unit rather than per category. The cart lives on the client and expires after 15 minutes — it never quietly reserves stock, which keeps the server the single source of truth for what is actually booked.',
+        th: 'เราออกแบบแคตตาล็อกแบบราย "ชิ้น" อุปกรณ์หนึ่งรายการ (เช่น Canon RF 70mm) มีหน่วยที่ยืมได้หลายชิ้น แต่ละชิ้นมีรหัสและสถานะของตัวเอง ความพร้อมให้ยืมจึงนับรายชิ้นจริง ไม่ใช่รายประเภท ส่วนตะกร้าอยู่ฝั่งผู้ใช้และหมดอายุใน 15 นาที โดยไม่ไปจองสต๊อกจริงแบบเงียบ ๆ เพื่อให้เซิร์ฟเวอร์เป็นแหล่งข้อมูลจริงเพียงจุดเดียวว่าอะไรถูกจองไปแล้ว',
+      },
+      collaboration: {
+        en: 'As a pair we split the work across the whole stack and kept the front-end and the API agreeing on the same rental states — pending, approved, checked out, returned. Getting both sides to mean the same thing by that state machine is what made the booking flow trustworthy.',
+        th: 'ในฐานะคู่หู เราแบ่งงานกันทั้งระบบ และทำให้ฝั่งหน้าจอกับ API เข้าใจสถานะการจองตรงกัน ทั้งรออนุมัติ อนุมัติ จ่ายของ และรับคืน การทำให้สองฝั่งหมายถึงสิ่งเดียวกันผ่านสถานะเหล่านี้ คือสิ่งที่ทำให้ระบบจองน่าเชื่อถือ',
+      },
+      result: {
+        en: 'A working full-stack rental system: students browse gear, request specific items for a date range, and admins approve, check out, return, and audit it — with double-bookings prevented at the API. It was our warmup before 9tours, and where the booking-overlap thinking that 9tours leaned on first clicked.',
+        th: 'ได้ระบบยืม-คืนแบบ full-stack ที่ใช้งานได้จริง นักศึกษาเลือกอุปกรณ์และขอยืมตามช่วงวันที่ ส่วนแอดมินอนุมัติ จ่ายของ รับคืน และตรวจประวัติได้ โดยกันการจองซ้อนตั้งแต่ที่ API เป็นงานวอร์มอัพก่อน 9tours และเป็นจุดที่แนวคิดเรื่องการจองซ้อนเวลาที่ 9tours ใช้ต่อเริ่มเข้าที่',
+      },
+      contactHandoff: {
+        en: 'That is Gear Rental — a full-stack booking system built as a pair. If you want to talk through how I would build something like this, I am one message away.',
+        th: 'นี่คือ Gear Rental ระบบจองแบบ full-stack ที่ทำกันเป็นคู่ ถ้าอยากคุยว่าผมจะสร้างงานแบบนี้ยังไง ทักผมมาได้เลย',
+      },
+      media: {
+        hero: gearCover,
+        thumbs: [gearG01, gearG02, gearG05],
+        gallery: gearRentalGallery,
+        video: gearVideo,
+        videoPoster: gearCover,
+      },
+    },
   },
   {
     title: 'MinusOnMine',
