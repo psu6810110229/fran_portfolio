@@ -13,10 +13,11 @@
 
 .secTitle,
 .otherTitle {
-  font-size: 11px;
+  font-size: 13px;
+  font-weight: 800;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: #7a6e66;
+  color: #c7b6a4;
 }
 
 .bento {
@@ -25,8 +26,45 @@
   gap: 10px;
 }
 
+.bento + .bento {
+  margin-top: 64px;
+}
+
+.bentoGuide {
+  display: grid;
+  grid-template-columns: auto minmax(28px, 1fr);
+  gap: 8px 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.bentoGuideKicker {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: #d4651a;
+}
+
+.bentoGuideLine {
+  display: block;
+  height: 1px;
+  background: #2a2520;
+}
+
+.bentoGuideText {
+  grid-column: 1 / -1;
+  max-width: 62ch;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #7a6e66;
+}
+
 .bentoHeading {
-  margin: 0 0 20px;
+  margin: 0 0 22px;
   font-family: 'Syne', sans-serif;
   font-size: 20px;
   font-weight: 800;
@@ -38,10 +76,19 @@
   font-family: 'IBM Plex Sans Thai', sans-serif;
 }
 
-.bentoTopRow,
-.bentoMediaRow {
+:global([data-lang="th"]) .bentoGuideKicker {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.bentoTopRow {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.bentoMediaRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
@@ -86,9 +133,8 @@
 
 .bentoThumbWrap {
   position: relative;
-  flex: 1;
-  min-height: 180px;
-  height: auto;
+  flex: none;
+  height: 220px;
   background: #0e0c0a;
   overflow: hidden;
 }
@@ -160,6 +206,22 @@
   visibility: visible;
 }
 
+.bentoMain.intentActive .bentoDetail,
+.bentoRole.intentActive .bentoDetail,
+.bentoShot.intentActive .bentoDetail,
+.bentoMain:focus-within .bentoDetail,
+.bentoRole:focus-within .bentoDetail,
+.bentoShot:focus-within .bentoDetail {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.bentoRoleWithFacts.intentActive .bentoDetail,
+.bentoRoleWithFacts:focus-within .bentoDetail {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
 .bentoRole {
   display: flex;
   flex-direction: column;
@@ -167,11 +229,21 @@
   padding: 18px;
 }
 
+.bentoRoleWithFacts {
+  gap: 12px;
+}
+
 .bentoCellLabel {
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 800;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: #7a6e66;
+  color: #b0a090;
+}
+
+.bentoRole > .bentoCellLabel {
+  font-size: 13px;
+  color: #c7b6a4;
 }
 
 .bentoRoleTitle {
@@ -210,6 +282,90 @@
   background: #d4651a;
 }
 
+.bentoFactGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 2px;
+  padding: 4px 0 0;
+}
+
+.bentoFact {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 10px;
+}
+
+.bentoFact + .bentoFact {
+  border-left: 1px solid #2a2520;
+}
+
+.bentoRoleWithFacts .bentoDetail {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: visible;
+  max-height: none;
+  min-height: 0;
+  margin-top: 0;
+  padding: 16px;
+  border: 1px solid rgba(42, 37, 32, 0.6);
+  border-radius: 16px;
+  background: rgba(14, 12, 10, 0.72);
+  color: #e0d4c8;
+}
+
+.bentoRoleWithFacts.intentActive .bentoDetail,
+.bentoRoleWithFacts:focus-within .bentoDetail {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+}
+
+.bentoRoleWithFacts .bentoDetailHeader {
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.bentoRoleWithFacts .bentoDetailBody {
+  display: block;
+  color: #7a6e66;
+}
+
+.bentoFactLabel {
+  font-family: 'Syne', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: #403a34;
+}
+
+.bentoFactValue {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #e0d4c8;
+  overflow-wrap: anywhere;
+}
+
+:global([data-lang="th"]) .bentoFactLabel {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+:global([data-lang="th"]) .bentoFactValue {
+  font-size: 11px;
+}
+
 .bentoTeamPill {
   display: inline-flex;
   align-items: center;
@@ -225,38 +381,48 @@
 .bentoShot {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
   min-height: 160px;
-  padding: 16px;
+  padding: 0;
   overflow: hidden;
   font-family: inherit;
   text-align: left;
   cursor: pointer;
 }
 
+.bentoShot .bentoCellLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .bentoMain .bentoDetail,
 .bentoRole .bentoDetail,
 .bentoShot .bentoDetail {
   position: absolute;
-  right: 20px;
-  bottom: 20px;
-  left: 20px;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   min-height: 0;
   margin-top: 0;
-  padding: 12px;
+  padding: 16px;
   border: 1px solid rgba(42, 37, 32, 0.6);
-  border-radius: 12px;
+  border-radius: 16px;
   background: rgba(14, 12, 10, 0.72);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
   color: #e0d4c8;
 }
 
 .bentoMain .bentoDetail,
 .bentoRole .bentoDetail {
-  right: 18px;
-  bottom: 18px;
-  left: 18px;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
 }
 
 .bentoDetailHeader {
@@ -270,22 +436,26 @@
 }
 
 .bentoDetailBody {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  display: block;
   margin: 0;
   font-size: 12px;
-  line-height: 1.3;
+  line-height: 1.45;
   color: #b0a090;
+}
+
+.bentoDetailBody span {
+  display: inline;
+}
+
+.bentoDetailBody span + span::before {
+  content: ' ';
 }
 
 .bentoShotImgWrap {
   position: relative;
-  flex: 1;
-  min-height: 100px;
+  flex: none;
+  height: 160px;
   overflow: hidden;
-  border: 1px solid #2a2520;
-  border-radius: 14px;
   background: #141210;
 }
 
@@ -293,7 +463,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 100px;
+  min-height: 160px;
   object-fit: cover;
   object-position: top;
   transform-origin: top center;
@@ -310,6 +480,7 @@
 .bentoStats {
   position: relative;
   display: grid;
+  grid-column: 1 / -1;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   padding: 18px 14px;
@@ -412,8 +583,8 @@
 }
 
 .bentoBottom {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 14px;
   padding: 16px;
 }
@@ -421,36 +592,37 @@
 .bentoBadges {
   display: flex;
   flex-wrap: wrap;
-  flex-basis: 100%;
-  gap: 8px;
+  grid-row: 1;
+  gap: 16px;
 }
 
 .badgePrimary,
 .badgeSecondary {
   display: inline-flex;
   align-items: center;
-  min-height: 30px;
-  padding: 0 12px;
-  border: 1px solid #2a2520;
-  border-radius: 999px;
-  font-size: 12px;
+  gap: 6px;
+  font-size: 13px;
   color: #7a6e66;
 }
 
 .badgePrimary {
-  border-color: #d4651a;
-  color: #e0d4c8;
+  color: #c8bdb4;
 }
 
 .bentoLinks {
   display: flex;
   flex-wrap: wrap;
-  flex-basis: 100%;
+  grid-row: 3;
   gap: 10px;
 }
 
 .bentoBottom .bentoDetail {
-  flex-basis: 100%;
+  grid-row: 2;
+  min-height: 0;
+  margin-top: 0;
+  opacity: 1;
+  transform: none;
+  visibility: visible;
 }
 
 .btnGhost,
@@ -466,6 +638,7 @@
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
+  gap: 8px;
 }
 
 .btnGhost {
@@ -478,6 +651,15 @@
   border: 1px solid #d4651a;
   background: #d4651a;
   color: #ffffff;
+}
+
+.btnIcon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: invert(1);
+  opacity: 0.88;
 }
 
 .bentoShot:focus-visible,
@@ -504,7 +686,8 @@
 
 :global([data-lang="th"]) .bentoTitle,
 :global([data-lang="th"]) .bentoRoleTitle,
-:global([data-lang="th"]) .bentoDetailHeader {
+:global([data-lang="th"]) .bentoDetailHeader,
+:global([data-lang="th"]) .bentoFactValue {
   font-family: 'IBM Plex Sans Thai', sans-serif;
 }
 
@@ -522,10 +705,22 @@
   border-bottom-color: #e0d8d0;
 }
 
+:global([data-theme="light"]) .bentoGuideText {
+  color: #7a6658;
+}
+
 :global([data-theme="light"]) .secTitle,
 :global([data-theme="light"]) .otherTitle,
 :global([data-theme="light"]) .bentoCellLabel {
-  color: #9a8a80;
+  color: #3a2e28;
+}
+
+:global([data-theme="light"]) .bentoRole > .bentoCellLabel {
+  color: #1a1614;
+}
+
+:global([data-theme="light"]) .bentoGuideLine {
+  background: #e0d8d0;
 }
 
 :global([data-theme="light"]) .bentoMain,
@@ -540,6 +735,10 @@
 :global([data-theme="light"]) .bentoShotImgWrap {
   background: #e8e2da;
   border-color: #e0d8d0;
+}
+
+:global([data-theme="light"]) .bentoFact + .bentoFact {
+  border-left-color: #d8cec4;
 }
 
 :global([data-theme="light"]) .bentoMain .bentoDetail,
@@ -561,6 +760,7 @@
 :global([data-theme="light"]) .bentoHeading,
 :global([data-theme="light"]) .bentoTitle,
 :global([data-theme="light"]) .bentoRoleTitle,
+:global([data-theme="light"]) .bentoFactValue,
 :global([data-theme="light"]) .btnGhost,
 :global([data-theme="light"]) .badgePrimary {
   color: #1a1614;
@@ -570,6 +770,7 @@
 :global([data-theme="light"]) .bentoRoleList li,
 :global([data-theme="light"]) .bentoTeamPill,
 :global([data-theme="light"]) .bentoDetail,
+:global([data-theme="light"]) .bentoFactLabel,
 :global([data-theme="light"]) .badgeSecondary {
   color: #5a4a40;
 }
@@ -580,9 +781,31 @@
   border-color: #e0d8d0;
 }
 
+:global([data-theme="light"]) .btnIcon {
+  filter: none;
+  opacity: 0.9;
+}
+
 @media (min-width: 768px) {
   .bento {
     grid-template-columns: 1fr;
+  }
+
+  .bento + .bento {
+    margin-top: 84px;
+  }
+
+  .bentoGuide {
+    grid-template-columns: auto minmax(0, 1fr) minmax(260px, auto);
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .bentoGuideText {
+    grid-column: auto;
+    justify-self: end;
+    max-width: 46ch;
+    text-align: right;
   }
 
   .bentoTopRow,
@@ -602,12 +825,12 @@
 
   .bentoTopRowMainIntent,
   .bentoTopRow:has(.bentoMain:focus-within) {
-    grid-template-columns: minmax(0, 7.6fr) minmax(0, 4.4fr);
+    grid-template-columns: minmax(0, 7.25fr) minmax(0, 4.75fr);
   }
 
   .bentoTopRowRoleIntent,
   .bentoTopRow:has(.bentoRole:focus-within) {
-    grid-template-columns: minmax(0, 6.3fr) minmax(0, 5.7fr);
+    grid-template-columns: minmax(0, 6.75fr) minmax(0, 5.25fr);
   }
 
   .bentoMediaRow {
@@ -618,16 +841,16 @@
 
   .bentoMediaRowBookingIntent,
   .bentoMediaRow:has(.bentoShot1:focus-within) {
-    grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.94fr) minmax(120px, 0.44fr);
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.99fr) minmax(120px, 0.47fr);
   }
 
   .bentoMediaRowAdminIntent,
   .bentoMediaRow:has(.bentoShot2:focus-within) {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr) minmax(120px, 0.44fr);
+    grid-template-columns: minmax(0, 0.97fr) minmax(0, 1.1fr) minmax(120px, 0.47fr);
   }
 
   .bentoMediaRowStatsIntent {
-    grid-template-columns: minmax(0, 0.98fr) minmax(0, 0.98fr) minmax(120px, 0.58fr);
+    grid-template-columns: minmax(0, 0.99fr) minmax(0, 0.99fr) minmax(120px, 0.52fr);
   }
 
   .bentoTopRow > *,
@@ -638,17 +861,17 @@
   .bentoShot {
     height: 100%;
     min-height: auto;
-    padding: 14px;
   }
 
   .bentoShotImgWrap,
   .bentoShotImg {
     flex: 1;
-    height: auto;
-    min-height: 0;
+    height: 100%;
+    min-height: 100%;
   }
 
   .bentoStats {
+    grid-column: auto;
     align-self: stretch;
     grid-template-columns: 1fr;
     align-content: center;
@@ -670,19 +893,33 @@
   }
 
   .bentoThumbWrap {
+    flex: 1;
     min-height: 260px;
+    height: auto;
   }
 
   .bentoBottom {
-    flex-direction: row;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
+    column-gap: 20px;
+    row-gap: 12px;
     padding: 16px 20px;
   }
 
-  .bentoBadges,
+  .bentoBadges {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
   .bentoLinks {
-    flex-basis: auto;
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-end;
+  }
+
+  .bentoBottom .bentoDetail {
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .bentoBottom.intentActive,
