@@ -1,3 +1,5 @@
+import TechBadge from '../TechBadge/TechBadge';
+import githubIcon from '../../assets/icons/github.svg';
 import styles from './CompactCard.module.css';
 
 interface Props {
@@ -26,13 +28,13 @@ function CompactCard({ title, description, techs, githubUrl, liveUrl, thumbnail 
 
         <div className={styles.badges}>
           {techs.map((t) => (
-            <span key={t} className={styles.badge}>{t}</span>
+            <TechBadge key={t} tech={t} className={styles.badge} />
           ))}
         </div>
 
         <div className={styles.links}>
           <a href={githubUrl} target="_blank" rel="noreferrer" className={styles.lbtn} aria-label="GitHub">
-            <i className="devicon-github-original" aria-hidden="true" />
+            <img src={githubIcon} alt="" aria-hidden="true" className={styles.linkIcon} />
             GitHub
           </a>
           {liveUrl && (
