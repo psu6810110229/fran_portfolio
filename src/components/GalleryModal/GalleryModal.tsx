@@ -5,8 +5,8 @@ import { useLanguage } from '../../hooks/useLanguage';
 import styles from './GalleryModal.module.css';
 
 const labels = {
-  en: { close: 'Close gallery', prev: 'Previous', next: 'Next', swipe: 'swipe to navigate', screenshot: 'Screenshot' },
-  th: { close: 'ปิดแกลเลอรี', prev: 'ก่อนหน้า', next: 'ถัดไป', swipe: 'ปัดเพื่อเลื่อนดู', screenshot: 'ภาพหน้าจอ' },
+  en: { close: 'Close gallery', prev: 'Previous', next: 'Next', swipe: 'swipe to navigate', screenshot: 'Screenshot', gallery: 'Image gallery' },
+  th: { close: 'ปิดแกลเลอรี', prev: 'ก่อนหน้า', next: 'ถัดไป', swipe: 'ปัดเพื่อเลื่อนดู', screenshot: 'ภาพหน้าจอ', gallery: 'แกลเลอรีรูปภาพ' },
 };
 
 interface Props {
@@ -22,19 +22,39 @@ function GalleryModal({ images, video, initialIndex, onClose }: Props) {
   const total = (video ? 1 : 0) + images.length;
   const [index, setIndex] = useState(initialIndex);
   const touchStartX = useRef<number | null>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   const prev = () => setIndex((i) => (i - 1 + total) % total);
   const next = () => setIndex((i) => (i + 1) % total);
 
+  // Scroll lock + initial focus + focus restore.
+  useEffect(() => {
+    const prevFocus = document.activeElement as HTMLElement | null;
+    overlayRef.current?.focus();
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+      prevFocus?.focus();
+    };
+  }, []);
+
+  // Escape / arrow keys + Tab focus trap.
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape')     onClose();
-      if (e.key === 'ArrowLeft')  prev();
-      if (e.key === 'ArrowRight') next();
+      if (e.key === 'Escape')     { onClose(); return; }
+      if (e.key === 'ArrowLeft')  { prev(); return; }
+      if (e.key === 'ArrowRight') { next(); return; }
+      const root = overlayRef.current;
+      if (e.key !== 'Tab' || !root) return;
+      const focusable = root.querySelectorAll<HTMLElement>('button:not([disabled]), video[controls], [tabindex]:not([tabindex="-1"])');
+      if (!focusable.length) return;
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-  }, []);
+  }, [onClose]);
 
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -52,12 +72,15 @@ function GalleryModal({ images, video, initialIndex, onClose }: Props) {
 
   return createPortal(
     <motion.div
+      ref={overlayRef}
       className={styles.overlay}
+      tabIndex={-1}
+      role="dialog"
+      aria-modal="true"
+      aria-label={t.gallery}
       onClick={onClose}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      role="dialog"
-      aria-modal="true"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
