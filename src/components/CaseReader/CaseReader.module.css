@@ -27,10 +27,10 @@
 
 .close {
   position: fixed;
-  top: 14px;
-  right: 14px;
-  width: 40px;
-  height: 40px;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,10 +133,12 @@
 .video {
   width: 100%;
   max-width: 68ch;
+  max-height: 280px;
   margin-top: 4px;
   border: 1px solid var(--color-border);
   border-radius: 14px;
   background: #000;
+  object-fit: contain;
 }
 
 .handoff {
@@ -171,7 +173,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
+  gap: 8px;
+  min-height: 44px;
   padding: 0 20px;
   border-radius: 999px;
   font-size: 13px;
@@ -190,6 +193,20 @@
   background: transparent;
   border: 1px solid var(--color-border);
   color: var(--color-text);
+}
+
+.btnIcon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: invert(1);
+  opacity: 0.88;
+}
+
+:global([data-theme="light"]) .btnIcon {
+  filter: none;
+  opacity: 0.9;
 }
 
 .fadeTop,
@@ -260,6 +277,10 @@
 
   .sections {
     padding-bottom: 84px;
+  }
+
+  .video {
+    max-height: 300px;
   }
 }
 
