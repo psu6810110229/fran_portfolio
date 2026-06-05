@@ -20,12 +20,36 @@ const ui = {
     more: 'More projects',
     github: 'GitHub',
     liveDemo: 'More details',
+    mobileMore: 'More',
+    mobileLess: 'Less',
+    caseInfo: 'Open case reader',
+    preview: 'Open project preview',
+    role: 'Role',
+    outcome: 'Outcome',
+    stack: 'Stack',
+    purpose: 'Purpose',
+    roleDetails: 'Role details',
+    features: 'Features',
+    stats: 'Stats',
+    links: 'Links',
   },
   th: {
     secTitle: 'โปรเจกต์',
     more: 'โปรเจกต์อื่น ๆ',
     github: 'GitHub',
     liveDemo: 'รายละเอียด',
+    mobileMore: 'เพิ่มเติม',
+    mobileLess: 'ย่อ',
+    caseInfo: 'เปิดเคสเต็ม',
+    preview: 'ดูตัวอย่างโปรเจกต์',
+    role: 'บทบาท',
+    outcome: 'ผลลัพธ์',
+    stack: 'สแต็ก',
+    purpose: 'แอปนี้ทำอะไร',
+    roleDetails: 'รายละเอียดบทบาท',
+    features: 'ฟีเจอร์หลัก',
+    stats: 'สถิติ',
+    links: 'ลิงก์',
   },
 };
 
@@ -525,6 +549,7 @@ function Projects() {
   const [galleryProject, setGalleryProject] = useState<Project | null>(null);
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [caseProject, setCaseProject] = useState<Project | null>(null);
+  const [expandedProject, setExpandedProject] = useState<string | null>(null);
   const [activeIntentKey, setActiveIntentKey] = useState<string | null>(null);
   const activeIntentRef = useRef<string | null>(null);
   const intentTimerRef = useRef<number | null>(null);
@@ -640,6 +665,10 @@ function Projects() {
           if (!cs || !showcase) return null;
 
           const showcaseKey = featured.title;
+          const mobileDetailsId = `mobile-project-details-${showcaseKey.toLowerCase().replace(/\s+/g, '-')}`;
+          const isMobileExpanded = expandedProject === showcaseKey;
+          const featuredDescription = lang === 'th' ? (featured.descriptionTh ?? featured.description) : featured.description;
+          const stackSummary = featured.techs.slice(0, 3).join(' / ');
           const primaryTechs = showcase.primaryTechs ? new Set(showcase.primaryTechs) : defaultPrimaryTechs;
           const isActive = (intent: BentoIntent) => activeIntentKey === getIntentKey(showcaseKey, intent);
           const topRowClassName = joinClasses(
@@ -663,6 +692,116 @@ function Projects() {
               </div>
               <h2 className={styles.bentoHeading}>{L(showcase.heading, lang)}</h2>
 
+              <div
+                className={joinClasses(
+                  styles.mobileProjectCard,
+                  isMobileExpanded ? styles.mobileProjectCardExpanded : '',
+                )}
+              >
+                <div className={styles.mobileHeroShell}>
+                  <button
+                    type="button"
+                    className={styles.mobileHeroButton}
+                    onClick={() => openVideoGallery(featured)}
+                    aria-label={`${t.preview}: ${featured.title}`}
+                  >
+                    <img
+                      src={cs.media.hero}
+                      alt={`${featured.title} app screen`}
+                      className={styles.mobileHeroImg}
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.mobileInfoButton}
+                    onClick={() => setCaseProject(featured)}
+                    aria-label={`${t.caseInfo}: ${featured.title}`}
+                  >
+                    <span aria-hidden="true">i</span>
+                  </button>
+                </div>
+
+                <div className={styles.mobileProjectBody}>
+                  <h3 className={styles.mobileProjectTitle}>{L(showcase.heading, lang)}</h3>
+                  <p className={styles.mobileProjectSummary}>{L(cs.whatTeamBuilt, lang)}</p>
+
+                  <div className={styles.mobileSummaryGrid}>
+                    <div className={styles.mobileSummaryItem}>
+                      <span className={styles.mobileSummaryLabel}>{t.role}</span>
+                      <strong className={styles.mobileSummaryValue}>{L(showcase.roleTitle, lang)}</strong>
+                    </div>
+                    <div className={styles.mobileSummaryItem}>
+                      <span className={styles.mobileSummaryLabel}>{t.outcome}</span>
+                      <strong className={styles.mobileSummaryValue}>{L(showcase.bottomDetail, lang)}</strong>
+                    </div>
+                    <div className={styles.mobileSummaryItem}>
+                      <span className={styles.mobileSummaryLabel}>{t.stack}</span>
+                      <strong className={styles.mobileSummaryValue}>{stackSummary}</strong>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    className={styles.mobileMoreButton}
+                    aria-expanded={isMobileExpanded}
+                    aria-controls={mobileDetailsId}
+                    onClick={() => setExpandedProject(isMobileExpanded ? null : showcaseKey)}
+                  >
+                    {isMobileExpanded ? t.mobileLess : t.mobileMore}
+                  </button>
+
+                  <div id={mobileDetailsId} className={styles.mobileExpandWrap}>
+                    <div className={styles.mobileExpandInner}>
+                      <section className={styles.mobileExpandSection}>
+                        <h4 className={styles.mobileExpandTitle}>{t.purpose}</h4>
+                        <p>{featuredDescription}</p>
+                      </section>
+
+                      <section className={styles.mobileExpandSection}>
+                        <h4 className={styles.mobileExpandTitle}>{t.features}</h4>
+                        <ul className={styles.mobileDetailList}>
+                          {showcase.shots.map((shot) => (
+                            <li key={L(shot.label, lang)}>
+                              <strong>{L(shot.label, lang)}</strong>
+                              <span>{L(shot.details[0], lang)}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+
+                      <section className={styles.mobileExpandSection}>
+                        <h4 className={styles.mobileExpandTitle}>{t.stats}</h4>
+                        <div className={styles.mobileStatsGrid}>
+                          {showcase.stats.map((stat) => (
+                            <div key={`${stat.number}-${L(stat.label, lang)}`} className={styles.mobileStatItem}>
+                              <span className={styles.mobileStatNumber}>{stat.number}</span>
+                              <span className={styles.mobileStatLabel}>{L(stat.label, lang)}</span>
+                              <p className={styles.mobileStatDetails}>
+                                {stat.details.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+
+                      <section className={styles.mobileExpandSection}>
+                        <h4 className={styles.mobileExpandTitle}>{t.stack}</h4>
+                        <div className={styles.mobileBadgeRow}>
+                          {featured.techs.map((tech) => (
+                            <TechBadge
+                              key={tech}
+                              tech={tech}
+                              className={primaryTechs.has(tech) ? styles.badgePrimary : styles.badgeSecondary}
+                            />
+                          ))}
+                        </div>
+                      </section>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className={topRowClassName}>
                 <button
                   type="button"
@@ -684,9 +823,7 @@ function Projects() {
                   </div>
                   <div className={styles.bentoMainContent}>
                     <h3 className={styles.bentoTitle}>{featured.title}</h3>
-                    <p className={styles.bentoDesc}>
-                      {lang === 'th' ? (featured.descriptionTh ?? featured.description) : featured.description}
-                    </p>
+                    <p className={styles.bentoDesc}>{featuredDescription}</p>
                   </div>
                   <div className={styles.bentoDetail}>
                     <span className={styles.bentoDetailHeader}>{L(showcase.mainDetailHeader, lang)}</span>
