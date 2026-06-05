@@ -1,10 +1,13 @@
 import { motion } from 'motion/react';
 import { useLanguage } from '../hooks/useLanguage';
+import capacitorIcon from '../assets/icons/capacitor.svg';
+import pwaIcon from '../assets/icons/pwa.svg';
 import styles from './Skills.module.css';
 
 interface Tech {
   label: string;
   icon?: string;
+  imgIcon?: string;
 }
 
 interface Group {
@@ -30,8 +33,17 @@ const groups: Record<'en' | 'th', { secTitle: string; groups: Group[] }> = {
       {
         label: 'Data & APIs',
         items: [
+          { label: 'Supabase', icon: 'devicon-supabase-plain' },
+          { label: 'Firebase', icon: 'devicon-firebase-plain' },
           { label: 'REST APIs' },
           { label: 'SQL', icon: 'devicon-mysql-plain' },
+        ],
+      },
+      {
+        label: 'Mobile',
+        items: [
+          { label: 'Capacitor', imgIcon: capacitorIcon },
+          { label: 'PWA', imgIcon: pwaIcon },
         ],
       },
       {
@@ -60,8 +72,17 @@ const groups: Record<'en' | 'th', { secTitle: string; groups: Group[] }> = {
       {
         label: 'ข้อมูลและ API',
         items: [
+          { label: 'Supabase', icon: 'devicon-supabase-plain' },
+          { label: 'Firebase', icon: 'devicon-firebase-plain' },
           { label: 'REST APIs' },
           { label: 'SQL', icon: 'devicon-mysql-plain' },
+        ],
+      },
+      {
+        label: 'Mobile',
+        items: [
+          { label: 'Capacitor', imgIcon: capacitorIcon },
+          { label: 'PWA', imgIcon: pwaIcon },
         ],
       },
       {
@@ -87,34 +108,43 @@ function Skills() {
   const { lang } = useLanguage();
   const c = groups[lang];
 
-  return (
-    <motion.section
-      id="skills"
-      className={styles.skills}
-      {...revealProps}
-    >
-      <div className={styles.inner}>
-        <div className={styles.secHeader}>
-          <span className={styles.secTitle}>{c.secTitle}</span>
-        </div>
+  const primary = c.groups.find((g) => g.primary)!;
+  const secondary = c.groups.filter((g) => !g.primary);
 
-        <div className={styles.groups}>
-          {c.groups.map((group) => (
-            <div key={group.label} className={styles.group}>
-              <span className={styles.groupLabel}>{group.label}</span>
-              <div className={styles.chips}>
-                {group.items.map((tech) => (
-                  <span
-                    key={tech.label}
-                    className={`${styles.chip} ${group.primary ? styles.chipPrimary : ''}`}
-                  >
-                    {tech.icon && <i className={tech.icon} aria-hidden="true" />}
-                    {tech.label}
-                  </span>
-                ))}
-              </div>
+  return (
+    <motion.section id="skills" className={styles.skills} {...revealProps}>
+      <div className={styles.inner}>
+        <div className={styles.layout}>
+
+          <div className={styles.zonePrimary}>
+            <span className={styles.groupLabel}>{primary.label}</span>
+            <div className={styles.primaryChips}>
+              {primary.items.map((tech) => (
+                <span key={tech.label} className={styles.chipPrimary}>
+                  {tech.icon && <i className={tech.icon} aria-hidden="true" />}
+                  {tech.label}
+                </span>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <div className={styles.zoneSecondary}>
+            {secondary.map((group) => (
+              <div key={group.label} className={styles.secondaryGroup}>
+                <span className={styles.groupLabel}>{group.label}</span>
+                <div className={styles.chips}>
+                  {group.items.map((tech) => (
+                    <span key={tech.label} className={styles.chip}>
+                      {tech.imgIcon && <img src={tech.imgIcon} alt="" aria-hidden="true" className={styles.chipImg} />}
+                      {tech.icon && <i className={tech.icon} aria-hidden="true" />}
+                      {tech.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </div>
     </motion.section>
