@@ -30,7 +30,7 @@ const ui = {
     purpose: 'Purpose',
     roleDetails: 'Role details',
     features: 'Features',
-    stats: 'Stats',
+    stats: 'Takeaways',
     links: 'Links',
   },
   th: {
@@ -48,7 +48,7 @@ const ui = {
     purpose: 'แอปนี้ทำอะไร',
     roleDetails: 'รายละเอียดบทบาท',
     features: 'ฟีเจอร์หลัก',
-    stats: 'สถิติ',
+    stats: 'สิ่งที่ได้จากโปรเจกต์',
     links: 'ลิงก์',
   },
 };

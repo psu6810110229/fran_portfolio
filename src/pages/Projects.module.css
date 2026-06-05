@@ -1463,27 +1463,10 @@
   }
 
   .mobileStatsGrid {
-    position: relative;
     display: grid;
     grid-template-columns: 1fr;
     gap: 0;
     padding: 2px 0 0;
-  }
-
-  .mobileStatsGrid::before {
-    content: '';
-    position: absolute;
-    top: 18px;
-    bottom: 20px;
-    left: 20px;
-    width: 1px;
-    background: linear-gradient(
-      180deg,
-      rgba(212, 101, 26, 0.16),
-      rgba(212, 101, 26, 0.52) 26%,
-      rgba(212, 101, 26, 0.3) 76%,
-      rgba(212, 101, 26, 0.08)
-    );
   }
 
   .mobileStatItem {
@@ -1493,23 +1476,21 @@
     column-gap: 14px;
     align-items: start;
     min-width: 0;
-    padding: 11px 0 14px;
+    padding: 11px 0 18px;
     color: #e0d4c8;
     text-align: left;
   }
 
-  .mobileStatItem + .mobileStatItem {
-    border-top: 0;
-  }
-
-  .mobileStatItem + .mobileStatItem::after {
+  /* Connect each badge to the next one — drawn from this badge's centre down
+     to the next, so the rail joins the points and never dangles past the last */
+  .mobileStatItem:not(:last-child)::before {
     content: '';
     position: absolute;
-    top: 0;
-    right: 0;
-    left: 56px;
-    height: 1px;
-    background: rgba(42, 37, 32, 0.58);
+    top: 31px;
+    bottom: -31px;
+    left: 20px;
+    width: 1px;
+    background: rgba(212, 101, 26, 0.3);
   }
 
   .mobileStatNumber {
@@ -1521,11 +1502,11 @@
     justify-content: center;
     width: 40px;
     height: 40px;
-    border: 1px solid rgba(212, 101, 26, 0.42);
+    border: 1px solid rgba(212, 101, 26, 0.5);
     border-radius: 999px;
-    background: #181512;
+    background: rgba(212, 101, 26, 0.1);
     font-family: 'Syne', sans-serif;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 800;
     line-height: 1;
     color: #d4651a;
@@ -1534,21 +1515,21 @@
 
   .mobileStatLabel {
     display: block;
-    margin-top: 2px;
-    font-size: 13px;
+    margin-top: 1px;
+    font-size: 14px;
     font-weight: 800;
-    line-height: 1.32;
+    line-height: 1.3;
     color: #e0d4c8;
     overflow-wrap: anywhere;
   }
 
   .mobileStatDetails {
     display: block;
-    max-width: 28em;
+    max-width: 30em;
     margin-top: 5px;
     font-size: 12px;
-    line-height: 1.58;
-    color: #7a6e66;
+    line-height: 1.6;
+    color: #978b7f;
   }
 
   .mobileStatDetails span {
@@ -1677,26 +1658,12 @@
     border-color: #e0d8d0;
   }
 
-  :global([data-theme="light"]) .mobileStatsGrid::before {
-    background: linear-gradient(
-      180deg,
-      rgba(212, 101, 26, 0.12),
-      rgba(212, 101, 26, 0.42) 26%,
-      rgba(212, 101, 26, 0.24) 76%,
-      rgba(212, 101, 26, 0.08)
-    );
-  }
-
-  :global([data-theme="light"]) .mobileStatItem + .mobileStatItem {
-    border-top-color: transparent;
-  }
-
-  :global([data-theme="light"]) .mobileStatItem + .mobileStatItem::after {
-    background: rgba(224, 216, 208, 0.82);
+  :global([data-theme="light"]) .mobileStatItem:not(:last-child)::before {
+    background: rgba(212, 101, 26, 0.28);
   }
 
   :global([data-theme="light"]) .mobileStatNumber {
-    border-color: rgba(212, 101, 26, 0.34);
+    border-color: rgba(212, 101, 26, 0.4);
     background: #fffaf4;
     color: #d4651a;
     box-shadow: 0 0 0 4px #fffaf4;
