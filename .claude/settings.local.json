@@ -35,7 +35,18 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5202/)",
       "Bash(curl -s http://localhost:5174)",
       "Bash('#projects')",
-      "Bash(dir \"D:\\\\Fran's Folder\\\\Project-archive\\\\fran_portfolio\\\\*.md\" /b)"
+      "Bash(dir \"D:\\\\Fran's Folder\\\\Project-archive\\\\fran_portfolio\\\\*.md\" /b)",
+      "Bash(npx vite *)",
+      "Bash(awk 'NR>=860 && NR<=895' src/pages/Projects.module.css)",
+      "Bash(awk 'NR>=820 && NR<=835' src/pages/Projects.module.css)",
+      "Bash(sort -k2 -r)",
+      "PowerShell($h = Join-Path $env:APPDATA 'Code\\\\User\\\\History'; if \\(Test-Path $h\\) { Write-Output \"History exists: $h\"; $hits = Get-ChildItem $h -Recurse -Filter 'entries.json' -ErrorAction SilentlyContinue | Where-Object { \\(Get-Content $_.FullName -Raw\\) -match 'Projects\\\\.\\(tsx|module\\\\.css\\)' }; Write-Output \"Matching entries.json count: $\\($hits.Count\\)\"; $hits | ForEach-Object { $_.DirectoryName } } else { Write-Output \"No VS Code History folder at $h\" })",
+      "Bash(command -v python)",
+      "Bash(command -v python3)",
+      "Bash(command -v node)",
+      "Bash(grep -nE \"^={5,}\" src/pages/Projects.module.css)",
+      "Bash(grep -cE *)",
+      "Bash(bash .commit-work.sh)"
     ]
   }
 }
