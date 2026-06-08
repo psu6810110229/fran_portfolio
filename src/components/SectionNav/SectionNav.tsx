@@ -87,7 +87,9 @@ function SectionNav() {
         onClick={scrollToTop}
         aria-label="Back to top"
       >
-        ↑
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+          <path d="M1.5 7L5 3L8.5 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
       </button>
     </nav>
   );
