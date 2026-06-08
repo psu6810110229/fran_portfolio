@@ -9,6 +9,8 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-4);
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .heading {
@@ -27,8 +29,49 @@
   color: var(--color-text-muted);
 }
 
+.form {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  text-align: left;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldGroup label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-dim);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.fieldGroup input,
+.fieldGroup textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  padding: 12px 14px;
+}
+
+.fieldGroup textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
 .btnPrimary {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   padding: 10px 24px;
   background: var(--color-accent);
   color: #fdf8f4;
@@ -39,6 +82,7 @@
   max-width: 280px;
   width: 100%;
   text-align: center;
+  align-self: center;
 }
 
 .btnPrimary:hover {

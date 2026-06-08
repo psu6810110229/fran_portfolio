@@ -16,33 +16,31 @@
 .avatarWrapper {
   position: relative;
   flex-shrink: 0;
-  width: 132px;
-  height: 132px;
+  width: 165px;
+  height: 165px;
 }
 
 .avatarRing {
   position: absolute;
-  inset: -6px;
+  inset: -8px;
   border-radius: 50%;
   border: 1px solid var(--color-accent);
   opacity: 0.1;
 }
 
 .avatar {
-  width: 132px;
-  height: 132px;
+  width: 165px;
+  height: 165px;
   border-radius: 50%;
   border: 2px solid var(--color-border);
-  object-fit: cover;
-  object-position: center top;
 }
 
 .avatarDot {
   position: absolute;
-  bottom: 4px;
-  right: 4px;
-  width: 14px;
-  height: 14px;
+  bottom: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: var(--color-accent);
   border: 3px solid var(--color-bg);
@@ -79,6 +77,14 @@
   color: var(--color-accent);
 }
 
+.cursor {
+  display: inline-block;
+  margin-left: 0.08em;
+  color: var(--color-text);
+  font-weight: 600;
+  animation: cursorBlink 1.15s steps(1, end) infinite;
+}
+
 .subhead {
   font-size: var(--font-size-sm);
   line-height: 1.65;
@@ -104,18 +110,35 @@
 
 .btns {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 6px;
+  flex-wrap: nowrap;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.btnPrimary,
+.btnGhost,
+.socialButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+
+.btnPrimary,
+.btnGhost {
+  min-height: 38px;
+  padding: 10px 12px;
 }
 
 .btnPrimary {
-  padding: 10px 22px;
   background: var(--color-accent);
   color: #fdf8f4;
-  border-radius: 7px;
-  font-size: var(--font-size-sm);
-  font-weight: 500;
 }
 
 .btnPrimary:hover {
@@ -123,17 +146,37 @@
 }
 
 .btnGhost {
-  padding: 10px 20px;
   background: transparent;
   color: var(--color-text-dim);
-  border: 0.5px solid var(--color-border);
-  border-radius: 7px;
-  font-size: var(--font-size-sm);
+  gap: 6px;
 }
 
 .btnGhost:hover {
   color: var(--color-text-muted);
-  border-color: var(--color-border-soft);
+  background: var(--color-surface-alt);
+}
+
+.socialButton {
+  width: 38px;
+  height: 38px;
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.socialButton:hover {
+  background: var(--color-surface-alt);
+}
+
+.socialIcon {
+  width: 17px;
+  height: 17px;
+  opacity: 0.72;
+  filter: invert(82%) sepia(11%) saturate(320%) hue-rotate(345deg) brightness(92%) contrast(86%);
+}
+
+:global([data-theme="light"]) .socialIcon {
+  filter: none;
+  opacity: 0.78;
 }
 
 /* ── Thai headline: Syne is Latin-only, swap to the Thai face ── */
@@ -167,13 +210,22 @@
   to   { opacity: 1; transform: none; }
 }
 
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
 /* ── tablet ── */
 @media (min-width: 768px) {
   .inner {
     flex-direction: row;
     text-align: left;
-    align-items: center;
+    align-items: flex-start;
     gap: 48px;
+  }
+
+  .avatarWrapper {
+    margin-top: calc(1.5rem + var(--space-4));
   }
 
   .text {
@@ -190,6 +242,25 @@
 
   .btns {
     justify-content: flex-start;
+    gap: 12px;
+    width: auto;
+  }
+
+  .btnPrimary,
+  .btnGhost {
+    min-height: 46px;
+    padding: 12px 28px;
+    font-size: var(--font-size-sm);
+  }
+
+  .socialButton {
+    width: 46px;
+    height: 46px;
+  }
+
+  .socialIcon {
+    width: 18px;
+    height: 18px;
   }
 }
 

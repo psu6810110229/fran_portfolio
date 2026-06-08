@@ -1,5 +1,8 @@
 import { useLanguage } from '../hooks/useLanguage';
-import franImg from '../assets/fran.jpg';
+import franImg from '../assets/fran-profile.jpg';
+import emailIcon from '../assets/icons/email.svg';
+import githubIcon from '../assets/icons/github.svg';
+import linkedinIcon from '../assets/icons/linkedin.svg';
 import styles from './Hero.module.css';
 
 const content = {
@@ -12,18 +15,18 @@ const content = {
     subhead:
       'First-year Computer Engineering student at PSU, building clean web interfaces with React and TypeScript.',
     btnPrimary: 'View Projects',
-    btnGhost: 'Say hello →',
+    btnGhost: 'Say hello',
   },
   th: {
     intro: 'สวัสดีครับ ผมฟราน',
-    headingPre: 'นักพัฒนาที่เปลี่ยนไอเดีย',
+    headingPre: 'เปลี่ยนไอเดียบนกระดาษ',
     headingLine2: 'ให้เป็น ',
-    headingAccent: 'product',
-    headingPost: ' จริง',
+    headingAccent: 'Web Product',
+    headingPost: 'ที่ใช้งานได้จริง',
     subhead:
-      'นักศึกษาปี 1 วิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยสงขลานครินทร์ สร้างเว็บที่ใช้ได้จริง ทั้งฝั่ง front-end และ back-end',
+      'นักศึกษาปี 1 วิศวฯ คอมฯ ม.อ. ที่หลงใหลในการพัฒนาแบบ Full-Stack เพื่อส่งมอบผลงาน และกำลังมองหาโอกาสฝึกงานเพื่อเติบโตไปกับทีม',
     btnPrimary: 'ดูผลงาน',
-    btnGhost: 'ทักทายกัน →',
+    btnGhost: 'ทักทายกัน',
   },
 };
 
@@ -46,12 +49,31 @@ function Hero() {
             {c.headingPre}
             {c.headingLine2 && <><br />{c.headingLine2}</>}
             <em className={styles.accent}>{c.headingAccent}</em>
-            {c.headingPost}
+            {lang === 'th' ? (
+              <>
+                <br />
+                {c.headingPost}
+                <span className={styles.cursor} aria-hidden="true">|</span>
+              </>
+            ) : (
+              c.headingPost
+            )}
           </h1>
           <p className={styles.subhead}>{c.subhead}</p>
           <div className={styles.btns}>
             <a href="#projects" className={styles.btnPrimary}>{c.btnPrimary}</a>
-            <a href="#contact" className={styles.btnGhost}>{c.btnGhost}</a>
+            <a href="#contact" className={styles.btnGhost}>
+              <span>{c.btnGhost}</span>
+            </a>
+            <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="GitHub">
+              <img src={githubIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
+            </a>
+            <a href="https://www.linkedin.com/in/patcharapon-matsuden-864883413" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="LinkedIn">
+              <img src={linkedinIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
+            </a>
+            <a href="mailto:farnpatcharapon@gmail.com" className={styles.socialButton} aria-label="Email">
+              <img src={emailIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
+            </a>
           </div>
         </div>
       </div>
