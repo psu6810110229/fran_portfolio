@@ -74,7 +74,7 @@
 .ownNum {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 12px;
+  font-size: 15px;
   letter-spacing: 0.04em;
   color: var(--color-accent);
   padding-top: 3px;
@@ -84,7 +84,7 @@
   display: block;
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.0625rem;
+  font-size: 1rem;
   letter-spacing: -0.01em;
   color: var(--color-text);
 }

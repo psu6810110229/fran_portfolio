@@ -7,26 +7,37 @@
   padding: 40px 5vw;
 }
 
-/* ── Two-zone layout ── */
+/* ── 3-column layout ── */
 .layout {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 28px;
 }
 
-/* ── Primary zone (Interface) ── */
-.zonePrimary {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-bottom: 28px;
-  border-bottom: 0.5px solid var(--color-border-soft);
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .col:not(:last-child) {
+    border-right: 0.5px solid var(--color-border-soft);
+    padding-right: 32px;
+    margin-right: 32px;
+  }
 }
 
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Primary chips (Frontend — icon + label stacked) ── */
 .primaryChips {
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 20px 24px;
 }
 
 .chipPrimary {
@@ -41,46 +52,36 @@
   color: var(--color-text-muted);
 }
 
-.chipPrimary i {
+.chipPrimary i,
+.chipPrimary img {
   font-size: 28px;
-  color: var(--color-accent);
+  width: 28px;
+  height: 28px;
 }
 
-/* ── Secondary zone ── */
-.zoneSecondary {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-.secondaryGroup {
+/* ── Secondary chips (inline) ── */
+.chips {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-size: 0.8125rem;
   color: var(--color-text-muted);
 }
 
 .chip i {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--color-text-dim);
 }
 
 .chipImg {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   flex: 0 0 auto;
   object-fit: contain;
 }
@@ -93,11 +94,4 @@
   letter-spacing: 0.06em;
   color: var(--color-text-dim);
   text-transform: uppercase;
-}
-
-@media (min-width: 768px) {
-  .zoneSecondary {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
 }

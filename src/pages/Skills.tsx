@@ -21,37 +21,36 @@ const groups: Record<'en' | 'th', { secTitle: string; groups: Group[] }> = {
     secTitle: 'Stack',
     groups: [
       {
-        label: 'Interface',
+        label: 'Frontend',
         primary: true,
         items: [
           { label: 'React', icon: 'devicon-react-original' },
           { label: 'TypeScript', icon: 'devicon-typescript-plain' },
-          { label: 'Vite', icon: 'devicon-vitejs-plain' },
+          { label: 'JavaScript', icon: 'devicon-javascript-plain' },
+          { label: 'HTML', icon: 'devicon-html5-plain' },
           { label: 'CSS', icon: 'devicon-css3-plain' },
+          { label: 'Tailwind', icon: 'devicon-tailwindcss-plain' },
+          { label: 'Vite', icon: 'devicon-vitejs-plain' },
         ],
       },
       {
-        label: 'Data & APIs',
+        label: 'Backend',
         items: [
           { label: 'Supabase', icon: 'devicon-supabase-plain' },
           { label: 'Firebase', icon: 'devicon-firebase-plain' },
-          { label: 'REST APIs' },
-          { label: 'SQL', icon: 'devicon-mysql-plain' },
+          { label: 'MySQL', icon: 'devicon-mysql-plain' },
+          { label: 'Redis', icon: 'devicon-redis-plain' },
         ],
       },
       {
-        label: 'Mobile',
-        items: [
-          { label: 'Capacitor', imgIcon: capacitorIcon },
-          { label: 'PWA', imgIcon: pwaIcon },
-        ],
-      },
-      {
-        label: 'Ship & collaborate',
+        label: 'DevOps & Tools',
         items: [
           { label: 'Git', icon: 'devicon-git-plain' },
           { label: 'GitHub', icon: 'devicon-github-original' },
           { label: 'Docker', icon: 'devicon-docker-plain' },
+          { label: 'AWS EC2', icon: 'devicon-amazonwebservices-plain' },
+          { label: 'Capacitor', imgIcon: capacitorIcon },
+          { label: 'PWA', imgIcon: pwaIcon },
         ],
       },
     ],
@@ -60,37 +59,36 @@ const groups: Record<'en' | 'th', { secTitle: string; groups: Group[] }> = {
     secTitle: 'ทักษะ',
     groups: [
       {
-        label: 'หน้าจอผู้ใช้',
+        label: 'Frontend',
         primary: true,
         items: [
           { label: 'React', icon: 'devicon-react-original' },
           { label: 'TypeScript', icon: 'devicon-typescript-plain' },
-          { label: 'Vite', icon: 'devicon-vitejs-plain' },
+          { label: 'JavaScript', icon: 'devicon-javascript-plain' },
+          { label: 'HTML', icon: 'devicon-html5-plain' },
           { label: 'CSS', icon: 'devicon-css3-plain' },
+          { label: 'Tailwind', icon: 'devicon-tailwindcss-plain' },
+          { label: 'Vite', icon: 'devicon-vitejs-plain' },
         ],
       },
       {
-        label: 'ข้อมูลและ API',
+        label: 'Backend',
         items: [
           { label: 'Supabase', icon: 'devicon-supabase-plain' },
           { label: 'Firebase', icon: 'devicon-firebase-plain' },
-          { label: 'REST APIs' },
-          { label: 'SQL', icon: 'devicon-mysql-plain' },
+          { label: 'MySQL', icon: 'devicon-mysql-plain' },
+          { label: 'Redis', icon: 'devicon-redis-plain' },
         ],
       },
       {
-        label: 'Mobile',
-        items: [
-          { label: 'Capacitor', imgIcon: capacitorIcon },
-          { label: 'PWA', imgIcon: pwaIcon },
-        ],
-      },
-      {
-        label: 'ส่งมอบและทำงานร่วมกัน',
+        label: 'DevOps & Tools',
         items: [
           { label: 'Git', icon: 'devicon-git-plain' },
           { label: 'GitHub', icon: 'devicon-github-original' },
           { label: 'Docker', icon: 'devicon-docker-plain' },
+          { label: 'AWS EC2', icon: 'devicon-amazonwebservices-plain' },
+          { label: 'Capacitor', imgIcon: capacitorIcon },
+          { label: 'PWA', imgIcon: pwaIcon },
         ],
       },
     ],
@@ -108,43 +106,24 @@ function Skills() {
   const { lang } = useLanguage();
   const c = groups[lang];
 
-  const primary = c.groups.find((g) => g.primary)!;
-  const secondary = c.groups.filter((g) => !g.primary);
-
   return (
     <motion.section id="skills" className={styles.skills} {...revealProps}>
       <div className={styles.inner}>
         <div className={styles.layout}>
-
-          <div className={styles.zonePrimary}>
-            <span className={styles.groupLabel}>{primary.label}</span>
-            <div className={styles.primaryChips}>
-              {primary.items.map((tech) => (
-                <span key={tech.label} className={styles.chipPrimary}>
-                  {tech.icon && <i className={tech.icon} aria-hidden="true" />}
-                  {tech.label}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className={styles.zoneSecondary}>
-            {secondary.map((group) => (
-              <div key={group.label} className={styles.secondaryGroup}>
-                <span className={styles.groupLabel}>{group.label}</span>
-                <div className={styles.chips}>
-                  {group.items.map((tech) => (
-                    <span key={tech.label} className={styles.chip}>
-                      {tech.imgIcon && <img src={tech.imgIcon} alt="" aria-hidden="true" className={styles.chipImg} />}
-                      {tech.icon && <i className={tech.icon} aria-hidden="true" />}
-                      {tech.label}
-                    </span>
-                  ))}
-                </div>
+          {c.groups.map((group) => (
+            <div key={group.label} className={styles.col}>
+              <span className={styles.groupLabel}>{group.label}</span>
+              <div className={styles.primaryChips}>
+                {group.items.map((tech) => (
+                  <span key={tech.label} className={styles.chipPrimary}>
+                    {tech.imgIcon && <img src={tech.imgIcon} alt="" aria-hidden="true" className={styles.chipImg} />}
+                    {tech.icon && <i className={`${tech.icon} colored`} aria-hidden="true" />}
+                    {tech.label}
+                  </span>
+                ))}
               </div>
-            ))}
-          </div>
-
+            </div>
+          ))}
         </div>
       </div>
     </motion.section>
