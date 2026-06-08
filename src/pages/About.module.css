@@ -114,21 +114,6 @@
   margin-right: 4px;
 }
 
-.links {
-  display: flex;
-  gap: 20px;
-  margin-left: auto;
-}
-
-.link {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-}
-
-.link:hover {
-  color: var(--color-accent);
-}
-
 /* ── Desktop: prose + rail, foot full width ── */
 @media (min-width: 768px) {
   .grid {

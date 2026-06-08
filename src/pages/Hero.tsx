@@ -1,6 +1,5 @@
-import { useLanguage } from '../hooks/useLanguage';
+﻿import { useLanguage } from '../hooks/useLanguage';
 import franImg from '../assets/fran-profile.jpg';
-import emailIcon from '../assets/icons/email.svg';
 import githubIcon from '../assets/icons/github.svg';
 import linkedinIcon from '../assets/icons/linkedin.svg';
 import styles from './Hero.module.css';
@@ -24,7 +23,7 @@ const content = {
     headingAccent: 'Web Product',
     headingPost: 'ที่ใช้งานได้จริง',
     subhead:
-      'นักศึกษาปี 1 วิศวฯ คอมฯ ม.อ. ที่หลงใหลในการพัฒนาแบบ Full-Stack เพื่อส่งมอบผลงาน และกำลังมองหาโอกาสฝึกงานเพื่อเติบโตไปกับทีม',
+      'นักศึกษาชั้นปีที่ 2 วิศวกรรมคอมพิวเตอร์ ม.อ. มีประสบการณ์พัฒนาเว็บแอปพลิเคชันแบบ Full-Stack สนใจการสร้างโปรดักต์ที่แก้ปัญหาได้จริง',
     btnPrimary: 'ดูผลงาน',
     btnGhost: 'ทักทายกัน',
   },
@@ -71,9 +70,6 @@ function Hero() {
             <a href="https://www.linkedin.com/in/patcharapon-matsuden-864883413" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="LinkedIn">
               <img src={linkedinIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
             </a>
-            <a href="mailto:farnpatcharapon@gmail.com" className={styles.socialButton} aria-label="Email">
-              <img src={emailIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
-            </a>
           </div>
         </div>
       </div>
@@ -82,3 +78,4 @@ function Hero() {
 }
 
 export default Hero;
+

@@ -96,14 +96,6 @@ function About() {
             <span className={styles.based}>
               <span className={styles.basedLabel}>{c.basedLabel}</span> {c.basedValue}
             </span>
-            <span className={styles.links}>
-              <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer" className={styles.link}>
-                GitHub ↗
-              </a>
-              <a href="mailto:farnpatcharapon@gmail.com" className={styles.link}>
-                Email ↗
-              </a>
-            </span>
           </div>
         </div>
       </div>
