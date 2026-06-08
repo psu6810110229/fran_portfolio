@@ -1,4 +1,4 @@
-import type { FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../hooks/useLanguage';
 import styles from './Contact.module.css';
@@ -18,24 +18,63 @@ const content = {
 
 // CV not ready yet. When it is: add public/fran-resume.pdf and set this to '/fran-resume.pdf'.
 const resumeUrl: string | null = null;
+const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error';
+
+interface Web3FormsResponse {
+  success: boolean;
+  message?: string;
+}
 
 function Contact() {
   const { lang } = useLanguage();
   const c = content[lang];
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle');
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
+    if (!web3FormsAccessKey) {
+      setSubmitStatus('error');
+      return;
+    }
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const fromName = formData.get('fromName')?.toString().trim() ?? '';
     const fromEmail = formData.get('fromEmail')?.toString().trim() ?? '';
     const message = formData.get('message')?.toString().trim() ?? '';
-    const subject = encodeURIComponent(`Portfolio message from ${fromName}`);
-    const body = encodeURIComponent(
-      `Name: ${fromName}\nEmail: ${fromEmail}\n\n${message}`,
-    );
 
-    window.location.href = `mailto:farnpatcharapon@gmail.com?subject=${subject}&body=${body}`;
+    setSubmitStatus('submitting');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: web3FormsAccessKey,
+          subject: `Portfolio message from ${fromName}`,
+          name: fromName,
+          email: fromEmail,
+          message,
+        }),
+      });
+
+      const result = (await response.json()) as Web3FormsResponse;
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message ?? 'Web3Forms submission failed');
+      }
+
+      form.reset();
+      setSubmitStatus('success');
+    } catch {
+      setSubmitStatus('error');
+    }
   };
 
   return (
@@ -63,9 +102,19 @@ function Contact() {
               <label htmlFor="contact-message">Message</label>
               <textarea id="contact-message" name="message" rows={5} required />
             </div>
-            <button type="submit" className={styles.btnPrimary}>
-              {c.btn}
+            <button type="submit" className={styles.btnPrimary} disabled={submitStatus === 'submitting'}>
+              {submitStatus === 'submitting' ? 'Sending...' : c.btn}
             </button>
+            {submitStatus === 'success' && (
+              <p className={styles.formStatus}>Message sent. Thank you!</p>
+            )}
+            {submitStatus === 'error' && (
+              <p className={styles.formStatusError}>
+                {web3FormsAccessKey
+                  ? 'Could not send right now. Please try again later.'
+                  : 'Contact form is not configured yet.'}
+              </p>
+            )}
           </form>
         </div>
       </div>
