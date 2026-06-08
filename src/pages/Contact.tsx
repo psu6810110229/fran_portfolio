@@ -1,18 +1,26 @@
 import { useState, type FormEvent } from 'react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../hooks/useLanguage';
+import githubIcon from '../assets/icons/github.svg';
+import linkedinIcon from '../assets/icons/linkedin.svg';
 import styles from './Contact.module.css';
 
 const content = {
   en: {
     heading: "Let's work together.",
     sub: 'Always open to new opportunities and conversations.',
-    btn: 'Get in touch →',
+    labelName: 'Name',
+    labelEmail: 'Email',
+    labelMessage: 'Message',
+    btn: 'Send',
   },
   th: {
-    heading: 'หวังว่าเราจะได้ร่วมงานกันนะครับ',
-    sub: 'พร้อมรับฟังโอกาสและพูดคุยเสมอครับ',
-    btn: 'ติดต่อผม →',
+    heading: 'ติดต่อผม',
+    sub: 'หากมีข้อสงสัยเกี่ยวกับผลงาน หรือต้องการข้อมูลเพิ่มเติม\nติดต่อผมผ่านฟอร์มนี้ได้เลยครับ',
+    labelName: 'ชื่อ',
+    labelEmail: 'อีเมล',
+    labelMessage: 'ข้อความ',
+    btn: 'ส่งข้อความ',
   },
 };
 
@@ -89,22 +97,44 @@ function Contact() {
         <div className={styles.inner}>
           <h2 className={styles.heading}>{c.heading}</h2>
           <p className={styles.sub}>{c.sub}</p>
+          <hr className={styles.divider} aria-hidden="true" />
+
           <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.fieldGroup}>
-              <label htmlFor="contact-name">Name</label>
-              <input id="contact-name" name="fromName" type="text" autoComplete="name" required />
+            <div className={styles.nameRow}>
+              <div className={styles.fieldGroup}>
+                <label htmlFor="contact-name">{c.labelName}</label>
+                <input id="contact-name" name="fromName" type="text" autoComplete="name" required />
+              </div>
+              <div className={styles.fieldGroup}>
+                <label htmlFor="contact-email">{c.labelEmail}</label>
+                <input id="contact-email" name="fromEmail" type="email" autoComplete="email" required />
+              </div>
             </div>
+
             <div className={styles.fieldGroup}>
-              <label htmlFor="contact-email">Email</label>
-              <input id="contact-email" name="fromEmail" type="email" autoComplete="email" required />
-            </div>
-            <div className={styles.fieldGroup}>
-              <label htmlFor="contact-message">Message</label>
+              <label htmlFor="contact-message">{c.labelMessage}</label>
               <textarea id="contact-message" name="message" rows={5} required />
             </div>
-            <button type="submit" className={styles.btnPrimary} disabled={submitStatus === 'submitting'}>
-              {submitStatus === 'submitting' ? 'Sending...' : c.btn}
-            </button>
+
+            <div className={styles.actions}>
+              <button type="submit" className={styles.btnPrimary} disabled={submitStatus === 'submitting'}>
+                {submitStatus === 'submitting' ? 'Sending...' : c.btn}
+              </button>
+              <div className={styles.inlineLinks}>
+                <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="GitHub">
+                  <img src={githubIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
+                </a>
+                <a href="https://www.linkedin.com/in/patcharapon-matsuden-864883413" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="LinkedIn">
+                  <img src={linkedinIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
+                </a>
+                {resumeUrl && (
+                  <a href={resumeUrl} target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="Resume">
+                    {lang === 'th' ? 'เรซูเม่' : 'CV'}
+                  </a>
+                )}
+              </div>
+            </div>
+
             {submitStatus === 'success' && (
               <p className={styles.formStatus}>Message sent. Thank you!</p>
             )}
@@ -122,13 +152,6 @@ function Contact() {
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
           <span className={styles.copy}>© 2026 Fran</span>
-          <div className={styles.socials}>
-            <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer">GitHub</a>
-            <a href="https://www.linkedin.com/in/patcharapon-matsuden-864883413" target="_blank" rel="noreferrer">LinkedIn</a>
-            {resumeUrl && (
-              <a href={resumeUrl} target="_blank" rel="noreferrer">{lang === 'th' ? 'เรซูเม่' : 'Resume'}</a>
-            )}
-          </div>
         </div>
       </footer>
     </motion.section>
