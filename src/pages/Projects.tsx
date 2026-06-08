@@ -11,7 +11,6 @@ import adminPanelShot from '../assets/9tours/admin/Screenshot (463).png';
 import bookingFlowShot from '../assets/9tours/user/Screenshot (456).png';
 import bentoHero9tours from '../assets/9tours/user/Screenshot (453).png';
 import goOutShot2 from '../assets/GO-OUT/images/IMG_20260604_18513373_COPY.jpeg';
-import githubIcon from '../assets/icons/github.svg';
 import styles from './Projects.module.css';
 
 const defaultPrimaryTechs = new Set(['React', 'TypeScript', 'CSS']);
