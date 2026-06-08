@@ -9,6 +9,8 @@ import { useLanguage } from '../hooks/useLanguage';
 import type { Localized, Project } from '../types';
 import adminPanelShot from '../assets/9tours/admin/Screenshot (463).png';
 import bookingFlowShot from '../assets/9tours/user/Screenshot (456).png';
+import bentoHero9tours from '../assets/9tours/user/Screenshot (453).png';
+import goOutShot2 from '../assets/GO-OUT/images/IMG_20260604_18513373_COPY.jpeg';
 import githubIcon from '../assets/icons/github.svg';
 import styles from './Projects.module.css';
 
@@ -81,6 +83,7 @@ interface ShowcaseConfig {
   roleDetailHeader: Localized;
   roleDetails: [Localized, Localized, Localized];
   roleFacts?: [BentoFactConfig, BentoFactConfig, BentoFactConfig, BentoFactConfig];
+  heroOverride?: string;
   teamPill?: Localized;
   shots: [BentoShotConfig, BentoShotConfig];
   stats: [BentoStatConfig, BentoStatConfig, BentoStatConfig];
@@ -101,6 +104,7 @@ interface PointerSample {
 
 const showcaseConfigs: Record<string, ShowcaseConfig> = {
   '9tours': {
+    heroOverride: bentoHero9tours,
     kicker: {
       en: 'Project 01',
       th: 'โปรเจกต์ 01',
@@ -171,10 +175,6 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         th: 'เรียนรู้การสื่อสาร scope ก่อนเริ่มเขียนโค้ด',
       },
     ],
-    teamPill: {
-      en: '3 developers · 2 months',
-      th: '3 นักพัฒนา · 2 เดือน',
-    },
     shots: [
       {
         label: {
@@ -462,6 +462,7 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
           },
         ],
         galleryIndex: 3,
+        imageOverride: goOutShot2,
       },
     ],
     stats: [
@@ -812,7 +813,7 @@ function Projects() {
                 >
                   <div className={styles.bentoThumbWrap}>
                     <img
-                      src={cs.media.hero}
+                      src={showcase.heroOverride ?? cs.media.hero}
                       alt={`${featured.title} app screen`}
                       className={styles.bentoHeroImg}
                     />
@@ -829,17 +830,20 @@ function Projects() {
                   </div>
                 </button>
 
-                <div
+                <button
+                  type="button"
                   className={joinClasses(
                     styles.bentoRole,
                     showcase.roleFacts ? styles.bentoRoleWithFacts : '',
                     isActive('role') ? styles.intentActive : '',
                   )}
+                  onClick={() => setCaseProject(featured)}
                   onPointerEnter={handleIntentEnter(showcaseKey, 'role')}
                   onPointerMove={handleIntentMove(showcaseKey, 'role')}
                   onPointerLeave={handleIntentLeave(showcaseKey, 'role')}
                   onFocus={handleIntentFocus(showcaseKey, 'role')}
                   onBlur={handleIntentBlur}
+                  aria-label={`${t.caseInfo}: ${featured.title}`}
                 >
                   <span className={styles.bentoCellLabel}>{L(showcase.roleLabel, lang)}</span>
                   <span className={styles.bentoRoleTitle}>{L(showcase.roleTitle, lang)}</span>
@@ -865,7 +869,7 @@ function Projects() {
                   {showcase.teamPill && (
                     <span className={styles.bentoTeamPill}>{L(showcase.teamPill, lang)}</span>
                   )}
-                </div>
+                </button>
 
                 <button
                   type="button"
@@ -927,32 +931,6 @@ function Projects() {
                 </div>
               </div>
 
-              <div
-                className={joinClasses(styles.bentoBottom, isActive('bottom') ? styles.intentActive : '')}
-                onPointerEnter={handleIntentEnter(showcaseKey, 'bottom')}
-                onPointerMove={handleIntentMove(showcaseKey, 'bottom')}
-                onPointerLeave={handleIntentLeave(showcaseKey, 'bottom')}
-                onFocus={handleIntentFocus(showcaseKey, 'bottom')}
-                onBlur={handleIntentBlur}
-              >
-                <div className={styles.bentoBadges}>
-                  {featured.techs.map((tech) => (
-                    <TechBadge
-                      key={tech}
-                      tech={tech}
-                      className={primaryTechs.has(tech) ? styles.badgePrimary : styles.badgeSecondary}
-                    />
-                  ))}
-                </div>
-                <div className={styles.bentoLinks}>
-                  <a href={featured.githubUrl} target="_blank" rel="noreferrer" className={styles.btnGhost}>
-                    <img src={githubIcon} alt="" aria-hidden="true" className={styles.btnIcon} />
-                    {t.github}
-                  </a>
-                  <button type="button" className={styles.btnPrimary} onClick={() => setCaseProject(featured)}>{t.liveDemo}</button>
-                </div>
-                <span className={styles.bentoDetail}>{L(showcase.bottomDetail, lang)}</span>
-              </div>
             </article>
           );
         })}

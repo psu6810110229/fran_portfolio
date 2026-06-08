@@ -17,7 +17,7 @@ const content = {
     btnGhost: 'Say hello',
   },
   th: {
-    intro: 'สวัสดีครับ ผมฟราน',
+    intro: 'สวัสดีครับ ผมฟาน',
     headingPre: 'เปลี่ยนไอเดียบนกระดาษ',
     headingLine2: 'ให้เป็น ',
     headingAccent: 'Web Product',

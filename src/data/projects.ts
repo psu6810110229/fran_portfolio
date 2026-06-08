@@ -27,7 +27,7 @@ import userFlowPoster from '../assets/9tours/opt/user-flow-poster.webp';
 
 // GO-OUT assets
 import goOutG00 from '../assets/GO-OUT/images/IMG_20260604_18495797.jpeg';
-import goOutG01 from '../assets/GO-OUT/images/IMG_20260604_18502263.jpeg';
+import goOutG01 from '../assets/GO-OUT/images/IMG_20260604_18502263.jpg';
 import goOutG02 from '../assets/GO-OUT/images/IMG_20260604_18504836.jpeg';
 import goOutG03 from '../assets/GO-OUT/images/IMG_20260604_18505443.jpeg';
 import goOutG04 from '../assets/GO-OUT/images/IMG_20260604_18510418.jpeg';
@@ -117,7 +117,7 @@ export const projects: Project[] = [
       },
       contactHandoff: {
         en: 'That is 9tours. If you want to hear how I would lead and build something like this for you, I am one message away.',
-        th: 'นี่แหละครับ 9tours ถ้าอยากรู้ว่าผมจะนำทีมและสร้างแบบนี้ให้คุณยังไง ทักผมมาได้เลย',
+        th: 'นี่คือโปรเจกต์ 9tours หากคุณกำลังมองหานักพัฒนาเพื่อร่วมต่อยอดไอเดีย หรือสนใจพูดคุยเรื่องการทำงาน สามารถฝากข้อความไว้ได้ครับ',
       },
       media: {
         hero: heroOpt,
@@ -186,7 +186,7 @@ export const projects: Project[] = [
       },
       contactHandoff: {
         en: 'That is GO-OUT: a savings app built around trust, privacy, and steady progress. If you want to talk through a product like this, I am one message away.',
-        th: 'นี่คือ GO-OUT แอปออมเงินที่สร้างจากความน่าเชื่อถือ ความเป็นส่วนตัว และความคืบหน้าที่จับต้องได้ ถ้าอยากคุยเรื่องโปรดักต์แบบนี้ ทักผมมาได้เลย',
+        th: 'GO-OUT คือแอปพลิเคชันออมเงินที่พัฒนาโดยให้ความสำคัญกับความน่าเชื่อถือ ความเป็นส่วนตัว และผลลัพธ์ที่จับต้องได้ หากสนใจเบื้องหลังการสร้างโปรดักต์นี้ สามารถติดต่อผมได้ครับ',
       },
       media: {
         hero: goOutG08,
@@ -256,7 +256,7 @@ export const projects: Project[] = [
       },
       contactHandoff: {
         en: 'That is Gear Rental — a full-stack booking system built as a pair. If you want to talk through how I would build something like this, I am one message away.',
-        th: 'นี่คือ Gear Rental ระบบจองแบบ full-stack ที่ทำกันเป็นคู่ ถ้าอยากคุยว่าผมจะสร้างงานแบบนี้ยังไง ทักผมมาได้เลย',
+        th: 'นี่คือ Gear Rental โปรเจกต์ระบบจองที่แสดงให้เห็นถึงการพัฒนาแบบ Full-Stack และการทำงานร่วมกัน หากสนใจพูดคุยรายละเอียดเชิงเทคนิค หรือมีโปรเจกต์ที่อยากร่วมงานกัน สามารถฝากข้อความไว้ได้ครับ',
       },
       media: {
         hero: gearCover,

@@ -33,7 +33,7 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = '';
-      prev?.focus();
+      prev?.focus({ preventScroll: true });
     };
   }, []);
 
@@ -124,9 +124,8 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
               <p className={styles.handoffText}>{L(cs.contactHandoff)}</p>
               <div className={styles.actions}>
                 <a href="#contact" className={styles.btnPrimary} onClick={onClose}>{t.talk}</a>
-                <a href={githubUrl} target="_blank" rel="noreferrer" className={styles.btnGhost}>
+                <a href={githubUrl} target="_blank" rel="noreferrer" className={`${styles.btnGhost} ${styles.btnIconOnly}`} aria-label="GitHub">
                   <img src={githubIcon} alt="" aria-hidden="true" className={styles.btnIcon} />
-                  {isSoloProject ? t.soloCode : t.code}
                 </a>
               </div>
             </section>

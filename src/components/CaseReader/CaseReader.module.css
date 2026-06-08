@@ -143,18 +143,20 @@
 
 .handoff {
   display: flex;
-  flex-direction: column;
-  gap: 18px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
   padding: 36px 0 0;
 }
 
 .handoffText {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(1.25rem, 3.5vw, 1.6rem);
+  font-size: clamp(1rem, 2vw, 1.15rem);
   font-weight: 700;
   line-height: 1.3;
   color: var(--color-text);
-  max-width: 24ch;
+  max-width: 40ch;
   text-wrap: balance;
 }
 
@@ -202,6 +204,13 @@
   object-fit: contain;
   filter: invert(1);
   opacity: 0.88;
+}
+
+.btnIconOnly {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  flex-shrink: 0;
 }
 
 :global([data-theme="light"]) .btnIcon {
