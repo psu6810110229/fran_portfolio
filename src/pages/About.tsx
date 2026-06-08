@@ -15,8 +15,6 @@ interface AboutCopy {
   leadPost: string;
   body: string;
   own: OwnItem[];
-  basedLabel: string;
-  basedValue: string;
 }
 
 const content: Record<'en' | 'th', AboutCopy> = {
@@ -31,8 +29,6 @@ const content: Record<'en' | 'th', AboutCopy> = {
       { num: '02', title: 'Build', desc: 'Write the front-end and the APIs behind it. Across the stack, not just the screen.' },
       { num: '03', title: 'Ship', desc: 'Debug, deliver, and keep a team moving to something that works.' },
     ],
-    basedLabel: 'Based in',
-    basedValue: 'Hat Yai, Songkhla',
   },
   th: {
     secTitle: 'เกี่ยวกับ',
@@ -45,8 +41,6 @@ const content: Record<'en' | 'th', AboutCopy> = {
       { num: '02', title: 'ลงมือสร้าง', desc: 'เขียนทั้ง front-end และ API เบื้องหลัง ทำได้ทั้งสองฝั่ง ไม่ใช่แค่หน้าจอ' },
       { num: '03', title: 'ส่งมอบ', desc: 'ไล่แก้บั๊ก ส่งงาน และพาทีมไปให้ถึงผลงานที่ใช้งานได้จริง' },
     ],
-    basedLabel: 'อยู่ที่',
-    basedValue: 'หาดใหญ่ สงขลา',
   },
 };
 
@@ -92,11 +86,7 @@ function About() {
             ))}
           </ol>
 
-          <div className={styles.foot}>
-            <span className={styles.based}>
-              <span className={styles.basedLabel}>{c.basedLabel}</span> {c.basedValue}
-            </span>
-          </div>
+
         </div>
       </div>
     </motion.section>
