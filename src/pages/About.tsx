@@ -62,10 +62,6 @@ function About() {
       {...revealProps}
     >
       <div className={styles.inner}>
-        <div className={styles.secHeader}>
-          <span className={styles.secTitle}>{c.secTitle}</span>
-        </div>
-
         <div className={styles.grid}>
           <div className={styles.prose}>
             <p className={styles.lead}>

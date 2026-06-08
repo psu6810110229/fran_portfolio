@@ -655,10 +655,6 @@ function Projects() {
   return (
     <section id="projects" className={styles.projects}>
       <div className={styles.inner}>
-        <div className={styles.secHeader}>
-          <span className={styles.secTitle}>{t.secTitle}</span>
-        </div>
-
         {showcaseProjects.map((featured) => {
           const cs = featured.caseStudy;
           const showcase = showcaseConfigs[featured.title];
@@ -963,7 +959,6 @@ function Projects() {
 
         {otherProjects.length > 0 && (
           <div className={styles.otherSection}>
-            <span className={styles.otherTitle}>{t.more}</span>
             <div className={styles.cardGrid}>
               {otherProjects.map((projectItem) => (
                 <CompactCard
