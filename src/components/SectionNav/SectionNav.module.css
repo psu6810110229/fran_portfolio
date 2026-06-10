@@ -178,6 +178,34 @@
 
 @media (max-width: 768px) {
   .nav {
+    right: 14px;
+    gap: 4px;
+    background: rgba(28, 25, 22, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 0.5px solid #2a2520;
+    border-radius: 20px;
+    padding: 10px 0;
+  }
+
+  :global([data-theme="light"]) .nav {
+    background: rgba(245, 240, 232, 0.82);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* hide tooltip on touch — no hover */
+  .tooltip {
     display: none;
+  }
+
+  /* hide track line on mobile — too tight */
+  .list::before {
+    display: none;
+  }
+
+  .topBtn {
+    margin-top: 2px;
+    width: 26px;
+    height: 26px;
   }
 }
