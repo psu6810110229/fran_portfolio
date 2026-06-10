@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './SectionNav.module.css';
 
 interface Section {
@@ -19,10 +19,36 @@ function SectionNav() {
   const [active, setActive] = useState('hero');
   const [scrolled, setScrolled] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [collapsing, setCollapsing] = useState(false);
+  const [selected, setSelected] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const lockedRef = useRef(false);
   const collapseTimerRef = useRef<number | null>(null);
+  const navigationTimerRef = useRef<number | null>(null);
+  const collapseAnimationTimerRef = useRef<number | null>(null);
+  const selectedTimerRef = useRef<number | null>(null);
   const activeLabel = SECTIONS.find((section) => section.id === active)?.label ?? 'Hero';
+
+  const startCollapse = useCallback(() => {
+    if (collapsing) return;
+
+    if (collapseTimerRef.current !== null) {
+      window.clearTimeout(collapseTimerRef.current);
+      collapseTimerRef.current = null;
+    }
+
+    if (collapseAnimationTimerRef.current !== null) {
+      return;
+    }
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setCollapsing(true);
+    setExpanded(false);
+    collapseAnimationTimerRef.current = window.setTimeout(() => {
+      setCollapsing(false);
+      collapseAnimationTimerRef.current = null;
+    }, reduce ? 0 : 480);
+  }, [collapsing]);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -49,6 +75,15 @@ function SectionNav() {
     return () => {
       observers.forEach((o) => o.disconnect());
       window.removeEventListener('scroll', onScroll);
+      if (navigationTimerRef.current !== null) {
+        window.clearTimeout(navigationTimerRef.current);
+      }
+      if (collapseAnimationTimerRef.current !== null) {
+        window.clearTimeout(collapseAnimationTimerRef.current);
+      }
+      if (selectedTimerRef.current !== null) {
+        window.clearTimeout(selectedTimerRef.current);
+      }
     };
   }, []);
 
@@ -58,24 +93,26 @@ function SectionNav() {
     const onPointerDown = (event: PointerEvent) => {
       const target = event.target;
       if (target instanceof Node && navRef.current && !navRef.current.contains(target)) {
-        setExpanded(false);
+        startCollapse();
       }
     };
 
     document.addEventListener('pointerdown', onPointerDown);
     return () => document.removeEventListener('pointerdown', onPointerDown);
-  }, [expanded]);
+  }, [expanded, startCollapse]);
 
   useEffect(() => {
     if (!expanded) return;
 
     const onScroll = () => {
+      if (lockedRef.current) return;
+
       if (collapseTimerRef.current !== null) {
         window.clearTimeout(collapseTimerRef.current);
       }
 
       collapseTimerRef.current = window.setTimeout(() => {
-        setExpanded(false);
+        startCollapse();
       }, 520);
     };
 
@@ -88,12 +125,19 @@ function SectionNav() {
         collapseTimerRef.current = null;
       }
     };
-  }, [expanded]);
+  }, [expanded, startCollapse]);
 
   const scrollTo = (id: string) => {
     lockedRef.current = true;
     setActive(id);
-    setExpanded(false);
+    setSelected(id);
+    setExpanded(true);
+    if (navigationTimerRef.current !== null) {
+      window.clearTimeout(navigationTimerRef.current);
+    }
+    if (selectedTimerRef.current !== null) {
+      window.clearTimeout(selectedTimerRef.current);
+    }
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (id === 'hero') {
       window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
@@ -101,11 +145,20 @@ function SectionNav() {
       const el = document.getElementById(id);
       if (!el) {
         lockedRef.current = false;
+        setSelected(null);
         return;
       }
       el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
     }
-    setTimeout(() => { lockedRef.current = false; }, 900);
+    navigationTimerRef.current = window.setTimeout(() => {
+      startCollapse();
+      lockedRef.current = false;
+      navigationTimerRef.current = null;
+      selectedTimerRef.current = window.setTimeout(() => {
+        setSelected(null);
+        selectedTimerRef.current = null;
+      }, reduce ? 120 : 620);
+    }, reduce ? 260 : 920);
   };
 
   const scrollToTop = () => {
@@ -116,13 +169,25 @@ function SectionNav() {
   return (
     <nav
       ref={navRef}
-      className={`${styles.nav} ${expanded ? styles.navExpanded : ''}`}
+      className={`${styles.nav} ${expanded ? styles.navExpanded : ''} ${collapsing ? styles.navCollapsing : ''}`}
       aria-label="Section navigation"
     >
       <button
         className={styles.fab}
         type="button"
-        onClick={() => setExpanded((current) => !current)}
+        onClick={() => {
+          setSelected(null);
+          if (expanded) {
+            startCollapse();
+            return;
+          }
+          if (collapseAnimationTimerRef.current !== null) {
+            window.clearTimeout(collapseAnimationTimerRef.current);
+            collapseAnimationTimerRef.current = null;
+          }
+          setCollapsing(false);
+          setExpanded(true);
+        }}
         aria-label={`${expanded ? 'Close' : 'Open'} section navigation. Current section: ${activeLabel}`}
         aria-controls="section-nav-list"
         aria-expanded={expanded}
@@ -138,12 +203,11 @@ function SectionNav() {
         {SECTIONS.map(({ id, label }) => (
           <li key={id} className={styles.item}>
             <button
-              className={`${styles.dot} ${active === id ? styles.dotActive : ''}`}
+              className={`${styles.dot} ${active === id ? styles.dotActive : ''} ${selected === id ? styles.dotSelected : ''}`}
               onClick={() => scrollTo(id)}
               aria-label={`Go to ${label}`}
               aria-current={active === id ? 'true' : undefined}
             >
-              <span className={styles.buttonLabel} aria-hidden="true">{label}</span>
             </button>
             <span className={styles.tooltip}>{label}</span>
           </li>
