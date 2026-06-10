@@ -67,7 +67,7 @@ interface BentoShotConfig {
 interface BentoStatConfig {
   number: string;
   label: Localized;
-  details: [Localized, Localized, Localized];
+  details: Localized[];
 }
 
 interface ShowcaseConfig {
@@ -230,65 +230,77 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
     ],
     stats: [
       {
-        number: '1',
+        number: '49',
         label: {
-          en: 'race bug fixed',
-          th: 'บัก race ที่แก้ไข',
+          en: 'API endpoints',
+          th: 'API endpoints',
         },
         details: [
           {
-            en: 'Found the booking race.',
-            th: 'พบ race condition',
+            en: 'Backend built by the team',
+            th: 'backend ที่ทีมสร้าง',
           },
           {
-            en: 'Moved trust to server state.',
-            th: 'ย้าย state ไปฝั่ง server',
+            en: 'Across 14 NestJS modules',
+            th: 'ครอบคลุม 14 โมดูล NestJS',
           },
           {
-            en: 'Learned to verify before success.',
-            th: 'ตรวจสอบก่อนแจ้งสำเร็จ',
+            en: 'Booking, payments, auth',
+            th: 'การจอง จ่ายเงิน ล็อกอิน',
+          },
+          {
+            en: 'I built parts of the API',
+            th: 'ผมลงมือทำ API บางส่วน',
           },
         ],
       },
       {
-        number: '2',
+        number: '146',
         label: {
-          en: 'product sides',
-          th: 'ฝั่งผลิตภัณฑ์',
+          en: 'automated tests',
+          th: 'เทสต์อัตโนมัติ',
         },
         details: [
           {
-            en: 'Built the booking flow.',
-            th: 'สร้างระบบจอง',
+            en: 'Cover the whole system',
+            th: 'ครอบคลุมทั้งระบบ',
           },
           {
-            en: 'Connected the admin side.',
-            th: 'เชื่อมต่อฝั่งแอดมิน',
+            en: 'Run in CI on every push',
+            th: 'รันใน CI ทุกครั้งที่ push',
           },
           {
-            en: 'Learned how both users think.',
-            th: 'เข้าใจผู้ใช้สองฝั่ง',
+            en: 'Guard the booking logic',
+            th: 'ป้องกัน logic การจอง',
+          },
+          {
+            en: 'Catch breakage before merge',
+            th: 'จับบั๊กก่อน merge',
           },
         ],
       },
       {
-        number: '3',
+        number: '17',
         label: {
-          en: 'devs led',
-          th: 'นักพัฒนาในทีม',
+          en: 'pages built',
+          th: 'หน้าที่สร้าง',
         },
         details: [
           {
-            en: 'Set the product direction.',
-            th: 'กำหนดทิศทาง product',
+            en: 'Front-end screens I led',
+            th: 'หน้า front-end ที่ผมดูแล',
           },
           {
-            en: 'Kept teammates aligned.',
-            th: 'รักษาทีมให้มุ่งเป้า',
+            en: 'Plus a 10-page admin side',
+            th: 'พร้อมฝั่ง admin 10 หน้า',
           },
           {
-            en: 'Learned to lead while building.',
-            th: 'เรียนรู้การนำทีม',
+            en: 'Browse, book, confirm flow',
+            th: 'flow ดู จอง ยืนยัน',
+          },
+          {
+            en: 'From wireframe to build',
+            th: 'ตั้งแต่ wireframe ถึงจริง',
           },
         ],
       },
@@ -638,7 +650,17 @@ function Projects() {
     }
     lastPointerRef.current = null;
     if (activeIntentRef.current === currentIntentKey) {
-      setIntent(null);
+      // Defer the collapse one beat: entering an adjacent cell within this
+      // window swaps intents directly instead of bouncing the grid through
+      // its rest layout (visible blink during the handoff).
+      clearIntentTimer();
+      intentTimerRef.current = window.setTimeout(() => {
+        if (activeIntentRef.current === currentIntentKey) {
+          setIntent(null);
+        }
+        intentTimerRef.current = null;
+        pendingIntentRef.current = null;
+      }, 140);
     }
   };
 
@@ -920,8 +942,10 @@ function Projects() {
                 >
                   {showcase.stats.map((stat) => (
                     <div key={`${stat.number}-${L(stat.label, lang)}`} className={styles.bentoStat}>
-                      <span className={styles.bentoStatNum}>{stat.number}</span>
-                      <span className={styles.bentoStatLabel}>{L(stat.label, lang)}</span>
+                      <div className={styles.bentoStatHead}>
+                        <span className={styles.bentoStatNum}>{stat.number}</span>
+                        <span className={styles.bentoStatLabel}>{L(stat.label, lang)}</span>
+                      </div>
                       <p className={styles.bentoStatBody}>
                         {stat.details.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
                       </p>

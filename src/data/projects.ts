@@ -61,9 +61,9 @@ export const projects: Project[] = [
   {
     title: '9tours',
     description:
-      'Tour booking platform built by a student team at PSU. I was the group lead and project manager, and built the front-end and parts of the API with my teammates.',
+      'Tour booking platform built by a 3-developer student team at PSU — a full system spanning 49 API endpoints, 17 pages, and 146 automated tests. I was the group lead and project manager, and built the front-end and parts of the API with my teammates.',
     descriptionTh:
-      'แพลตฟอร์มจองทัวร์ที่ทีมนักศึกษา ม.อ. ช่วยกันสร้าง ผมเป็นหัวหน้ากลุ่มและดูแลภาพรวมโปรเจกต์ และลงมือทำทั้ง front-end และบางส่วนของ API ร่วมกับเพื่อนในทีม',
+      'แพลตฟอร์มจองทัวร์ที่ทีมนักศึกษา ม.อ. 3 คนช่วยกันสร้าง เป็นระบบเต็มรูปแบบที่มี 49 API endpoints, 17 หน้า และเทสต์อัตโนมัติ 146 รายการ ผมเป็นหัวหน้ากลุ่มและดูแลภาพรวมโปรเจกต์ และลงมือทำทั้ง front-end และบางส่วนของ API ร่วมกับเพื่อนในทีม',
     tag: 'Team · 240-124',
     techs: ['React', 'TypeScript', 'CSS', 'SQL', 'Git'],
     githubUrl: 'https://github.com/psu6810110712/9Tours',

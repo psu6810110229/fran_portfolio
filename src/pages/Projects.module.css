@@ -486,6 +486,9 @@
   grid-column: 1 / -1;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
+  /* Mid-expand the not-yet-unwrapped text can exceed the fixed cell height;
+     clip it so it never paints below the card. */
+  overflow: hidden;
   padding: 18px 14px;
   border: 1px solid #d4651a;
   border-radius: 24px;
@@ -532,6 +535,7 @@
 
 .bentoStatLabel {
   font-size: 11px;
+  font-weight: 500;
   line-height: 1.2;
   color: #ffffff;
 }
@@ -544,8 +548,8 @@
   max-height: 0;
   overflow: hidden;
   margin: 0;
-  font-size: 12px;
-  line-height: 1.25;
+  font-size: 13px;
+  line-height: 1.5;
   color: #ffffff;
   opacity: 0;
   text-align: left;
@@ -709,7 +713,11 @@
 
 :global([data-lang="th"]) .bentoStats.intentActive .bentoStatBody,
 :global([data-lang="th"]) .bentoStats:focus-within .bentoStatBody {
-  max-height: 72px;
+  max-height: none;
+}
+
+:global([data-lang="th"]) .bentoStats .bentoStatBody {
+  line-height: 1.65;
 }
 
 :global([data-theme="light"]) .projects {
@@ -861,8 +869,13 @@
     grid-template-columns: minmax(0, 0.97fr) minmax(0, 1.1fr) minmax(120px, 0.47fr);
   }
 
+  /* Stats hovered: widen the stats cell so its side-by-side 4-line detail
+     fits on single lines (no wrap, no clip). Height may grow on narrow
+     tablets where the detail lines wrap; a fixed 325px would clip them. */
   .bentoMediaRowStatsIntent {
-    grid-template-columns: minmax(0, 0.99fr) minmax(0, 0.99fr) minmax(120px, 0.52fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) minmax(220px, 0.9fr);
+    height: auto;
+    min-height: 325px;
   }
 
   .bentoTopRow > *,
@@ -882,22 +895,116 @@
     min-height: 100%;
   }
 
+  /* Rest: each stat shows its number with its label beneath (so the meaning
+     is always readable), centred in the cell. Hover/active: the number+label
+     head glides to the left, shrinks, and a 4-line detail column eases in to
+     the RIGHT. All motion shares one easing curve + duration for a seamless,
+     premium feel. */
   .bentoStats {
     grid-column: auto;
     align-self: stretch;
     grid-template-columns: 1fr;
     align-content: center;
+    gap: 14px;
     height: 100%;
     min-height: 100%;
-    padding: 20px 14px 56px;
+    padding: 22px 20px;
   }
 
-  .bentoStatNum {
-    font-size: 38px;
+  /* Hover: spread the rows to the top/bottom edges so each row's 4-line
+     subtext has room and never clips. */
+  .bentoStats.intentActive,
+  .bentoStats:focus-within {
+    align-content: space-between;
   }
 
-  .bentoStatLabel {
+  .bentoStats .bentoStat {
+    display: grid;
+    grid-template-columns: auto 0fr;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0;
+    transition:
+      grid-template-columns 380ms cubic-bezier(0.22, 1, 0.36, 1),
+      column-gap 380ms cubic-bezier(0.22, 1, 0.36, 1),
+      justify-content 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Fixed width keeps the auto track constant between rest and expanded, so
+     every row's detail column starts at the same x. */
+  .bentoStatHead {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 104px;
+    text-align: center;
+    transition: align-items 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bentoStats .bentoStatNum {
+    grid-row: auto;
+    grid-column: auto;
+    font-size: 40px;
+    line-height: 1;
+    text-align: inherit;
+    transition: font-size 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bentoStats .bentoStatLabel {
+    grid-row: auto;
+    grid-column: auto;
     font-size: 14px;
+    line-height: 1.25;
+    text-align: inherit;
+  }
+
+  .bentoStats .bentoStatBody {
+    display: flex;
+    flex-direction: column;
+    grid-column: 2;
+    gap: 2px;
+    align-self: center;
+    max-height: 0;
+    margin: 0;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1.45;
+    text-align: left;
+    opacity: 0;
+    transform: translateX(10px);
+    transition:
+      max-height 380ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 260ms ease,
+      transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Reveal */
+  .bentoStats.intentActive .bentoStat,
+  .bentoStats:focus-within .bentoStat {
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-content: start;
+    column-gap: 12px;
+  }
+
+  .bentoStats.intentActive .bentoStatHead,
+  .bentoStats:focus-within .bentoStatHead {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .bentoStats.intentActive .bentoStatNum,
+  .bentoStats:focus-within .bentoStatNum {
+    font-size: 22px;
+  }
+
+  /* 320px covers the worst-case wrapped EN detail on narrow tablets;
+     >=1280px tightens it back to 9em for the slower, premium glide. */
+  .bentoStats.intentActive .bentoStatBody,
+  .bentoStats:focus-within .bentoStatBody {
+    max-height: 320px;
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .bentoMain {
@@ -989,6 +1096,8 @@
   .bentoShotImg,
   .bentoDetail,
   .bentoStat,
+  .bentoStatHead,
+  .bentoStatNum,
   .bentoStatBody,
   .bentoTopRow,
   .bentoMediaRow {
@@ -1017,6 +1126,18 @@
   .bentoMainContent,
   .bentoRole {
     padding: 20px;
+  }
+
+  .bentoStats.intentActive .bentoStatBody,
+  .bentoStats:focus-within .bentoStatBody {
+    max-height: 9em;
+  }
+
+  /* Content fits the fixed row height here; keeping it locked prevents the
+     row from briefly growing taller while the columns are still animating
+     (mid-flight text wrap inflates an auto height for a split second). */
+  .bentoMediaRowStatsIntent {
+    height: 325px;
   }
 }
 
