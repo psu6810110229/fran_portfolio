@@ -14,7 +14,7 @@
    `backwards` fill keeps it visible if the animation never runs. ── */
 @media (prefers-reduced-motion: no-preference) {
   .navbar {
-    animation: navDrop 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation: navDrop 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.3s backwards;
   }
 }
 

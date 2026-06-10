@@ -1,4 +1,5 @@
-import { motion } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'motion/react';
 import { useLanguage } from '../hooks/useLanguage';
 import styles from './About.module.css';
 
@@ -44,43 +45,71 @@ const content: Record<'en' | 'th', AboutCopy> = {
   },
 };
 
-const revealProps = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.1 },
-  transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
+/* ── Entrance choreography ──
+   Section reveals once on scroll: prose first, then the numbered list
+   staggers its items. Same easing family as the bento section. */
+const aboutEase = [0.22, 1, 0.36, 1] as const;
+
+const sectionVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
 };
+
+const listVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: aboutEase } },
+};
+
+/* Hero's last item starts at 0.66s; let About begin as that fade settles
+   so the sequence reads navbar → hero → about without a dead gap. */
+const HERO_SETTLE_MS = 900;
 
 function About() {
   const { lang } = useLanguage();
   const c = content[lang];
+  const sectionRef = useRef<HTMLElement>(null);
+  const inView = useInView(sectionRef, { once: true, margin: '0px 0px -120px 0px' });
+  const [heroDone, setHeroDone] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setHeroDone(true), HERO_SETTLE_MS);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <motion.section
       id="about"
+      ref={sectionRef}
       className={styles.about}
-      {...revealProps}
+      variants={sectionVariants}
+      initial="hidden"
+      animate={inView && heroDone ? 'show' : 'hidden'}
     >
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.prose}>
-            <p className={styles.lead}>
+            <motion.p className={styles.lead} variants={itemVariants}>
               {c.leadPre}<span className={styles.leadAccent}>{c.leadAccent}</span>{c.leadPost}
-            </p>
-            <p className={styles.body}>{c.body}</p>
+            </motion.p>
+            <motion.p className={styles.body} variants={itemVariants}>{c.body}</motion.p>
           </div>
 
-          <ol className={styles.own}>
+          <motion.ol className={styles.own} variants={listVariants}>
             {c.own.map((item) => (
-              <li key={item.num} className={styles.ownItem}>
+              <motion.li key={item.num} className={styles.ownItem} variants={itemVariants}>
                 <span className={styles.ownNum}>{item.num}</span>
                 <div>
                   <span className={styles.ownTitle}>{item.title}</span>
                   <p className={styles.ownDesc}>{item.desc}</p>
                 </div>
-              </li>
+              </motion.li>
             ))}
-          </ol>
+          </motion.ol>
 
 
         </div>

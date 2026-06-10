@@ -1,6 +1,28 @@
 .projects {
   background: #141210;
-  border-bottom: 1px solid #2a2520;
+  position: relative;
+}
+
+/* ── Divider: hairline spreads from center on load ── */
+.projects::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #2a2520;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .projects::after {
+    animation: lineSpread 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1.2s backwards;
+  }
+}
+
+@keyframes lineSpread {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 
 .inner {
@@ -811,7 +833,10 @@
 
 :global([data-theme="light"]) .projects {
   background: transparent;
-  border-bottom-color: #e0d8d0;
+}
+
+:global([data-theme="light"]) .projects::after {
+  background: #e0d8d0;
 }
 
 :global([data-theme="light"]) .bentoGuideText {

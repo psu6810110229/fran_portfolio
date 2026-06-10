@@ -1,6 +1,28 @@
 .about {
-  border-bottom: 0.5px solid var(--color-border-soft);
+  position: relative;
   scroll-margin-top: var(--nav-height);
+}
+
+/* ── Divider: hairline spreads from center, follows the hero line ── */
+.about::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.5px;
+  background: var(--color-border-soft);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .about::after {
+    animation: lineSpread 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1.1s backwards;
+  }
+}
+
+@keyframes lineSpread {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 
 .inner {

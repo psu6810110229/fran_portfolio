@@ -1,6 +1,28 @@
 .hero {
   width: 100%;
-  border-bottom: 0.5px solid var(--color-border-soft);
+  position: relative;
+}
+
+/* ── Divider: hairline spreads from center once the hero settles ── */
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.5px;
+  background: var(--color-border-soft);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero::after {
+    animation: lineSpread 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.9s backwards;
+  }
+}
+
+@keyframes lineSpread {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 
 .inner {
@@ -197,12 +219,12 @@
     animation: heroRise 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   }
 
-  .avatarWrapper { animation-delay: 0s; }
-  .intro         { animation-delay: 0.05s; }
-  .heading       { animation-delay: 0.12s; }
-  .subhead       { animation-delay: 0.2s; }
-  .badge         { animation-delay: 0.28s; }
-  .btns          { animation-delay: 0.36s; }
+  .avatarWrapper { animation-delay: 0.3s; }
+  .intro         { animation-delay: 0.35s; }
+  .heading       { animation-delay: 0.42s; }
+  .subhead       { animation-delay: 0.5s; }
+  .badge         { animation-delay: 0.58s; }
+  .btns          { animation-delay: 0.66s; }
 }
 
 @keyframes heroRise {

@@ -804,7 +804,7 @@ function Projects() {
               variants={articleVariants}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.12 }}
+              viewport={{ once: true, margin: '0px 0px -120px 0px' }}
             >
               <motion.div className={styles.bentoGuide} variants={cellVariants}>
                 <span className={styles.bentoGuideKicker}>{L(showcase.kicker, lang)}</span>
