@@ -18,7 +18,11 @@ const SECTIONS: Section[] = [
 function SectionNav() {
   const [active, setActive] = useState('hero');
   const [scrolled, setScrolled] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
   const lockedRef = useRef(false);
+  const collapseTimerRef = useRef<number | null>(null);
+  const activeLabel = SECTIONS.find((section) => section.id === active)?.label ?? 'Hero';
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -48,15 +52,57 @@ function SectionNav() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!expanded) return;
+
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (target instanceof Node && navRef.current && !navRef.current.contains(target)) {
+        setExpanded(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => document.removeEventListener('pointerdown', onPointerDown);
+  }, [expanded]);
+
+  useEffect(() => {
+    if (!expanded) return;
+
+    const onScroll = () => {
+      if (collapseTimerRef.current !== null) {
+        window.clearTimeout(collapseTimerRef.current);
+      }
+
+      collapseTimerRef.current = window.setTimeout(() => {
+        setExpanded(false);
+      }, 520);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (collapseTimerRef.current !== null) {
+        window.clearTimeout(collapseTimerRef.current);
+        collapseTimerRef.current = null;
+      }
+    };
+  }, [expanded]);
+
   const scrollTo = (id: string) => {
     lockedRef.current = true;
     setActive(id);
+    setExpanded(false);
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (id === 'hero') {
       window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
     } else {
       const el = document.getElementById(id);
-      if (!el) return;
+      if (!el) {
+        lockedRef.current = false;
+        return;
+      }
       el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
     }
     setTimeout(() => { lockedRef.current = false; }, 900);
@@ -68,15 +114,37 @@ function SectionNav() {
   };
 
   return (
-    <nav className={styles.nav} aria-label="Section navigation">
-      <ul className={styles.list}>
+    <nav
+      ref={navRef}
+      className={`${styles.nav} ${expanded ? styles.navExpanded : ''}`}
+      aria-label="Section navigation"
+    >
+      <button
+        className={styles.fab}
+        type="button"
+        onClick={() => setExpanded((current) => !current)}
+        aria-label={`${expanded ? 'Close' : 'Open'} section navigation. Current section: ${activeLabel}`}
+        aria-controls="section-nav-list"
+        aria-expanded={expanded}
+      >
+        <span className={styles.fabIcon} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </span>
+      </button>
+
+      <ul id="section-nav-list" className={`${styles.list} ${expanded ? styles.listExpanded : ''}`}>
         {SECTIONS.map(({ id, label }) => (
           <li key={id} className={styles.item}>
             <button
               className={`${styles.dot} ${active === id ? styles.dotActive : ''}`}
               onClick={() => scrollTo(id)}
               aria-label={`Go to ${label}`}
-            />
+              aria-current={active === id ? 'true' : undefined}
+            >
+              <span className={styles.buttonLabel} aria-hidden="true">{label}</span>
+            </button>
             <span className={styles.tooltip}>{label}</span>
           </li>
         ))}
