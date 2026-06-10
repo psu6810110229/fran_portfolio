@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FocusEvent, type PointerEvent } from 'react';
-import { AnimatePresence } from 'motion/react';
+import { AnimatePresence, animate, motion, useInView, useReducedMotion } from 'motion/react';
 import GalleryModal from '../components/GalleryModal/GalleryModal';
 import CaseReader from '../components/CaseReader/CaseReader';
 import CompactCard from '../components/CompactCard/CompactCard';
@@ -559,6 +559,90 @@ const L = (value: Localized, lang: 'en' | 'th') => value[lang];
 
 const getIntentKey = (showcaseKey: string, intent: BentoIntent) => `${showcaseKey}:${intent}`;
 
+/* ── Entrance choreography ──
+   Each bento article reveals once on scroll: guide + heading first, then the
+   rows stagger their cells. One easing family across the section. */
+const bentoEase = [0.22, 1, 0.36, 1] as const;
+
+const articleVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+};
+
+const rowVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09 } },
+};
+
+const cellVariants = {
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: bentoEase } },
+};
+
+const liftHover = { y: -3, transition: { duration: 0.18, ease: 'easeOut' as const } };
+
+interface StatNumberProps {
+  value: string;
+  className: string;
+}
+
+/** Counts the stat up from 0 the first time it scrolls into view. */
+function StatNumber({ value, className }: StatNumberProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-10% 0px' });
+  const prefersReducedMotion = useReducedMotion();
+  const target = Number.parseInt(value, 10);
+  const animatable = !prefersReducedMotion && Number.isFinite(target);
+  const [display, setDisplay] = useState(animatable ? '0' : value);
+
+  useEffect(() => {
+    if (!inView || !animatable) return;
+    const controls = animate(0, target, {
+      duration: 1.1,
+      ease: bentoEase,
+      onUpdate: (v) => setDisplay(String(Math.round(v))),
+    });
+    return () => controls.stop();
+  }, [inView, animatable, target]);
+
+  return <span ref={ref} className={className}>{animatable ? display : value}</span>;
+}
+
+interface PreviewVideoProps {
+  src: string;
+  active: boolean;
+  className: string;
+}
+
+/** Muted looping preview that plays while its bento cell holds hover intent. */
+function PreviewVideo({ src, active, className }: PreviewVideoProps) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    if (active) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }, [active]);
+
+  return (
+    <video
+      ref={ref}
+      className={className}
+      src={src}
+      muted
+      loop
+      playsInline
+      preload="auto"
+      aria-hidden="true"
+      tabIndex={-1}
+    />
+  );
+}
+
 function Projects() {
   const { lang } = useLanguage();
   const t = ui[lang];
@@ -567,6 +651,8 @@ function Projects() {
   const [caseProject, setCaseProject] = useState<Project | null>(null);
   const [expandedProject, setExpandedProject] = useState<string | null>(null);
   const [activeIntentKey, setActiveIntentKey] = useState<string | null>(null);
+  const [armedVideos, setArmedVideos] = useState<Record<string, boolean>>({});
+  const prefersReducedMotion = useReducedMotion();
   const activeIntentRef = useRef<string | null>(null);
   const intentTimerRef = useRef<number | null>(null);
   const pendingIntentRef = useRef<string | null>(null);
@@ -613,8 +699,13 @@ function Projects() {
     setGalleryIndex(imageIndex + videoOffset);
   };
 
+  const armVideo = (showcaseKey: string) => {
+    setArmedVideos((armed) => (armed[showcaseKey] ? armed : { ...armed, [showcaseKey]: true }));
+  };
+
   const handleIntentEnter = (showcaseKey: string, intent: BentoIntent) => (event: PointerEvent<HTMLElement>) => {
     if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+    if (intent === 'main') armVideo(showcaseKey);
     lastPointerRef.current = { x: event.clientX, y: event.clientY, time: performance.now() };
     scheduleIntent(showcaseKey, intent, 110);
   };
@@ -706,19 +797,28 @@ function Projects() {
           );
 
           return (
-            <article key={featured.title} id={`project-${featured.title.toLowerCase().replace(/\s+/g, '-')}`} className={styles.bento}>
-              <div className={styles.bentoGuide}>
+            <motion.article
+              key={featured.title}
+              id={`project-${featured.title.toLowerCase().replace(/\s+/g, '-')}`}
+              className={styles.bento}
+              variants={articleVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.12 }}
+            >
+              <motion.div className={styles.bentoGuide} variants={cellVariants}>
                 <span className={styles.bentoGuideKicker}>{L(showcase.kicker, lang)}</span>
                 <span className={styles.bentoGuideLine} aria-hidden="true" />
                 <p className={styles.bentoGuideText}>{L(showcase.guide, lang)}</p>
-              </div>
-              <h2 className={styles.bentoHeading}>{L(showcase.heading, lang)}</h2>
+              </motion.div>
+              <motion.h2 className={styles.bentoHeading} variants={cellVariants}>{L(showcase.heading, lang)}</motion.h2>
 
-              <div
+              <motion.div
                 className={joinClasses(
                   styles.mobileProjectCard,
                   isMobileExpanded ? styles.mobileProjectCardExpanded : '',
                 )}
+                variants={cellVariants}
               >
                 <div className={styles.mobileHeroShell}>
                   <button
@@ -796,7 +896,7 @@ function Projects() {
                         <div className={styles.mobileStatsGrid}>
                           {showcase.stats.map((stat) => (
                             <div key={`${stat.number}-${L(stat.label, lang)}`} className={styles.mobileStatItem}>
-                              <span className={styles.mobileStatNumber}>{stat.number}</span>
+                              <StatNumber value={stat.number} className={styles.mobileStatNumber} />
                               <span className={styles.mobileStatLabel}>{L(stat.label, lang)}</span>
                               <p className={styles.mobileStatDetails}>
                                 {stat.details.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
@@ -822,12 +922,14 @@ function Projects() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className={topRowClassName}>
-                <button
+              <motion.div className={topRowClassName} variants={rowVariants}>
+                <motion.button
                   type="button"
                   className={joinClasses(styles.bentoMain, isActive('main') ? styles.intentActive : '')}
+                  variants={cellVariants}
+                  whileHover={liftHover}
                   onClick={() => openVideoGallery(featured)}
                   onPointerEnter={handleIntentEnter(showcaseKey, 'main')}
                   onPointerMove={handleIntentMove(showcaseKey, 'main')}
@@ -842,6 +944,16 @@ function Projects() {
                       alt={`${featured.title} app screen`}
                       className={styles.bentoHeroImg}
                     />
+                    {armedVideos[showcaseKey] && featured.previewVideo && !prefersReducedMotion && (
+                      <PreviewVideo
+                        src={featured.previewVideo}
+                        active={isActive('main')}
+                        className={joinClasses(
+                          styles.bentoVideo,
+                          isActive('main') ? styles.bentoVideoVisible : '',
+                        )}
+                      />
+                    )}
                   </div>
                   <div className={styles.bentoMainContent}>
                     <h3 className={styles.bentoTitle}>{featured.title}</h3>
@@ -853,15 +965,17 @@ function Projects() {
                       {showcase.mainDetails.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
                     </p>
                   </div>
-                </button>
+                </motion.button>
 
-                <button
+                <motion.button
                   type="button"
                   className={joinClasses(
                     styles.bentoRole,
                     showcase.roleFacts ? styles.bentoRoleWithFacts : '',
                     isActive('role') ? styles.intentActive : '',
                   )}
+                  variants={cellVariants}
+                  whileHover={liftHover}
                   onClick={() => setCaseProject(featured)}
                   onPointerEnter={handleIntentEnter(showcaseKey, 'role')}
                   onPointerMove={handleIntentMove(showcaseKey, 'role')}
@@ -894,7 +1008,7 @@ function Projects() {
                   {showcase.teamPill && (
                     <span className={styles.bentoTeamPill}>{L(showcase.teamPill, lang)}</span>
                   )}
-                </button>
+                </motion.button>
 
                 <button
                   type="button"
@@ -903,19 +1017,21 @@ function Projects() {
                 >
                   {t.liveDemo}
                 </button>
-              </div>
+              </motion.div>
 
-              <div className={mediaRowClassName}>
+              <motion.div className={mediaRowClassName} variants={rowVariants}>
                 {showcase.shots.map((shot, index) => {
                   const shotIntent: BentoIntent = index === 0 ? 'booking' : 'admin';
                   const shotClass = index === 0 ? styles.bentoShot1 : styles.bentoShot2;
                   const shotSrc = shot.imageOverride ?? cs.media.gallery[shot.galleryIndex];
 
                   return (
-                    <button
+                    <motion.button
                       key={L(shot.label, lang)}
                       type="button"
                       className={joinClasses(styles.bentoShot, shotClass, isActive(shotIntent) ? styles.intentActive : '')}
+                      variants={cellVariants}
+                      whileHover={liftHover}
                       onClick={() => openImageGallery(featured, shot.galleryIndex)}
                       onPointerEnter={handleIntentEnter(showcaseKey, shotIntent)}
                       onPointerMove={handleIntentMove(showcaseKey, shotIntent)}
@@ -934,12 +1050,14 @@ function Projects() {
                           {shot.details.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
                         </p>
                       </div>
-                    </button>
+                    </motion.button>
                   );
                 })}
 
-                <div
+                <motion.div
                   className={joinClasses(styles.bentoStats, isActive('stats') ? styles.intentActive : '')}
+                  variants={cellVariants}
+                  whileHover={liftHover}
                   onPointerEnter={handleIntentEnter(showcaseKey, 'stats')}
                   onPointerMove={handleIntentMove(showcaseKey, 'stats')}
                   onPointerLeave={handleIntentLeave(showcaseKey, 'stats')}
@@ -947,7 +1065,7 @@ function Projects() {
                   {showcase.stats.map((stat) => (
                     <div key={`${stat.number}-${L(stat.label, lang)}`} className={styles.bentoStat}>
                       <div className={styles.bentoStatHead}>
-                        <span className={styles.bentoStatNum}>{stat.number}</span>
+                        <StatNumber value={stat.number} className={styles.bentoStatNum} />
                         <span className={styles.bentoStatLabel}>{L(stat.label, lang)}</span>
                       </div>
                       <p className={styles.bentoStatBody}>
@@ -955,10 +1073,10 @@ function Projects() {
                       </p>
                     </div>
                   ))}
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
-            </article>
+            </motion.article>
           );
         })}
 
