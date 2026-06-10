@@ -7,6 +7,7 @@ import TechBadge from '../components/TechBadge/TechBadge';
 import { projects } from '../data/projects';
 import { useLanguage } from '../hooks/useLanguage';
 import type { Localized, Project } from '../types';
+import githubIcon from '../assets/icons/github.svg';
 import adminPanelShot from '../assets/9tours/admin/Screenshot (463).png';
 import bookingFlowShot from '../assets/9tours/user/Screenshot (456).png';
 import bentoHero9tours from '../assets/9tours/user/Screenshot (453).png';
@@ -17,9 +18,10 @@ const defaultPrimaryTechs = new Set(['React', 'TypeScript', 'CSS']);
 
 const ui = {
   en: {
-    secTitle: 'Projects',
     more: 'More projects',
-    github: 'GitHub',
+    github: 'View the code',
+    readCase: 'Read the full case',
+    watchPreview: 'Watch the preview',
     liveDemo: 'More details',
     mobileMore: 'More',
     mobileLess: 'Less',
@@ -29,17 +31,16 @@ const ui = {
     outcome: 'Outcome',
     stack: 'Stack',
     purpose: 'Purpose',
-    roleDetails: 'Role details',
     features: 'Features',
     stats: 'Takeaways',
-    links: 'Links',
     comingSoon: 'Coming soon',
     comingSoonSub: 'Next project in progress…',
   },
   th: {
-    secTitle: 'โปรเจกต์',
     more: 'โปรเจกต์อื่น ๆ',
-    github: 'GitHub',
+    github: 'ดูโค้ด',
+    readCase: 'อ่านเคสเต็ม',
+    watchPreview: 'ดูวิดีโอตัวอย่าง',
     liveDemo: 'รายละเอียด',
     mobileMore: 'เพิ่มเติม',
     mobileLess: 'ย่อ',
@@ -49,16 +50,14 @@ const ui = {
     outcome: 'ผลลัพธ์',
     stack: 'สแต็ก',
     purpose: 'แอปนี้ทำอะไร',
-    roleDetails: 'รายละเอียดบทบาท',
     features: 'ฟีเจอร์หลัก',
     stats: 'สิ่งที่ได้จากโปรเจกต์',
-    links: 'ลิงก์',
     comingSoon: 'เร็ว ๆ นี้',
     comingSoonSub: 'โปรเจกต์ถัดไปกำลังสร้าง…',
   },
 };
 
-type BentoIntent = 'main' | 'role' | 'booking' | 'admin' | 'stats' | 'bottom';
+type BentoIntent = 'main' | 'role' | 'booking' | 'admin' | 'stats';
 
 interface BentoShotConfig {
   label: Localized;
@@ -76,8 +75,8 @@ interface BentoStatConfig {
 
 interface ShowcaseConfig {
   kicker: Localized;
-  guide: Localized;
   heading: Localized;
+  mainLine: Localized;
   mainDetailHeader: Localized;
   mainDetails: [Localized, Localized, Localized];
   roleLabel: Localized;
@@ -85,9 +84,8 @@ interface ShowcaseConfig {
   rolePoints: [Localized, Localized, Localized];
   roleDetailHeader: Localized;
   roleDetails: [Localized, Localized, Localized];
-  roleFacts?: [BentoFactConfig, BentoFactConfig, BentoFactConfig, BentoFactConfig];
+  roleFacts: [BentoFactConfig, BentoFactConfig, BentoFactConfig, BentoFactConfig];
   heroOverride?: string;
-  teamPill?: Localized;
   shots: [BentoShotConfig, BentoShotConfig];
   stats: [BentoStatConfig, BentoStatConfig, BentoStatConfig];
   bottomDetail: Localized;
@@ -112,17 +110,17 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
       en: 'Project 01',
       th: 'โปรเจกต์ 01',
     },
-    guide: {
-      en: 'A booking platform focused on flow, trust, and managing both sides of the product.',
-      th: 'เว็บไซต์จองทัวร์ที่ออนไลน์ที่ที่มีความน่าเชื่อถือ ใช้งานง่าย',
-    },
     heading: {
       en: '9Tours — Online Tour Booking',
       th: '9Tours เว็บไซต์จองทัวร์ออนไลน์',
     },
+    mainLine: {
+      en: 'Browse, book, pay, confirm: one booking flow, plus the admin side that runs it.',
+      th: 'ดูทริป จอง จ่าย ยืนยัน ครบในระบบเดียว พร้อมฝั่งแอดมินสำหรับจัดการ',
+    },
     mainDetailHeader: {
-      en: 'Project learning',
-      th: 'สิ่งที่ได้เรียนรู้',
+      en: 'What I owned',
+      th: 'สิ่งที่ผมดูแล',
     },
     mainDetails: [
       {
@@ -161,8 +159,8 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
       },
     ],
     roleDetailHeader: {
-      en: 'Role learning',
-      th: 'สิ่งที่ได้เรียนรู้จากบทบาท',
+      en: 'How I led',
+      th: 'วิธีที่ผมนำทีม',
     },
     roleDetails: [
       {
@@ -174,8 +172,50 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         th: 'สมดุลระหว่างการจัดการโปรเจกต์และการพัฒนาจริง',
       },
       {
-        en: 'Learned to communicate scope before writing code.',
-        th: 'เรียนรู้การสื่อสาร scope ก่อนเริ่มเขียนโค้ด',
+        en: 'Communicated scope before writing code.',
+        th: 'สื่อสาร scope ให้ชัดก่อนเริ่มเขียนโค้ด',
+      },
+    ],
+    roleFacts: [
+      {
+        label: {
+          en: 'Team',
+          th: 'ทีม',
+        },
+        value: {
+          en: '3 developers',
+          th: '3 คน',
+        },
+      },
+      {
+        label: {
+          en: 'My part',
+          th: 'ส่วนของผม',
+        },
+        value: {
+          en: 'Lead + build',
+          th: 'นำทีม + ลงมือทำ',
+        },
+      },
+      {
+        label: {
+          en: 'Hardest fix',
+          th: 'แก้ยากสุด',
+        },
+        value: {
+          en: 'Booking race',
+          th: 'Race การจอง',
+        },
+      },
+      {
+        label: {
+          en: 'Tests',
+          th: 'เทสต์',
+        },
+        value: {
+          en: '146 in CI',
+          th: '146 ใน CI',
+        },
       },
     ],
     shots: [
@@ -185,8 +225,8 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
           th: 'ขั้นตอนการจอง',
         },
         detailHeader: {
-          en: 'Booking flow learning',
-          th: 'สิ่งที่ได้เรียนรู้จากระบบจอง',
+          en: 'Design decision',
+          th: 'การตัดสินใจด้านดีไซน์',
         },
         details: [
           {
@@ -211,13 +251,13 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
           th: 'แผงแอดมิน',
         },
         detailHeader: {
-          en: 'Admin panel learning',
-          th: 'สิ่งที่ได้เรียนรู้จากแผงแอดมิน',
+          en: 'Built for the operators',
+          th: 'สร้างเพื่อผู้ดูแลระบบ',
         },
         details: [
           {
-            en: 'Built for the people managing the system.',
-            th: 'สร้างขึ้นสำหรับผู้ดูแลระบบโดยเฉพาะ',
+            en: 'One panel for the people running tours and bookings.',
+            th: 'แผงเดียวสำหรับคนดูแลทัวร์และการจอง',
           },
           {
             en: 'Learned to organize operational data clearly.',
@@ -319,17 +359,17 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
       en: 'Project 02',
       th: 'โปรเจกต์ 02',
     },
-    guide: {
-      en: 'A smaller, more personal build about shared goals, private buckets, and money history people can trust.',
-      th: 'ตั้งเป้า · ชวนเพื่อน · ออมด้วยกัน',
-    },
     heading: {
       en: 'GO-OUT — Shared Savings Tracker',
       th: 'GO-OUT แอปติดตามการออมร่วมกัน',
     },
+    mainLine: {
+      en: 'A savings scoreboard for small groups: progress shared, money details private.',
+      th: 'กระดานออมร่วมกันสำหรับกลุ่มเล็ก เห็นความคืบหน้าด้วยกัน ส่วนรายละเอียดเงินยังเป็นส่วนตัว',
+    },
     mainDetailHeader: {
-      en: 'Project learning',
-      th: 'สิ่งที่ได้เรียนรู้',
+      en: 'Built solo, end to end',
+      th: 'ทำคนเดียวตั้งแต่ต้นจนจบ',
     },
     mainDetails: [
       {
@@ -434,8 +474,8 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
           th: 'แผนการออม',
         },
         detailHeader: {
-          en: 'Saving plan learning',
-          th: 'สิ่งที่ได้เรียนรู้จากแผนการออม',
+          en: 'Design decision',
+          th: 'การตัดสินใจด้านดีไซน์',
         },
         details: [
           {
@@ -459,8 +499,8 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
           th: 'ห้องโปรเจกต์',
         },
         detailHeader: {
-          en: 'Project room learning',
-          th: 'สิ่งที่ได้เรียนรู้จากห้องโปรเจกต์',
+          en: 'Privacy by design',
+          th: 'ออกแบบให้เป็นส่วนตัว',
         },
         details: [
           {
@@ -809,9 +849,9 @@ function Projects() {
               <motion.div className={styles.bentoGuide} variants={cellVariants}>
                 <span className={styles.bentoGuideKicker}>{L(showcase.kicker, lang)}</span>
                 <span className={styles.bentoGuideLine} aria-hidden="true" />
-                <p className={styles.bentoGuideText}>{L(showcase.guide, lang)}</p>
               </motion.div>
               <motion.h2 className={styles.bentoHeading} variants={cellVariants}>{L(showcase.heading, lang)}</motion.h2>
+              <motion.p className={styles.bentoStandfirst} variants={cellVariants}>{L(cs.problem, lang)}</motion.p>
 
               <motion.div
                 className={joinClasses(
@@ -919,6 +959,16 @@ function Projects() {
                         </div>
                       </section>
 
+                      <div className={styles.mobileLinkRow}>
+                        <a className={styles.mobileGhostLink} href={featured.githubUrl} target="_blank" rel="noreferrer">
+                          <img src={githubIcon} alt="" aria-hidden="true" className={styles.mobileLinkIcon} />
+                          {t.github}
+                        </a>
+                        <button type="button" className={styles.mobilePrimaryLink} onClick={() => setCaseProject(featured)}>
+                          {t.readCase}
+                        </button>
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -955,9 +1005,12 @@ function Projects() {
                       />
                     )}
                   </div>
-                  <div className={styles.bentoMainContent}>
-                    <h3 className={styles.bentoTitle}>{featured.title}</h3>
-                    <p className={styles.bentoDesc}>{featuredDescription}</p>
+                  <div className={styles.bentoMainBand}>
+                    <p className={styles.bentoMainLine}>{L(showcase.mainLine, lang)}</p>
+                    <span className={styles.bentoPlayCue}>
+                      <span className={styles.bentoPlayIcon} aria-hidden="true" />
+                      {t.watchPreview}
+                    </span>
                   </div>
                   <div className={styles.bentoDetail}>
                     <span className={styles.bentoDetailHeader}>{L(showcase.mainDetailHeader, lang)}</span>
@@ -971,7 +1024,6 @@ function Projects() {
                   type="button"
                   className={joinClasses(
                     styles.bentoRole,
-                    showcase.roleFacts ? styles.bentoRoleWithFacts : '',
                     isActive('role') ? styles.intentActive : '',
                   )}
                   variants={cellVariants}
@@ -989,34 +1041,21 @@ function Projects() {
                   <ul className={styles.bentoRoleList}>
                     {showcase.rolePoints.map((point) => <li key={L(point, lang)}>{L(point, lang)}</li>)}
                   </ul>
+                  <div className={styles.bentoFactGrid}>
+                    {showcase.roleFacts.map((fact) => (
+                      <span key={L(fact.label, lang)} className={styles.bentoFact}>
+                        <span className={styles.bentoFactLabel}>{L(fact.label, lang)}</span>
+                        <span className={styles.bentoFactValue}>{L(fact.value, lang)}</span>
+                      </span>
+                    ))}
+                  </div>
                   <div className={styles.bentoDetail}>
                     <span className={styles.bentoDetailHeader}>{L(showcase.roleDetailHeader, lang)}</span>
                     <p className={styles.bentoDetailBody}>
                       {showcase.roleDetails.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
                     </p>
                   </div>
-                  {showcase.roleFacts && (
-                    <div className={styles.bentoFactGrid}>
-                      {showcase.roleFacts.map((fact) => (
-                        <span key={L(fact.label, lang)} className={styles.bentoFact}>
-                          <span className={styles.bentoFactLabel}>{L(fact.label, lang)}</span>
-                          <span className={styles.bentoFactValue}>{L(fact.value, lang)}</span>
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                  {showcase.teamPill && (
-                    <span className={styles.bentoTeamPill}>{L(showcase.teamPill, lang)}</span>
-                  )}
                 </motion.button>
-
-                <button
-                  type="button"
-                  className={styles.bentoMoreMobile}
-                  onClick={() => setCaseProject(featured)}
-                >
-                  {t.liveDemo}
-                </button>
               </motion.div>
 
               <motion.div className={mediaRowClassName} variants={rowVariants}>
@@ -1027,7 +1066,7 @@ function Projects() {
 
                   return (
                     <motion.button
-                      key={L(shot.label, lang)}
+                      key={shot.galleryIndex}
                       type="button"
                       className={joinClasses(styles.bentoShot, shotClass, isActive(shotIntent) ? styles.intentActive : '')}
                       variants={cellVariants}
@@ -1040,9 +1079,12 @@ function Projects() {
                       onBlur={handleIntentBlur}
                       aria-label={`${featured.title} ${L(shot.label, lang)} screenshot`}
                     >
-                      <span className={styles.bentoCellLabel}>{L(shot.label, lang)}</span>
                       <div className={styles.bentoShotImgWrap}>
                         <img src={shotSrc} alt="" className={styles.bentoShotImg} />
+                      </div>
+                      <div className={styles.bentoShotCaption}>
+                        <span className={styles.bentoCellLabel}>{L(shot.label, lang)}</span>
+                        <span className={styles.bentoShotCaptionText}>{L(shot.details[0], lang)}</span>
                       </div>
                       <div className={styles.bentoDetail}>
                         <span className={styles.bentoDetailHeader}>{L(shot.detailHeader, lang)}</span>
@@ -1076,12 +1118,34 @@ function Projects() {
                 </motion.div>
               </motion.div>
 
+              <motion.div className={styles.bentoBottom} variants={cellVariants}>
+                <div className={styles.bentoBadges}>
+                  {featured.techs.map((tech) => (
+                    <TechBadge
+                      key={tech}
+                      tech={tech}
+                      className={primaryTechs.has(tech) ? styles.badgePrimary : styles.badgeSecondary}
+                    />
+                  ))}
+                </div>
+                <div className={styles.bentoLinks}>
+                  <a className={styles.btnGhost} href={featured.githubUrl} target="_blank" rel="noreferrer">
+                    <img src={githubIcon} alt="" aria-hidden="true" className={styles.btnIcon} />
+                    {t.github}
+                  </a>
+                  <button type="button" className={styles.btnPrimary} onClick={() => setCaseProject(featured)}>
+                    {t.readCase}
+                  </button>
+                </div>
+              </motion.div>
+
             </motion.article>
           );
         })}
 
         {otherProjects.length > 0 && (
           <div className={styles.otherSection}>
+            <span className={styles.otherTitle}>{t.more}</span>
             <div className={styles.cardGrid}>
               {otherProjects.map((projectItem) => (
                 <CompactCard
