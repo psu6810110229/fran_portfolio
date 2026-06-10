@@ -33,6 +33,8 @@ const ui = {
     features: 'Features',
     stats: 'Takeaways',
     links: 'Links',
+    comingSoon: 'Coming soon',
+    comingSoonSub: 'Next project in progress…',
   },
   th: {
     secTitle: 'โปรเจกต์',
@@ -51,6 +53,8 @@ const ui = {
     features: 'ฟีเจอร์หลัก',
     stats: 'สิ่งที่ได้จากโปรเจกต์',
     links: 'ลิงก์',
+    comingSoon: 'เร็ว ๆ นี้',
+    comingSoonSub: 'โปรเจกต์ถัดไปกำลังสร้าง…',
   },
 };
 
@@ -971,6 +975,10 @@ function Projects() {
                   caseLabel={t.liveDemo}
                 />
               ))}
+              <div className={styles.ghostCard} role="note">
+                <span className={styles.ghostTitle}>{t.comingSoon}</span>
+                <span className={styles.ghostSub}>{t.comingSoonSub}</span>
+              </div>
             </div>
           </div>
         )}

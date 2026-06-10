@@ -267,12 +267,4 @@ export const projects: Project[] = [
       },
     },
   },
-  {
-    title: 'MinusOnMine',
-    description: 'Top-down mining RPG built with Python and Kivy. Grid-based resource collection, equipment upgrades, and persistent save states.',
-    descriptionTh: 'เกม RPG แนว top-down mining พัฒนาด้วย Python และ Kivy มีระบบเก็บทรัพยากร อัปเกรดอุปกรณ์ และบันทึกเกม',
-    tag: '3 devs · Algorithm',
-    techs: ['Python', 'Kivy'],
-    githubUrl: 'https://github.com/psu6810110712/MinusOnMine',
-  },
 ];
