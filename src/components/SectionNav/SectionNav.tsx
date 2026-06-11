@@ -192,11 +192,15 @@ function SectionNav() {
         aria-controls="section-nav-list"
         aria-expanded={expanded}
       >
-        <span className={styles.fabIcon} aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </span>
+        <svg className={styles.fabIcon} viewBox="0 0 18 18" width="18" height="18" fill="none" aria-hidden="true" style={{ overflow: 'visible' }}>
+          <line className={styles.axis} x1="4" y1="2" x2="4" y2="16" strokeWidth="1" strokeLinecap="round" />
+          <line className={styles.tick} x1="8" y1="4" x2="15" y2="4" strokeWidth="1.5" strokeLinecap="round" />
+          <line className={styles.tick} x1="8" y1="10" x2="15" y2="10" strokeWidth="1.5" strokeLinecap="round" />
+          <line className={styles.tick} x1="8" y1="14" x2="15" y2="14" strokeWidth="1.5" strokeLinecap="round" />
+          <rect className={`${styles.mark} ${styles.mark1}`} x="-3" y="4.5" width="14" height="5" rx="2.5" />
+          <rect className={`${styles.mark} ${styles.mark2}`} x="-3" y="4.5" width="14" height="5" rx="2.5" />
+          <rect className={`${styles.mark} ${styles.mark3}`} x="-3" y="4.5" width="14" height="5" rx="2.5" />
+        </svg>
       </button>
 
       <ul id="section-nav-list" className={`${styles.list} ${expanded ? styles.listExpanded : ''}`}>
