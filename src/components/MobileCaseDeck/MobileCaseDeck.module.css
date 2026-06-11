@@ -44,7 +44,6 @@
   position: relative;
   overflow: hidden;
   aspect-ratio: 16 / 10;
-  border: 1px solid #2a2520;
   border-radius: 17px;
   background: #0e0c0a;
 }
@@ -306,7 +305,7 @@
   margin-top: 10px;
   aspect-ratio: 16 / 10;
   padding: 0;
-  border: 1px solid #2a2520;
+  border: 0;
   border-radius: 14px;
   background: #0e0c0a;
   cursor: pointer;
@@ -492,10 +491,6 @@
   background: #e8e2da;
 }
 
-:global([data-theme="light"]) .heroShell {
-  border-color: #e0d8d0;
-}
-
 :global([data-theme="light"]) .title,
 :global([data-theme="light"]) .roleTitle,
 :global([data-theme="light"]) .factValue,
@@ -530,8 +525,7 @@
 }
 
 :global([data-theme="light"]) .quietLink,
-:global([data-theme="light"]) .ghostLink,
-:global([data-theme="light"]) .screenShot {
+:global([data-theme="light"]) .ghostLink {
   border-color: #e0d8d0;
 }
 
