@@ -80,9 +80,9 @@ const L = (value: Localized, lang: 'en' | 'th') => value[lang];
 /* Resting pose per stack slot: the front card sits flat, the two behind it
    shrink and drop a little so their bottom edges peek out under the front. */
 const stackSlots = [
-  { y: 0, scale: 1, filter: 'brightness(1)' },
-  { y: 18, scale: 0.96, filter: 'brightness(0.85)' },
-  { y: 34, scale: 0.92, filter: 'brightness(0.7)' },
+  { y: 0, scale: 1, opacity: 1 },
+  { y: 18, scale: 0.96, opacity: 1 },
+  { y: 34, scale: 0.92, opacity: 1 },
 ];
 
 const SWIPE_DISTANCE = 80;
@@ -183,8 +183,8 @@ function DeckCard({ position, ariaLabel, reduced, hintActive, onSwipe, className
   };
 
   const slot = reduced
-    ? { y: 0, scale: 1, opacity: isFront ? 1 : 0, filter: 'brightness(1)' }
-    : { ...stackSlots[position], opacity: 1 };
+    ? { y: 0, scale: 1, opacity: isFront ? 1 : 0 }
+    : stackSlots[position];
 
   return (
     <motion.div
@@ -199,6 +199,7 @@ function DeckCard({ position, ariaLabel, reduced, hintActive, onSwipe, className
       drag={isFront && !leaving ? 'x' : false}
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.9}
+      dragMomentum={false}
       onDragEnd={handleDragEnd}
       inert={!isFront || undefined}
     >
@@ -212,18 +213,16 @@ function MobileCaseDeck(props: MobileCaseDeckProps) {
   const t = ui[lang];
   const reduced = useReducedMotion() ?? false;
   const [front, setFront] = useState(0);
-  const [hintActive, setHintActive] = useState(false);
+  const [hintActive, setHintActive] = useState(() => !reduced && !getHintDismissed());
   const advance = () => setFront((current) => (current + 1) % 3);
 
   useEffect(() => {
-    if (reduced || getHintDismissed()) return;
-
-    setHintActive(true);
+    if (reduced || !hintActive) return;
 
     const stopHint = () => setHintActive(false);
     window.addEventListener(SWIPE_HINT_EVENT, stopHint);
     return () => window.removeEventListener(SWIPE_HINT_EVENT, stopHint);
-  }, [reduced]);
+  }, [hintActive, reduced]);
 
   const dismissHint = () => {
     if (!hintActive) return;
