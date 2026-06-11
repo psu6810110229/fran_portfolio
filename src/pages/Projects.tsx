@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FocusEvent, type PointerEvent } from 'react';
+import { useEffect, useRef, useState, type FocusEvent, type MouseEvent, type PointerEvent } from 'react';
 import { AnimatePresence, animate, motion, useInView, useReducedMotion } from 'motion/react';
 import GalleryModal from '../components/GalleryModal/GalleryModal';
 import CaseReader from '../components/CaseReader/CaseReader';
@@ -23,16 +23,15 @@ const ui = {
     readCase: 'Read the full case',
     watchPreview: 'Watch the preview',
     liveDemo: 'More details',
-    mobileMore: 'More',
-    mobileLess: 'Less',
     caseInfo: 'Open case reader',
     preview: 'Open project preview',
-    role: 'Role',
-    outcome: 'Outcome',
-    stack: 'Stack',
-    purpose: 'Purpose',
-    features: 'Features',
-    stats: 'Takeaways',
+    flipToTech: 'Technical details',
+    flipToStory: 'Back to overview',
+    underHood: 'Under the hood',
+    hardest: 'Hardest problem',
+    screens: 'Real screens',
+    photos: 'photos',
+    videoTag: 'video',
     comingSoon: 'Coming soon',
     comingSoonSub: 'Next project in progress…',
   },
@@ -42,16 +41,15 @@ const ui = {
     readCase: 'อ่านเคสเต็ม',
     watchPreview: 'ดูวิดีโอตัวอย่าง',
     liveDemo: 'รายละเอียด',
-    mobileMore: 'เพิ่มเติม',
-    mobileLess: 'ย่อ',
     caseInfo: 'เปิดเคสเต็ม',
     preview: 'ดูตัวอย่างโปรเจกต์',
-    role: 'บทบาท',
-    outcome: 'ผลลัพธ์',
-    stack: 'สแต็ก',
-    purpose: 'แอปนี้ทำอะไร',
-    features: 'ฟีเจอร์หลัก',
-    stats: 'สิ่งที่ได้จากโปรเจกต์',
+    flipToTech: 'ดูเบื้องหลังเทคนิค',
+    flipToStory: 'กลับหน้าภาพรวม',
+    underHood: 'เบื้องหลังการสร้าง',
+    hardest: 'โจทย์ที่ยากที่สุด',
+    screens: 'หน้าจอจริง',
+    photos: 'ภาพ',
+    videoTag: 'วิดีโอ',
     comingSoon: 'เร็ว ๆ นี้',
     comingSoonSub: 'โปรเจกต์ถัดไปกำลังสร้าง…',
   },
@@ -689,8 +687,10 @@ function Projects() {
   const [galleryProject, setGalleryProject] = useState<Project | null>(null);
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [caseProject, setCaseProject] = useState<Project | null>(null);
-  const [expandedProject, setExpandedProject] = useState<string | null>(null);
+  const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
   const [activeIntentKey, setActiveIntentKey] = useState<string | null>(null);
+  const flipFrontButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const flipBackButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const [armedVideos, setArmedVideos] = useState<Record<string, boolean>>({});
   const prefersReducedMotion = useReducedMotion();
   const activeIntentRef = useRef<string | null>(null);
@@ -737,6 +737,23 @@ function Projects() {
     const videoOffset = project.previewVideo ? 1 : 0;
     setGalleryProject(project);
     setGalleryIndex(imageIndex + videoOffset);
+  };
+
+  const toggleCardFlip = (showcaseKey: string, focusTarget?: 'front' | 'back') => {
+    setFlippedCards((flipped) => ({ ...flipped, [showcaseKey]: !flipped[showcaseKey] }));
+    if (!focusTarget) return;
+    // Keyboard flips move focus onto the newly revealed face; the old face is
+    // about to become inert and would otherwise drop focus to <body>.
+    window.setTimeout(() => {
+      const refs = focusTarget === 'back' ? flipBackButtonRefs : flipFrontButtonRefs;
+      refs.current[showcaseKey]?.focus({ preventScroll: true });
+    }, 60);
+  };
+
+  const handleCardFaceTap = (showcaseKey: string) => (event: MouseEvent<HTMLDivElement>) => {
+    // Taps aimed at gallery / case-reader / link controls must never flip the card.
+    if (event.target instanceof Element && event.target.closest('a, button')) return;
+    toggleCardFlip(showcaseKey);
   };
 
   const armVideo = (showcaseKey: string) => {
@@ -818,10 +835,8 @@ function Projects() {
           if (!cs || !showcase) return null;
 
           const showcaseKey = featured.title;
-          const mobileDetailsId = `mobile-project-details-${showcaseKey.toLowerCase().replace(/\s+/g, '-')}`;
-          const isMobileExpanded = expandedProject === showcaseKey;
-          const featuredDescription = lang === 'th' ? (featured.descriptionTh ?? featured.description) : featured.description;
-          const stackSummary = featured.techs.slice(0, 3).join(' / ');
+          const isFlipped = Boolean(flippedCards[showcaseKey]);
+          const galleryCount = featured.gallery?.length ?? 0;
           const primaryTechs = showcase.primaryTechs ? new Set(showcase.primaryTechs) : defaultPrimaryTechs;
           const isActive = (intent: BentoIntent) => activeIntentKey === getIntentKey(showcaseKey, intent);
           const topRowClassName = joinClasses(
@@ -853,122 +868,141 @@ function Projects() {
               <motion.h2 className={styles.bentoHeading} variants={cellVariants}>{L(showcase.heading, lang)}</motion.h2>
               <motion.p className={styles.bentoStandfirst} variants={cellVariants}>{L(cs.problem, lang)}</motion.p>
 
-              <motion.div
-                className={joinClasses(
-                  styles.mobileProjectCard,
-                  isMobileExpanded ? styles.mobileProjectCardExpanded : '',
-                )}
-                variants={cellVariants}
-              >
-                <div className={styles.mobileHeroShell}>
-                  <button
-                    type="button"
-                    className={styles.mobileHeroButton}
-                    onClick={() => openVideoGallery(featured)}
-                    aria-label={`${t.preview}: ${featured.title}`}
+              <motion.div className={styles.mobileFlipScene} variants={cellVariants}>
+                <div className={joinClasses(styles.mobileFlipCard, isFlipped ? styles.mobileFlipCardFlipped : '')}>
+                  <div
+                    className={joinClasses(styles.mobileFace, styles.mobileFaceFront)}
+                    inert={isFlipped || undefined}
+                    onClick={handleCardFaceTap(showcaseKey)}
                   >
-                    <img
-                      src={cs.media.hero}
-                      alt={`${featured.title} app screen`}
-                      className={styles.mobileHeroImg}
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    className={styles.mobileInfoButton}
-                    onClick={() => setCaseProject(featured)}
-                    aria-label={`${t.caseInfo}: ${featured.title}`}
-                  >
-                    <span aria-hidden="true">i</span>
-                  </button>
-                </div>
-
-                <div className={styles.mobileProjectBody}>
-                  <h3 className={styles.mobileProjectTitle}>{L(showcase.heading, lang)}</h3>
-                  <p className={styles.mobileProjectSummary}>{L(cs.whatTeamBuilt, lang)}</p>
-
-                  <div className={styles.mobileSummaryGrid}>
-                    <div className={styles.mobileSummaryItem}>
-                      <span className={styles.mobileSummaryLabel}>{t.role}</span>
-                      <strong className={styles.mobileSummaryValue}>{L(showcase.roleTitle, lang)}</strong>
+                    <div className={styles.mobileHeroShell}>
+                      <button
+                        type="button"
+                        className={styles.mobileHeroButton}
+                        onClick={() => openVideoGallery(featured)}
+                        aria-label={`${t.preview}: ${featured.title}`}
+                      >
+                        <img
+                          src={cs.media.hero}
+                          alt={`${featured.title} app screen`}
+                          className={styles.mobileHeroImg}
+                        />
+                        <span className={styles.mobileGalleryPill}>
+                          <span className={styles.mobilePlayGlyph} aria-hidden="true" />
+                          {galleryCount} {t.photos}
+                          {featured.previewVideo ? ` · ${t.videoTag}` : ''}
+                        </span>
+                      </button>
+                      <span className={styles.mobileKicker}>{L(showcase.kicker, lang)}</span>
                     </div>
-                    <div className={styles.mobileSummaryItem}>
-                      <span className={styles.mobileSummaryLabel}>{t.outcome}</span>
-                      <strong className={styles.mobileSummaryValue}>{L(showcase.bottomDetail, lang)}</strong>
-                    </div>
-                    <div className={styles.mobileSummaryItem}>
-                      <span className={styles.mobileSummaryLabel}>{t.stack}</span>
-                      <strong className={styles.mobileSummaryValue}>{stackSummary}</strong>
-                    </div>
-                  </div>
 
-                  <button
-                    type="button"
-                    className={styles.mobileMoreButton}
-                    aria-expanded={isMobileExpanded}
-                    aria-controls={mobileDetailsId}
-                    onClick={() => setExpandedProject(isMobileExpanded ? null : showcaseKey)}
-                  >
-                    {isMobileExpanded ? t.mobileLess : t.mobileMore}
-                  </button>
+                    <div className={styles.mobileFaceBody}>
+                      <h3 className={styles.mobileProjectTitle}>{L(showcase.heading, lang)}</h3>
+                      <p className={styles.mobileTagline}>{L(showcase.mainLine, lang)}</p>
+                      <p className={styles.mobileProblem}>{L(cs.problem, lang)}</p>
 
-                  <div id={mobileDetailsId} className={styles.mobileExpandWrap}>
-                    <div className={styles.mobileExpandInner}>
-                      <section className={styles.mobileExpandSection}>
-                        <h4 className={styles.mobileExpandTitle}>{t.purpose}</h4>
-                        <p>{featuredDescription}</p>
-                      </section>
-
-                      <section className={styles.mobileExpandSection}>
-                        <h4 className={styles.mobileExpandTitle}>{t.features}</h4>
-                        <ul className={styles.mobileDetailList}>
-                          {showcase.shots.map((shot) => (
-                            <li key={L(shot.label, lang)}>
-                              <strong>{L(shot.label, lang)}</strong>
-                              <span>{L(shot.details[0], lang)}</span>
-                            </li>
-                          ))}
+                      <div className={styles.mobileValueBlock}>
+                        <span className={styles.mobileBlockLabel}>{L(showcase.mainDetailHeader, lang)}</span>
+                        <ul className={styles.mobileValueList}>
+                          {showcase.mainDetails.map((detail) => <li key={L(detail, lang)}>{L(detail, lang)}</li>)}
                         </ul>
-                      </section>
+                      </div>
 
-                      <section className={styles.mobileExpandSection}>
-                        <h4 className={styles.mobileExpandTitle}>{t.stats}</h4>
-                        <div className={styles.mobileStatsGrid}>
-                          {showcase.stats.map((stat) => (
-                            <div key={`${stat.number}-${L(stat.label, lang)}`} className={styles.mobileStatItem}>
-                              <StatNumber value={stat.number} className={styles.mobileStatNumber} />
-                              <span className={styles.mobileStatLabel}>{L(stat.label, lang)}</span>
-                              <p className={styles.mobileStatDetails}>
-                                {stat.details.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      </section>
+                      <div className={styles.mobileFactGrid}>
+                        {showcase.roleFacts.map((fact) => (
+                          <span key={L(fact.label, lang)} className={styles.mobileFact}>
+                            <span className={styles.mobileFactLabel}>{L(fact.label, lang)}</span>
+                            <span className={styles.mobileFactValue}>{L(fact.value, lang)}</span>
+                          </span>
+                        ))}
+                      </div>
 
-                      <section className={styles.mobileExpandSection}>
-                        <h4 className={styles.mobileExpandTitle}>{t.stack}</h4>
-                        <div className={styles.mobileBadgeRow}>
-                          {featured.techs.map((tech) => (
-                            <TechBadge
-                              key={tech}
-                              tech={tech}
-                              className={primaryTechs.has(tech) ? styles.badgePrimary : styles.badgeSecondary}
-                            />
-                          ))}
-                        </div>
-                      </section>
-
-                      <div className={styles.mobileLinkRow}>
-                        <a className={styles.mobileGhostLink} href={featured.githubUrl} target="_blank" rel="noreferrer">
-                          <img src={githubIcon} alt="" aria-hidden="true" className={styles.mobileLinkIcon} />
-                          {t.github}
-                        </a>
-                        <button type="button" className={styles.mobilePrimaryLink} onClick={() => setCaseProject(featured)}>
+                      <div className={styles.mobileFaceFooter}>
+                        <button
+                          type="button"
+                          ref={(node) => { flipFrontButtonRefs.current[showcaseKey] = node; }}
+                          className={styles.mobileFlipButton}
+                          onClick={() => toggleCardFlip(showcaseKey, 'back')}
+                        >
+                          <span className={styles.mobileFlipGlyph} aria-hidden="true">↻</span>
+                          {t.flipToTech}
+                        </button>
+                        <button type="button" className={styles.mobileQuietLink} onClick={() => setCaseProject(featured)}>
                           {t.readCase}
                         </button>
                       </div>
+                    </div>
+                  </div>
 
+                  <div
+                    className={joinClasses(styles.mobileFace, styles.mobileFaceBack)}
+                    inert={!isFlipped || undefined}
+                    onClick={handleCardFaceTap(showcaseKey)}
+                  >
+                    <div className={styles.mobileBackHead}>
+                      <span className={styles.mobileBlockLabel}>{t.underHood}</span>
+                      <button
+                        type="button"
+                        ref={(node) => { flipBackButtonRefs.current[showcaseKey] = node; }}
+                        className={styles.mobileFlipBackButton}
+                        onClick={() => toggleCardFlip(showcaseKey, 'front')}
+                        aria-label={t.flipToStory}
+                      >
+                        <span aria-hidden="true">↻</span>
+                      </button>
+                    </div>
+
+                    <div className={styles.mobileBadgeRow}>
+                      {featured.techs.map((tech) => (
+                        <TechBadge
+                          key={tech}
+                          tech={tech}
+                          className={primaryTechs.has(tech) ? styles.badgePrimary : styles.badgeSecondary}
+                        />
+                      ))}
+                    </div>
+
+                    <div className={styles.mobileScopeRow}>
+                      {showcase.stats.map((stat) => (
+                        <div key={`${stat.number}-${L(stat.label, lang)}`} className={styles.mobileScopeItem}>
+                          <StatNumber value={stat.number} className={styles.mobileScopeNumber} />
+                          <span className={styles.mobileScopeLabel}>{L(stat.label, lang)}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className={styles.mobileHardBlock}>
+                      <span className={styles.mobileBlockLabel}>{t.hardest}</span>
+                      <p className={styles.mobileHardHeadline}>{L(cs.hardestIssue.headline, lang)}</p>
+                      <p className={styles.mobileHardBody}>{L(cs.hardestIssue.whatWeDid, lang)}</p>
+                    </div>
+
+                    <div className={styles.mobileScreensBlock}>
+                      <span className={styles.mobileBlockLabel}>{t.screens}</span>
+                      <div className={styles.mobileScreensRow}>
+                        {showcase.shots.map((shot) => (
+                          <button
+                            key={shot.galleryIndex}
+                            type="button"
+                            className={styles.mobileScreenThumb}
+                            onClick={() => openImageGallery(featured, shot.galleryIndex)}
+                            aria-label={`${featured.title} ${L(shot.label, lang)} screenshot`}
+                          >
+                            <img src={shot.imageOverride ?? cs.media.gallery[shot.galleryIndex]} alt="" className={styles.mobileScreenImg} />
+                            <span className={styles.mobileScreenLabel}>{L(shot.label, lang)}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className={styles.mobileLinkRow}>
+                      <a className={styles.mobileGhostLink} href={featured.githubUrl} target="_blank" rel="noreferrer">
+                        <img src={githubIcon} alt="" aria-hidden="true" className={styles.mobileLinkIcon} />
+                        {t.github}
+                      </a>
+                      <button type="button" className={styles.mobilePrimaryLink} onClick={() => setCaseProject(featured)}>
+                        {t.readCase}
+                      </button>
                     </div>
                   </div>
                 </div>
