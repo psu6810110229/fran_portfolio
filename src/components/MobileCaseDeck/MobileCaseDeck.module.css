@@ -1,0 +1,551 @@
+/* ── Mobile case deck ──
+   Three stacked cards per project. Cards share one grid cell so the deck
+   takes the tallest card's height and every card renders at the same size.
+   The two cards behind the front one peek out below it as a swipe hint. */
+
+.deck {
+  overflow-x: clip;
+}
+
+.stack {
+  display: grid;
+  /* Room below the front card for the peeking stack edges */
+  margin-bottom: 26px;
+}
+
+.card {
+  position: relative;
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #2a2520;
+  border-radius: 24px;
+  background: #1c1916;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.28),
+    0 10px 28px rgba(0, 0, 0, 0.3),
+    0 28px 64px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  color: #e0d4c8;
+  /* Horizontal drag belongs to the deck; vertical stays with page scroll */
+  touch-action: pan-y;
+}
+
+.cardHook {
+  padding: 8px;
+}
+
+.cardPanel {
+  padding: 18px 16px 16px;
+}
+
+/* ── Card A: hook ── */
+
+.heroShell {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border: 1px solid #2a2520;
+  border-radius: 17px;
+  background: #0e0c0a;
+}
+
+.heroButton {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: #0e0c0a;
+  cursor: pointer;
+  font: inherit;
+}
+
+.heroImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+:global(#project-go-out) .heroImg {
+  object-position: center 3%;
+}
+
+.kicker {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  padding: 5px 11px;
+  border: 1px solid rgba(224, 212, 200, 0.28);
+  border-radius: 999px;
+  background: rgba(14, 12, 10, 0.72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e0d4c8;
+  pointer-events: none;
+}
+
+.galleryPill {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border: 1px solid rgba(224, 212, 200, 0.3);
+  border-radius: 999px;
+  background: rgba(14, 12, 10, 0.78);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.playGlyph {
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid #d4651a;
+}
+
+.hookBody {
+  padding: 16px 10px 6px;
+}
+
+.title {
+  margin: 0;
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  color: #e0d4c8;
+  text-wrap: balance;
+}
+
+.tagline {
+  max-width: 35em;
+  margin: 8px 0 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #cbbfb2;
+  text-wrap: pretty;
+}
+
+.metaLine {
+  margin: auto 10px 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(42, 37, 32, 0.8);
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: #978b7f;
+}
+
+/* ── Card B: role / product ── */
+
+.blockLabel {
+  display: block;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #d4651a;
+}
+
+.roleTitle {
+  margin: 10px 0 0;
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #e0d4c8;
+  text-wrap: balance;
+}
+
+.roleList {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.roleList li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 13px;
+  line-height: 1.58;
+  color: #978b7f;
+}
+
+.roleList li::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #d4651a;
+}
+
+.factGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.fact {
+  display: grid;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 1px solid rgba(42, 37, 32, 0.76);
+  border-radius: 14px;
+  background: #171411;
+}
+
+.factLabel {
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #978b7f;
+}
+
+.factValue {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #e0d4c8;
+  overflow-wrap: anywhere;
+}
+
+/* ── Card C: under the hood ── */
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin-top: 12px;
+}
+
+.badgePrimary,
+.badgeSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #978b7f;
+}
+
+.badgePrimary {
+  color: #c8bdb4;
+}
+
+.statRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.statItem {
+  display: grid;
+  gap: 3px;
+  padding: 11px 8px;
+  border: 1px solid rgba(42, 37, 32, 0.76);
+  border-radius: 14px;
+  background: #171411;
+  text-align: center;
+}
+
+.statNumber {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.05;
+  color: #d4651a;
+}
+
+.statLabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #978b7f;
+  overflow-wrap: anywhere;
+}
+
+.screenBlock {
+  display: flex;
+  flex-direction: column;
+  margin-top: 14px;
+}
+
+.screenShot {
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+  aspect-ratio: 16 / 10;
+  padding: 0;
+  border: 1px solid #2a2520;
+  border-radius: 14px;
+  background: #0e0c0a;
+  cursor: pointer;
+}
+
+.screenImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.screenLabel {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  max-width: calc(100% - 16px);
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(14, 12, 10, 0.8);
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #ffffff;
+}
+
+/* ── Shared footer row inside cards ── */
+
+.cardFooter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.quietLink,
+.ghostLink,
+.primaryLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 15px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.quietLink,
+.ghostLink {
+  border: 1px solid #2a2520;
+  background: transparent;
+  color: #e0d4c8;
+}
+
+.quietLink {
+  flex: 1;
+}
+
+.primaryLink {
+  border: 1px solid #d4651a;
+  background: #d4651a;
+  color: #ffffff;
+}
+
+.linkIcon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: invert(1);
+  opacity: 0.88;
+}
+
+/* ── Deck footer: dots + swipe hint ── */
+
+.deckFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.deckSteps {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.dot {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: #403a34;
+  transition: width 160ms ease, background 160ms ease;
+}
+
+.dotActive::before {
+  width: 18px;
+  background: #d4651a;
+}
+
+.stepName {
+  overflow: hidden;
+  margin-left: 6px;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #978b7f;
+}
+
+.swipeHint {
+  font-size: 11px;
+  font-weight: 600;
+  color: #978b7f;
+  white-space: nowrap;
+}
+
+.heroButton:focus-visible,
+.screenShot:focus-visible,
+.quietLink:focus-visible,
+.ghostLink:focus-visible,
+.primaryLink:focus-visible,
+.dot:focus-visible {
+  outline: 2px solid #d4651a;
+  outline-offset: 3px;
+}
+
+/* ── Thai display font ── */
+
+:global([data-lang="th"]) .title,
+:global([data-lang="th"]) .kicker,
+:global([data-lang="th"]) .blockLabel,
+:global([data-lang="th"]) .roleTitle,
+:global([data-lang="th"]) .statNumber,
+:global([data-lang="th"]) .stepName {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+/* ── Light theme ── */
+
+:global([data-theme="light"]) .card {
+  background: #f7f1ea;
+  border-color: #e0d8d0;
+  box-shadow:
+    0 1px 2px rgba(84, 62, 44, 0.08),
+    0 10px 28px rgba(84, 62, 44, 0.1),
+    0 28px 64px rgba(84, 62, 44, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  color: #1a1614;
+}
+
+:global([data-theme="light"]) .heroShell,
+:global([data-theme="light"]) .heroButton {
+  background: #e8e2da;
+}
+
+:global([data-theme="light"]) .heroShell {
+  border-color: #e0d8d0;
+}
+
+:global([data-theme="light"]) .title,
+:global([data-theme="light"]) .roleTitle,
+:global([data-theme="light"]) .factValue,
+:global([data-theme="light"]) .quietLink,
+:global([data-theme="light"]) .ghostLink {
+  color: #1a1614;
+}
+
+:global([data-theme="light"]) .tagline {
+  color: #3c2f27;
+}
+
+:global([data-theme="light"]) .metaLine,
+:global([data-theme="light"]) .roleList li,
+:global([data-theme="light"]) .factLabel,
+:global([data-theme="light"]) .statLabel,
+:global([data-theme="light"]) .stepName,
+:global([data-theme="light"]) .swipeHint,
+:global([data-theme="light"]) .badgePrimary,
+:global([data-theme="light"]) .badgeSecondary {
+  color: #5a4a40;
+}
+
+:global([data-theme="light"]) .metaLine {
+  border-top-color: #e0d8d0;
+}
+
+:global([data-theme="light"]) .fact,
+:global([data-theme="light"]) .statItem {
+  background: #fffaf4;
+  border-color: #e0d8d0;
+}
+
+:global([data-theme="light"]) .quietLink,
+:global([data-theme="light"]) .ghostLink,
+:global([data-theme="light"]) .screenShot {
+  border-color: #e0d8d0;
+}
+
+:global([data-theme="light"]) .dot::before {
+  background: #d8cec4;
+}
+
+:global([data-theme="light"]) .dotActive::before {
+  background: #d4651a;
+}
+
+:global([data-theme="light"]) .linkIcon {
+  filter: none;
+  opacity: 0.9;
+}

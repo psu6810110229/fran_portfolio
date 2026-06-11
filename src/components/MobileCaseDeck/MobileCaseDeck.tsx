@@ -1,0 +1,303 @@
+import { useRef, useState, type ReactNode } from 'react';
+import { animate, motion, useMotionValue, useReducedMotion, useTransform, type PanInfo } from 'motion/react';
+import TechBadge from '../TechBadge/TechBadge';
+import { useLanguage } from '../../hooks/useLanguage';
+import type { Localized } from '../../types';
+import githubIcon from '../../assets/icons/github.svg';
+import styles from './MobileCaseDeck.module.css';
+
+const ui = {
+  en: {
+    overview: 'Overview',
+    underHood: 'Under the hood',
+    screens: 'Real screens',
+    photos: 'photos',
+    videoTag: 'video',
+    github: 'View the code',
+    readCase: 'Read the full case',
+    preview: 'Open project preview',
+    screenshot: 'screenshot',
+    swipeHint: 'Swipe for more',
+    card: 'Card',
+    of: 'of',
+  },
+  th: {
+    overview: 'ภาพรวม',
+    underHood: 'เบื้องหลังการสร้าง',
+    screens: 'หน้าจอจริง',
+    photos: 'ภาพ',
+    videoTag: 'วิดีโอ',
+    github: 'ดูโค้ด',
+    readCase: 'อ่านเคสเต็ม',
+    preview: 'ดูตัวอย่างโปรเจกต์',
+    screenshot: 'ภาพหน้าจอ',
+    swipeHint: 'ปัดดูใบถัดไป',
+    card: 'การ์ดที่',
+    of: 'จาก',
+  },
+};
+
+export interface DeckFact {
+  label: Localized;
+  value: Localized;
+}
+
+export interface DeckStat {
+  number: string;
+  label: Localized;
+}
+
+export interface DeckShot {
+  label: Localized;
+  src: string;
+  galleryIndex: number;
+}
+
+interface MobileCaseDeckProps {
+  projectTitle: string;
+  githubUrl: string;
+  galleryCount: number;
+  hasVideo: boolean;
+  hero: string;
+  kicker: Localized;
+  heading: Localized;
+  tagline: Localized;
+  meta: Localized;
+  roleLabel: Localized;
+  roleTitle: Localized;
+  rolePoints: Localized[];
+  roleFacts: DeckFact[];
+  stats: DeckStat[];
+  techs: string[];
+  primaryTechs: Set<string>;
+  shot: DeckShot;
+  onOpenGallery: () => void;
+  onOpenImage: (galleryIndex: number) => void;
+  onOpenCase: () => void;
+}
+
+const L = (value: Localized, lang: 'en' | 'th') => value[lang];
+
+/* Resting pose per stack slot: the front card sits flat, the two behind it
+   shrink and drop a little so their bottom edges peek out under the front. */
+const stackSlots = [
+  { y: 0, scale: 1, filter: 'brightness(1)' },
+  { y: 18, scale: 0.96, filter: 'brightness(0.85)' },
+  { y: 34, scale: 0.92, filter: 'brightness(0.7)' },
+];
+
+const SWIPE_DISTANCE = 80;
+const SWIPE_VELOCITY = 520;
+
+interface DeckCardProps {
+  position: number;
+  ariaLabel: string;
+  reduced: boolean;
+  onSwipe: () => void;
+  className: string;
+  children: ReactNode;
+}
+
+function DeckCard({ position, ariaLabel, reduced, onSwipe, className, children }: DeckCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const rotate = useTransform(x, [-280, 280], [-7, 7]);
+  const [leaving, setLeaving] = useState(false);
+  const isFront = position === 0;
+
+  const commitSwipe = (direction: number) => {
+    if (leaving) return;
+    if (reduced) {
+      onSwipe();
+      x.set(0);
+      return;
+    }
+    setLeaving(true);
+    const distance = (cardRef.current?.offsetWidth ?? 340) * 1.15;
+    // Promote the next card while this one is still in flight so the stack
+    // reorganizes in one continuous motion instead of two separate steps.
+    window.setTimeout(onSwipe, 90);
+    animate(x, direction * distance, { duration: 0.32, ease: [0.3, 0.7, 0.2, 1] }).then(() => {
+      setLeaving(false);
+      animate(x, 0, { type: 'spring', stiffness: 150, damping: 25 });
+    });
+  };
+
+  const handleDragEnd = (_event: unknown, info: PanInfo) => {
+    if (Math.abs(info.offset.x) > SWIPE_DISTANCE || Math.abs(info.velocity.x) > SWIPE_VELOCITY) {
+      commitSwipe((info.offset.x || info.velocity.x) < 0 ? -1 : 1);
+    }
+  };
+
+  const slot = reduced
+    ? { y: 0, scale: 1, opacity: isFront ? 1 : 0, filter: 'brightness(1)' }
+    : { ...stackSlots[position], opacity: 1 };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      role="group"
+      aria-label={ariaLabel}
+      className={className}
+      style={{ x, rotate: reduced ? undefined : rotate, zIndex: leaving ? 4 : 3 - position }}
+      initial={false}
+      animate={slot}
+      transition={reduced ? { duration: 0.25, ease: 'easeOut' } : { type: 'spring', stiffness: 260, damping: 30 }}
+      drag={isFront && !leaving ? 'x' : false}
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.9}
+      onDragEnd={handleDragEnd}
+      inert={!isFront || undefined}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function MobileCaseDeck(props: MobileCaseDeckProps) {
+  const { lang } = useLanguage();
+  const t = ui[lang];
+  const reduced = useReducedMotion() ?? false;
+  const [front, setFront] = useState(0);
+  const advance = () => setFront((current) => (current + 1) % 3);
+
+  const visibleTechs = props.techs.filter((tech) => tech !== 'Git');
+  const cardNames = [t.overview, L(props.roleLabel, lang), t.underHood];
+  const cardLabel = (index: number) => `${t.card} ${index + 1} ${t.of} 3 — ${cardNames[index]}`;
+
+  const hookCard = (
+    <>
+      <div className={styles.heroShell}>
+        <button
+          type="button"
+          className={styles.heroButton}
+          onClick={props.onOpenGallery}
+          aria-label={`${t.preview}: ${props.projectTitle}`}
+        >
+          <img src={props.hero} alt={`${props.projectTitle} app screen`} className={styles.heroImg} draggable={false} />
+          <span className={styles.galleryPill}>
+            <span className={styles.playGlyph} aria-hidden="true" />
+            {props.galleryCount} {t.photos}
+            {props.hasVideo ? ` · ${t.videoTag}` : ''}
+          </span>
+        </button>
+        <span className={styles.kicker}>{L(props.kicker, lang)}</span>
+      </div>
+      <div className={styles.hookBody}>
+        <h3 className={styles.title}>{L(props.heading, lang)}</h3>
+        <p className={styles.tagline}>{L(props.tagline, lang)}</p>
+      </div>
+      <p className={styles.metaLine}>{L(props.meta, lang)}</p>
+    </>
+  );
+
+  const storyCard = (
+    <>
+      <span className={styles.blockLabel}>{L(props.roleLabel, lang)}</span>
+      <h4 className={styles.roleTitle}>{L(props.roleTitle, lang)}</h4>
+      <ul className={styles.roleList}>
+        {props.rolePoints.map((point) => <li key={L(point, lang)}>{L(point, lang)}</li>)}
+      </ul>
+      <div className={styles.factGrid}>
+        {props.roleFacts.map((fact) => (
+          <span key={L(fact.label, lang)} className={styles.fact}>
+            <span className={styles.factLabel}>{L(fact.label, lang)}</span>
+            <span className={styles.factValue}>{L(fact.value, lang)}</span>
+          </span>
+        ))}
+      </div>
+      <div className={styles.cardFooter}>
+        <button type="button" className={styles.quietLink} onClick={props.onOpenCase}>
+          {t.readCase}
+        </button>
+      </div>
+    </>
+  );
+
+  const buildCard = (
+    <>
+      <span className={styles.blockLabel}>{t.underHood}</span>
+      <div className={styles.badgeRow}>
+        {visibleTechs.map((tech) => (
+          <TechBadge
+            key={tech}
+            tech={tech}
+            className={props.primaryTechs.has(tech) ? styles.badgePrimary : styles.badgeSecondary}
+          />
+        ))}
+      </div>
+      <div className={styles.statRow}>
+        {props.stats.map((stat) => (
+          <div key={`${stat.number}-${L(stat.label, lang)}`} className={styles.statItem}>
+            <span className={styles.statNumber}>{stat.number}</span>
+            <span className={styles.statLabel}>{L(stat.label, lang)}</span>
+          </div>
+        ))}
+      </div>
+      <div className={styles.screenBlock}>
+        <span className={styles.blockLabel}>{t.screens}</span>
+        <button
+          type="button"
+          className={styles.screenShot}
+          onClick={() => props.onOpenImage(props.shot.galleryIndex)}
+          aria-label={`${props.projectTitle} ${L(props.shot.label, lang)} ${t.screenshot}`}
+        >
+          <img src={props.shot.src} alt="" className={styles.screenImg} draggable={false} />
+          <span className={styles.screenLabel}>{L(props.shot.label, lang)}</span>
+        </button>
+      </div>
+      <div className={styles.cardFooter}>
+        <a className={styles.ghostLink} href={props.githubUrl} target="_blank" rel="noreferrer">
+          <img src={githubIcon} alt="" aria-hidden="true" className={styles.linkIcon} />
+          {t.github}
+        </a>
+        <button type="button" className={styles.primaryLink} onClick={props.onOpenCase}>
+          {t.readCase}
+        </button>
+      </div>
+    </>
+  );
+
+  const cards = [
+    { body: hookCard, className: `${styles.card} ${styles.cardHook}` },
+    { body: storyCard, className: `${styles.card} ${styles.cardPanel}` },
+    { body: buildCard, className: `${styles.card} ${styles.cardPanel}` },
+  ];
+
+  return (
+    <div className={styles.deck}>
+      <div className={styles.stack}>
+        {cards.map((card, index) => (
+          <DeckCard
+            key={cardNames[index]}
+            position={(index - front + 3) % 3}
+            ariaLabel={cardLabel(index)}
+            reduced={reduced}
+            onSwipe={advance}
+            className={card.className}
+          >
+            {card.body}
+          </DeckCard>
+        ))}
+      </div>
+      <div className={styles.deckFooter}>
+        <div className={styles.deckSteps}>
+          {cardNames.map((name, index) => (
+            <button
+              key={name}
+              type="button"
+              className={index === front ? `${styles.dot} ${styles.dotActive}` : styles.dot}
+              aria-label={cardLabel(index)}
+              aria-current={index === front}
+              onClick={() => setFront(index)}
+            />
+          ))}
+          <span className={styles.stepName}>{cardNames[front]}</span>
+        </div>
+        <span className={styles.swipeHint} aria-hidden="true">{t.swipeHint} →</span>
+      </div>
+    </div>
+  );
+}
+
+export default MobileCaseDeck;
