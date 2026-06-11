@@ -3,10 +3,8 @@
    takes the tallest card's height and every card renders at the same size.
    The two cards behind the front one peek out below it as a swipe hint. */
 
-.deck {
-  overflow-x: clip;
-}
-
+/* No overflow clipping here: the swiped card must travel to the real screen
+   edge. The Projects section clips horizontally at the viewport instead. */
 .stack {
   display: grid;
   /* Room below the front card for the peeking stack edges */

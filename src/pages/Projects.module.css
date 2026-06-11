@@ -1204,6 +1204,11 @@
 }
 
 @media (max-width: 767px) {
+  /* Clip swiped deck cards at the real screen edge, not the content column */
+  .projects {
+    overflow-x: clip;
+  }
+
   .inner {
     padding: 28px 5vw 40px;
   }
