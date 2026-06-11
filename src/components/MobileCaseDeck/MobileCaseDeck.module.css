@@ -358,14 +358,14 @@
 .deckFooter {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  justify-content: center;
   margin-top: 12px;
 }
 
 .deckSteps {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 2px;
   min-width: 0;
 }
@@ -409,13 +409,6 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   color: #978b7f;
-}
-
-.swipeHint {
-  font-size: 11px;
-  font-weight: 600;
-  color: #978b7f;
-  white-space: nowrap;
 }
 
 .heroButton:focus-visible,

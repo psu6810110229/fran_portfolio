@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { animate, motion, useMotionValue, useReducedMotion, useTransform, type PanInfo } from 'motion/react';
 import TechBadge from '../TechBadge/TechBadge';
 import { useLanguage } from '../../hooks/useLanguage';
@@ -87,22 +87,76 @@ const stackSlots = [
 
 const SWIPE_DISTANCE = 80;
 const SWIPE_VELOCITY = 520;
+const SWIPE_HINT_STORAGE_KEY = 'franPortfolio.mobileCaseDeckHintDismissed';
+const SWIPE_HINT_EVENT = 'mobileCaseDeckHintDismissed';
+
+const getHintDismissed = () => {
+  try {
+    return window.sessionStorage.getItem(SWIPE_HINT_STORAGE_KEY) === 'true';
+  } catch {
+    return true;
+  }
+};
+
+const setHintDismissed = () => {
+  try {
+    window.sessionStorage.setItem(SWIPE_HINT_STORAGE_KEY, 'true');
+  } catch {
+    // The hint is decorative, so blocked storage should only stop the loop.
+  }
+  window.dispatchEvent(new Event(SWIPE_HINT_EVENT));
+};
+
+const wait = (duration: number) => new Promise<void>((resolve) => {
+  window.setTimeout(resolve, duration);
+});
 
 interface DeckCardProps {
   position: number;
   ariaLabel: string;
   reduced: boolean;
+  hintActive: boolean;
   onSwipe: () => void;
   className: string;
   children: ReactNode;
 }
 
-function DeckCard({ position, ariaLabel, reduced, onSwipe, className, children }: DeckCardProps) {
+function DeckCard({ position, ariaLabel, reduced, hintActive, onSwipe, className, children }: DeckCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-280, 280], [-7, 7]);
   const [leaving, setLeaving] = useState(false);
   const isFront = position === 0;
+
+  useEffect(() => {
+    if (!isFront || !hintActive || reduced || leaving) return;
+
+    let cancelled = false;
+    let controls: ReturnType<typeof animate> | null = null;
+
+    const playHint = async () => {
+      await wait(520);
+      while (!cancelled) {
+        controls = animate(x, 34, { duration: 0.48, ease: [0.22, 1, 0.36, 1] });
+        await controls;
+        if (cancelled) break;
+
+        controls = animate(x, 0, { type: 'spring', stiffness: 170, damping: 18, mass: 0.8 });
+        await controls;
+        if (cancelled) break;
+
+        await wait(960);
+      }
+    };
+
+    playHint();
+
+    return () => {
+      cancelled = true;
+      controls?.stop();
+      animate(x, 0, { duration: 0.18, ease: 'easeOut' });
+    };
+  }, [hintActive, isFront, leaving, reduced, x]);
 
   const commitSwipe = (direction: number) => {
     if (leaving) return;
@@ -158,7 +212,24 @@ function MobileCaseDeck(props: MobileCaseDeckProps) {
   const t = ui[lang];
   const reduced = useReducedMotion() ?? false;
   const [front, setFront] = useState(0);
+  const [hintActive, setHintActive] = useState(false);
   const advance = () => setFront((current) => (current + 1) % 3);
+
+  useEffect(() => {
+    if (reduced || getHintDismissed()) return;
+
+    setHintActive(true);
+
+    const stopHint = () => setHintActive(false);
+    window.addEventListener(SWIPE_HINT_EVENT, stopHint);
+    return () => window.removeEventListener(SWIPE_HINT_EVENT, stopHint);
+  }, [reduced]);
+
+  const dismissHint = () => {
+    if (!hintActive) return;
+    setHintActive(false);
+    setHintDismissed();
+  };
 
   const visibleTechs = props.techs.filter((tech) => tech !== 'Git');
   const cardNames = [t.overview, L(props.roleLabel, lang), t.underHood];
@@ -262,7 +333,7 @@ function MobileCaseDeck(props: MobileCaseDeckProps) {
   ];
 
   return (
-    <div className={styles.deck}>
+    <div className={styles.deck} onPointerDownCapture={dismissHint}>
       <div className={styles.stack}>
         {cards.map((card, index) => (
           <DeckCard
@@ -270,6 +341,7 @@ function MobileCaseDeck(props: MobileCaseDeckProps) {
             position={(index - front + 3) % 3}
             ariaLabel={cardLabel(index)}
             reduced={reduced}
+            hintActive={hintActive}
             onSwipe={advance}
             className={card.className}
           >
@@ -291,7 +363,6 @@ function MobileCaseDeck(props: MobileCaseDeckProps) {
           ))}
           <span className={styles.stepName}>{cardNames[front]}</span>
         </div>
-        <span className={styles.swipeHint} aria-hidden="true">{t.swipeHint} →</span>
       </div>
     </div>
   );

@@ -1,48 +1,35 @@
 import { useEffect, useRef, useState, type FocusEvent, type PointerEvent } from 'react';
-import { AnimatePresence, animate, motion, useInView, useReducedMotion } from 'motion/react';
+import { AnimatePresence } from 'motion/react';
 import GalleryModal from '../components/GalleryModal/GalleryModal';
 import CaseReader from '../components/CaseReader/CaseReader';
 import CompactCard from '../components/CompactCard/CompactCard';
-import MobileCaseDeck from '../components/MobileCaseDeck/MobileCaseDeck';
 import TechBadge from '../components/TechBadge/TechBadge';
 import { projects } from '../data/projects';
 import { useLanguage } from '../hooks/useLanguage';
 import type { Localized, Project } from '../types';
-import githubIcon from '../assets/icons/github.svg';
 import adminPanelShot from '../assets/9tours/admin/Screenshot (463).png';
 import bookingFlowShot from '../assets/9tours/user/Screenshot (456).png';
-import bentoHero9tours from '../assets/9tours/user/Screenshot (453).png';
-import goOutShot2 from '../assets/GO-OUT/images/IMG_20260604_18513373_COPY.jpeg';
+import githubIcon from '../assets/icons/github.svg';
 import styles from './Projects.module.css';
 
 const defaultPrimaryTechs = new Set(['React', 'TypeScript', 'CSS']);
 
 const ui = {
   en: {
-    sectionTitle: 'Projects',
+    secTitle: 'Projects',
     more: 'More projects',
-    github: 'View the code',
-    readCase: 'Read the full case',
-    watchPreview: 'Watch the preview',
+    github: 'GitHub',
     liveDemo: 'More details',
-    caseInfo: 'Open case reader',
-    comingSoon: 'Coming soon',
-    comingSoonSub: 'Next project in progress…',
   },
   th: {
-    sectionTitle: 'โปรเจกต์',
+    secTitle: 'โปรเจกต์',
     more: 'โปรเจกต์อื่น ๆ',
-    github: 'ดูโค้ด',
-    readCase: 'อ่านเคสเต็ม',
-    watchPreview: 'ดูวิดีโอตัวอย่าง',
+    github: 'GitHub',
     liveDemo: 'รายละเอียด',
-    caseInfo: 'เปิดเคสเต็ม',
-    comingSoon: 'เร็ว ๆ นี้',
-    comingSoonSub: 'โปรเจกต์ถัดไปกำลังสร้าง…',
   },
 };
 
-type BentoIntent = 'main' | 'role' | 'booking' | 'admin' | 'stats';
+type BentoIntent = 'main' | 'role' | 'booking' | 'admin' | 'stats' | 'bottom';
 
 interface BentoShotConfig {
   label: Localized;
@@ -55,13 +42,13 @@ interface BentoShotConfig {
 interface BentoStatConfig {
   number: string;
   label: Localized;
-  details: Localized[];
+  details: [Localized, Localized, Localized];
 }
 
 interface ShowcaseConfig {
   kicker: Localized;
+  guide: Localized;
   heading: Localized;
-  mainLine: Localized;
   mainDetailHeader: Localized;
   mainDetails: [Localized, Localized, Localized];
   roleLabel: Localized;
@@ -69,8 +56,8 @@ interface ShowcaseConfig {
   rolePoints: [Localized, Localized, Localized];
   roleDetailHeader: Localized;
   roleDetails: [Localized, Localized, Localized];
-  roleFacts: [BentoFactConfig, BentoFactConfig, BentoFactConfig, BentoFactConfig];
-  heroOverride?: string;
+  roleFacts?: [BentoFactConfig, BentoFactConfig, BentoFactConfig, BentoFactConfig];
+  teamPill?: Localized;
   shots: [BentoShotConfig, BentoShotConfig];
   stats: [BentoStatConfig, BentoStatConfig, BentoStatConfig];
   bottomDetail: Localized;
@@ -90,22 +77,21 @@ interface PointerSample {
 
 const showcaseConfigs: Record<string, ShowcaseConfig> = {
   '9tours': {
-    heroOverride: bentoHero9tours,
     kicker: {
       en: 'Project 01',
       th: 'โปรเจกต์ 01',
+    },
+    guide: {
+      en: 'A booking platform focused on flow, trust, and managing both sides of the product.',
+      th: 'เว็บไซต์จองทัวร์ที่ออนไลน์ที่ที่มีความน่าเชื่อถือ ใช้งานง่าย',
     },
     heading: {
       en: '9Tours — Online Tour Booking',
       th: '9Tours เว็บไซต์จองทัวร์ออนไลน์',
     },
-    mainLine: {
-      en: 'Browse, book, pay, confirm: one booking flow, plus the admin side that runs it.',
-      th: 'ดูทริป จอง จ่าย ยืนยัน ครบในระบบเดียว พร้อมฝั่งแอดมินสำหรับจัดการ',
-    },
     mainDetailHeader: {
-      en: 'What I owned',
-      th: 'สิ่งที่ผมดูแล',
+      en: 'Project learning',
+      th: 'สิ่งที่ได้เรียนรู้',
     },
     mainDetails: [
       {
@@ -144,8 +130,8 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
       },
     ],
     roleDetailHeader: {
-      en: 'How I led',
-      th: 'วิธีที่ผมนำทีม',
+      en: 'Role learning',
+      th: 'สิ่งที่ได้เรียนรู้จากบทบาท',
     },
     roleDetails: [
       {
@@ -157,52 +143,14 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         th: 'สมดุลระหว่างการจัดการโปรเจกต์และการพัฒนาจริง',
       },
       {
-        en: 'Communicated scope before writing code.',
-        th: 'สื่อสาร scope ให้ชัดก่อนเริ่มเขียนโค้ด',
+        en: 'Learned to communicate scope before writing code.',
+        th: 'เรียนรู้การสื่อสาร scope ก่อนเริ่มเขียนโค้ด',
       },
     ],
-    roleFacts: [
-      {
-        label: {
-          en: 'Team',
-          th: 'ทีม',
-        },
-        value: {
-          en: '3 developers',
-          th: '3 คน',
-        },
-      },
-      {
-        label: {
-          en: 'My part',
-          th: 'ส่วนของผม',
-        },
-        value: {
-          en: 'Lead + build',
-          th: 'นำทีม + ลงมือทำ',
-        },
-      },
-      {
-        label: {
-          en: 'Hardest fix',
-          th: 'แก้ยากสุด',
-        },
-        value: {
-          en: 'Booking race',
-          th: 'Race การจอง',
-        },
-      },
-      {
-        label: {
-          en: 'Tests',
-          th: 'เทสต์',
-        },
-        value: {
-          en: '146 in CI',
-          th: '146 ใน CI',
-        },
-      },
-    ],
+    teamPill: {
+      en: '3 developers · 2 months',
+      th: '3 นักพัฒนา · 2 เดือน',
+    },
     shots: [
       {
         label: {
@@ -210,8 +158,8 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
           th: 'ขั้นตอนการจอง',
         },
         detailHeader: {
-          en: 'Design decision',
-          th: 'การตัดสินใจด้านดีไซน์',
+          en: 'Booking flow learning',
+          th: 'สิ่งที่ได้เรียนรู้จากระบบจอง',
         },
         details: [
           {
@@ -236,13 +184,13 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
           th: 'แผงแอดมิน',
         },
         detailHeader: {
-          en: 'Built for the operators',
-          th: 'สร้างเพื่อผู้ดูแลระบบ',
+          en: 'Admin panel learning',
+          th: 'สิ่งที่ได้เรียนรู้จากแผงแอดมิน',
         },
         details: [
           {
-            en: 'One panel for the people running tours and bookings.',
-            th: 'แผงเดียวสำหรับคนดูแลทัวร์และการจอง',
+            en: 'Built for the people managing the system.',
+            th: 'สร้างขึ้นสำหรับผู้ดูแลระบบโดยเฉพาะ',
           },
           {
             en: 'Learned to organize operational data clearly.',
@@ -259,77 +207,65 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
     ],
     stats: [
       {
-        number: '49',
+        number: '1',
         label: {
-          en: 'API endpoints',
-          th: 'API endpoints',
+          en: 'race bug fixed',
+          th: 'บัก race ที่แก้ไข',
         },
         details: [
           {
-            en: 'Backend built by the team',
-            th: 'backend ที่ทีมสร้าง',
+            en: 'Found the booking race.',
+            th: 'พบ race condition',
           },
           {
-            en: 'Across 14 NestJS modules',
-            th: 'ครอบคลุม 14 โมดูล NestJS',
+            en: 'Moved trust to server state.',
+            th: 'ย้าย state ไปฝั่ง server',
           },
           {
-            en: 'Booking, payments, auth',
-            th: 'การจอง จ่ายเงิน ล็อกอิน',
-          },
-          {
-            en: 'I built parts of the API',
-            th: 'ผมลงมือทำ API บางส่วน',
+            en: 'Learned to verify before success.',
+            th: 'ตรวจสอบก่อนแจ้งสำเร็จ',
           },
         ],
       },
       {
-        number: '146',
+        number: '2',
         label: {
-          en: 'automated tests',
-          th: 'เทสต์อัตโนมัติ',
+          en: 'product sides',
+          th: 'ฝั่งผลิตภัณฑ์',
         },
         details: [
           {
-            en: 'Cover the whole system',
-            th: 'ครอบคลุมทั้งระบบ',
+            en: 'Built the booking flow.',
+            th: 'สร้างระบบจอง',
           },
           {
-            en: 'Run in CI on every push',
-            th: 'รันใน CI ทุกครั้งที่ push',
+            en: 'Connected the admin side.',
+            th: 'เชื่อมต่อฝั่งแอดมิน',
           },
           {
-            en: 'Guard the booking logic',
-            th: 'ป้องกัน logic การจอง',
-          },
-          {
-            en: 'Catch breakage before merge',
-            th: 'จับบั๊กก่อน merge',
+            en: 'Learned how both users think.',
+            th: 'เข้าใจผู้ใช้สองฝั่ง',
           },
         ],
       },
       {
-        number: '17',
+        number: '3',
         label: {
-          en: 'pages built',
-          th: 'หน้าที่สร้าง',
+          en: 'devs led',
+          th: 'นักพัฒนาในทีม',
         },
         details: [
           {
-            en: 'Front-end screens I led',
-            th: 'หน้า front-end ที่ผมดูแล',
+            en: 'Set the product direction.',
+            th: 'กำหนดทิศทาง product',
           },
           {
-            en: 'Plus a 10-page admin side',
-            th: 'พร้อมฝั่ง admin 10 หน้า',
+            en: 'Kept teammates aligned.',
+            th: 'รักษาทีมให้มุ่งเป้า',
           },
           {
-            en: 'Browse, book, confirm flow',
-            th: 'flow ดู จอง ยืนยัน',
-          },
-          {
-            en: 'From wireframe to build',
-            th: 'ตั้งแต่ wireframe ถึงจริง',
+            en: 'Learned to lead while building.',
+            th: 'เรียนรู้การนำทีม',
           },
         ],
       },
@@ -344,17 +280,17 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
       en: 'Project 02',
       th: 'โปรเจกต์ 02',
     },
+    guide: {
+      en: 'A smaller, more personal build about shared goals, private buckets, and money history people can trust.',
+      th: 'ตั้งเป้า · ชวนเพื่อน · ออมด้วยกัน',
+    },
     heading: {
       en: 'GO-OUT — Shared Savings Tracker',
       th: 'GO-OUT แอปติดตามการออมร่วมกัน',
     },
-    mainLine: {
-      en: 'A savings scoreboard for small groups: progress shared, money details private.',
-      th: 'กระดานออมร่วมกันสำหรับกลุ่มเล็ก เห็นความคืบหน้าด้วยกัน ส่วนรายละเอียดเงินยังเป็นส่วนตัว',
-    },
     mainDetailHeader: {
-      en: 'Built solo, end to end',
-      th: 'ทำคนเดียวตั้งแต่ต้นจนจบ',
+      en: 'Project learning',
+      th: 'สิ่งที่ได้เรียนรู้',
     },
     mainDetails: [
       {
@@ -459,8 +395,8 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
           th: 'แผนการออม',
         },
         detailHeader: {
-          en: 'Design decision',
-          th: 'การตัดสินใจด้านดีไซน์',
+          en: 'Saving plan learning',
+          th: 'สิ่งที่ได้เรียนรู้จากแผนการออม',
         },
         details: [
           {
@@ -484,8 +420,8 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
           th: 'ห้องโปรเจกต์',
         },
         detailHeader: {
-          en: 'Privacy by design',
-          th: 'ออกแบบให้เป็นส่วนตัว',
+          en: 'Project room learning',
+          th: 'สิ่งที่ได้เรียนรู้จากห้องโปรเจกต์',
         },
         details: [
           {
@@ -501,8 +437,7 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
             th: 'เปลี่ยนแรงรับผิดชอบร่วมกันให้เป็น dashboard ที่ใช้ง่าย',
           },
         ],
-        galleryIndex: 3,
-        imageOverride: goOutShot2,
+        galleryIndex: 8,
       },
     ],
     stats: [
@@ -584,90 +519,6 @@ const L = (value: Localized, lang: 'en' | 'th') => value[lang];
 
 const getIntentKey = (showcaseKey: string, intent: BentoIntent) => `${showcaseKey}:${intent}`;
 
-/* ── Entrance choreography ──
-   Each bento article reveals once on scroll: guide + heading first, then the
-   rows stagger their cells. One easing family across the section. */
-const bentoEase = [0.22, 1, 0.36, 1] as const;
-
-const articleVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
-};
-
-const rowVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09 } },
-};
-
-const cellVariants = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: bentoEase } },
-};
-
-const liftHover = { y: -3, transition: { duration: 0.18, ease: 'easeOut' as const } };
-
-interface StatNumberProps {
-  value: string;
-  className: string;
-}
-
-/** Counts the stat up from 0 the first time it scrolls into view. */
-function StatNumber({ value, className }: StatNumberProps) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-10% 0px' });
-  const prefersReducedMotion = useReducedMotion();
-  const target = Number.parseInt(value, 10);
-  const animatable = !prefersReducedMotion && Number.isFinite(target);
-  const [display, setDisplay] = useState(animatable ? '0' : value);
-
-  useEffect(() => {
-    if (!inView || !animatable) return;
-    const controls = animate(0, target, {
-      duration: 1.1,
-      ease: bentoEase,
-      onUpdate: (v) => setDisplay(String(Math.round(v))),
-    });
-    return () => controls.stop();
-  }, [inView, animatable, target]);
-
-  return <span ref={ref} className={className}>{animatable ? display : value}</span>;
-}
-
-interface PreviewVideoProps {
-  src: string;
-  active: boolean;
-  className: string;
-}
-
-/** Muted looping preview that plays while its bento cell holds hover intent. */
-function PreviewVideo({ src, active, className }: PreviewVideoProps) {
-  const ref = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = ref.current;
-    if (!video) return;
-    if (active) {
-      video.play().catch(() => {});
-    } else {
-      video.pause();
-    }
-  }, [active]);
-
-  return (
-    <video
-      ref={ref}
-      className={className}
-      src={src}
-      muted
-      loop
-      playsInline
-      preload="auto"
-      aria-hidden="true"
-      tabIndex={-1}
-    />
-  );
-}
-
 function Projects() {
   const { lang } = useLanguage();
   const t = ui[lang];
@@ -675,8 +526,6 @@ function Projects() {
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [caseProject, setCaseProject] = useState<Project | null>(null);
   const [activeIntentKey, setActiveIntentKey] = useState<string | null>(null);
-  const [armedVideos, setArmedVideos] = useState<Record<string, boolean>>({});
-  const prefersReducedMotion = useReducedMotion();
   const activeIntentRef = useRef<string | null>(null);
   const intentTimerRef = useRef<number | null>(null);
   const pendingIntentRef = useRef<string | null>(null);
@@ -723,13 +572,8 @@ function Projects() {
     setGalleryIndex(imageIndex + videoOffset);
   };
 
-  const armVideo = (showcaseKey: string) => {
-    setArmedVideos((armed) => (armed[showcaseKey] ? armed : { ...armed, [showcaseKey]: true }));
-  };
-
   const handleIntentEnter = (showcaseKey: string, intent: BentoIntent) => (event: PointerEvent<HTMLElement>) => {
     if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
-    if (intent === 'main') armVideo(showcaseKey);
     lastPointerRef.current = { x: event.clientX, y: event.clientY, time: performance.now() };
     scheduleIntent(showcaseKey, intent, 110);
   };
@@ -769,17 +613,7 @@ function Projects() {
     }
     lastPointerRef.current = null;
     if (activeIntentRef.current === currentIntentKey) {
-      // Defer the collapse one beat: entering an adjacent cell within this
-      // window swaps intents directly instead of bouncing the grid through
-      // its rest layout (visible blink during the handoff).
-      clearIntentTimer();
-      intentTimerRef.current = window.setTimeout(() => {
-        if (activeIntentRef.current === currentIntentKey) {
-          setIntent(null);
-        }
-        intentTimerRef.current = null;
-        pendingIntentRef.current = null;
-      }, 140);
+      setIntent(null);
     }
   };
 
@@ -791,22 +625,21 @@ function Projects() {
   };
 
   const showcaseProjects = projects.filter((project) => project.caseStudy && showcaseConfigs[project.title]);
-  const otherProjects = projects.filter((project) => !(project.caseStudy && showcaseConfigs[project.title]));
+  const otherProjects = projects.filter((project) => !project.caseStudy);
 
   return (
     <section id="projects" className={styles.projects}>
       <div className={styles.inner}>
-        <div className={styles.sectionHeader}>
-          <span className={styles.sectionEyebrow}>{t.sectionTitle}</span>
-          <span className={styles.sectionLine} aria-hidden="true" />
+        <div className={styles.secHeader}>
+          <span className={styles.secTitle}>{t.secTitle}</span>
         </div>
+
         {showcaseProjects.map((featured) => {
           const cs = featured.caseStudy;
           const showcase = showcaseConfigs[featured.title];
           if (!cs || !showcase) return null;
 
           const showcaseKey = featured.title;
-          const galleryCount = featured.gallery?.length ?? 0;
           const primaryTechs = showcase.primaryTechs ? new Set(showcase.primaryTechs) : defaultPrimaryTechs;
           const isActive = (intent: BentoIntent) => activeIntentKey === getIntentKey(showcaseKey, intent);
           const topRowClassName = joinClasses(
@@ -822,52 +655,18 @@ function Projects() {
           );
 
           return (
-            <motion.article
-              key={featured.title}
-              id={`project-${featured.title.toLowerCase().replace(/\s+/g, '-')}`}
-              className={styles.bento}
-              variants={articleVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '0px 0px -120px 0px' }}
-            >
-              <motion.h2 className={styles.bentoHeading} variants={cellVariants}>{L(showcase.heading, lang)}</motion.h2>
-              <motion.p className={styles.bentoStandfirst} variants={cellVariants}>{L(cs.problem, lang)}</motion.p>
+            <article key={featured.title} id={`project-${featured.title.toLowerCase().replace(/\s+/g, '-')}`} className={styles.bento}>
+              <div className={styles.bentoGuide}>
+                <span className={styles.bentoGuideKicker}>{L(showcase.kicker, lang)}</span>
+                <span className={styles.bentoGuideLine} aria-hidden="true" />
+                <p className={styles.bentoGuideText}>{L(showcase.guide, lang)}</p>
+              </div>
+              <h2 className={styles.bentoHeading}>{L(showcase.heading, lang)}</h2>
 
-              <motion.div className={styles.mobileDeckSlot} variants={cellVariants}>
-                <MobileCaseDeck
-                  projectTitle={featured.title}
-                  githubUrl={featured.githubUrl}
-                  galleryCount={galleryCount}
-                  hasVideo={Boolean(featured.previewVideo)}
-                  hero={cs.media.hero}
-                  heading={showcase.heading}
-                  tagline={showcase.mainLine}
-                  meta={showcase.bottomDetail}
-                  roleLabel={showcase.roleLabel}
-                  roleTitle={showcase.roleTitle}
-                  rolePoints={showcase.rolePoints}
-                  roleFacts={showcase.roleFacts}
-                  stats={showcase.stats.map((stat) => ({ number: stat.number, label: stat.label }))}
-                  techs={featured.techs}
-                  primaryTechs={primaryTechs}
-                  shot={{
-                    label: showcase.shots[0].label,
-                    src: showcase.shots[0].imageOverride ?? cs.media.gallery[showcase.shots[0].galleryIndex],
-                    galleryIndex: showcase.shots[0].galleryIndex,
-                  }}
-                  onOpenGallery={() => openVideoGallery(featured)}
-                  onOpenImage={(galleryImageIndex) => openImageGallery(featured, galleryImageIndex)}
-                  onOpenCase={() => setCaseProject(featured)}
-                />
-              </motion.div>
-
-              <motion.div className={topRowClassName} variants={rowVariants}>
-                <motion.button
+              <div className={topRowClassName}>
+                <button
                   type="button"
                   className={joinClasses(styles.bentoMain, isActive('main') ? styles.intentActive : '')}
-                  variants={cellVariants}
-                  whileHover={liftHover}
                   onClick={() => openVideoGallery(featured)}
                   onPointerEnter={handleIntentEnter(showcaseKey, 'main')}
                   onPointerMove={handleIntentMove(showcaseKey, 'main')}
@@ -878,27 +677,16 @@ function Projects() {
                 >
                   <div className={styles.bentoThumbWrap}>
                     <img
-                      src={showcase.heroOverride ?? cs.media.hero}
+                      src={cs.media.hero}
                       alt={`${featured.title} app screen`}
                       className={styles.bentoHeroImg}
                     />
-                    {armedVideos[showcaseKey] && featured.previewVideo && !prefersReducedMotion && (
-                      <PreviewVideo
-                        src={featured.previewVideo}
-                        active={isActive('main')}
-                        className={joinClasses(
-                          styles.bentoVideo,
-                          isActive('main') ? styles.bentoVideoVisible : '',
-                        )}
-                      />
-                    )}
                   </div>
-                  <div className={styles.bentoMainBand}>
-                    <p className={styles.bentoMainLine}>{L(showcase.mainLine, lang)}</p>
-                    <span className={styles.bentoPlayCue}>
-                      <span className={styles.bentoPlayIcon} aria-hidden="true" />
-                      {t.watchPreview}
-                    </span>
+                  <div className={styles.bentoMainContent}>
+                    <h3 className={styles.bentoTitle}>{featured.title}</h3>
+                    <p className={styles.bentoDesc}>
+                      {lang === 'th' ? (featured.descriptionTh ?? featured.description) : featured.description}
+                    </p>
                   </div>
                   <div className={styles.bentoDetail}>
                     <span className={styles.bentoDetailHeader}>{L(showcase.mainDetailHeader, lang)}</span>
@@ -906,59 +694,58 @@ function Projects() {
                       {showcase.mainDetails.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
                     </p>
                   </div>
-                </motion.button>
+                </button>
 
-                <motion.button
-                  type="button"
+                <div
                   className={joinClasses(
                     styles.bentoRole,
+                    showcase.roleFacts ? styles.bentoRoleWithFacts : '',
                     isActive('role') ? styles.intentActive : '',
                   )}
-                  variants={cellVariants}
-                  whileHover={liftHover}
-                  onClick={() => setCaseProject(featured)}
                   onPointerEnter={handleIntentEnter(showcaseKey, 'role')}
                   onPointerMove={handleIntentMove(showcaseKey, 'role')}
                   onPointerLeave={handleIntentLeave(showcaseKey, 'role')}
                   onFocus={handleIntentFocus(showcaseKey, 'role')}
                   onBlur={handleIntentBlur}
-                  aria-label={`${t.caseInfo}: ${featured.title}`}
                 >
                   <span className={styles.bentoCellLabel}>{L(showcase.roleLabel, lang)}</span>
                   <span className={styles.bentoRoleTitle}>{L(showcase.roleTitle, lang)}</span>
                   <ul className={styles.bentoRoleList}>
                     {showcase.rolePoints.map((point) => <li key={L(point, lang)}>{L(point, lang)}</li>)}
                   </ul>
-                  <div className={styles.bentoFactGrid}>
-                    {showcase.roleFacts.map((fact) => (
-                      <span key={L(fact.label, lang)} className={styles.bentoFact}>
-                        <span className={styles.bentoFactLabel}>{L(fact.label, lang)}</span>
-                        <span className={styles.bentoFactValue}>{L(fact.value, lang)}</span>
-                      </span>
-                    ))}
-                  </div>
                   <div className={styles.bentoDetail}>
                     <span className={styles.bentoDetailHeader}>{L(showcase.roleDetailHeader, lang)}</span>
                     <p className={styles.bentoDetailBody}>
                       {showcase.roleDetails.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
                     </p>
                   </div>
-                </motion.button>
-              </motion.div>
+                  {showcase.roleFacts && (
+                    <div className={styles.bentoFactGrid}>
+                      {showcase.roleFacts.map((fact) => (
+                        <span key={L(fact.label, lang)} className={styles.bentoFact}>
+                          <span className={styles.bentoFactLabel}>{L(fact.label, lang)}</span>
+                          <span className={styles.bentoFactValue}>{L(fact.value, lang)}</span>
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {showcase.teamPill && (
+                    <span className={styles.bentoTeamPill}>{L(showcase.teamPill, lang)}</span>
+                  )}
+                </div>
+              </div>
 
-              <motion.div className={mediaRowClassName} variants={rowVariants}>
+              <div className={mediaRowClassName}>
                 {showcase.shots.map((shot, index) => {
                   const shotIntent: BentoIntent = index === 0 ? 'booking' : 'admin';
                   const shotClass = index === 0 ? styles.bentoShot1 : styles.bentoShot2;
                   const shotSrc = shot.imageOverride ?? cs.media.gallery[shot.galleryIndex];
 
                   return (
-                    <motion.button
-                      key={shot.galleryIndex}
+                    <button
+                      key={L(shot.label, lang)}
                       type="button"
                       className={joinClasses(styles.bentoShot, shotClass, isActive(shotIntent) ? styles.intentActive : '')}
-                      variants={cellVariants}
-                      whileHover={liftHover}
                       onClick={() => openImageGallery(featured, shot.galleryIndex)}
                       onPointerEnter={handleIntentEnter(showcaseKey, shotIntent)}
                       onPointerMove={handleIntentMove(showcaseKey, shotIntent)}
@@ -967,12 +754,9 @@ function Projects() {
                       onBlur={handleIntentBlur}
                       aria-label={`${featured.title} ${L(shot.label, lang)} screenshot`}
                     >
+                      <span className={styles.bentoCellLabel}>{L(shot.label, lang)}</span>
                       <div className={styles.bentoShotImgWrap}>
                         <img src={shotSrc} alt="" className={styles.bentoShotImg} />
-                      </div>
-                      <div className={styles.bentoShotCaption}>
-                        <span className={styles.bentoCellLabel}>{L(shot.label, lang)}</span>
-                        <span className={styles.bentoShotCaptionText}>{L(shot.details[0], lang)}</span>
                       </div>
                       <div className={styles.bentoDetail}>
                         <span className={styles.bentoDetailHeader}>{L(shot.detailHeader, lang)}</span>
@@ -980,33 +764,36 @@ function Projects() {
                           {shot.details.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
                         </p>
                       </div>
-                    </motion.button>
+                    </button>
                   );
                 })}
 
-                <motion.div
+                <div
                   className={joinClasses(styles.bentoStats, isActive('stats') ? styles.intentActive : '')}
-                  variants={cellVariants}
-                  whileHover={liftHover}
                   onPointerEnter={handleIntentEnter(showcaseKey, 'stats')}
                   onPointerMove={handleIntentMove(showcaseKey, 'stats')}
                   onPointerLeave={handleIntentLeave(showcaseKey, 'stats')}
                 >
                   {showcase.stats.map((stat) => (
                     <div key={`${stat.number}-${L(stat.label, lang)}`} className={styles.bentoStat}>
-                      <div className={styles.bentoStatHead}>
-                        <StatNumber value={stat.number} className={styles.bentoStatNum} />
-                        <span className={styles.bentoStatLabel}>{L(stat.label, lang)}</span>
-                      </div>
+                      <span className={styles.bentoStatNum}>{stat.number}</span>
+                      <span className={styles.bentoStatLabel}>{L(stat.label, lang)}</span>
                       <p className={styles.bentoStatBody}>
                         {stat.details.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
                       </p>
                     </div>
                   ))}
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
 
-              <motion.div className={styles.bentoBottom} variants={cellVariants}>
+              <div
+                className={joinClasses(styles.bentoBottom, isActive('bottom') ? styles.intentActive : '')}
+                onPointerEnter={handleIntentEnter(showcaseKey, 'bottom')}
+                onPointerMove={handleIntentMove(showcaseKey, 'bottom')}
+                onPointerLeave={handleIntentLeave(showcaseKey, 'bottom')}
+                onFocus={handleIntentFocus(showcaseKey, 'bottom')}
+                onBlur={handleIntentBlur}
+              >
                 <div className={styles.bentoBadges}>
                   {featured.techs.map((tech) => (
                     <TechBadge
@@ -1017,17 +804,15 @@ function Projects() {
                   ))}
                 </div>
                 <div className={styles.bentoLinks}>
-                  <a className={styles.btnGhost} href={featured.githubUrl} target="_blank" rel="noreferrer">
+                  <a href={featured.githubUrl} target="_blank" rel="noreferrer" className={styles.btnGhost}>
                     <img src={githubIcon} alt="" aria-hidden="true" className={styles.btnIcon} />
                     {t.github}
                   </a>
-                  <button type="button" className={styles.btnPrimary} onClick={() => setCaseProject(featured)}>
-                    {t.readCase}
-                  </button>
+                  <button type="button" className={styles.btnPrimary} onClick={() => setCaseProject(featured)}>{t.liveDemo}</button>
                 </div>
-              </motion.div>
-
-            </motion.article>
+                <span className={styles.bentoDetail}>{L(showcase.bottomDetail, lang)}</span>
+              </div>
+            </article>
           );
         })}
 
@@ -1040,15 +825,8 @@ function Projects() {
                   key={projectItem.title}
                   {...projectItem}
                   description={lang === 'th' ? (projectItem.descriptionTh ?? projectItem.description) : projectItem.description}
-                  onOpenGallery={projectItem.gallery ? () => openVideoGallery(projectItem) : undefined}
-                  onOpenCase={projectItem.caseStudy ? () => setCaseProject(projectItem) : undefined}
-                  caseLabel={t.liveDemo}
                 />
               ))}
-              <div className={styles.ghostCard} role="note">
-                <span className={styles.ghostTitle}>{t.comingSoon}</span>
-                <span className={styles.ghostSub}>{t.comingSoonSub}</span>
-              </div>
             </div>
           </div>
         )}
