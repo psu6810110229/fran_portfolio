@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { animate, motion, useMotionValue, useReducedMotion, useTransform, type PanInfo } from 'motion/react';
 import TechBadge from '../TechBadge/TechBadge';
 import { useLanguage } from '../../hooks/useLanguage';
@@ -87,6 +87,7 @@ const stackSlots = [
 
 const SWIPE_DISTANCE = 80;
 const SWIPE_VELOCITY = 520;
+const SWIPE_INTENT_DISTANCE = 14;
 const SWIPE_HINT_STORAGE_KEY = 'franPortfolio.mobileCaseDeckHintDismissed';
 const SWIPE_HINT_EVENT = 'mobileCaseDeckHintDismissed';
 
@@ -117,11 +118,23 @@ interface DeckCardProps {
   reduced: boolean;
   hintActive: boolean;
   onSwipe: () => void;
+  onHintIntent: () => void;
+  onHintCycle: () => void;
   className: string;
   children: ReactNode;
 }
 
-function DeckCard({ position, ariaLabel, reduced, hintActive, onSwipe, className, children }: DeckCardProps) {
+function DeckCard({
+  position,
+  ariaLabel,
+  reduced,
+  hintActive,
+  onSwipe,
+  onHintIntent,
+  onHintCycle,
+  className,
+  children,
+}: DeckCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-280, 280], [-7, 7]);
@@ -146,6 +159,7 @@ function DeckCard({ position, ariaLabel, reduced, hintActive, onSwipe, className
         if (cancelled) break;
 
         await wait(960);
+        onHintCycle();
       }
     };
 
@@ -156,10 +170,11 @@ function DeckCard({ position, ariaLabel, reduced, hintActive, onSwipe, className
       controls?.stop();
       animate(x, 0, { duration: 0.18, ease: 'easeOut' });
     };
-  }, [hintActive, isFront, leaving, reduced, x]);
+  }, [hintActive, isFront, leaving, onHintCycle, reduced, x]);
 
   const commitSwipe = (direction: number) => {
     if (leaving) return;
+    onHintIntent();
     if (reduced) {
       onSwipe();
       x.set(0);
@@ -182,6 +197,10 @@ function DeckCard({ position, ariaLabel, reduced, hintActive, onSwipe, className
     }
   };
 
+  const handleDrag = (_event: unknown, info: PanInfo) => {
+    if (Math.abs(info.offset.x) > SWIPE_INTENT_DISTANCE) onHintIntent();
+  };
+
   const slot = reduced
     ? { y: 0, scale: 1, opacity: isFront ? 1 : 0 }
     : stackSlots[position];
@@ -200,6 +219,7 @@ function DeckCard({ position, ariaLabel, reduced, hintActive, onSwipe, className
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.9}
       dragMomentum={false}
+      onDrag={handleDrag}
       onDragEnd={handleDragEnd}
       inert={!isFront || undefined}
     >
@@ -214,6 +234,7 @@ function MobileCaseDeck(props: MobileCaseDeckProps) {
   const reduced = useReducedMotion() ?? false;
   const [front, setFront] = useState(0);
   const [hintActive, setHintActive] = useState(() => !reduced && !getHintDismissed());
+  const [, setHintCycles] = useState(0);
   const advance = () => setFront((current) => (current + 1) % 3);
 
   useEffect(() => {
@@ -224,10 +245,22 @@ function MobileCaseDeck(props: MobileCaseDeckProps) {
     return () => window.removeEventListener(SWIPE_HINT_EVENT, stopHint);
   }, [hintActive, reduced]);
 
-  const dismissHint = () => {
+  const dismissHint = useCallback(() => {
     if (!hintActive) return;
     setHintActive(false);
     setHintDismissed();
+  }, [hintActive]);
+
+  const handleHintCycle = useCallback(() => {
+    setHintCycles((current) => {
+      const next = current + 1;
+      if (next >= 3) dismissHint();
+      return next;
+    });
+  }, [dismissHint]);
+
+  const dismissHintFromKeyboard = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') dismissHint();
   };
 
   const visibleTechs = props.techs.filter((tech) => tech !== 'Git');
@@ -332,7 +365,7 @@ function MobileCaseDeck(props: MobileCaseDeckProps) {
   ];
 
   return (
-    <div className={styles.deck} onPointerDownCapture={dismissHint}>
+    <div className={styles.deck} onKeyDownCapture={dismissHintFromKeyboard}>
       <div className={styles.stack}>
         {cards.map((card, index) => (
           <DeckCard
@@ -342,6 +375,8 @@ function MobileCaseDeck(props: MobileCaseDeckProps) {
             reduced={reduced}
             hintActive={hintActive}
             onSwipe={advance}
+            onHintIntent={dismissHint}
+            onHintCycle={handleHintCycle}
             className={card.className}
           >
             {card.body}
