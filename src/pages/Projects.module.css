@@ -1213,8 +1213,10 @@
     padding: 28px 5vw 40px;
   }
 
+  /* Section-nav jumps land the deck card right under the sticky navbar */
   .bento {
     gap: 0;
+    scroll-margin-top: 84px;
   }
 
   .bento + .bento {
