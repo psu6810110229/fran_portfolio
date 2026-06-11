@@ -87,7 +87,6 @@
 /* ── Base ── */
 html {
   font-size: 17px;
-  scroll-behavior: smooth;
   background-color: var(--color-bg);
 }
 

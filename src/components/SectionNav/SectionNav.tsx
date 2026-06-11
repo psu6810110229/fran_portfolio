@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useLenis } from 'lenis/react';
 import styles from './SectionNav.module.css';
 
 interface Section {
@@ -16,6 +17,7 @@ const SECTIONS: Section[] = [
 ];
 
 function SectionNav() {
+  const lenis = useLenis();
   const [active, setActive] = useState('hero');
   const [scrolled, setScrolled] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -140,7 +142,11 @@ function SectionNav() {
     }
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (id === 'hero') {
-      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      if (lenis) {
+        lenis.scrollTo(0, { duration: 0.9, immediate: reduce });
+      } else {
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      }
     } else {
       const el = document.getElementById(id);
       if (!el) {
@@ -148,7 +154,11 @@ function SectionNav() {
         setSelected(null);
         return;
       }
-      el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+      if (lenis) {
+        lenis.scrollTo(el, { duration: 0.9, immediate: reduce });
+      } else {
+        el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+      }
     }
     navigationTimerRef.current = window.setTimeout(() => {
       startCollapse();
@@ -163,7 +173,11 @@ function SectionNav() {
 
   const scrollToTop = () => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    if (lenis) {
+      lenis.scrollTo(0, { duration: 0.9, immediate: reduce });
+    } else {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    }
   };
 
   return (
