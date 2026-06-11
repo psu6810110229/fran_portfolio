@@ -1,19 +1,20 @@
-import { useEffect, useRef, useState, type FocusEvent, type PointerEvent } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type FocusEvent, type PointerEvent } from 'react';
 import { AnimatePresence, animate, motion, useInView, useReducedMotion } from 'motion/react';
-import GalleryModal from '../components/GalleryModal/GalleryModal';
-import CaseReader from '../components/CaseReader/CaseReader';
 import CompactCard from '../components/CompactCard/CompactCard';
-import MobileCaseDeck from '../components/MobileCaseDeck/MobileCaseDeck';
 import TechBadge from '../components/TechBadge/TechBadge';
 import { projects } from '../data/projects';
 import { useLanguage } from '../hooks/useLanguage';
 import type { Localized, Project } from '../types';
 import githubIcon from '../assets/icons/github.svg';
-import adminPanelShot from '../assets/9tours/admin/Screenshot (463).png';
-import bookingFlowShot from '../assets/9tours/user/Screenshot (456).png';
-import bentoHero9tours from '../assets/9tours/user/Screenshot (453).png';
-import goOutShot2 from '../assets/GO-OUT/images/IMG_20260604_18513373_COPY.jpeg';
+import adminPanelShot from '../assets/9tours/opt/gallery-11.webp';
+import bookingFlowShot from '../assets/9tours/opt/gallery-04.webp';
+import bentoHero9tours from '../assets/9tours/opt/preview-hero.webp';
+import goOutShot2 from '../assets/GO-OUT/opt/preview-shot-02.webp';
 import styles from './Projects.module.css';
+
+const GalleryModal = lazy(() => import('../components/GalleryModal/GalleryModal'));
+const CaseReader = lazy(() => import('../components/CaseReader/CaseReader'));
+const MobileCaseDeck = lazy(() => import('../components/MobileCaseDeck/MobileCaseDeck'));
 
 const defaultPrimaryTechs = new Set(['React', 'TypeScript', 'CSS']);
 
@@ -661,7 +662,7 @@ function PreviewVideo({ src, active, className }: PreviewVideoProps) {
       muted
       loop
       playsInline
-      preload="auto"
+      preload="metadata"
       aria-hidden="true"
       tabIndex={-1}
     />
@@ -676,6 +677,9 @@ function Projects() {
   const [caseProject, setCaseProject] = useState<Project | null>(null);
   const [activeIntentKey, setActiveIntentKey] = useState<string | null>(null);
   const [armedVideos, setArmedVideos] = useState<Record<string, boolean>>({});
+  const [showMobileDeck, setShowMobileDeck] = useState(() => (
+    window.matchMedia('(max-width: 767px)').matches
+  ));
   const prefersReducedMotion = useReducedMotion();
   const activeIntentRef = useRef<string | null>(null);
   const intentTimerRef = useRef<number | null>(null);
@@ -710,6 +714,16 @@ function Projects() {
     if (intentTimerRef.current !== null) {
       window.clearTimeout(intentTimerRef.current);
     }
+  }, []);
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia('(max-width: 767px)');
+    const updateMobileDeck = () => setShowMobileDeck(mobileQuery.matches);
+
+    updateMobileDeck();
+    mobileQuery.addEventListener('change', updateMobileDeck);
+
+    return () => mobileQuery.removeEventListener('change', updateMobileDeck);
   }, []);
 
   const openVideoGallery = (project: Project) => {
@@ -834,33 +848,37 @@ function Projects() {
               <motion.h2 className={styles.bentoHeading} variants={cellVariants}>{L(showcase.heading, lang)}</motion.h2>
               <motion.p className={styles.bentoStandfirst} variants={cellVariants}>{L(cs.problem, lang)}</motion.p>
 
-              <motion.div className={styles.mobileDeckSlot} variants={cellVariants}>
-                <MobileCaseDeck
-                  projectTitle={featured.title}
-                  githubUrl={featured.githubUrl}
-                  galleryCount={galleryCount}
-                  hasVideo={Boolean(featured.previewVideo)}
-                  hero={cs.media.hero}
-                  heading={showcase.heading}
-                  tagline={showcase.mainLine}
-                  meta={showcase.bottomDetail}
-                  roleLabel={showcase.roleLabel}
-                  roleTitle={showcase.roleTitle}
-                  rolePoints={showcase.rolePoints}
-                  roleFacts={showcase.roleFacts}
-                  stats={showcase.stats.map((stat) => ({ number: stat.number, label: stat.label }))}
-                  techs={featured.techs}
-                  primaryTechs={primaryTechs}
-                  shot={{
-                    label: showcase.shots[0].label,
-                    src: showcase.shots[0].imageOverride ?? cs.media.gallery[showcase.shots[0].galleryIndex],
-                    galleryIndex: showcase.shots[0].galleryIndex,
-                  }}
-                  onOpenGallery={() => openVideoGallery(featured)}
-                  onOpenImage={(galleryImageIndex) => openImageGallery(featured, galleryImageIndex)}
-                  onOpenCase={() => setCaseProject(featured)}
-                />
-              </motion.div>
+              {showMobileDeck && (
+                <motion.div className={styles.mobileDeckSlot} variants={cellVariants}>
+                  <Suspense fallback={null}>
+                    <MobileCaseDeck
+                      projectTitle={featured.title}
+                      githubUrl={featured.githubUrl}
+                      galleryCount={galleryCount}
+                      hasVideo={Boolean(featured.previewVideo)}
+                      hero={cs.media.hero}
+                      heading={showcase.heading}
+                      tagline={showcase.mainLine}
+                      meta={showcase.bottomDetail}
+                      roleLabel={showcase.roleLabel}
+                      roleTitle={showcase.roleTitle}
+                      rolePoints={showcase.rolePoints}
+                      roleFacts={showcase.roleFacts}
+                      stats={showcase.stats.map((stat) => ({ number: stat.number, label: stat.label }))}
+                      techs={featured.techs}
+                      primaryTechs={primaryTechs}
+                      shot={{
+                        label: showcase.shots[0].label,
+                        src: showcase.shots[0].imageOverride ?? cs.media.gallery[showcase.shots[0].galleryIndex],
+                        galleryIndex: showcase.shots[0].galleryIndex,
+                      }}
+                      onOpenGallery={() => openVideoGallery(featured)}
+                      onOpenImage={(galleryImageIndex) => openImageGallery(featured, galleryImageIndex)}
+                      onOpenCase={() => setCaseProject(featured)}
+                    />
+                  </Suspense>
+                </motion.div>
+              )}
 
               <motion.div className={topRowClassName} variants={rowVariants}>
                 <motion.button
@@ -1054,30 +1072,34 @@ function Projects() {
         )}
       </div>
 
-      <AnimatePresence>
-        {caseProject?.caseStudy && (
-          <CaseReader
-            key="case-reader"
-            title={caseProject.title}
-            githubUrl={caseProject.githubUrl}
-            caseStudy={caseProject.caseStudy}
-            lang={lang}
-            onClose={() => setCaseProject(null)}
-          />
-        )}
-      </AnimatePresence>
+      <Suspense fallback={null}>
+        <AnimatePresence>
+          {caseProject?.caseStudy && (
+            <CaseReader
+              key="case-reader"
+              title={caseProject.title}
+              githubUrl={caseProject.githubUrl}
+              caseStudy={caseProject.caseStudy}
+              lang={lang}
+              onClose={() => setCaseProject(null)}
+            />
+          )}
+        </AnimatePresence>
+      </Suspense>
 
-      <AnimatePresence>
-        {galleryProject?.gallery && (
-          <GalleryModal
-            key="gallery"
-            images={galleryProject.gallery}
-            video={galleryProject.previewVideo}
-            initialIndex={galleryIndex}
-            onClose={() => setGalleryProject(null)}
-          />
-        )}
-      </AnimatePresence>
+      <Suspense fallback={null}>
+        <AnimatePresence>
+          {galleryProject?.gallery && (
+            <GalleryModal
+              key="gallery"
+              images={galleryProject.gallery}
+              video={galleryProject.previewVideo}
+              initialIndex={galleryIndex}
+              onClose={() => setGalleryProject(null)}
+            />
+          )}
+        </AnimatePresence>
+      </Suspense>
     </section>
   );
 }

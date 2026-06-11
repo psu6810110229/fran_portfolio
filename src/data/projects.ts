@@ -25,17 +25,20 @@ import g15 from '../assets/9tours/opt/gallery-15.webp';
 import userFlow from '../assets/9tours/opt/user-flow.mp4';
 import userFlowPoster from '../assets/9tours/opt/user-flow-poster.webp';
 
-// GO-OUT assets
-import goOutG00 from '../assets/GO-OUT/images/IMG_20260604_18495797.jpeg';
-import goOutG01 from '../assets/GO-OUT/images/IMG_20260604_18502263.jpg';
-import goOutG02 from '../assets/GO-OUT/images/IMG_20260604_18504836.jpeg';
-import goOutG03 from '../assets/GO-OUT/images/IMG_20260604_18505443.jpeg';
-import goOutG04 from '../assets/GO-OUT/images/IMG_20260604_18510418.jpeg';
-import goOutG05 from '../assets/GO-OUT/images/IMG_20260604_18511376.jpeg';
-import goOutG06 from '../assets/GO-OUT/images/IMG_20260604_18512308.jpeg';
-import goOutG07 from '../assets/GO-OUT/images/IMG_20260604_18512589.jpeg';
-import goOutG08 from '../assets/GO-OUT/images/IMG_20260604_18513373.jpeg';
-import goOutVideo from '../assets/GO-OUT/vdo/GO-OUT preview.mp4';
+// Optimised GO-OUT media (see scripts/optimize-goout-media.mjs).
+// Raw originals under ../assets/GO-OUT/{images,vdo} are intentionally left unreferenced.
+import goOutCover from '../assets/GO-OUT/opt/cover.webp';
+import goOutG00 from '../assets/GO-OUT/opt/gallery-00.webp';
+import goOutG01 from '../assets/GO-OUT/opt/gallery-01.webp';
+import goOutG02 from '../assets/GO-OUT/opt/gallery-02.webp';
+import goOutG03 from '../assets/GO-OUT/opt/gallery-03.webp';
+import goOutG04 from '../assets/GO-OUT/opt/gallery-04.webp';
+import goOutG05 from '../assets/GO-OUT/opt/gallery-05.webp';
+import goOutG06 from '../assets/GO-OUT/opt/gallery-06.webp';
+import goOutG07 from '../assets/GO-OUT/opt/gallery-07.webp';
+import goOutG08 from '../assets/GO-OUT/opt/gallery-08.webp';
+import goOutVideo from '../assets/GO-OUT/opt/go-out-preview.mp4';
+import goOutVideoPoster from '../assets/GO-OUT/opt/go-out-preview-poster.webp';
 
 // Gear Rental assets (optimised, see scripts/optimize-gear-rental-media.mjs)
 import gearCover from '../assets/Gear_Rental/opt/cover.webp';
@@ -138,7 +141,7 @@ export const projects: Project[] = [
     techs: ['React', 'TypeScript', 'Vite', 'Supabase', 'Capacitor', 'PWA', 'FCM'],
     githubUrl: 'https://github.com/psu6810110229/Project_Saving',
     badge: 'Featured',
-    thumbnail: goOutG00,
+    thumbnail: goOutCover,
     previewVideo: goOutVideo,
     gallery: goOutGallery,
     caseStudy: {
@@ -193,7 +196,7 @@ export const projects: Project[] = [
         thumbs: [goOutG01, goOutG03, goOutG08],
         gallery: goOutGallery,
         video: goOutVideo,
-        videoPoster: goOutG00,
+        videoPoster: goOutVideoPoster,
       },
     },
   },
