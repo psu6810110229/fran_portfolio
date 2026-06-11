@@ -19,6 +19,7 @@ const defaultPrimaryTechs = new Set(['React', 'TypeScript', 'CSS']);
 
 const ui = {
   en: {
+    sectionTitle: 'Projects',
     more: 'More projects',
     github: 'View the code',
     readCase: 'Read the full case',
@@ -29,6 +30,7 @@ const ui = {
     comingSoonSub: 'Next project in progress…',
   },
   th: {
+    sectionTitle: 'โปรเจกต์',
     more: 'โปรเจกต์อื่น ๆ',
     github: 'ดูโค้ด',
     readCase: 'อ่านเคสเต็ม',
@@ -794,6 +796,10 @@ function Projects() {
   return (
     <section id="projects" className={styles.projects}>
       <div className={styles.inner}>
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionEyebrow}>{t.sectionTitle}</span>
+          <span className={styles.sectionLine} aria-hidden="true" />
+        </div>
         {showcaseProjects.map((featured) => {
           const cs = featured.caseStudy;
           const showcase = showcaseConfigs[featured.title];

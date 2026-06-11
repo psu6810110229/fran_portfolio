@@ -7,6 +7,7 @@ import styles from './Contact.module.css';
 
 const content = {
   en: {
+    secTitle: 'Contact',
     heading: "Let's work together.",
     sub: 'Always open to new opportunities and conversations.',
     labelName: 'Name',
@@ -15,6 +16,7 @@ const content = {
     btn: 'Send',
   },
   th: {
+    secTitle: 'ติดต่อ',
     heading: 'ติดต่อผม',
     sub: 'หากมีข้อสงสัยเกี่ยวกับผลงาน หรือต้องการข้อมูลเพิ่มเติม\nติดต่อผมผ่านฟอร์มนี้ได้เลยครับ',
     labelName: 'ชื่อ',
@@ -95,6 +97,10 @@ function Contact() {
     >
       <div className={styles.cta}>
         <div className={styles.inner}>
+          <div className={styles.secHeader}>
+            <span className={styles.secTitle}>{c.secTitle}</span>
+            <span className={styles.secLine} aria-hidden="true" />
+          </div>
           <h2 className={styles.heading}>{c.heading}</h2>
           <p className={styles.sub}>{c.sub}</p>
           <hr className={styles.divider} aria-hidden="true" />

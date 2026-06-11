@@ -29,6 +29,34 @@
   padding: 36px 5vw;
 }
 
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.sectionEyebrow {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #d4651a;
+}
+
+:global([data-lang="th"]) .sectionEyebrow {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.sectionLine {
+  display: block;
+  flex: 1;
+  height: 1px;
+  background: #2a2520;
+}
+
 .otherTitle {
   font-size: 13px;
   font-weight: 800;
@@ -781,7 +809,8 @@
   color: #1a1614;
 }
 
-:global([data-theme="light"]) .bentoGuideLine {
+:global([data-theme="light"]) .bentoGuideLine,
+:global([data-theme="light"]) .sectionLine {
   background: #e0d8d0;
 }
 

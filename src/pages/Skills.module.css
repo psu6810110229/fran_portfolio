@@ -32,6 +32,30 @@
   padding: 40px 5vw;
 }
 
+.secHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.secTitle {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.secLine {
+  display: block;
+  flex: 1;
+  height: 1px;
+  background: var(--color-border-soft);
+}
+
 /* ── 3-column layout ── */
 .layout {
   display: grid;

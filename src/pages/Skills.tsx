@@ -109,6 +109,10 @@ function Skills() {
   return (
     <motion.section id="skills" className={styles.skills} {...revealProps}>
       <div className={styles.inner}>
+        <div className={styles.secHeader}>
+          <span className={styles.secTitle}>{c.secTitle}</span>
+          <span className={styles.secLine} aria-hidden="true" />
+        </div>
         <div className={styles.layout}>
           {c.groups.map((group) => (
             <div key={group.label} className={styles.col}>

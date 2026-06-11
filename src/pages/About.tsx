@@ -91,6 +91,10 @@ function About() {
       animate={inView && heroDone ? 'show' : 'hidden'}
     >
       <div className={styles.inner}>
+        <motion.div className={styles.secHeader} variants={itemVariants}>
+          <span className={styles.secTitle}>{c.secTitle}</span>
+          <span className={styles.secLine} aria-hidden="true" />
+        </motion.div>
         <div className={styles.grid}>
           <div className={styles.prose}>
             <motion.p className={styles.lead} variants={itemVariants}>
