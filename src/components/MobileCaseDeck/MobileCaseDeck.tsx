@@ -59,7 +59,6 @@ interface MobileCaseDeckProps {
   galleryCount: number;
   hasVideo: boolean;
   hero: string;
-  kicker: Localized;
   heading: Localized;
   tagline: Localized;
   meta: Localized;
@@ -181,7 +180,6 @@ function MobileCaseDeck(props: MobileCaseDeckProps) {
             {props.hasVideo ? ` · ${t.videoTag}` : ''}
           </span>
         </button>
-        <span className={styles.kicker}>{L(props.kicker, lang)}</span>
       </div>
       <div className={styles.hookBody}>
         <h3 className={styles.title}>{L(props.heading, lang)}</h3>
@@ -243,7 +241,6 @@ function MobileCaseDeck(props: MobileCaseDeckProps) {
           aria-label={`${props.projectTitle} ${L(props.shot.label, lang)} ${t.screenshot}`}
         >
           <img src={props.shot.src} alt="" className={styles.screenImg} draggable={false} />
-          <span className={styles.screenLabel}>{L(props.shot.label, lang)}</span>
         </button>
       </div>
       <div className={styles.cardFooter}>

@@ -839,7 +839,6 @@ function Projects() {
                   galleryCount={galleryCount}
                   hasVideo={Boolean(featured.previewVideo)}
                   hero={cs.media.hero}
-                  kicker={showcase.kicker}
                   heading={showcase.heading}
                   tagline={showcase.mainLine}
                   meta={showcase.bottomDetail}
