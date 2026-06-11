@@ -90,6 +90,10 @@ html {
   background-color: var(--color-bg);
 }
 
+html:not(.lenis) {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-body);
   font-size: var(--font-size-base);

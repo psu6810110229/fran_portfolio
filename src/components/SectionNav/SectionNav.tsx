@@ -16,6 +16,9 @@ const SECTIONS: Section[] = [
   { id: 'contact',        label: 'Contact',observeIds: ['contact'] },
 ];
 
+const scrollDuration = 0.38;
+const navigationSettleMs = 500;
+
 function SectionNav() {
   const lenis = useLenis();
   const [active, setActive] = useState('hero');
@@ -143,7 +146,7 @@ function SectionNav() {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (id === 'hero') {
       if (lenis) {
-        lenis.scrollTo(0, { duration: 0.9, immediate: reduce });
+        lenis.scrollTo(0, { duration: scrollDuration, immediate: reduce });
       } else {
         window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
       }
@@ -155,7 +158,7 @@ function SectionNav() {
         return;
       }
       if (lenis) {
-        lenis.scrollTo(el, { duration: 0.9, immediate: reduce });
+        lenis.scrollTo(el, { duration: scrollDuration, immediate: reduce });
       } else {
         el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
       }
@@ -168,13 +171,13 @@ function SectionNav() {
         setSelected(null);
         selectedTimerRef.current = null;
       }, reduce ? 120 : 620);
-    }, reduce ? 260 : 920);
+    }, reduce ? 260 : navigationSettleMs);
   };
 
   const scrollToTop = () => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (lenis) {
-      lenis.scrollTo(0, { duration: 0.9, immediate: reduce });
+      lenis.scrollTo(0, { duration: scrollDuration, immediate: reduce });
     } else {
       window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
     }
