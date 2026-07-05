@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'motion/react';
 import { useLanguage } from '../hooks/useLanguage';
+import VariableProximity from '../components/VariableProximity/VariableProximity';
 import styles from './About.module.css';
 
 interface OwnItem {
@@ -92,13 +93,62 @@ function About() {
     >
       <div className={styles.inner}>
         <motion.div className={styles.secHeader} variants={itemVariants}>
-          <span className={styles.secTitle}>{c.secTitle}</span>
+          <span className={styles.secTitle}>
+            {lang === 'en' ? (
+              <VariableProximity
+                label={c.secTitle}
+                fromFontVariationSettings="'wght' 800, 'opsz' 10"
+                toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                containerRef={sectionRef}
+                radius={140}
+                falloff="linear"
+              />
+            ) : (
+              c.secTitle
+            )}
+          </span>
           <span className={styles.secLine} aria-hidden="true" />
         </motion.div>
         <div className={styles.grid}>
           <div className={styles.prose}>
             <motion.p className={styles.lead} variants={itemVariants}>
-              {c.leadPre}<span className={styles.leadAccent}>{c.leadAccent}</span>{c.leadPost}
+              {lang === 'en' ? (
+                <>
+                  <VariableProximity
+                    label={c.leadPre}
+                    fromFontVariationSettings="'wght' 700, 'opsz' 12"
+                    toFontVariationSettings="'wght' 1000, 'opsz' 44"
+                    containerRef={sectionRef}
+                    radius={180}
+                    falloff="linear"
+                  />
+                  <VariableProximity
+                    label={c.leadAccent}
+                    className={styles.leadAccent}
+                    fromFontVariationSettings="'wght' 700, 'opsz' 12"
+                    toFontVariationSettings="'wght' 1000, 'opsz' 44"
+                    containerRef={sectionRef}
+                    radius={180}
+                    falloff="linear"
+                  />
+                  {c.leadPost && (
+                    <VariableProximity
+                      label={c.leadPost}
+                      fromFontVariationSettings="'wght' 700, 'opsz' 12"
+                      toFontVariationSettings="'wght' 1000, 'opsz' 44"
+                      containerRef={sectionRef}
+                      radius={180}
+                      falloff="linear"
+                    />
+                  )}
+                </>
+              ) : (
+                <>
+                  {c.leadPre}
+                  <span className={styles.leadAccent}>{c.leadAccent}</span>
+                  {c.leadPost}
+                </>
+              )}
             </motion.p>
             <motion.p className={styles.body} variants={itemVariants}>{c.body}</motion.p>
           </div>

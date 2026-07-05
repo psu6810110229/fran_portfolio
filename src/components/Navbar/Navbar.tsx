@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import { useLanguage } from '../../hooks/useLanguage';
+import VariableProximity from '../VariableProximity/VariableProximity';
 import styles from './Navbar.module.css';
 
 const navLinks = {
@@ -20,18 +21,41 @@ function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const { lang, toggleLang } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <nav className={styles.navbar} aria-label="Main navigation">
+    <nav ref={navRef} className={styles.navbar} aria-label="Main navigation">
       <div className={styles.inner}>
-        <a href="#hero" className={styles.logo} onClick={closeMenu}>fran.</a>
+        <a href="#hero" className={styles.logo} onClick={closeMenu}>
+          <VariableProximity
+            label="fran."
+            fromFontVariationSettings="'wght' 700, 'opsz' 12"
+            toFontVariationSettings="'wght' 1000, 'opsz' 40"
+            containerRef={navRef}
+            radius={120}
+            falloff="linear"
+          />
+        </a>
         <div className={styles.right}>
           <ul className={`${styles.navList} ${menuOpen ? styles.navListOpen : ''}`}>
             {navLinks[lang].map((link) => (
               <li key={link.href}>
-                <a href={link.href} className={styles.navLink} onClick={closeMenu}>{link.label}</a>
+                <a href={link.href} className={styles.navLink} onClick={closeMenu}>
+                  {lang === 'en' ? (
+                    <VariableProximity
+                      label={link.label}
+                      fromFontVariationSettings="'wght' 500, 'opsz' 10"
+                      toFontVariationSettings="'wght' 900, 'opsz' 32"
+                      containerRef={navRef}
+                      radius={95}
+                      falloff="linear"
+                    />
+                  ) : (
+                    link.label
+                  )}
+                </a>
               </li>
             ))}
           </ul>
