@@ -161,23 +161,16 @@ function ScrollStack({
     measureElements();
 
     if (useWindowScroll) {
-      let ticking = false;
-      const requestUpdate = () => {
-        if (ticking) return;
-        ticking = true;
-        animationFrameRef.current = requestAnimationFrame(() => {
-          ticking = false;
-          updateCardTransforms();
-        });
+      const handleScroll = () => {
+        updateCardTransforms();
       };
-      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener('scroll', handleScroll, { passive: true });
       window.addEventListener('resize', measureElements);
       updateCardTransforms();
 
       return () => {
-        window.removeEventListener('scroll', requestUpdate);
+        window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', measureElements);
-        if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
         cardsRef.current.forEach((card) => {
           card.style.marginBottom = '';
           card.style.transform = '';
