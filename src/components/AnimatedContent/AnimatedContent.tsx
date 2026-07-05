@@ -37,12 +37,6 @@ const AnimatedContent = ({
   animateOpacity = true,
   scale = 1,
   threshold = 0.1,
-  delay = 0,
-  disappearAfter = 0,
-  disappearDuration = 0.5,
-  disappearEase = 'power3.in',
-  onComplete,
-  onDisappearanceComplete,
   className = '',
 }: AnimatedContentProps) => {
   const ref = useRef<HTMLDivElement>(null);

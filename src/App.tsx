@@ -30,21 +30,8 @@ const getCurrentTheme = (): Theme => {
 function App() {
   const prefersReducedMotion = useReducedMotion();
   const shouldReduceMotion = Boolean(prefersReducedMotion);
-  const [hasFinePointer, setHasFinePointer] = useState(() => (
-    window.matchMedia('(hover: hover) and (pointer: fine)').matches
-  ));
   const [theme, setTheme] = useState<Theme>(getCurrentTheme);
   const useSmoothScroll = !shouldReduceMotion;
-
-  useEffect(() => {
-    const pointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
-    const updatePointer = () => setHasFinePointer(pointerQuery.matches);
-
-    updatePointer();
-    pointerQuery.addEventListener('change', updatePointer);
-
-    return () => pointerQuery.removeEventListener('change', updatePointer);
-  }, []);
 
   useEffect(() => {
     const updateTheme = () => setTheme(getCurrentTheme());

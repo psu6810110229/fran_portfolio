@@ -592,21 +592,6 @@ const getIntentKey = (showcaseKey: string, intent: BentoIntent) => `${showcaseKe
    rows stagger their cells. One easing family across the section. */
 const bentoEase = [0.22, 1, 0.36, 1] as const;
 
-const articleVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
-};
-
-const rowVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09 } },
-};
-
-const cellVariants = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: bentoEase } },
-};
-
 const liftHover = { y: -3, transition: { duration: 0.18, ease: 'easeOut' as const } };
 
 interface StatNumberProps {
