@@ -851,19 +851,14 @@ function Projects() {
             return (
               <ScrollStackItem key={featured.title} itemClassName={styles.projectStackItem}>
                 <AnimatedContent
-                  distance={200}
+                  distance={72}
                   direction="vertical"
-                  reverse={false}
                   duration={1}
-                  ease="power3.out"
-                  initialOpacity={0}
+                  ease="power2.out"
+                  initialOpacity={0.15}
                   animateOpacity
-                  scale={2}
-                  threshold={0.1}
-                  delay={0}
-                  disappearAfter={0}
-                  disappearDuration={0.5}
-                  disappearEase="power3.in"
+                  scale={1.12}
+                  threshold={0.12}
                 >
                 <motion.article
               id={`project-${featured.title.toLowerCase().replace(/\s+/g, '-')}`}

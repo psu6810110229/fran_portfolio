@@ -71,6 +71,8 @@ const AnimatedContent = ({
       scale,
       opacity: animateOpacity ? initialOpacity : 1,
       visibility: 'visible',
+      willChange: 'transform, opacity',
+      backfaceVisibility: 'hidden',
     });
 
     const tl = gsap.timeline();
@@ -107,16 +109,10 @@ const AnimatedContent = ({
     animateOpacity,
     scale,
     threshold,
-    delay,
-    disappearAfter,
-    disappearDuration,
-    disappearEase,
-    onComplete,
-    onDisappearanceComplete,
   ]);
 
   return (
-    <div ref={ref} className={className} style={{ visibility: 'hidden' }}>
+    <div ref={ref} className={className} style={{ visibility: 'hidden', willChange: 'transform, opacity' }}>
       {children}
     </div>
   );
