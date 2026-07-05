@@ -108,26 +108,43 @@ function ScrollStack({
         ? null
         : nextCardTop - stackPositionPx - itemStackDistance * (index + 1);
 
-      // Pin each card until the next card is ~85% onto the screen, or until the end of the stack for the last card
+      // Pin each card until the next card is ~90% onto the screen, or until the end of the stack for the last card
       const pinEnd = nextTriggerStart === null
         ? endTop - stackPositionPx - scaledCardHeight - 24
-        : nextTriggerStart - containerHeight * 0.15;
+        : nextTriggerStart - containerHeight * 0.10;
 
       const rotation = rotationAmount ? index * rotationAmount * progress : 0;
       const translateY = scrollTop >= triggerStart
         ? Math.min(scrollTop, pinEnd) - cardTop + stackPositionPx
         : 0;
 
-      // Opacity fades out from ~45% to ~85% of the next card's scroll entrance
-      // Uses a cubic ease-in curve to start fading out very subtly (little strength) and accelerate at the end (stronger strength)
-      const fadeProgress = getProgress(
-        scrollTop,
-        nextTriggerStart - containerHeight * 0.55,
-        nextTriggerStart - containerHeight * 0.15,
-      );
-      const opacity = nextTriggerStart === null
-        ? 1
-        : 1 - Math.pow(fadeProgress, 3);
+      // Calculate dynamic gradient mask and opacity to fade out the overlapped bottom section of the card
+      let opacity = 1;
+      if (nextTriggerStart !== null) {
+        const relativeY = nextTriggerStart - scrollTop;
+        const cardHeight = card.offsetHeight;
+        const percent = cardHeight > 0 ? relativeY / cardHeight : 1;
+
+        if (percent < 1.1) {
+          // Calculate linear-gradient mask bounds (30% fade window tracking Card 1's top)
+          const maskStart = Math.max(0, percent * 100 - 15);
+          const maskEnd = Math.min(100, percent * 100 + 15);
+          const maskVal = `linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) ${maskStart}%, rgba(0,0,0,0) ${maskEnd}%)`;
+          card.style.maskImage = maskVal;
+          card.style.webkitMaskImage = maskVal;
+
+          // Fade out the remaining top portion as it unpins
+          if (percent <= 0.1) {
+            opacity = Math.max(0, percent / 0.1);
+          }
+        } else {
+          card.style.maskImage = '';
+          card.style.webkitMaskImage = '';
+        }
+      } else {
+        card.style.maskImage = '';
+        card.style.webkitMaskImage = '';
+      }
 
       const blur = blurAmount && progress === 1 ? index * blurAmount : 0;
 
@@ -186,6 +203,8 @@ function ScrollStack({
           card.style.filter = '';
           card.style.pointerEvents = '';
           card.style.transformOrigin = '';
+          card.style.maskImage = '';
+          card.style.webkitMaskImage = '';
         });
         stackCompletedRef.current = false;
         cardsRef.current = [];
@@ -214,6 +233,8 @@ function ScrollStack({
         card.style.filter = '';
         card.style.pointerEvents = '';
         card.style.transformOrigin = '';
+        card.style.maskImage = '';
+        card.style.webkitMaskImage = '';
       });
       stackCompletedRef.current = false;
       cardsRef.current = [];
