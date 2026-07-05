@@ -1,6 +1,7 @@
 .hero {
   width: 100%;
   position: relative;
+  overflow: hidden;
 }
 
 /* ── Divider: hairline spreads from center once the hero settles ── */
@@ -26,12 +27,22 @@
 }
 
 .inner {
+  position: relative;
+  z-index: 1;
   padding: 56px 5vw 28px;
   display: flex;
   flex-direction: column;
   gap: 36px;
   align-items: center;
   text-align: center;
+}
+
+.grainient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.18;
+  pointer-events: none;
 }
 
 /* ── Avatar (supporting role) ── */
