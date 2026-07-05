@@ -1,0 +1,121 @@
+import { useRef, useEffect, type ReactNode } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+interface AnimatedContentProps {
+  children: ReactNode;
+  container?: string | HTMLElement | null;
+  distance?: number;
+  direction?: 'vertical' | 'horizontal';
+  reverse?: boolean;
+  duration?: number;
+  ease?: string;
+  initialOpacity?: number;
+  animateOpacity?: boolean;
+  scale?: number;
+  threshold?: number;
+  delay?: number;
+  disappearAfter?: number;
+  disappearDuration?: number;
+  disappearEase?: string;
+  onComplete?: () => void;
+  onDisappearanceComplete?: () => void;
+  className?: string;
+}
+
+const AnimatedContent = ({
+  children,
+  container,
+  distance = 100,
+  direction = 'vertical',
+  reverse = false,
+  duration = 0.8,
+  ease = 'power3.out',
+  initialOpacity = 0,
+  animateOpacity = true,
+  scale = 1,
+  threshold = 0.1,
+  delay = 0,
+  disappearAfter = 0,
+  disappearDuration = 0.5,
+  disappearEase = 'power3.in',
+  onComplete,
+  onDisappearanceComplete,
+  className = '',
+}: AnimatedContentProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    let scrollerTarget: HTMLElement | null =
+      (typeof container === 'string'
+        ? document.querySelector<HTMLElement>(container)
+        : container) ??
+      document.getElementById('snap-main-container') ??
+      null;
+
+    if (typeof scrollerTarget === 'string') {
+      scrollerTarget = document.querySelector<HTMLElement>(scrollerTarget);
+    }
+
+    const axis = direction === 'horizontal' ? 'x' : 'y';
+    const offset = reverse ? -distance : distance;
+    const startPct = (1 - threshold) * 100;
+
+    gsap.set(el, {
+      [axis]: offset,
+      scale,
+      opacity: animateOpacity ? initialOpacity : 1,
+      visibility: 'visible',
+      willChange: 'transform, opacity',
+      backfaceVisibility: 'hidden',
+    });
+
+    const tl = gsap.timeline();
+
+    tl.to(el, {
+      [axis]: 0,
+      scale: 1,
+      opacity: 1,
+      duration,
+      ease,
+    });
+
+    const st = ScrollTrigger.create({
+      trigger: el,
+      scroller: scrollerTarget,
+      start: `top ${startPct}%`,
+      end: 'top 25%',
+      scrub: 1,
+      animation: tl,
+    });
+
+    return () => {
+      st.kill();
+      tl.kill();
+    };
+  }, [
+    container,
+    distance,
+    direction,
+    reverse,
+    duration,
+    ease,
+    initialOpacity,
+    animateOpacity,
+    scale,
+    threshold,
+  ]);
+
+  return (
+    <div ref={ref} className={className} style={{ visibility: 'hidden', willChange: 'transform, opacity' }}>
+      {children}
+    </div>
+  );
+};
+
+export default AnimatedContent;
