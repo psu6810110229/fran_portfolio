@@ -94,18 +94,20 @@ function ScrollStack({
     const scaleEndPositionPx = parseOffset(scaleEndPosition, containerHeight);
     const endTop = endTopRef.current;
 
+    const lastCardIndex = cardsRef.current.length - 1;
+    const lastCard = cardsRef.current[lastCardIndex];
+    const lastCardScale = baseScale + Math.max(0, lastCardIndex) * itemScale;
+    const lastCardScaledHeight = lastCard ? lastCard.offsetHeight * lastCardScale : 0;
+    const globalPinEnd = endTop - stackPositionPx - lastCardScaledHeight - 24;
+
     cardsRef.current.forEach((card, index) => {
       const cardTop = cardTopsRef.current[index] ?? getElementOffset(card);
       const triggerStart = cardTop - stackPositionPx;
       const triggerEnd = cardTop - scaleEndPositionPx;
-      const isLastCard = index === cardsRef.current.length - 1;
       const progress = getProgress(scrollTop, triggerStart, triggerEnd);
       const targetScale = baseScale + index * itemScale;
       const scale = targetScale;
-      const scaledCardHeight = card.offsetHeight * scale;
-      const pinEnd = isLastCard
-        ? endTop - stackPositionPx - scaledCardHeight - 24
-        : endTop - containerHeight * 0.5;
+      const pinEnd = globalPinEnd;
       const rotation = rotationAmount ? index * rotationAmount * progress : 0;
       const translateY = scrollTop >= triggerStart
         ? Math.min(scrollTop, pinEnd) - cardTop + stackPositionPx
@@ -118,8 +120,8 @@ function ScrollStack({
         ? 1
         : 1 - getProgress(
           scrollTop,
-          nextTriggerStart - containerHeight * 0.7,
-          nextTriggerStart - containerHeight * 0.18,
+          nextTriggerStart - 150,
+          nextTriggerStart + 150,
         );
       const blur = blurAmount && progress === 1 ? index * blurAmount : 0;
 
