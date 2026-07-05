@@ -1,6 +1,5 @@
 ﻿import { useLanguage } from '../hooks/useLanguage';
 import franImg from '../assets/fran-profile.jpg';
-import Grainient from '../components/Grainient/Grainient';
 import githubIcon from '../assets/icons/github.svg';
 import linkedinIcon from '../assets/icons/linkedin.svg';
 import styles from './Hero.module.css';
@@ -36,21 +35,6 @@ function Hero() {
 
   return (
     <section id="hero" className={styles.hero}>
-      <Grainient
-        className={styles.grainient}
-        color1="#d4651a"
-        color2="#2a2520"
-        color3="#141210"
-        timeSpeed={0.18}
-        colorBalance={0.12}
-        warpStrength={1.7}
-        warpFrequency={3.2}
-        grainAmount={0.05}
-        grainScale={1.6}
-        contrast={1.35}
-        saturation={0.85}
-        zoom={0.95}
-      />
       <div className={styles.inner}>
         <div className={styles.avatarWrapper}>
           <div className={styles.avatarRing} aria-hidden="true" />
