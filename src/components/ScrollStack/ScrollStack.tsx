@@ -94,12 +94,6 @@ function ScrollStack({
     const scaleEndPositionPx = parseOffset(scaleEndPosition, containerHeight);
     const endTop = endTopRef.current;
 
-    const lastCardIndex = cardsRef.current.length - 1;
-    const lastCard = cardsRef.current[lastCardIndex];
-    const lastCardScale = baseScale + Math.max(0, lastCardIndex) * itemScale;
-    const lastCardScaledHeight = lastCard ? lastCard.offsetHeight * lastCardScale : 0;
-    const globalPinEnd = endTop - stackPositionPx - lastCardScaledHeight - 24;
-
     cardsRef.current.forEach((card, index) => {
       const cardTop = cardTopsRef.current[index] ?? getElementOffset(card);
       const triggerStart = cardTop - stackPositionPx;
@@ -107,22 +101,32 @@ function ScrollStack({
       const progress = getProgress(scrollTop, triggerStart, triggerEnd);
       const targetScale = baseScale + index * itemScale;
       const scale = targetScale;
-      const pinEnd = globalPinEnd;
-      const rotation = rotationAmount ? index * rotationAmount * progress : 0;
-      const translateY = scrollTop >= triggerStart
-        ? Math.min(scrollTop, pinEnd) - cardTop + stackPositionPx
-        : 0;
+      const scaledCardHeight = card.offsetHeight * scale;
+
       const nextCardTop = cardTopsRef.current[index + 1];
       const nextTriggerStart = nextCardTop === undefined
         ? null
         : nextCardTop - stackPositionPx - itemStackDistance * (index + 1);
+
+      // Pin each card until the next card starts pinning, or until the end of the stack for the last card
+      const pinEnd = nextTriggerStart === null
+        ? endTop - stackPositionPx - scaledCardHeight - 24
+        : nextTriggerStart;
+
+      const rotation = rotationAmount ? index * rotationAmount * progress : 0;
+      const translateY = scrollTop >= triggerStart
+        ? Math.min(scrollTop, pinEnd) - cardTop + stackPositionPx
+        : 0;
+
+      // Opacity stays 1 while pinned, and fades out smoothly as it unpins and scrolls away
       const opacity = nextTriggerStart === null
         ? 1
         : 1 - getProgress(
           scrollTop,
-          nextTriggerStart - 150,
-          nextTriggerStart + 150,
+          nextTriggerStart,
+          nextTriggerStart + 250,
         );
+
       const blur = blurAmount && progress === 1 ? index * blurAmount : 0;
 
       card.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale}) rotate(${rotation}deg)`;
