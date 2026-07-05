@@ -108,23 +108,23 @@ function ScrollStack({
         ? null
         : nextCardTop - stackPositionPx - itemStackDistance * (index + 1);
 
-      // Pin each card until the next card is ~55% onto the screen, or until the end of the stack for the last card
+      // Pin each card until the next card is ~85% onto the screen, or until the end of the stack for the last card
       const pinEnd = nextTriggerStart === null
         ? endTop - stackPositionPx - scaledCardHeight - 24
-        : nextTriggerStart - containerHeight * 0.45;
+        : nextTriggerStart - containerHeight * 0.15;
 
       const rotation = rotationAmount ? index * rotationAmount * progress : 0;
       const translateY = scrollTop >= triggerStart
         ? Math.min(scrollTop, pinEnd) - cardTop + stackPositionPx
         : 0;
 
-      // Opacity fades out from ~15% to ~55% of the next card's scroll entrance
+      // Opacity fades out from ~45% to ~85% of the next card's scroll entrance
       const opacity = nextTriggerStart === null
         ? 1
         : 1 - getProgress(
           scrollTop,
-          nextTriggerStart - containerHeight * 0.85,
-          nextTriggerStart - containerHeight * 0.45,
+          nextTriggerStart - containerHeight * 0.55,
+          nextTriggerStart - containerHeight * 0.15,
         );
 
       const blur = blurAmount && progress === 1 ? index * blurAmount : 0;
