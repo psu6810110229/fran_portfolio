@@ -81,6 +81,7 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.22 }}
+        data-lenis-prevent="true"
       >
         <motion.div
           ref={dialogRef}
@@ -94,6 +95,7 @@ function CaseReader({ title, githubUrl, caseStudy: cs, lang, onClose }: Props) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          data-lenis-prevent="true"
         >
           <div className={styles.closeRow}>
             <button type="button" className={styles.close} onClick={onClose} aria-label={t.close}>✕</button>

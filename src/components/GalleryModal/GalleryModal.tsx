@@ -85,6 +85,7 @@ function GalleryModal({ images, video, initialIndex, onClose }: Props) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
+      data-lenis-prevent="true"
     >
       <button className={styles.close} onClick={onClose} aria-label={t.close}>✕</button>
 
