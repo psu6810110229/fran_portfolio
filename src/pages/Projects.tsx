@@ -863,16 +863,12 @@ function Projects() {
                 <motion.article
               id={`project-${featured.title.toLowerCase().replace(/\s+/g, '-')}`}
               className={styles.bento}
-              variants={articleVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '0px 0px -120px 0px' }}
             >
-              <motion.h2 className={styles.bentoHeading} variants={cellVariants}>{L(showcase.heading, lang)}</motion.h2>
-              <motion.p className={styles.bentoStandfirst} variants={cellVariants}>{L(cs.problem, lang)}</motion.p>
+              <motion.h2 className={styles.bentoHeading}>{L(showcase.heading, lang)}</motion.h2>
+              <motion.p className={styles.bentoStandfirst}>{L(cs.problem, lang)}</motion.p>
 
               {showMobileDeck && (
-                <motion.div className={styles.mobileDeckSlot} variants={cellVariants}>
+                <motion.div className={styles.mobileDeckSlot}>
                   <Suspense fallback={null}>
                     <MobileCaseDeck
                       projectTitle={featured.title}
@@ -903,11 +899,10 @@ function Projects() {
                 </motion.div>
               )}
 
-              <motion.div className={topRowClassName} variants={rowVariants}>
+              <motion.div className={topRowClassName}>
                 <motion.button
                   type="button"
                   className={joinClasses(styles.bentoMain, isActive('main') ? styles.intentActive : '')}
-                  variants={cellVariants}
                   whileHover={liftHover}
                   onClick={() => openVideoGallery(featured)}
                   onPointerEnter={handleIntentEnter(showcaseKey, 'main')}
@@ -955,7 +950,6 @@ function Projects() {
                     styles.bentoRole,
                     isActive('role') ? styles.intentActive : '',
                   )}
-                  variants={cellVariants}
                   whileHover={liftHover}
                   onClick={() => setCaseProject(featured)}
                   onPointerEnter={handleIntentEnter(showcaseKey, 'role')}
@@ -987,7 +981,7 @@ function Projects() {
                 </motion.button>
               </motion.div>
 
-              <motion.div className={mediaRowClassName} variants={rowVariants}>
+              <motion.div className={mediaRowClassName}>
                 {showcase.shots.map((shot, index) => {
                   const shotIntent: BentoIntent = index === 0 ? 'booking' : 'admin';
                   const shotClass = index === 0 ? styles.bentoShot1 : styles.bentoShot2;
@@ -998,7 +992,6 @@ function Projects() {
                       key={shot.galleryIndex}
                       type="button"
                       className={joinClasses(styles.bentoShot, shotClass, isActive(shotIntent) ? styles.intentActive : '')}
-                      variants={cellVariants}
                       whileHover={liftHover}
                       onClick={() => openImageGallery(featured, shot.galleryIndex)}
                       onPointerEnter={handleIntentEnter(showcaseKey, shotIntent)}
@@ -1027,7 +1020,6 @@ function Projects() {
 
                 <motion.div
                   className={joinClasses(styles.bentoStats, isActive('stats') ? styles.intentActive : '')}
-                  variants={cellVariants}
                   whileHover={liftHover}
                   onPointerEnter={handleIntentEnter(showcaseKey, 'stats')}
                   onPointerMove={handleIntentMove(showcaseKey, 'stats')}
@@ -1047,7 +1039,7 @@ function Projects() {
                 </motion.div>
               </motion.div>
 
-              <motion.div className={styles.bentoBottom} variants={cellVariants}>
+              <motion.div className={styles.bentoBottom}>
                 <div className={styles.bentoBadges}>
                   {featured.techs.map((tech) => (
                     <TechBadge
