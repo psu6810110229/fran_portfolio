@@ -818,7 +818,7 @@ function Projects() {
         </div>
         <ScrollStack
           className={styles.projectStack}
-          itemDistance={400}
+          itemDistance={200}
           itemStackDistance={26}
           stackPosition="2%"
           scaleEndPosition="2%"
