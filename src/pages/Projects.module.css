@@ -1249,22 +1249,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 8px;
   pointer-events: none;
   z-index: 10;
   will-change: transform, opacity;
-}
-
-.scrollHintPill {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(20, 18, 16, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 8px 16px;
-  border-radius: 9999px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
 }
 
 .scrollHintText {
@@ -1273,14 +1262,22 @@
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #a39992;
+  color: #7a6e66;
+}
+
+:global([data-theme="light"]) .scrollHintText {
+  color: #403a34;
 }
 
 .scrollHintArrow {
   width: 12px;
   height: 12px;
-  color: #a39992;
+  color: #7a6e66;
   animation: elegantPulseBounce 2.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:global([data-theme="light"]) .scrollHintArrow {
+  color: #403a34;
 }
 
 @keyframes elegantPulseBounce {

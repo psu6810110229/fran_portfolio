@@ -1062,14 +1062,12 @@ function Projects() {
 
               {index < showcaseProjects.length - 1 && (
                 <div className={styles.scrollHint}>
-                  <div className={styles.scrollHintPill}>
-                    <span className={styles.scrollHintText}>
-                      {lang === 'en' ? 'Scroll for next' : 'เลื่อนเพื่อดูผลงานถัดไป'}
-                    </span>
-                    <svg className={styles.scrollHintArrow} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                    </svg>
-                  </div>
+                  <span className={styles.scrollHintText}>
+                    {lang === 'en' ? 'Scroll for next' : 'เลื่อนเพื่อดูผลงานถัดไป'}
+                  </span>
+                  <svg className={styles.scrollHintArrow} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg>
                 </div>
               )}
 
