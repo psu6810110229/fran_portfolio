@@ -827,7 +827,7 @@ function Projects() {
           useWindowScroll
           disabled={showMobileDeck}
         >
-          {showcaseProjects.map((featured) => {
+          {showcaseProjects.map((featured, index) => {
             const cs = featured.caseStudy;
             const showcase = showcaseConfigs[featured.title];
             if (!cs || !showcase) return null;
@@ -1059,6 +1059,19 @@ function Projects() {
                   </button>
                 </div>
               </motion.div>
+
+              {index < showcaseProjects.length - 1 && (
+                <div className={styles.scrollHint}>
+                  <div className={styles.scrollHintPill}>
+                    <span className={styles.scrollHintText}>
+                      {lang === 'en' ? 'Scroll for next' : 'เลื่อนเพื่อดูผลงานถัดไป'}
+                    </span>
+                    <svg className={styles.scrollHintArrow} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                    </svg>
+                  </div>
+                </div>
+              )}
 
                 </motion.article>
                 </AnimatedContent>

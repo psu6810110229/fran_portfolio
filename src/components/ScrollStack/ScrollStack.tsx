@@ -151,6 +151,14 @@ function ScrollStack({
 
       const blur = blurAmount && progress === 1 ? index * blurAmount : 0;
 
+      // Calculate buffer scroll progress to drive subtle interactive UI cues inside the card
+      if (nextTriggerStart !== null) {
+        const bufferProgress = getProgress(scrollTop, triggerStart, nextTriggerStart);
+        card.style.setProperty('--buffer-progress', String(bufferProgress));
+      } else {
+        card.style.setProperty('--buffer-progress', '1');
+      }
+
       card.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale}) rotate(${rotation}deg)`;
       card.style.opacity = String(opacity);
       card.style.filter = blur ? `blur(${blur}px)` : '';
