@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState, type FocusEvent, type PointerEvent } from 'react';
 import { AnimatePresence, animate, motion, useInView, useReducedMotion } from 'motion/react';
+import AnimatedContent from '../components/AnimatedContent/AnimatedContent';
 import CompactCard from '../components/CompactCard/CompactCard';
 import ScrollStack, { ScrollStackItem } from '../components/ScrollStack/ScrollStack';
 import TechBadge from '../components/TechBadge/TechBadge';
@@ -849,6 +850,16 @@ function Projects() {
 
             return (
               <ScrollStackItem key={featured.title} itemClassName={styles.projectStackItem}>
+                <AnimatedContent
+                  distance={100}
+                  direction="vertical"
+                  reverse={false}
+                  duration={0.8}
+                  ease="power3.out"
+                  initialOpacity={0}
+                  animateOpacity
+                  threshold={0.2}
+                >
                 <motion.article
               id={`project-${featured.title.toLowerCase().replace(/\s+/g, '-')}`}
               className={styles.bento}
@@ -1058,6 +1069,7 @@ function Projects() {
               </motion.div>
 
                 </motion.article>
+                </AnimatedContent>
               </ScrollStackItem>
             );
           })}
