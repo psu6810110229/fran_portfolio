@@ -38,18 +38,28 @@ function App() {
       <div className={styles.screen}>
         <Grainient
           className={styles.grainient}
-          color1="#d4651a"
-          color2="#2a2520"
-          color3="#141210"
-          timeSpeed={0.18}
-          colorBalance={0.12}
-          warpStrength={1.7}
-          warpFrequency={3.2}
-          grainAmount={0.05}
-          grainScale={1.6}
-          contrast={1.35}
-          saturation={0.85}
-          zoom={0.95}
+          color1="#ff9372"
+          color2="#e4e4e4"
+          color3="#ff8d6a"
+          timeSpeed={1.55}
+          colorBalance={-0.1}
+          warpStrength={2.5}
+          warpFrequency={2.9}
+          warpSpeed={2}
+          warpAmplitude={50}
+          blendAngle={180}
+          blendSoftness={0}
+          rotationAmount={500}
+          noiseScale={0}
+          grainAmount={0}
+          grainScale={0.2}
+          grainAnimated={false}
+          contrast={1.55}
+          gamma={1}
+          saturation={0.8}
+          centerX={0}
+          centerY={0}
+          zoom={0.9}
         />
         <Navbar />
         <main className={styles.main}>
