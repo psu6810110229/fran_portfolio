@@ -52,6 +52,7 @@ function ScrollStack({
   const lenisRef = useRef<Lenis | null>(null);
   const cardsRef = useRef<HTMLElement[]>([]);
   const cardTopsRef = useRef<number[]>([]);
+  const cardHeightsRef = useRef<number[]>([]);
   const endTopRef = useRef(0);
 
   const parseOffset = useCallback((value: string, height: number) => (
@@ -80,6 +81,7 @@ function ScrollStack({
 
     cardsRef.current = Array.from(scroller.querySelectorAll<HTMLElement>('[data-scroll-stack-card="true"]'));
     cardTopsRef.current = cardsRef.current.map((card) => getElementOffset(card));
+    cardHeightsRef.current = cardsRef.current.map((card) => card.offsetHeight);
     const endElement = scroller.querySelector<HTMLElement>('[data-scroll-stack-end="true"]');
     endTopRef.current = endElement ? getElementOffset(endElement) : 0;
   }, [getElementOffset]);
@@ -96,12 +98,13 @@ function ScrollStack({
 
     cardsRef.current.forEach((card, index) => {
       const cardTop = cardTopsRef.current[index] ?? getElementOffset(card);
+      const cardHeight = cardHeightsRef.current[index] ?? card.offsetHeight;
       const triggerStart = cardTop - stackPositionPx;
       const triggerEnd = cardTop - scaleEndPositionPx;
       const progress = getProgress(scrollTop, triggerStart, triggerEnd);
       const targetScale = baseScale + index * itemScale;
       const scale = targetScale;
-      const scaledCardHeight = card.offsetHeight * scale;
+      const scaledCardHeight = cardHeight * scale;
 
       const nextCardTop = cardTopsRef.current[index + 1];
       const nextTriggerStart = nextCardTop === undefined
@@ -122,13 +125,13 @@ function ScrollStack({
       let opacity = 1;
       if (nextTriggerStart !== null) {
         const relativeY = nextTriggerStart - scrollTop;
-        const cardHeight = card.offsetHeight;
         const percent = cardHeight > 0 ? relativeY / cardHeight : 1;
 
         if (percent < 1.1) {
           // Calculate linear-gradient mask bounds (30% fade window tracking Card 1's top)
-          const maskStart = Math.max(0, percent * 100 - 15);
-          const maskEnd = Math.min(100, percent * 100 + 15);
+          // Rounded to 1 decimal place to prevent subpixel rasterization jitter on slow scrolling
+          const maskStart = Math.max(0, percent * 100 - 15).toFixed(1);
+          const maskEnd = Math.min(100, percent * 100 + 15).toFixed(1);
           const maskVal = `linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) ${maskStart}%, rgba(0,0,0,0) ${maskEnd}%)`;
           card.style.maskImage = maskVal;
           card.style.webkitMaskImage = maskVal;
