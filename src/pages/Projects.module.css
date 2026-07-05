@@ -121,12 +121,14 @@
 
 /* Standfirst: the plain-language problem line that opens each case study */
 .bentoStandfirst {
-  max-width: 62ch;
+  max-width: 100%;
   margin: 0 0 26px;
   font-size: 15px;
   line-height: 1.6;
   color: #b0a090;
-  text-wrap: pretty;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 :global([data-lang="th"]) .bentoHeading {
