@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState, type FocusEvent, type PointerEvent } from 'react';
 import { AnimatePresence, animate, motion, useInView, useReducedMotion } from 'motion/react';
 import CompactCard from '../components/CompactCard/CompactCard';
+import ScrollStack, { ScrollStackItem } from '../components/ScrollStack/ScrollStack';
 import TechBadge from '../components/TechBadge/TechBadge';
 import { projects } from '../data/projects';
 import { useLanguage } from '../hooks/useLanguage';
@@ -814,10 +815,21 @@ function Projects() {
           <span className={styles.sectionEyebrow}>{t.sectionTitle}</span>
           <span className={styles.sectionLine} aria-hidden="true" />
         </div>
-        {showcaseProjects.map((featured) => {
-          const cs = featured.caseStudy;
-          const showcase = showcaseConfigs[featured.title];
-          if (!cs || !showcase) return null;
+        <ScrollStack
+          className={styles.projectStack}
+          itemDistance={84}
+          itemStackDistance={26}
+          stackPosition="2%"
+          scaleEndPosition="2%"
+          baseScale={0.86}
+          itemScale={0.02}
+          useWindowScroll
+          disabled={showMobileDeck}
+        >
+          {showcaseProjects.map((featured) => {
+            const cs = featured.caseStudy;
+            const showcase = showcaseConfigs[featured.title];
+            if (!cs || !showcase) return null;
 
           const showcaseKey = featured.title;
           const galleryCount = featured.gallery?.length ?? 0;
@@ -835,9 +847,9 @@ function Projects() {
             isActive('stats') ? styles.bentoMediaRowStatsIntent : '',
           );
 
-          return (
-            <motion.article
-              key={featured.title}
+            return (
+              <ScrollStackItem key={featured.title} itemClassName={styles.projectStackItem}>
+                <motion.article
               id={`project-${featured.title.toLowerCase().replace(/\s+/g, '-')}`}
               className={styles.bento}
               variants={articleVariants}
@@ -1045,9 +1057,11 @@ function Projects() {
                 </div>
               </motion.div>
 
-            </motion.article>
-          );
-        })}
+                </motion.article>
+              </ScrollStackItem>
+            );
+          })}
+        </ScrollStack>
 
         {otherProjects.length > 0 && (
           <div className={styles.otherSection}>
