@@ -12,8 +12,9 @@ import { LanguageProvider } from './hooks/useLanguage';
 import SectionNav from './components/SectionNav/SectionNav';
 import styles from './App.module.css';
 
-const scrollDuration = 0.38;
+const scrollDuration = 1.25;
 const scrollLerp = 0.18;
+const easeOutQuint = (x: number): number => 1 - Math.pow(1 - x, 5);
 type Theme = 'dark' | 'light';
 
 const getCurrentTheme = (): Theme => {
@@ -108,6 +109,7 @@ function App() {
             lerp: scrollLerp,
             anchors: {
               duration: scrollDuration,
+              easing: easeOutQuint,
             },
           }}
         >

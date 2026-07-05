@@ -16,8 +16,8 @@ const SECTIONS: Section[] = [
   { id: 'contact',        label: 'Contact',observeIds: ['contact'] },
 ];
 
-const scrollDuration = 0.85;
-const navigationSettleMs = 900;
+const scrollDuration = 1.25;
+const navigationSettleMs = 1300;
 const easeOutQuint = (x: number): number => 1 - Math.pow(1 - x, 5);
 
 function SectionNav() {
@@ -159,7 +159,21 @@ function SectionNav() {
         return;
       }
       if (lenis) {
-        lenis.scrollTo(el, { duration: scrollDuration, immediate: reduce, easing: easeOutQuint });
+        // Calculate static offset top to avoid bounding rect issues from active CSS transforms on pinned ScrollStack cards
+        let targetScrollY = 0;
+        let current: HTMLElement | null = el;
+        while (current) {
+          targetScrollY += current.offsetTop;
+          current = current.offsetParent as HTMLElement | null;
+        }
+
+        // Subtract ScrollStack pinning offset on desktop/tablet (> 768px) to align cards properly,
+        // or navbar height (72px) on mobile/tablet (<= 768px) to prevent covering headers.
+        const hasPinStack = window.matchMedia('(min-width: 769px)').matches;
+        const pinOffset = hasPinStack ? window.innerHeight * 0.02 : 72;
+        const finalScrollY = Math.max(0, targetScrollY - pinOffset);
+
+        lenis.scrollTo(finalScrollY, { duration: scrollDuration, immediate: reduce, easing: easeOutQuint });
       } else {
         el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
       }
