@@ -119,13 +119,15 @@ function ScrollStack({
         : 0;
 
       // Opacity fades out from ~45% to ~85% of the next card's scroll entrance
+      // Uses a cubic ease-in curve to start fading out very subtly (little strength) and accelerate at the end (stronger strength)
+      const fadeProgress = getProgress(
+        scrollTop,
+        nextTriggerStart - containerHeight * 0.55,
+        nextTriggerStart - containerHeight * 0.15,
+      );
       const opacity = nextTriggerStart === null
         ? 1
-        : 1 - getProgress(
-          scrollTop,
-          nextTriggerStart - containerHeight * 0.55,
-          nextTriggerStart - containerHeight * 0.15,
-        );
+        : 1 - Math.pow(fadeProgress, 3);
 
       const blur = blurAmount && progress === 1 ? index * blurAmount : 0;
 
