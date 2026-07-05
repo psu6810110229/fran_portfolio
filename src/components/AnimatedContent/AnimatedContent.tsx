@@ -73,24 +73,7 @@ const AnimatedContent = ({
       visibility: 'visible',
     });
 
-    const tl = gsap.timeline({
-      paused: true,
-      delay,
-      onComplete: () => {
-        if (onComplete) onComplete();
-        if (disappearAfter > 0) {
-          gsap.to(el, {
-            [axis]: reverse ? distance : -distance,
-            scale: 0.8,
-            opacity: animateOpacity ? initialOpacity : 0,
-            delay: disappearAfter,
-            duration: disappearDuration,
-            ease: disappearEase,
-            onComplete: () => onDisappearanceComplete?.(),
-          });
-        }
-      },
-    });
+    const tl = gsap.timeline();
 
     tl.to(el, {
       [axis]: 0,
@@ -104,11 +87,9 @@ const AnimatedContent = ({
       trigger: el,
       scroller: scrollerTarget,
       start: `top ${startPct}%`,
-      end: `bottom ${100 - startPct}%`,
-      onEnter: () => tl.play(),
-      onLeave: () => tl.reverse(),
-      onEnterBack: () => tl.play(),
-      onLeaveBack: () => tl.reverse(),
+      end: 'top 25%',
+      scrub: 1,
+      animation: tl,
     });
 
     return () => {
