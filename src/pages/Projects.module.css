@@ -1242,7 +1242,7 @@
 
 .scrollHint {
   position: absolute;
-  bottom: 24px;
+  bottom: -48px;
   left: 50%;
   transform: translateX(-50%) translateY(calc(var(--buffer-progress, 0) * -24px));
   opacity: calc(1 - var(--buffer-progress, 0) * 3);
