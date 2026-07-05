@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import Magnet from '../components/Magnet/Magnet';
 import { useLanguage } from '../hooks/useLanguage';
 import capacitorIcon from '../assets/icons/capacitor.svg';
 import pwaIcon from '../assets/icons/pwa.svg';
@@ -119,11 +120,13 @@ function Skills() {
               <span className={styles.groupLabel}>{group.label}</span>
               <div className={styles.primaryChips}>
                 {group.items.map((tech) => (
-                  <span key={tech.label} className={styles.chipPrimary}>
-                    {tech.imgIcon && <img src={tech.imgIcon} alt="" aria-hidden="true" className={styles.chipImg} />}
-                    {tech.icon && <i className={`${tech.icon} colored`} aria-hidden="true" />}
-                    {tech.label}
-                  </span>
+                  <Magnet key={tech.label} padding={32} magnetStrength={4}>
+                    <span className={styles.chipPrimary}>
+                      {tech.imgIcon && <img src={tech.imgIcon} alt="" aria-hidden="true" className={styles.chipImg} />}
+                      {tech.icon && <i className={`${tech.icon} colored`} aria-hidden="true" />}
+                      {tech.label}
+                    </span>
+                  </Magnet>
                 ))}
               </div>
             </div>
