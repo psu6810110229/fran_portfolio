@@ -127,11 +127,11 @@ function ScrollStack({
         const relativeY = nextTriggerStart - scrollTop;
         const percent = cardHeight > 0 ? relativeY / cardHeight : 1;
 
-        if (percent < 1.1) {
-          // Calculate linear-gradient mask bounds (30% fade window tracking Card 1's top)
+        if (percent < 1.0) {
+          // Calculate linear-gradient mask bounds tracking Card 1's top edge exactly
           // Rounded to 1 decimal place to prevent subpixel rasterization jitter on slow scrolling
-          const maskStart = Math.max(0, percent * 100 - 15).toFixed(1);
-          const maskEnd = Math.min(100, percent * 100 + 15).toFixed(1);
+          const maskStart = Math.max(0, percent * 100).toFixed(1);
+          const maskEnd = Math.min(100, percent * 100 + 20).toFixed(1);
           const maskVal = `linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) ${maskStart}%, rgba(0,0,0,0) ${maskEnd}%)`;
           card.style.maskImage = maskVal;
           card.style.webkitMaskImage = maskVal;
