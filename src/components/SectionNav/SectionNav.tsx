@@ -16,8 +16,9 @@ const SECTIONS: Section[] = [
   { id: 'contact',        label: 'Contact',observeIds: ['contact'] },
 ];
 
-const scrollDuration = 0.38;
-const navigationSettleMs = 500;
+const scrollDuration = 0.85;
+const navigationSettleMs = 900;
+const easeOutQuint = (x: number): number => 1 - Math.pow(1 - x, 5);
 
 function SectionNav() {
   const lenis = useLenis();
@@ -146,7 +147,7 @@ function SectionNav() {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (id === 'hero') {
       if (lenis) {
-        lenis.scrollTo(0, { duration: scrollDuration, immediate: reduce });
+        lenis.scrollTo(0, { duration: scrollDuration, immediate: reduce, easing: easeOutQuint });
       } else {
         window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
       }
@@ -158,7 +159,7 @@ function SectionNav() {
         return;
       }
       if (lenis) {
-        lenis.scrollTo(el, { duration: scrollDuration, immediate: reduce });
+        lenis.scrollTo(el, { duration: scrollDuration, immediate: reduce, easing: easeOutQuint });
       } else {
         el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
       }
@@ -177,7 +178,7 @@ function SectionNav() {
   const scrollToTop = () => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (lenis) {
-      lenis.scrollTo(0, { duration: scrollDuration, immediate: reduce });
+      lenis.scrollTo(0, { duration: scrollDuration, immediate: reduce, easing: easeOutQuint });
     } else {
       window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
     }

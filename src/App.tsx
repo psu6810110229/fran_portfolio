@@ -33,7 +33,7 @@ function App() {
     window.matchMedia('(hover: hover) and (pointer: fine)').matches
   ));
   const [theme, setTheme] = useState<Theme>(getCurrentTheme);
-  const useSmoothScroll = hasFinePointer && !shouldReduceMotion;
+  const useSmoothScroll = !shouldReduceMotion;
 
   useEffect(() => {
     const pointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -104,6 +104,7 @@ function App() {
           options={{
             autoRaf: true,
             smoothWheel: true,
+            syncTouch: false,
             lerp: scrollLerp,
             anchors: {
               duration: scrollDuration,
