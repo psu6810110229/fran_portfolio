@@ -34,30 +34,6 @@
   margin: 0 auto;
 }
 
-.secHeader {
-  display: flex;
-  align-items: center;
-  align-self: stretch;
-  gap: 12px;
-}
-
-.secTitle {
-  font-family: var(--font-heading);
-  font-size: 11px;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-}
-
-.secLine {
-  display: block;
-  flex: 1;
-  height: 1px;
-  background: var(--color-border-soft);
-}
-
 .heading {
   font-family: var(--font-heading);
   font-size: var(--font-size-2xl);
@@ -74,14 +50,8 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   margin-top: calc(var(--space-1) * -1);
+  margin-bottom: var(--space-4);
   white-space: pre-line;
-}
-
-.divider {
-  width: 100%;
-  border: none;
-  border-top: 0.5px solid var(--color-border-soft);
-  margin: var(--space-2) 0;
 }
 
 /* ── Form ── */
@@ -107,12 +77,18 @@
 
 .fieldGroup label {
   font-size: var(--font-size-xs);
+  font-weight: 600;
   color: var(--color-text-dim);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  transition: color 0.2s ease;
 }
 
-/* Underline-only inputs */
+.fieldGroup:focus-within label {
+  color: var(--color-accent);
+}
+
+/* Underline-only inputs with smooth transition */
 .fieldGroup input,
 .fieldGroup textarea {
   width: 100%;
@@ -123,8 +99,14 @@
   color: var(--color-text);
   font: inherit;
   font-size: var(--font-size-base);
-  padding: 8px 2px;
+  padding: 10px 2px;
   outline: none;
+  transition: border-color 0.25s ease;
+}
+
+.fieldGroup input:hover,
+.fieldGroup textarea:hover {
+  border-bottom-color: var(--color-text-muted);
 }
 
 .fieldGroup input:focus,
@@ -148,20 +130,21 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  margin-top: var(--space-2);
+  margin-top: var(--space-4);
 }
 
 .btnPrimary {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 28px;
+  padding: 12px 32px;
   background: var(--color-accent);
-  color: #fdf8f4;
-  border-radius: 12px;
+  color: #ffffff;
+  border-radius: var(--radius-lg);
   font-size: var(--font-size-base);
-  font-weight: 500;
+  font-weight: 600;
   align-self: flex-start;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
 .btnPrimary:hover {
@@ -170,29 +153,33 @@
 
 .btnPrimary:disabled {
   cursor: not-allowed;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .inlineLinks {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
 .socialButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   border-radius: var(--radius-full);
-  background: transparent;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
   color: var(--color-text-muted);
   flex: 0 0 auto;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .socialButton:hover {
-  background: var(--color-surface-alt);
+  background: var(--color-surface);
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
 }
 
 .socialIcon {

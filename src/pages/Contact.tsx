@@ -97,13 +97,8 @@ function Contact() {
     >
       <div className={styles.cta}>
         <div className={styles.inner}>
-          <div className={styles.secHeader}>
-            <span className={styles.secTitle}>{c.secTitle}</span>
-            <span className={styles.secLine} aria-hidden="true" />
-          </div>
           <h2 className={styles.heading}>{c.heading}</h2>
           <p className={styles.sub}>{c.sub}</p>
-          <hr className={styles.divider} aria-hidden="true" />
 
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.nameRow}>
