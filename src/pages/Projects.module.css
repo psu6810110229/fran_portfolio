@@ -170,6 +170,22 @@
     transform 180ms ease;
 }
 
+.bentoMain::after,
+.bentoRole::after,
+.bentoShot::after,
+.bentoStats::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.12), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 38%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
 /* Lift transform lives in the motion whileHover prop (Projects.tsx), so the
    entrance animation's inline transform can't fight a CSS :hover transform.
    CSS keeps the border + shadow half of the gesture. */
@@ -184,11 +200,25 @@
 .bentoStats:focus-within {
   border-color: #36302a;
   box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.3),
-    0 18px 44px rgba(0, 0, 0, 0.38),
-    0 40px 90px rgba(0, 0, 0, 0.26),
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    0 28px 72px rgba(0, 0, 0, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
   z-index: 2;
+}
+
+.bentoMain:hover::after,
+.bentoRole:hover::after,
+.bentoShot:hover::after,
+.bentoStats:hover::after,
+.bentoMain.intentActive::after,
+.bentoRole.intentActive::after,
+.bentoShot.intentActive::after,
+.bentoStats.intentActive::after,
+.bentoMain:focus-within::after,
+.bentoRole:focus-within::after,
+.bentoShot:focus-within::after,
+.bentoStats:focus-within::after {
+  opacity: 1;
 }
 
 .bentoMain {
@@ -216,14 +246,14 @@
   object-fit: cover;
   object-position: top;
   transform-origin: top center;
-  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
 .bentoMain:hover .bentoHeroImg,
 .bentoMain.intentActive .bentoHeroImg,
 .bentoMain:focus-within .bentoHeroImg {
-  transform: scale(1.035);
+  transform: scale(1.03);
 }
 
 /* Preview video: sits over the hero image, crossfades in once armed + active */
@@ -506,14 +536,14 @@
   object-fit: cover;
   object-position: top;
   transform-origin: top center;
-  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
 .bentoShot:hover .bentoShotImg,
 .bentoShot.intentActive .bentoShotImg,
 .bentoShot:focus-within .bentoShotImg {
-  transform: scale(1.035);
+  transform: scale(1.03);
 }
 
 .bentoStats {
@@ -541,26 +571,32 @@
     transform 180ms ease;
 }
 
-/* The stats panel keeps its ember border and inner highlight on hover —
-   only the lift + deeper shadow change. */
 .bentoStats:hover,
 .bentoStats:focus-within {
   border-color: #d4651a;
   box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.3),
-    0 18px 44px rgba(0, 0, 0, 0.38),
-    0 40px 90px rgba(0, 0, 0, 0.26),
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    0 28px 72px rgba(0, 0, 0, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .bentoStat {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
   justify-content: center;
   min-width: 0;
+  min-height: 72px;
   text-align: center;
-  transition: gap 180ms ease;
+}
+
+.bentoStatHead {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  text-align: center;
 }
 
 .bentoStatNum {
@@ -576,55 +612,6 @@
   font-weight: 700;
   line-height: 1.2;
   color: #ffffff;
-}
-
-.bentoStatBody {
-  display: flex;
-  flex-direction: column;
-  grid-column: 2;
-  gap: 2px;
-  max-height: 0;
-  overflow: hidden;
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #ffffff;
-  opacity: 0;
-  text-align: left;
-  transform: translateX(-4px);
-  transition:
-    max-height 180ms ease,
-    opacity 180ms ease,
-    transform 180ms ease;
-}
-
-.bentoStats.intentActive .bentoStat,
-.bentoStats:focus-within .bentoStat {
-  display: grid;
-  grid-template-columns: 42px minmax(0, 1fr);
-  column-gap: 10px;
-  align-items: start;
-  text-align: left;
-}
-
-.bentoStats.intentActive .bentoStatNum,
-.bentoStats:focus-within .bentoStatNum {
-  grid-row: 1 / 3;
-  text-align: left;
-}
-
-.bentoStats.intentActive .bentoStatLabel,
-.bentoStats:focus-within .bentoStatLabel {
-  grid-column: 2;
-  font-size: 14px;
-  text-align: left;
-}
-
-.bentoStats.intentActive .bentoStatBody,
-.bentoStats:focus-within .bentoStatBody {
-  max-height: 54px;
-  opacity: 1;
-  transform: translateX(0);
 }
 
 .bentoBottom {
@@ -846,9 +833,8 @@
 :global([data-theme="light"]) .bentoShot:focus-within {
   border-color: #d4c8bc;
   box-shadow:
-    0 2px 4px rgba(84, 62, 44, 0.1),
-    0 18px 44px rgba(84, 62, 44, 0.14),
-    0 40px 90px rgba(84, 62, 44, 0.1),
+    0 20px 40px rgba(84, 62, 44, 0.08),
+    0 28px 72px rgba(84, 62, 44, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
@@ -864,9 +850,8 @@
 :global([data-theme="light"]) .bentoStats:focus-within {
   border-color: #d4651a;
   box-shadow:
-    0 2px 4px rgba(84, 62, 44, 0.14),
-    0 18px 44px rgba(84, 62, 44, 0.2),
-    0 40px 90px rgba(84, 62, 44, 0.12),
+    0 20px 40px rgba(84, 62, 44, 0.08),
+    0 28px 72px rgba(84, 62, 44, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
@@ -980,6 +965,36 @@
     min-height: 325px;
   }
 
+  :global(#project-9tours) .bentoTopRow,
+  :global(#project-go-out) .bentoTopRow,
+  :global(#project-9tours) .bentoTopRowMainIntent,
+  :global(#project-9tours) .bentoTopRowRoleIntent,
+  :global(#project-go-out) .bentoTopRowMainIntent,
+  :global(#project-go-out) .bentoTopRowRoleIntent,
+  :global(#project-9tours) .bentoTopRow:has(.bentoMain:focus-within),
+  :global(#project-9tours) .bentoTopRow:has(.bentoRole:focus-within),
+  :global(#project-go-out) .bentoTopRow:has(.bentoMain:focus-within),
+  :global(#project-go-out) .bentoTopRow:has(.bentoRole:focus-within) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+
+  :global(#project-9tours) .bentoMediaRow,
+  :global(#project-go-out) .bentoMediaRow,
+  :global(#project-9tours) .bentoMediaRowBookingIntent,
+  :global(#project-9tours) .bentoMediaRowAdminIntent,
+  :global(#project-9tours) .bentoMediaRowStatsIntent,
+  :global(#project-go-out) .bentoMediaRowBookingIntent,
+  :global(#project-go-out) .bentoMediaRowAdminIntent,
+  :global(#project-go-out) .bentoMediaRowStatsIntent,
+  :global(#project-9tours) .bentoMediaRow:has(.bentoShot1:focus-within),
+  :global(#project-9tours) .bentoMediaRow:has(.bentoShot2:focus-within),
+  :global(#project-go-out) .bentoMediaRow:has(.bentoShot1:focus-within),
+  :global(#project-go-out) .bentoMediaRow:has(.bentoShot2:focus-within) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(120px, 0.48fr);
+    height: 325px;
+    min-height: 325px;
+  }
+
   .bentoTopRow > *,
   .bentoMediaRow > * {
     min-width: 0;
@@ -1011,107 +1026,36 @@
     grid-column: auto;
     align-self: stretch;
     grid-template-columns: 1fr;
-    align-content: center;
+    align-content: stretch;
     gap: 14px;
     height: 100%;
     min-height: 100%;
     padding: 22px 20px;
   }
 
-  /* Hover: spread the rows to the top/bottom edges so each row's 4-line
-     subtext has room and never clips. */
-  .bentoStats.intentActive,
-  .bentoStats:focus-within {
-    align-content: space-between;
-  }
-
+  /* Keep each stat cell locked in place; the copy swaps inside the cell
+     instead of reflowing the whole orange panel. */
   .bentoStats .bentoStat {
-    display: grid;
-    grid-template-columns: auto 0fr;
-    align-items: center;
-    justify-content: center;
-    column-gap: 0;
-    transition:
-      grid-template-columns 380ms cubic-bezier(0.22, 1, 0.36, 1),
-      column-gap 380ms cubic-bezier(0.22, 1, 0.36, 1),
-      justify-content 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    min-height: 0;
+    flex: 1;
   }
 
-  /* Fixed width keeps the auto track constant between rest and expanded, so
-     every row's detail column starts at the same x. */
   .bentoStatHead {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 4px;
-    width: 104px;
-    text-align: center;
-    transition: align-items 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    width: 100%;
+    padding: 0 6px;
   }
 
   .bentoStats .bentoStatNum {
-    grid-row: auto;
-    grid-column: auto;
     font-size: 33px;
     line-height: 1;
-    text-align: inherit;
-    transition: font-size 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    text-align: center;
   }
 
   .bentoStats .bentoStatLabel {
-    grid-row: auto;
-    grid-column: auto;
     font-size: 15px;
     line-height: 1.25;
-    text-align: inherit;
-  }
-
-  .bentoStats .bentoStatBody {
-    display: flex;
-    flex-direction: column;
-    grid-column: 2;
-    gap: 2px;
-    align-self: center;
-    max-height: 0;
-    margin: 0;
-    overflow: hidden;
-    font-size: 13px;
-    line-height: 1.45;
-    text-align: left;
-    opacity: 0;
-    transform: translateX(10px);
-    transition:
-      max-height 380ms cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 260ms ease,
-      transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  /* Reveal */
-  .bentoStats.intentActive .bentoStat,
-  .bentoStats:focus-within .bentoStat {
-    grid-template-columns: auto minmax(0, 1fr);
-    justify-content: start;
-    column-gap: 12px;
-  }
-
-  .bentoStats.intentActive .bentoStatHead,
-  .bentoStats:focus-within .bentoStatHead {
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .bentoStats.intentActive .bentoStatNum,
-  .bentoStats:focus-within .bentoStatNum {
-    font-size: 23px;
-  }
-
-  /* 320px covers the worst-case wrapped EN detail on narrow tablets;
-     >=1280px tightens it back to 9em for the slower, premium glide. */
-  .bentoStats.intentActive .bentoStatBody,
-  .bentoStats:focus-within .bentoStatBody {
-    max-height: 320px;
-    opacity: 1;
-    transform: translateX(0);
+    text-align: center;
   }
 
   .bentoMain {

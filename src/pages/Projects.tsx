@@ -269,20 +269,20 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'Backend built by the team',
-            th: 'backend ที่ทีมสร้าง',
+            en: 'Team-built backend',
+            th: 'ทีมพัฒนา Backend ร่วมกัน',
           },
           {
-            en: 'Across 14 NestJS modules',
-            th: 'ครอบคลุม 14 โมดูล NestJS',
+            en: '14 NestJS modules',
+            th: 'วางโครงสร้าง 14 โมดูล (NestJS)',
           },
           {
             en: 'Booking, payments, auth',
-            th: 'การจอง จ่ายเงิน ล็อกอิน',
+            th: 'ระบบจอง, จ่ายเงิน, และ Auth',
           },
           {
-            en: 'I built parts of the API',
-            th: 'ผมลงมือทำ API บางส่วน',
+            en: 'Owned booking APIs',
+            th: 'รับผิดชอบ API ฝั่งการจอง',
           },
         ],
       },
@@ -294,19 +294,19 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'Cover the whole system',
+            en: 'Full-system coverage',
             th: 'ครอบคลุมทั้งระบบ',
           },
           {
-            en: 'Run in CI on every push',
+            en: 'CI on every push',
             th: 'รันใน CI ทุกครั้งที่ push',
           },
           {
-            en: 'Guard the booking logic',
+            en: 'Protects booking logic',
             th: 'ป้องกัน logic การจอง',
           },
           {
-            en: 'Catch breakage before merge',
+            en: 'Catches breakage early',
             th: 'จับบั๊กก่อน merge',
           },
         ],
@@ -319,19 +319,19 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'Front-end screens I led',
+            en: 'Led front-end screens',
             th: 'หน้า front-end ที่ผมดูแล',
           },
           {
-            en: 'Plus a 10-page admin side',
+            en: '10 admin pages',
             th: 'พร้อมฝั่ง admin 10 หน้า',
           },
           {
-            en: 'Browse, book, confirm flow',
+            en: 'Browse to confirm flow',
             th: 'flow ดู จอง ยืนยัน',
           },
           {
-            en: 'From wireframe to build',
+            en: 'Wireframe to build',
             th: 'ตั้งแต่ wireframe ถึงจริง',
           },
         ],
@@ -517,15 +517,15 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'Designed for small groups.',
+            en: 'For small group savings',
             th: 'ออกแบบสำหรับกลุ่มเล็ก',
           },
           {
-            en: 'Shared goal, separate buckets.',
+            en: 'Shared goal, separate buckets',
             th: 'เป้าหมายร่วมกัน buckets แยกกัน',
           },
           {
-            en: 'Progress without bank access.',
+            en: 'No bank access required',
             th: 'ติดตามได้โดยไม่เข้าถึงธนาคาร',
           },
         ],
@@ -538,15 +538,15 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'Recorded deposits.',
+            en: 'Recorded deposits',
             th: 'เงินที่บันทึก',
           },
           {
-            en: 'Verified balance.',
+            en: 'Verified balance',
             th: 'เงินที่ยืนยันแล้ว',
           },
           {
-            en: 'Planned balance.',
+            en: 'Planned balance',
             th: 'เงินตามแผน',
           },
         ],
@@ -559,15 +559,15 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'React and Vite.',
+            en: 'React and Vite',
             th: 'React และ Vite',
           },
           {
-            en: 'PWA and Capacitor.',
+            en: 'PWA and Capacitor',
             th: 'PWA และ Capacitor',
           },
           {
-            en: 'Supabase backend.',
+            en: 'Supabase backend',
             th: 'backend บน Supabase',
           },
         ],
@@ -592,7 +592,10 @@ const getIntentKey = (showcaseKey: string, intent: BentoIntent) => `${showcaseKe
    rows stagger their cells. One easing family across the section. */
 const bentoEase = [0.22, 1, 0.36, 1] as const;
 
-const liftHover = { y: -3, transition: { duration: 0.18, ease: 'easeOut' as const } };
+const liftHover = {
+  y: -4,
+  transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] as const },
+};
 
 interface StatNumberProps {
   value: string;
@@ -1004,11 +1007,8 @@ function Projects() {
                 })}
 
                 <motion.div
-                  className={joinClasses(styles.bentoStats, isActive('stats') ? styles.intentActive : '')}
+                  className={styles.bentoStats}
                   whileHover={liftHover}
-                  onPointerEnter={handleIntentEnter(showcaseKey, 'stats')}
-                  onPointerMove={handleIntentMove(showcaseKey, 'stats')}
-                  onPointerLeave={handleIntentLeave(showcaseKey, 'stats')}
                 >
                   {showcase.stats.map((stat) => (
                     <div key={`${stat.number}-${L(stat.label, lang)}`} className={styles.bentoStat}>
@@ -1016,9 +1016,6 @@ function Projects() {
                         <StatNumber value={stat.number} className={styles.bentoStatNum} />
                         <span className={styles.bentoStatLabel}>{L(stat.label, lang)}</span>
                       </div>
-                      <p className={styles.bentoStatBody}>
-                        {stat.details.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
-                      </p>
                     </div>
                   ))}
                 </motion.div>
