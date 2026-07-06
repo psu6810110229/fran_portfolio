@@ -69,10 +69,11 @@ interface ShowcaseConfig {
   mainDetails: [Localized, Localized, Localized];
   roleLabel: Localized;
   roleTitle: Localized;
-  rolePoints: [Localized, Localized, Localized];
+  rolePoints: Localized[];
   roleDetailHeader: Localized;
   roleDetails: [Localized, Localized, Localized];
   roleFacts: [BentoFactConfig, BentoFactConfig, BentoFactConfig, BentoFactConfig];
+  keyEngineering: BentoKeyEngineeringConfig;
   heroOverride?: string;
   shots: [BentoShotConfig, BentoShotConfig];
   stats: [BentoStatConfig, BentoStatConfig, BentoStatConfig];
@@ -83,6 +84,11 @@ interface ShowcaseConfig {
 interface BentoFactConfig {
   label: Localized;
   value: Localized;
+}
+
+interface BentoKeyEngineeringConfig {
+  headline: Localized;
+  detail: Localized;
 }
 
 interface PointerSample {
@@ -206,6 +212,16 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
       },
     ],
+    keyEngineering: {
+      headline: {
+        en: 'Every tour booking tap resolves for real.',
+        th: 'จองทัวร์ติดจริงทุกแตะ.',
+      },
+      detail: {
+        en: 'Real-time architecture that fixes race conditions so users can trust the booking state within seconds.',
+        th: 'สถาปัตยกรรม Real-time ที่แก้ไข Race Condition เพื่อความเชื่อมั่นของผู้ใช้ระดับวินาที.',
+      },
+    },
     shots: [
       {
         label: {
@@ -269,20 +285,20 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'Backend built by the team',
-            th: 'backend ที่ทีมสร้าง',
+            en: 'Team-built backend',
+            th: 'ทีมพัฒนา Backend ร่วมกัน',
           },
           {
-            en: 'Across 14 NestJS modules',
-            th: 'ครอบคลุม 14 โมดูล NestJS',
+            en: '14 NestJS modules',
+            th: 'วางโครงสร้าง 14 โมดูล (NestJS)',
           },
           {
             en: 'Booking, payments, auth',
-            th: 'การจอง จ่ายเงิน ล็อกอิน',
+            th: 'ระบบจอง, จ่ายเงิน, และ Auth',
           },
           {
-            en: 'I built parts of the API',
-            th: 'ผมลงมือทำ API บางส่วน',
+            en: 'Owned booking APIs',
+            th: 'รับผิดชอบ API ฝั่งการจอง',
           },
         ],
       },
@@ -294,19 +310,19 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'Cover the whole system',
+            en: 'Full-system coverage',
             th: 'ครอบคลุมทั้งระบบ',
           },
           {
-            en: 'Run in CI on every push',
+            en: 'CI on every push',
             th: 'รันใน CI ทุกครั้งที่ push',
           },
           {
-            en: 'Guard the booking logic',
+            en: 'Protects booking logic',
             th: 'ป้องกัน logic การจอง',
           },
           {
-            en: 'Catch breakage before merge',
+            en: 'Catches breakage early',
             th: 'จับบั๊กก่อน merge',
           },
         ],
@@ -319,19 +335,19 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'Front-end screens I led',
+            en: 'Led front-end screens',
             th: 'หน้า front-end ที่ผมดูแล',
           },
           {
-            en: 'Plus a 10-page admin side',
+            en: '10 admin pages',
             th: 'พร้อมฝั่ง admin 10 หน้า',
           },
           {
-            en: 'Browse, book, confirm flow',
+            en: 'Browse to confirm flow',
             th: 'flow ดู จอง ยืนยัน',
           },
           {
-            en: 'From wireframe to build',
+            en: 'Wireframe to build',
             th: 'ตั้งแต่ wireframe ถึงจริง',
           },
         ],
@@ -394,6 +410,14 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         en: 'Show progress without connecting to real bank accounts',
         th: 'เห็นความคืบหน้าโดยไม่ต้องเชื่อมต่อบัญชีธนาคารจริง',
       },
+      {
+        en: 'Keep each update traceable in a shared history',
+        th: 'เก็บทุกการอัปเดตให้ตรวจสอบย้อนหลังได้ในประวัติร่วม',
+      },
+      {
+        en: 'Sync progress across devices in real time',
+        th: 'ซิงก์ความคืบหน้าข้ามอุปกรณ์แบบเรียลไทม์',
+      },
     ],
     roleDetailHeader: {
       en: 'Builder note',
@@ -455,6 +479,16 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
       },
     ],
+    keyEngineering: {
+      headline: {
+        en: 'Savings stays smooth everywhere.',
+        th: 'ออมเงินได้ลื่นไหลทุกที่.',
+      },
+      detail: {
+        en: 'Offline-first PWA architecture with real-time Supabase sync for a tracker that keeps up across devices.',
+        th: 'สถาปัตยกรรม PWA แบบ Offline-first และ Real-time Sync ผ่าน Supabase สำหรับแอปติดตามออมเงินที่ตามทันทุกอุปกรณ์.',
+      },
+    },
     shots: [
       {
         label: {
@@ -517,15 +551,15 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'Designed for small groups.',
+            en: 'For small group savings',
             th: 'ออกแบบสำหรับกลุ่มเล็ก',
           },
           {
-            en: 'Shared goal, separate buckets.',
+            en: 'Shared goal, separate buckets',
             th: 'เป้าหมายร่วมกัน buckets แยกกัน',
           },
           {
-            en: 'Progress without bank access.',
+            en: 'No bank access required',
             th: 'ติดตามได้โดยไม่เข้าถึงธนาคาร',
           },
         ],
@@ -538,15 +572,15 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'Recorded deposits.',
+            en: 'Recorded deposits',
             th: 'เงินที่บันทึก',
           },
           {
-            en: 'Verified balance.',
+            en: 'Verified balance',
             th: 'เงินที่ยืนยันแล้ว',
           },
           {
-            en: 'Planned balance.',
+            en: 'Planned balance',
             th: 'เงินตามแผน',
           },
         ],
@@ -559,15 +593,15 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
         details: [
           {
-            en: 'React and Vite.',
+            en: 'React and Vite',
             th: 'React และ Vite',
           },
           {
-            en: 'PWA and Capacitor.',
+            en: 'PWA and Capacitor',
             th: 'PWA และ Capacitor',
           },
           {
-            en: 'Supabase backend.',
+            en: 'Supabase backend',
             th: 'backend บน Supabase',
           },
         ],
@@ -592,22 +626,10 @@ const getIntentKey = (showcaseKey: string, intent: BentoIntent) => `${showcaseKe
    rows stagger their cells. One easing family across the section. */
 const bentoEase = [0.22, 1, 0.36, 1] as const;
 
-const articleVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+const liftHover = {
+  y: -4,
+  transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] as const },
 };
-
-const rowVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09 } },
-};
-
-const cellVariants = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: bentoEase } },
-};
-
-const liftHover = { y: -3, transition: { duration: 0.18, ease: 'easeOut' as const } };
 
 interface StatNumberProps {
   value: string;
@@ -964,13 +986,11 @@ function Projects() {
                   <ul className={styles.bentoRoleList}>
                     {showcase.rolePoints.map((point) => <li key={L(point, lang)}>{L(point, lang)}</li>)}
                   </ul>
-                  <div className={styles.bentoFactGrid}>
-                    {showcase.roleFacts.map((fact) => (
-                      <span key={L(fact.label, lang)} className={styles.bentoFact}>
-                        <span className={styles.bentoFactLabel}>{L(fact.label, lang)}</span>
-                        <span className={styles.bentoFactValue}>{L(fact.value, lang)}</span>
-                      </span>
-                    ))}
+                  <div className={styles.bentoKeyEngineering}>
+                    <div className={styles.bentoKeyCopy}>
+                      <p className={styles.bentoKeyHeadline}>{L(showcase.keyEngineering.headline, lang)}</p>
+                      <p className={styles.bentoKeyDetail}>{L(showcase.keyEngineering.detail, lang)}</p>
+                    </div>
                   </div>
                   <div className={styles.bentoDetail}>
                     <span className={styles.bentoDetailHeader}>{L(showcase.roleDetailHeader, lang)}</span>
@@ -1019,11 +1039,8 @@ function Projects() {
                 })}
 
                 <motion.div
-                  className={joinClasses(styles.bentoStats, isActive('stats') ? styles.intentActive : '')}
+                  className={styles.bentoStats}
                   whileHover={liftHover}
-                  onPointerEnter={handleIntentEnter(showcaseKey, 'stats')}
-                  onPointerMove={handleIntentMove(showcaseKey, 'stats')}
-                  onPointerLeave={handleIntentLeave(showcaseKey, 'stats')}
                 >
                   {showcase.stats.map((stat) => (
                     <div key={`${stat.number}-${L(stat.label, lang)}`} className={styles.bentoStat}>
@@ -1031,9 +1048,6 @@ function Projects() {
                         <StatNumber value={stat.number} className={styles.bentoStatNum} />
                         <span className={styles.bentoStatLabel}>{L(stat.label, lang)}</span>
                       </div>
-                      <p className={styles.bentoStatBody}>
-                        {stat.details.map((detail) => <span key={L(detail, lang)}>{L(detail, lang)}</span>)}
-                      </p>
                     </div>
                   ))}
                 </motion.div>
