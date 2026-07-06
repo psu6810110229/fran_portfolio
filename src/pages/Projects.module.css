@@ -127,9 +127,6 @@
   font-weight: 400;
   line-height: 1.65;
   color: #c0b2a4;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 :global([data-lang="th"]) .bentoHeading {
@@ -980,12 +977,12 @@
 
   .bentoTopRow {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    height: 318px;
+    min-height: 318px;
   }
 
   .bentoTopRow > .bentoMain,
   .bentoTopRow > .bentoRole {
-    height: 100%;
+    min-height: 100%;
   }
 
   .bentoTopRowMainIntent,
@@ -1001,7 +998,7 @@
   .bentoMediaRow {
     align-items: stretch;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(120px, 0.48fr);
-    height: 325px;
+    min-height: 325px;
   }
 
   .bentoMediaRowBookingIntent,
@@ -1019,7 +1016,6 @@
      tablets where the detail lines wrap; a fixed 325px would clip them. */
   .bentoMediaRowStatsIntent {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) minmax(220px, 0.9fr);
-    height: auto;
     min-height: 325px;
   }
 
@@ -1049,7 +1045,6 @@
   :global(#project-go-out) .bentoMediaRow:has(.bentoShot1:focus-within),
   :global(#project-go-out) .bentoMediaRow:has(.bentoShot2:focus-within) {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(120px, 0.48fr);
-    height: 325px;
     min-height: 325px;
   }
 
@@ -1098,7 +1093,6 @@
   :global(#project-9tours) .bentoRole,
   :global(#project-go-out) .bentoRole {
     gap: 11px;
-    overflow: hidden;
     padding: 20px 22px;
   }
 
@@ -1227,7 +1221,6 @@
     grid-template-columns: 1fr;
     align-content: stretch;
     gap: 14px;
-    height: 100%;
     min-height: 100%;
     padding: 22px 20px;
   }
@@ -1280,6 +1273,104 @@
 
   .cardGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .bentoStandfirst {
+    max-width: 68ch;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .bentoTopRow {
+    align-items: stretch;
+    min-height: 0;
+  }
+
+  .bentoTopRow > .bentoMain,
+  .bentoTopRow > .bentoRole {
+    min-height: 0;
+  }
+
+  .bentoMediaRow,
+  .bentoMediaRowBookingIntent,
+  .bentoMediaRowAdminIntent,
+  .bentoMediaRowStatsIntent,
+  :global(#project-9tours) .bentoMediaRow,
+  :global(#project-go-out) .bentoMediaRow,
+  :global(#project-9tours) .bentoMediaRowBookingIntent,
+  :global(#project-9tours) .bentoMediaRowAdminIntent,
+  :global(#project-9tours) .bentoMediaRowStatsIntent,
+  :global(#project-go-out) .bentoMediaRowBookingIntent,
+  :global(#project-go-out) .bentoMediaRowAdminIntent,
+  :global(#project-go-out) .bentoMediaRowStatsIntent,
+  :global(#project-9tours) .bentoMediaRow:has(.bentoShot1:focus-within),
+  :global(#project-9tours) .bentoMediaRow:has(.bentoShot2:focus-within),
+  :global(#project-go-out) .bentoMediaRow:has(.bentoShot1:focus-within),
+  :global(#project-go-out) .bentoMediaRow:has(.bentoShot2:focus-within) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: 0;
+  }
+
+  .bentoStats {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    min-height: 132px;
+    padding: 22px 20px;
+  }
+
+  .bentoStats .bentoStat {
+    min-height: 78px;
+  }
+
+  .bentoBottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .bentoBadges,
+  .bentoLinks {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .bentoStandfirst {
+    max-width: 78ch;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .bentoTopRow {
+    min-height: 318px;
+  }
+
+  .bentoMediaRow,
+  .bentoMediaRowBookingIntent,
+  .bentoMediaRowAdminIntent,
+  .bentoMediaRowStatsIntent,
+  :global(#project-9tours) .bentoMediaRow,
+  :global(#project-go-out) .bentoMediaRow,
+  :global(#project-9tours) .bentoMediaRowBookingIntent,
+  :global(#project-9tours) .bentoMediaRowAdminIntent,
+  :global(#project-9tours) .bentoMediaRowStatsIntent,
+  :global(#project-go-out) .bentoMediaRowBookingIntent,
+  :global(#project-go-out) .bentoMediaRowAdminIntent,
+  :global(#project-go-out) .bentoMediaRowStatsIntent,
+  :global(#project-9tours) .bentoMediaRow:has(.bentoShot1:focus-within),
+  :global(#project-9tours) .bentoMediaRow:has(.bentoShot2:focus-within),
+  :global(#project-go-out) .bentoMediaRow:has(.bentoShot1:focus-within),
+  :global(#project-go-out) .bentoMediaRow:has(.bentoShot2:focus-within) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(210px, 0.72fr);
+    min-height: 325px;
+  }
+
+  .bentoStats {
+    min-height: 100%;
+    padding-inline: 18px;
   }
 }
 
@@ -1382,6 +1473,33 @@
      (mid-flight text wrap inflates an auto height for a split second). */
   .bentoMediaRowStatsIntent {
     height: 325px;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1366px) and (max-height: 1024px) {
+  .bentoStandfirst {
+    max-width: 82ch;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .bentoTopRow,
+  :global(#project-go-out) .bentoTopRow {
+    height: auto;
+    min-height: 318px;
+  }
+
+  .bentoTopRow > .bentoMain,
+  .bentoTopRow > .bentoRole {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .bentoMediaRow,
+  .bentoMediaRowStatsIntent {
+    height: auto;
+    min-height: 325px;
   }
 }
 
