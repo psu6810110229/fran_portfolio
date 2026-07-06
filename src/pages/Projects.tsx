@@ -69,10 +69,11 @@ interface ShowcaseConfig {
   mainDetails: [Localized, Localized, Localized];
   roleLabel: Localized;
   roleTitle: Localized;
-  rolePoints: [Localized, Localized, Localized];
+  rolePoints: Localized[];
   roleDetailHeader: Localized;
   roleDetails: [Localized, Localized, Localized];
   roleFacts: [BentoFactConfig, BentoFactConfig, BentoFactConfig, BentoFactConfig];
+  keyEngineering: BentoKeyEngineeringConfig;
   heroOverride?: string;
   shots: [BentoShotConfig, BentoShotConfig];
   stats: [BentoStatConfig, BentoStatConfig, BentoStatConfig];
@@ -83,6 +84,11 @@ interface ShowcaseConfig {
 interface BentoFactConfig {
   label: Localized;
   value: Localized;
+}
+
+interface BentoKeyEngineeringConfig {
+  headline: Localized;
+  detail: Localized;
 }
 
 interface PointerSample {
@@ -206,6 +212,16 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
       },
     ],
+    keyEngineering: {
+      headline: {
+        en: 'Every tour booking tap resolves for real.',
+        th: 'จองทัวร์ติดจริงทุกแตะ.',
+      },
+      detail: {
+        en: 'Real-time architecture that fixes race conditions so users can trust the booking state within seconds.',
+        th: 'สถาปัตยกรรม Real-time ที่แก้ไข Race Condition เพื่อความเชื่อมั่นของผู้ใช้ระดับวินาที.',
+      },
+    },
     shots: [
       {
         label: {
@@ -394,6 +410,14 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         en: 'Show progress without connecting to real bank accounts',
         th: 'เห็นความคืบหน้าโดยไม่ต้องเชื่อมต่อบัญชีธนาคารจริง',
       },
+      {
+        en: 'Keep each update traceable in a shared history',
+        th: 'เก็บทุกการอัปเดตให้ตรวจสอบย้อนหลังได้ในประวัติร่วม',
+      },
+      {
+        en: 'Sync progress across devices in real time',
+        th: 'ซิงก์ความคืบหน้าข้ามอุปกรณ์แบบเรียลไทม์',
+      },
     ],
     roleDetailHeader: {
       en: 'Builder note',
@@ -455,6 +479,16 @@ const showcaseConfigs: Record<string, ShowcaseConfig> = {
         },
       },
     ],
+    keyEngineering: {
+      headline: {
+        en: 'Savings stays smooth everywhere.',
+        th: 'ออมเงินได้ลื่นไหลทุกที่.',
+      },
+      detail: {
+        en: 'Offline-first PWA architecture with real-time Supabase sync for a tracker that keeps up across devices.',
+        th: 'สถาปัตยกรรม PWA แบบ Offline-first และ Real-time Sync ผ่าน Supabase สำหรับแอปติดตามออมเงินที่ตามทันทุกอุปกรณ์.',
+      },
+    },
     shots: [
       {
         label: {
@@ -952,13 +986,11 @@ function Projects() {
                   <ul className={styles.bentoRoleList}>
                     {showcase.rolePoints.map((point) => <li key={L(point, lang)}>{L(point, lang)}</li>)}
                   </ul>
-                  <div className={styles.bentoFactGrid}>
-                    {showcase.roleFacts.map((fact) => (
-                      <span key={L(fact.label, lang)} className={styles.bentoFact}>
-                        <span className={styles.bentoFactLabel}>{L(fact.label, lang)}</span>
-                        <span className={styles.bentoFactValue}>{L(fact.value, lang)}</span>
-                      </span>
-                    ))}
+                  <div className={styles.bentoKeyEngineering}>
+                    <div className={styles.bentoKeyCopy}>
+                      <p className={styles.bentoKeyHeadline}>{L(showcase.keyEngineering.headline, lang)}</p>
+                      <p className={styles.bentoKeyDetail}>{L(showcase.keyEngineering.detail, lang)}</p>
+                    </div>
                   </div>
                   <div className={styles.bentoDetail}>
                     <span className={styles.bentoDetailHeader}>{L(showcase.roleDetailHeader, lang)}</span>
