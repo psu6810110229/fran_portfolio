@@ -8,6 +8,7 @@ import About from './pages/About';
 import Skills from './pages/Skills';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
+import Resume from './pages/Resume/Resume';
 import { LanguageProvider } from './hooks/useLanguage';
 import SectionNav from './components/SectionNav/SectionNav';
 import styles from './App.module.css';
@@ -33,7 +34,10 @@ function App() {
   const [theme, setTheme] = useState<Theme>(getCurrentTheme);
   const useSmoothScroll = !shouldReduceMotion;
 
+  const isResumeRoute = window.location.pathname === '/resume';
+
   useEffect(() => {
+    if (isResumeRoute) return;
     const updateTheme = () => setTheme(getCurrentTheme());
     const observer = new MutationObserver(updateTheme);
 
@@ -41,7 +45,11 @@ function App() {
     updateTheme();
 
     return () => observer.disconnect();
-  }, []);
+  }, [isResumeRoute]);
+
+  if (isResumeRoute) {
+    return <Resume />;
+  }
 
   const content = (
     <LanguageProvider>

@@ -9,11 +9,13 @@ const navLinks = {
     { label: 'about', href: '#about' },
     { label: 'work', href: '#projects' },
     { label: 'contact', href: '#contact' },
+    { label: 'staff profile', href: '/resume' },
   ],
   th: [
     { label: 'เกี่ยวกับ', href: '#about' },
     { label: 'ผลงาน', href: '#projects' },
     { label: 'ติดต่อ', href: '#contact' },
+    { label: 'โปรไฟล์สต๊าฟ', href: '/resume' },
   ],
 };
 
