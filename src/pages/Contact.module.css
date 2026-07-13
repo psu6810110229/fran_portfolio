@@ -186,11 +186,9 @@
   width: 17px;
   height: 17px;
   opacity: 0.72;
-  filter: invert(82%) sepia(11%) saturate(320%) hue-rotate(345deg) brightness(92%) contrast(86%);
 }
 
 :global([data-theme="light"]) .socialIcon {
-  filter: none;
   opacity: 0.78;
 }
 
