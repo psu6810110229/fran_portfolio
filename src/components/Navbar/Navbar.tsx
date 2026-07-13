@@ -20,16 +20,22 @@ const navLinks = {
   ],
 };
 
-function DockItem({ mouseX, isDesktop, as = 'div', children, className }: { mouseX: MotionValue<number>, isDesktop: boolean, as?: 'div' | 'li', children: React.ReactNode, className?: string }) {
+function DockItem({ mouseX, mouseY, isDesktop, as = 'div', children, className }: { mouseX: MotionValue<number>, mouseY: MotionValue<number>, isDesktop: boolean, as?: 'div' | 'li', children: React.ReactNode, className?: string }) {
   const ref = useRef<any>(null);
   
-  const distance = useTransform(mouseX, (val) => {
+  const distance = useTransform(() => {
     if (!isDesktop) return Infinity;
-    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
-    return val - bounds.x - bounds.width / 2;
+    const x = mouseX.get();
+    const y = mouseY.get();
+    if (x === Infinity || y === Infinity) return Infinity;
+    
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, y: 0, width: 0, height: 0 };
+    const dx = x - (bounds.x + bounds.width / 2);
+    const dy = y - (bounds.y + bounds.height / 2);
+    return Math.sqrt(dx * dx + dy * dy);
   });
 
-  const scaleSync = useTransform(distance, [-200, 0, 200], [1, 1.3, 1]);
+  const scaleSync = useTransform(distance, [0, 200], [1.3, 1], { clamp: true });
   const scale = useSpring(scaleSync, { mass: 0.1, stiffness: 200, damping: 15 });
 
   const props = {
@@ -49,14 +55,29 @@ function Navbar() {
   const navRef = useRef<HTMLElement>(null);
   
   const mouseX = useMotionValue(Infinity);
+  const mouseY = useMotionValue(Infinity);
   const [isDesktop, setIsDesktop] = useState(true);
 
   useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
+    const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (window.innerWidth >= 768) {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+      }
+    };
+    
+    // Track globally so the dock reacts before the mouse even enters the navbar
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [mouseX, mouseY]);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -65,8 +86,6 @@ function Navbar() {
       ref={navRef} 
       className={styles.navbar} 
       aria-label="Main navigation"
-      onMouseMove={(e) => isDesktop && mouseX.set(e.pageX)}
-      onMouseLeave={() => isDesktop && mouseX.set(Infinity)}
     >
       <div className={styles.inner}>
         <a href="#hero" className={styles.logo} onClick={closeMenu}>
@@ -82,14 +101,14 @@ function Navbar() {
         <div className={styles.right}>
           <ul className={`${styles.navList} ${menuOpen ? styles.navListOpen : ''}`}>
             {navLinks[lang].map((link) => (
-              <DockItem key={link.href} mouseX={mouseX} isDesktop={isDesktop} as="li">
+              <DockItem key={link.href} mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop} as="li">
                 <a href={link.href} className={styles.navLink} onClick={closeMenu}>
                   {link.label}
                 </a>
               </DockItem>
             ))}
           </ul>
-          <DockItem mouseX={mouseX} isDesktop={isDesktop}>
+          <DockItem mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop}>
             <button
               className={styles.langToggle}
               onClick={toggleLang}
@@ -99,7 +118,7 @@ function Navbar() {
               {lang === 'en' ? 'EN' : 'TH'}
             </button>
           </DockItem>
-          <DockItem mouseX={mouseX} isDesktop={isDesktop}>
+          <DockItem mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop}>
             <button
               className={styles.themeToggle}
               onClick={toggleTheme}
