@@ -336,7 +336,7 @@
 }
 
 .aboutTitleHighlight {
-  color: var(--color-primary);
+  color: var(--color-accent);
   font-weight: 700;
 }
 
