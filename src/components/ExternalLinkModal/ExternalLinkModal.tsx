@@ -74,9 +74,9 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
         >
           <motion.div
             className={styles.modal}
-            initial={{ opacity: 0, y: 150 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 150 }}
+            initial={{ y: '100vh' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100vh' }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           >
             <div className={styles.previewCol}>
