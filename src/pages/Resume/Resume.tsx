@@ -21,7 +21,8 @@ const dictionary = {
     heroDesc: 'A Year 1 Computer Engineering student at PSU, passionate about web development and creating user-friendly digital experiences.',
     viewApp: 'Explore My Story',
     aboutBadge: 'Web Developer',
-    about1: 'Hi, I am Fran. ',
+    about1a: 'Hi, I am ',
+    about1b: 'Fran. ',
     about2: 'A Computer Engineering student ',
     about3: 'who enjoys learning new technologies and getting hands-on with real projects.',
     aboutFull: 'Currently studying Computer Engineering, which trains me to think analytically and solve problems methodically. Beyond coding, organizing events like the university Open House has helped me develop teamwork and communication skills, which I believe are just as important.',
@@ -46,9 +47,10 @@ const dictionary = {
     heroDesc: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ปี 1 ม.สงขลานครินทร์ ที่หลงใหลในการพัฒนาเว็บไซต์และชื่นชอบการสร้างประสบการณ์ที่ดีให้กับผู้ใช้งาน',
     viewApp: 'ไปกันต่อ',
     aboutBadge: 'นักพัฒนาเว็บไซต์',
-    about1: 'สวัสดีครับ ผมฟราน ',
+    about1a: 'สวัสดีครับ ',
+    about1b: 'ผมฟราน ',
     about2: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ ',
-    about3: 'ที่สนุกกับการเรียนรู้เทคโนโลยีใหม่ๆ และชอบลงมือทำโปรเจกต์จริง',
+    about3: 'ที่สนุกกับการเรียนรู้เทคโนโลยีใหม่ๆ และชอบลงมือทำโปรเจกต์',
     aboutFull: 'ปัจจุบันผมกำลังศึกษาในสาขาวิศวกรรมคอมพิวเตอร์ ซึ่งช่วยฝึกให้ผมคิดวิเคราะห์และแก้ปัญหาอย่างเป็นระบบ นอกจากเรื่องเรียนแล้ว ผมยังมีโอกาสจัดกิจกรรมอย่าง Open House ที่ช่วยฝึกทักษะการสื่อสารและการทำงานเป็นทีม ซึ่งผมมองว่าสำคัญไม่แพ้กันครับ',
     feat1: 'การเรียนรู้และพัฒนา ',
     feat2: 'การทำกิจกรรมร่วมกับทีม',
@@ -201,7 +203,8 @@ const Resume: React.FC = () => {
             key={lang}
             containerClassName={styles.aboutTitle}
             segments={[
-              { text: t.about1, className: styles.aboutTitleNormal },
+              { text: t.about1a, className: styles.aboutTitleNormal },
+              { text: t.about1b, className: styles.aboutTitleHighlight },
               { text: t.about2, className: styles.aboutTitleItalic },
               { text: t.about3, className: styles.aboutTitleNormal },
             ]}
