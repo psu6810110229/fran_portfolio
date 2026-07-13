@@ -4,6 +4,7 @@ import { ArrowRight, Check } from 'lucide-react';
 import WordsPullUp from '../../components/Resume/WordsPullUp';
 import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle';
 import AnimatedLetter from '../../components/Resume/AnimatedLetter';
+import ScrollReveal from '../../components/ScrollReveal/ScrollReveal';
 import Magnet from '../../components/Magnet/Magnet';
 import Contact from '../../pages/Contact';
 import { useLanguage } from '../../hooks/useLanguage';
@@ -73,10 +74,8 @@ const Resume: React.FC = () => {
   const aboutRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: aboutRef,
-    offset: ['start 0.8', 'end 0.2'],
+    offset: ['start 80%', 'end center'],
   });
-
-  const chars = t.aboutFull.split('');
 
   const cardVariants = {
     hidden: { scale: 0.95, opacity: 0 },
@@ -195,13 +194,15 @@ const Resume: React.FC = () => {
             ]}
           />
 
-          <p ref={aboutRef} className={styles.aboutRevealText}>
-            {chars.map((char, i) => (
-              <AnimatedLetter key={i} progress={scrollYProgress} charProgress={i / chars.length}>
-                {char}
-              </AnimatedLetter>
-            ))}
-          </p>
+          <ScrollReveal
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={5}
+            blurStrength={10}
+            textClassName={styles.aboutRevealText}
+          >
+            {t.aboutFull}
+          </ScrollReveal>
         </div>
       </section>
 
