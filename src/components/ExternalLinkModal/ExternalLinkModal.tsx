@@ -77,7 +77,7 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
             initial={{ y: '100vh' }}
             animate={{ y: 0 }}
             exit={{ y: '100vh' }}
-            transition={{ type: 'spring', damping: 22, stiffness: 260, mass: 0.8 }}
+            transition={{ type: 'spring', damping: 16, stiffness: 140, mass: 1 }}
           >
             <div className={styles.previewCol}>
               <img src={contentData[type].preview} alt={`${type} preview`} className={styles.previewImage} />
