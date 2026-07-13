@@ -72,11 +72,11 @@ const contentData = {
     preview: '/previews/facebook.png',
     en: {
       title: 'Visit Facebook',
-      desc: 'My personal social media profile, primarily used for keeping up with general news, connecting with friends, and sharing casual day-to-day updates.',
+      desc: 'My personal social media profile, primarily used for keeping up with general news, posting personal updates, and sharing casual day-to-day moments.',
     },
     th: {
       title: 'เยี่ยมชม Facebook',
-      desc: 'หน้าโปรไฟล์โซเชียลมีเดียส่วนตัวของผม สำหรับใช้ติดตามข่าวสารทั่วไป พูดคุยกับเพื่อนฝูง และแชร์เรื่องราวต่างๆ ในชีวิตประจำวัน',
+      desc: 'หน้าโปรไฟล์โซเชียลมีเดียส่วนตัวของผม สำหรับใช้ติดตามข่าวสารทั่วไป อัปเดตความเคลื่อนไหว และแชร์เรื่องราวต่างๆ ในชีวิตประจำวัน',
     },
   },
 };
