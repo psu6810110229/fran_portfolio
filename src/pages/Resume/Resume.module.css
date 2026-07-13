@@ -325,7 +325,7 @@
 .aboutTitle {
   font-family: var(--font-heading);
   font-size: clamp(1.5rem, 4vw, 3.75rem);
-  line-height: 1.1;
+  line-height: 1.4;
   max-width: 56rem;
   margin: 0 auto 3rem auto;
   color: var(--color-text);
