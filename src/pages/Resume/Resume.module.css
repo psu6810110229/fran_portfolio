@@ -326,7 +326,7 @@
   font-family: var(--font-heading);
   font-size: clamp(1.875rem, 5vw, 4.5rem);
   line-height: 1.1;
-  max-width: 48rem;
+  max-width: 56rem;
   margin: 0 auto 3rem auto;
   color: var(--color-text);
 }

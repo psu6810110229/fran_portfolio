@@ -195,9 +195,7 @@ const Resume: React.FC = () => {
       {/* SECTION 2: ABOUT */}
       <section id="about" className={styles.aboutSection}>
         <div className={styles.aboutInner}>
-          <span className={styles.aboutBadge}>
-            {t.aboutBadge}
-          </span>
+
           
           <WordsPullUpMultiStyle
             key={lang}
