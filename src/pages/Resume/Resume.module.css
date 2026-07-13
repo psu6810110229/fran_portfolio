@@ -65,6 +65,8 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
+  width: max-content;
+  max-width: calc(100% - var(--space-8));
 }
 
 .navBar {
@@ -77,8 +79,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100vw;
-  max-width: 900px;
+  gap: var(--space-8);
+  width: 100%;
 }
 
 .navLinks {
