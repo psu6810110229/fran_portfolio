@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import styles from './WordsPullUpMultiStyle.module.css';
 
 interface TextSegment {
   text: string;
@@ -34,7 +35,6 @@ const WordsPullUpMultiStyle: React.FC<WordsPullUpMultiStyleProps> = ({ segments,
     },
   };
 
-  // Flatten segments into individual words with their respective classNames
   const wordsWithStyles = segments.flatMap((segment) =>
     segment.text.split(' ').map((word) => ({ word, className: segment.className || '' }))
   );
@@ -45,13 +45,13 @@ const WordsPullUpMultiStyle: React.FC<WordsPullUpMultiStyleProps> = ({ segments,
       variants={containerVariants}
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
-      className={`tw-inline-flex tw-flex-wrap tw-justify-center ${containerClassName}`}
+      className={`${styles.container} ${containerClassName}`}
     >
       {wordsWithStyles.map((item, i) => (
         <motion.span
           key={i}
           variants={wordVariants}
-          className={`tw-inline-block tw-mr-[0.25em] ${item.className}`}
+          className={`${styles.word} ${item.className}`}
         >
           {item.word}
         </motion.span>

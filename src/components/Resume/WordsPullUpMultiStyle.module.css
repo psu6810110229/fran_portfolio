@@ -1,0 +1,10 @@
+.container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.word {
+  display: inline-block;
+  margin-right: 0.25em;
+}

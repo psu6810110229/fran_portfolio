@@ -1,0 +1,26 @@
+.container {
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.word {
+  display: inline-block;
+  margin-right: 0.25em;
+}
+
+.wordWithAsterisk {
+  display: inline-block;
+  margin-right: 0.25em;
+  padding-right: 0.1em;
+}
+
+.relativeChar {
+  position: relative;
+}
+
+.asterisk {
+  position: absolute;
+  top: 0.65em;
+  right: -0.3em;
+  font-size: 0.31em;
+}

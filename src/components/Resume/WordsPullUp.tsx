@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import styles from './WordsPullUp.module.css';
 
 interface WordsPullUpProps {
   text: string;
@@ -37,29 +38,25 @@ const WordsPullUp: React.FC<WordsPullUpProps> = ({ text, className = '', showAst
       variants={containerVariants}
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
-      className={`tw-inline-flex tw-flex-wrap ${className}`}
+      className={`${styles.container} ${className}`}
     >
       {words.map((word, i) => {
         const isLastWord = i === words.length - 1;
         if (showAsterisk && isLastWord) {
-          // Find the last 'n' to put the asterisk on. For "Patcharapon" it's the last character.
           const letters = word.split('');
           return (
             <motion.span
               key={i}
               variants={wordVariants}
-              className="tw-inline-block tw-mr-[0.25em]"
-              style={{ paddingRight: '0.1em' }}
+              className={styles.wordWithAsterisk}
             >
               {letters.map((char, charIdx) => {
                 const isFinalN = charIdx === letters.length - 1 && char.toLowerCase() === 'n';
                 return (
-                  <span key={charIdx} className="tw-relative">
+                  <span key={charIdx} className={styles.relativeChar}>
                     {char}
                     {isFinalN && (
-                      <span className="tw-absolute tw-top-[0.65em] tw--right-[0.3em] tw-text-[0.31em]">
-                        *
-                      </span>
+                      <span className={styles.asterisk}>*</span>
                     )}
                   </span>
                 );
@@ -69,7 +66,7 @@ const WordsPullUp: React.FC<WordsPullUpProps> = ({ text, className = '', showAst
         }
 
         return (
-          <motion.span key={i} variants={wordVariants} className="tw-inline-block tw-mr-[0.25em]">
+          <motion.span key={i} variants={wordVariants} className={styles.word}>
             {word}
           </motion.span>
         );
