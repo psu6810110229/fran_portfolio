@@ -61,11 +61,11 @@ const contentData = {
     preview: '/previews/instagram.png',
     en: {
       title: 'Visit Instagram',
-      desc: 'Peek into my daily life, behind-the-scenes of my projects, and my passions for aquascaping and photography.',
+      desc: 'A space where I share my hobbies like photography and aquascaping, reflecting the creativity and attention to detail I apply to my development work.',
     },
     th: {
       title: 'เยี่ยมชม Instagram',
-      desc: 'แวะดูไลฟ์สไตล์ มุมมองหลังเลนส์ และงานอดิเรกของผม ไม่ว่าจะเป็นการจัดตู้ไม้น้ำหรือการถ่ายภาพ',
+      desc: 'พื้นที่แชร์งานอดิเรกอย่างการถ่ายภาพและจัดตู้ไม้น้ำ ซึ่งสะท้อนถึงความคิดสร้างสรรค์และความใส่ใจในรายละเอียดที่ผมนำมาประยุกต์ใช้กับการพัฒนาเว็บไซต์',
     },
   },
   Facebook: {
