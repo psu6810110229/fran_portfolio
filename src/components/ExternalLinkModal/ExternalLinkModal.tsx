@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './ExternalLinkModal.module.css';
 
@@ -95,6 +96,32 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
   const c = contentData[type]?.[lang] || contentData[type]?.en;
   const common = commonStrings[lang];
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Define animations based on device type
+  const mobileAnimation = {
+    initial: { y: '100vh' },
+    animate: { y: 0 },
+    exit: { y: '100vh' },
+    transition: { type: 'spring', bounce: 0.15, duration: 0.5 }
+  };
+
+  const desktopAnimation = {
+    initial: { opacity: 0, scale: 0.98 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.98 },
+    transition: { duration: 0.2, ease: 'easeOut' }
+  };
+
+  const animationProps = isMobile ? mobileAnimation : desktopAnimation;
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -103,14 +130,11 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2 }}
         >
           <motion.div
             className={styles.modal}
-            initial={{ y: '100vh' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100vh' }}
-            transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
+            {...animationProps}
           >
             <div className={styles.previewCol}>
               <img src={contentData[type].preview} alt={`${type} preview`} className={styles.previewImage} />
