@@ -17,66 +17,66 @@ const contentData = {
     preview: '/previews/email.png',
     en: {
       title: 'Send an Email',
-      desc: 'Send me a direct email via your default email client.',
+      desc: 'A direct communication channel for work inquiries or further questions. This will automatically open your device\'s default email client.',
     },
     th: {
       title: 'ส่งอีเมล',
-      desc: 'ส่งอีเมลส่วนตัวถึงผมโดยตรง',
+      desc: 'ช่องทางสำหรับติดต่อพูดคุยเรื่องงานหรือสอบถามรายละเอียดเพิ่มเติม โดยระบบจะเปิดแอปพลิเคชันอีเมลหลักในเครื่องของคุณเพื่อส่งข้อความหาผมโดยตรง',
     },
   },
   LinkedIn: {
     preview: '/previews/linkedin.png',
     en: {
       title: 'Visit LinkedIn',
-      desc: 'My professional network, education, and career updates.',
+      desc: 'A detailed view of my educational background, university activities, and a professional platform to connect and network within the industry.',
     },
     th: {
       title: 'เยี่ยมชม LinkedIn',
-      desc: 'ประวัติการศึกษาและคอนเนคชั่นในสายอาชีพ',
+      desc: 'รวบรวมประวัติการศึกษา ประสบการณ์การทำกิจกรรมในมหาวิทยาลัย และช่องทางสำหรับเชื่อมต่อกับผู้คนหรือติดตามข่าวสารในสายอาชีพ',
     },
   },
   GitHub: {
     preview: '/previews/github.png',
     en: {
       title: 'Visit GitHub',
-      desc: 'Source code, repositories, and my development projects.',
+      desc: 'A repository of my source code and technical projects, ranging from university coursework assignments to personal coding practice and side projects.',
     },
     th: {
       title: 'เยี่ยมชม GitHub',
-      desc: 'รวมซอร์สโค้ดและโปรเจกต์ต่างๆ ที่ผมเคยเขียน',
+      desc: 'พื้นที่เก็บซอร์สโค้ดของโปรเจกต์ทั้งหมดที่ผมเคยพัฒนา ทั้งงานที่ทำส่งในรายวิชาต่างๆ ของมหาวิทยาลัยและโปรเจกต์ส่วนตัวที่ทำขึ้นเพื่อฝึกฝนทักษะ',
     },
   },
   YouTube: {
     preview: '/previews/youtube.png',
     en: {
       title: 'Visit YouTube',
-      desc: 'Videos of my past projects and video editing work.',
+      desc: 'A channel dedicated to my video content, featuring showcases of my past collaborative projects along with various video editing works.',
     },
     th: {
       title: 'เยี่ยมชม YouTube',
-      desc: 'วิดีโอโปรเจกต์และผลงานตัดต่อที่ผ่านมา',
+      desc: 'ช่องสำหรับรวบรวมผลงานในรูปแบบวิดีโอ ซึ่งมีทั้งคลิปวิดีโอโปรเจกต์ต่างๆ ที่ผมเคยร่วมทำ และผลงานการตัดต่อวิดีโออื่นๆ ที่ผ่านมา',
     },
   },
   Instagram: {
     preview: '/previews/instagram.png',
     en: {
       title: 'Visit Instagram',
-      desc: 'Photos of my daily life, cats, aquascaping, and photography.',
+      desc: 'A collection of photos and videos from my daily life, including maintaining aquascapes, photography trips, and other personal leisure activities.',
     },
     th: {
       title: 'เยี่ยมชม Instagram',
-      desc: 'รวมภาพถ่ายงานอดิเรก การจัดตู้ไม้น้ำ และชีวิตประจำวันทั่วไป',
+      desc: 'รวมภาพถ่ายและวิดีโอจากชีวิตประจำวันของผม ไม่ว่าจะเป็นการดูแลตู้ไม้น้ำ การออกไปถ่ายภาพสถานที่ต่างๆ และกิจกรรมยามว่างอื่นๆ',
     },
   },
   Facebook: {
     preview: '/previews/facebook.png',
     en: {
       title: 'Visit Facebook',
-      desc: 'My personal profile for casual updates and networking.',
+      desc: 'My personal social media profile, primarily used for keeping up with general news, connecting with friends, and sharing casual day-to-day updates.',
     },
     th: {
       title: 'เยี่ยมชม Facebook',
-      desc: 'หน้าโปรไฟล์ส่วนตัวสำหรับติดตามข่าวสารและพูดคุยทั่วไป',
+      desc: 'หน้าโปรไฟล์โซเชียลมีเดียส่วนตัวของผม สำหรับใช้ติดตามข่าวสารทั่วไป พูดคุยกับเพื่อนฝูง และแชร์เรื่องราวต่างๆ ในชีวิตประจำวัน',
     },
   },
 };
