@@ -17,66 +17,66 @@ const contentData = {
     preview: '/previews/email.png',
     en: {
       title: 'Send an Email',
-      desc: 'You are about to open your default email client to send an email.',
+      desc: 'Send me a direct email via your default email client.',
     },
     th: {
       title: 'ส่งอีเมล',
-      desc: 'คุณกำลังจะเปิดโปรแกรมอีเมลของคุณเพื่อส่งข้อความ',
+      desc: 'ส่งอีเมลส่วนตัวถึงผมโดยตรง',
     },
   },
   LinkedIn: {
     preview: '/previews/linkedin.png',
     en: {
       title: 'Visit LinkedIn',
-      desc: 'You are about to view my professional profile on LinkedIn.',
+      desc: 'My professional network, education, and career updates.',
     },
     th: {
       title: 'เยี่ยมชม LinkedIn',
-      desc: 'คุณกำลังจะเข้าไปดูโปรไฟล์การทำงานของผมบน LinkedIn',
+      desc: 'ประวัติการศึกษาและคอนเนคชั่นในสายอาชีพ',
     },
   },
   GitHub: {
     preview: '/previews/github.png',
     en: {
       title: 'Visit GitHub',
-      desc: 'You are about to explore my open-source projects and code.',
+      desc: 'Source code, repositories, and my development projects.',
     },
     th: {
       title: 'เยี่ยมชม GitHub',
-      desc: 'คุณกำลังจะเข้าไปดูโค้ดและโปรเจกต์โอเพนซอร์ซของผม',
+      desc: 'รวมซอร์สโค้ดและโปรเจกต์ต่างๆ ที่ผมเคยเขียน',
     },
   },
   YouTube: {
     preview: '/previews/youtube.png',
     en: {
       title: 'Visit YouTube',
-      desc: 'You are about to view my YouTube channel.',
+      desc: 'Videos of my past projects and video editing work.',
     },
     th: {
       title: 'เยี่ยมชม YouTube',
-      desc: 'คุณกำลังจะเข้าไปดูช่อง YouTube ของผม',
+      desc: 'วิดีโอโปรเจกต์และผลงานตัดต่อที่ผ่านมา',
     },
   },
   Instagram: {
     preview: '/previews/instagram.png',
     en: {
       title: 'Visit Instagram',
-      desc: 'A space where I share my hobbies like photography and aquascaping, reflecting the creativity and attention to detail I apply to my development work.',
+      desc: 'Photos of my daily life, cats, aquascaping, and photography.',
     },
     th: {
       title: 'เยี่ยมชม Instagram',
-      desc: 'พื้นที่แชร์งานอดิเรกอย่างการถ่ายภาพและจัดตู้ไม้น้ำ ซึ่งสะท้อนถึงความคิดสร้างสรรค์และความใส่ใจในรายละเอียดที่ผมนำมาประยุกต์ใช้กับการพัฒนาเว็บไซต์',
+      desc: 'รวมภาพถ่ายงานอดิเรก การจัดตู้ไม้น้ำ และชีวิตประจำวันทั่วไป',
     },
   },
   Facebook: {
     preview: '/previews/facebook.png',
     en: {
       title: 'Visit Facebook',
-      desc: 'You are about to view my Facebook profile.',
+      desc: 'My personal profile for casual updates and networking.',
     },
     th: {
       title: 'เยี่ยมชม Facebook',
-      desc: 'คุณกำลังจะเข้าไปดูโปรไฟล์ Facebook ของผม',
+      desc: 'หน้าโปรไฟล์ส่วนตัวสำหรับติดตามข่าวสารและพูดคุยทั่วไป',
     },
   },
 };
