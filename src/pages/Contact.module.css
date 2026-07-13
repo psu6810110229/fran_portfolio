@@ -178,24 +178,21 @@
   width: 52px;
   height: 52px;
   border-radius: var(--radius-full);
-  background: var(--color-surface-alt);
-  border: 1px solid var(--color-border);
+  background: transparent;
   color: var(--color-text-muted);
   flex: 0 0 auto;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .socialButton:hover {
-  background: var(--color-surface);
-  border-color: var(--color-text-muted);
   color: var(--color-text);
   transform: translateY(-2px);
 }
 
 .socialIcon {
-  width: 22px;
-  height: 22px;
-  opacity: 0.72;
+  width: 28px;
+  height: 28px;
+  opacity: 0.85;
 }
 
 :global([data-theme="light"]) .socialIcon {

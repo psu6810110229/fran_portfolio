@@ -1,13 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { motion, useScroll } from 'motion/react';
-import { ArrowRight, Check, Mail } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 import WordsPullUp from '../../components/Resume/WordsPullUp';
 import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle';
 import AnimatedLetter from '../../components/Resume/AnimatedLetter';
 import Magnet from '../../components/Magnet/Magnet';
 import Contact from '../../pages/Contact';
-import ExternalLinkModal, { type ExternalLinkType } from '../../components/ExternalLinkModal/ExternalLinkModal';
-import { GithubIcon, LinkedinIcon } from '../../components/Icons/SocialIcons';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useTheme } from '../../hooks/useTheme';
 import styles from './Resume.module.css';
@@ -70,17 +68,6 @@ const Resume: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const t = dictionary[lang];
 
-  // Modal State
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState<ExternalLinkType>('Email');
-  const [modalLink, setModalLink] = useState('');
-
-  const handleOpenModal = (type: ExternalLinkType, link: string) => {
-    setModalType(type);
-    setModalLink(link);
-    setIsModalOpen(true);
-  };
-
   const aboutRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: aboutRef,
@@ -99,7 +86,6 @@ const Resume: React.FC = () => {
       {/* SECTION 1: HERO */}
       <section id="hero" className={styles.heroSection}>
         <div className={styles.heroInner}>
-          {/* Background Video */}
           <video
             autoPlay
             loop
@@ -108,12 +94,9 @@ const Resume: React.FC = () => {
             className={styles.videoBg}
             src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
           />
-          {/* Noise Overlay */}
           <div className={styles.noiseOverlay} />
-          {/* Gradient Overlay */}
           <div className={styles.gradientOverlay} />
 
-          {/* Navbar */}
           <div className={styles.navContainer}>
             <nav className={styles.navBar}>
               <div className={styles.navLinks}>
@@ -168,7 +151,6 @@ const Resume: React.FC = () => {
             </nav>
           </div>
 
-          {/* Hero Content */}
           <div className={styles.heroContent}>
             <div className={styles.heroLeft}>
               <WordsPullUp
@@ -218,7 +200,7 @@ const Resume: React.FC = () => {
           </span>
           
           <WordsPullUpMultiStyle
-            key={lang} /* Force remount on language change */
+            key={lang}
             containerClassName={styles.aboutTitle}
             segments={[
               { text: t.about1, className: styles.aboutTitleNormal },
@@ -234,50 +216,6 @@ const Resume: React.FC = () => {
               </AnimatedLetter>
             ))}
           </p>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.8 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className={styles.aboutContact}
-          >
-            <span className={styles.aboutContactLabel}>{lang === 'en' ? 'Get in Touch' : 'ติดต่อพูดคุย'}</span>
-            <div className={styles.aboutSocials}>
-              <Magnet padding={20} disabled={false} magnetStrength={3} activeTransition="transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)">
-                <motion.button 
-                  whileTap={{ scale: 0.85 }} 
-                  className={styles.aboutSocialLink}
-                  onClick={() => handleOpenModal('Email', 'mailto:patcharapon.fran@gmail.com')}
-                  aria-label="Email"
-                >
-                  <Mail size={24} strokeWidth={1.5} />
-                </motion.button>
-              </Magnet>
-              
-              <Magnet padding={20} disabled={false} magnetStrength={3} activeTransition="transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)">
-                <motion.button 
-                  whileTap={{ scale: 0.85 }} 
-                  className={styles.aboutSocialLink}
-                  onClick={() => handleOpenModal('LinkedIn', 'https://www.linkedin.com/in/patcharapon-matsuden-864883413')}
-                  aria-label="LinkedIn"
-                >
-                  <LinkedinIcon size={24} strokeWidth="1.5" />
-                </motion.button>
-              </Magnet>
-
-              <Magnet padding={20} disabled={false} magnetStrength={3} activeTransition="transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)">
-                <motion.button 
-                  whileTap={{ scale: 0.85 }} 
-                  className={styles.aboutSocialLink}
-                  onClick={() => handleOpenModal('GitHub', 'https://github.com/psu6810110229')}
-                  aria-label="GitHub"
-                >
-                  <GithubIcon size={24} strokeWidth="1.5" />
-                </motion.button>
-              </Magnet>
-            </div>
-          </motion.div>
         </div>
       </section>
 
@@ -287,7 +225,7 @@ const Resume: React.FC = () => {
         
         <div className={styles.featuresInner}>
           <WordsPullUpMultiStyle
-            key={lang} /* Force remount */
+            key={lang}
             containerClassName={styles.featuresTitle}
             segments={[
               { text: t.feat1, className: styles.featuresTitlePrimary },
@@ -302,7 +240,6 @@ const Resume: React.FC = () => {
             variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
             className={styles.featuresGrid}
           >
-            {/* Card 1 */}
             <motion.div variants={cardVariants} className={styles.cardVideo}>
               <video
                 autoPlay
@@ -318,7 +255,6 @@ const Resume: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Card 2 */}
             <motion.div variants={cardVariants} className={styles.cardStandard}>
               <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171918_4a5edc79-d78f-4637-ac8b-53c43c220606.png&w=1280&q=85" alt="Icon" className={styles.cardIcon} />
               <div className={styles.cardNumber}>01</div>
@@ -337,7 +273,6 @@ const Resume: React.FC = () => {
               </a>
             </motion.div>
 
-            {/* Card 3 */}
             <motion.div variants={cardVariants} className={styles.cardStandard}>
               <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171741_ed9845ab-f5b2-4018-8ce7-07cc01823522.png&w=1280&q=85" alt="Icon" className={styles.cardIcon} />
               <div className={styles.cardNumber}>02</div>
@@ -356,7 +291,6 @@ const Resume: React.FC = () => {
               </a>
             </motion.div>
 
-            {/* Card 4 */}
             <motion.div variants={cardVariants} className={styles.cardStandard}>
               <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171809_f56666dc-c099-4778-ad82-9ad4f209567b.png&w=1280&q=85" alt="Icon" className={styles.cardIcon} />
               <div className={styles.cardNumber}>03</div>
@@ -380,15 +314,6 @@ const Resume: React.FC = () => {
 
       {/* SECTION 4: CONTACT */}
       <Contact />
-
-      {/* External Link Modal */}
-      <ExternalLinkModal 
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        link={modalLink}
-        type={modalType}
-        lang={lang}
-      />
     </div>
   );
 };

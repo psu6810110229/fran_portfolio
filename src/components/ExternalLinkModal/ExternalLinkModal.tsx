@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './ExternalLinkModal.module.css';
 
-export type ExternalLinkType = 'Email' | 'LinkedIn' | 'GitHub';
+export type ExternalLinkType = 'Email' | 'LinkedIn' | 'GitHub' | 'YouTube' | 'Instagram' | 'Facebook';
 
 interface ExternalLinkModalProps {
   isOpen: boolean;
@@ -30,19 +30,52 @@ const contentData = {
       desc: 'You are about to view my professional profile on LinkedIn.',
     },
     th: {
-      title: 'ไปยัง LinkedIn',
-      desc: 'คุณกำลังจะเปิดดูโปรไฟล์การทำงานของผมบน LinkedIn',
+      title: 'เยี่ยมชม LinkedIn',
+      desc: 'คุณกำลังจะเข้าไปดูโปรไฟล์การทำงานของผมบน LinkedIn',
     },
   },
   GitHub: {
     preview: 'https://placehold.co/600x400/1c1916/d4651a?text=GitHub+Preview',
     en: {
-      title: 'Explore GitHub',
-      desc: 'You are about to see my code repositories and projects on GitHub.',
+      title: 'Visit GitHub',
+      desc: 'You are about to explore my open-source projects and code.',
     },
     th: {
-      title: 'สำรวจ GitHub',
-      desc: 'คุณกำลังจะเข้าไปดูโค้ดและโปรเจกต์ต่างๆ ของผมบน GitHub',
+      title: 'เยี่ยมชม GitHub',
+      desc: 'คุณกำลังจะเข้าไปดูโค้ดและโปรเจกต์โอเพนซอร์ซของผม',
+    },
+  },
+  YouTube: {
+    preview: 'https://placehold.co/600x400/1c1916/d4651a?text=YouTube+Preview',
+    en: {
+      title: 'Visit YouTube',
+      desc: 'You are about to view my YouTube channel.',
+    },
+    th: {
+      title: 'เยี่ยมชม YouTube',
+      desc: 'คุณกำลังจะเข้าไปดูช่อง YouTube ของผม',
+    },
+  },
+  Instagram: {
+    preview: 'https://placehold.co/600x400/1c1916/d4651a?text=Instagram+Preview',
+    en: {
+      title: 'Visit Instagram',
+      desc: 'You are about to view my Instagram profile.',
+    },
+    th: {
+      title: 'เยี่ยมชม Instagram',
+      desc: 'คุณกำลังจะเข้าไปดูโปรไฟล์ Instagram ของผม',
+    },
+  },
+  Facebook: {
+    preview: 'https://placehold.co/600x400/1c1916/d4651a?text=Facebook+Preview',
+    en: {
+      title: 'Visit Facebook',
+      desc: 'You are about to view my Facebook profile.',
+    },
+    th: {
+      title: 'เยี่ยมชม Facebook',
+      desc: 'คุณกำลังจะเข้าไปดูโปรไฟล์ Facebook ของผม',
     },
   },
 };
