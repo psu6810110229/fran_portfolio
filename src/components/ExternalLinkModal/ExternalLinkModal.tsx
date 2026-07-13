@@ -61,11 +61,11 @@ const contentData = {
     preview: '/previews/instagram.png',
     en: {
       title: 'Visit Instagram',
-      desc: 'You are about to view my Instagram profile.',
+      desc: 'Peek into my daily life, behind-the-scenes of my projects, and my passions for aquascaping and photography.',
     },
     th: {
       title: 'เยี่ยมชม Instagram',
-      desc: 'คุณกำลังจะเข้าไปดูโปรไฟล์ Instagram ของผม',
+      desc: 'แวะดูไลฟ์สไตล์ มุมมองหลังเลนส์ และงานอดิเรกของผม ไม่ว่าจะเป็นการจัดตู้ไม้น้ำหรือการถ่ายภาพ',
     },
   },
   Facebook: {
