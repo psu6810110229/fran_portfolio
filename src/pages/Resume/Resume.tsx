@@ -19,7 +19,7 @@ const dictionary = {
       { label: 'Contact', href: '#contact' }
     ],
     heroDesc: 'A Year 2 Computer Engineering student at PSU. Highly logical, systematic, yet approachable. I build rigorous systems with an empathetic touch, ready to support the next generation of engineers.',
-    viewApp: 'Get in Touch',
+    viewApp: 'Explore My Story',
     aboutBadge: 'Systematic Thinker',
     about1: 'I am Fran, ',
     about2: 'a builder of logical systems. ',
@@ -44,7 +44,7 @@ const dictionary = {
       { label: 'ติดต่อ', href: '#contact' }
     ],
     heroDesc: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ปี 2 ม.สงขลานครินทร์ มีความสามารถในการคิดวิเคราะห์อย่างเป็นระบบแต่ก็เข้าถึงง่าย ผมสร้างระบบที่รัดกุมพร้อมกับความเข้าใจผู้อื่น พร้อมสนับสนุนวิศวกรรุ่นใหม่',
-    viewApp: 'ติดต่อพูดคุย',
+    viewApp: 'ไปกันต่อ',
     aboutBadge: 'นักคิดอย่างเป็นระบบ',
     about1: 'ผมชื่อฟราน, ',
     about2: 'นักสร้างระบบเชิงตรรกะ ',
@@ -180,7 +180,7 @@ const Resume: React.FC = () => {
                 activeTransition="transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)"
               >
                 <motion.a
-                  href="#contact"
+                  href="#about"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.7, ease: [0.16, 1, 0.3, 1] as any, duration: 0.8 }}
@@ -221,6 +221,21 @@ const Resume: React.FC = () => {
               </AnimatedLetter>
             ))}
           </p>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className={styles.aboutContact}
+          >
+            <span className={styles.aboutContactLabel}>{lang === 'en' ? 'Get in Touch' : 'ติดต่อพูดคุย'}</span>
+            <div className={styles.aboutSocials}>
+              <a href="mailto:patcharapon.fran@gmail.com" className={styles.aboutSocialLink}>Email</a>
+              <a href="https://www.linkedin.com/in/patcharapon-matsuden-864883413" target="_blank" rel="noreferrer" className={styles.aboutSocialLink}>LinkedIn</a>
+              <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer" className={styles.aboutSocialLink}>GitHub</a>
+            </div>
+          </motion.div>
         </div>
       </section>
 
