@@ -170,25 +170,18 @@ const Resume: React.FC = () => {
               >
                 {t.heroDesc}
               </motion.p>
-              <Magnet
-                padding={30}
-                disabled={false}
-                magnetStrength={3}
-                activeTransition="transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)"
+              <motion.a
+                href="#about"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.7, ease: [0.16, 1, 0.3, 1] as any, duration: 0.8 }}
+                className={styles.ctaButton}
               >
-                <motion.a
-                  href="#about"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.7, ease: [0.16, 1, 0.3, 1] as any, duration: 0.8 }}
-                  className={styles.ctaButton}
-                >
-                  <span className={styles.ctaText}>{t.viewApp}</span>
-                  <div className={styles.ctaIconBox}>
-                    <ArrowRight className={styles.ctaIcon} />
-                  </div>
-                </motion.a>
-              </Magnet>
+                <span className={styles.ctaText}>{t.viewApp}</span>
+                <div className={styles.ctaIconBox}>
+                  <ArrowRight className={styles.ctaIcon} />
+                </div>
+              </motion.a>
             </div>
           </div>
         </div>
