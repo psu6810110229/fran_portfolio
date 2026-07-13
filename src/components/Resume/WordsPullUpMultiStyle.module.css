@@ -7,4 +7,5 @@
 .word {
   display: inline-block;
   margin-right: 0.25em;
+  will-change: transform, opacity;
 }

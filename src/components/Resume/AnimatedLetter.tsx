@@ -15,7 +15,7 @@ const AnimatedLetter: React.FC<AnimatedLetterProps> = ({ children, progress, cha
   );
 
   return (
-    <motion.span style={{ opacity }}>
+    <motion.span style={{ opacity, willChange: 'opacity' }}>
       {children}
     </motion.span>
   );
