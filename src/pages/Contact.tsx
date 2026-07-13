@@ -121,13 +121,13 @@ function Contact() {
                 {submitStatus === 'submitting' ? 'Sending...' : c.btn}
               </button>
               <div className={styles.inlineLinks}>
-                <a href="https://youtube.com/@your_channel" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="YouTube">
+                <a href="https://www.youtube.com/@farnpatcharapon5393" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="YouTube">
                   <YoutubeIcon className={styles.socialIcon} />
                 </a>
-                <a href="https://instagram.com/your_handle" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="Instagram">
+                <a href="https://www.instagram.com/fran_patchara?igsh=ZXVpYm5iejJnNmF4" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="Instagram">
                   <InstagramIcon className={styles.socialIcon} />
                 </a>
-                <a href="https://facebook.com/your_profile" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="Facebook">
+                <a href="https://www.facebook.com/share/16zrE22rYU/" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="Facebook">
                   <FacebookIcon className={styles.socialIcon} />
                 </a>
                 <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="GitHub">
