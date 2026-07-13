@@ -103,17 +103,9 @@ const Resume: React.FC = () => {
             <nav className={styles.navBar}>
               <div className={styles.navLinks}>
                 {t.nav.map((item) => (
-                  <Magnet
-                    key={item.label}
-                    padding={20}
-                    disabled={false}
-                    magnetStrength={4}
-                    activeTransition="transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)"
-                  >
-                    <a href={item.href} className={styles.navLink}>
-                      {item.label}
-                    </a>
-                  </Magnet>
+                  <a key={item.label} href={item.href} className={styles.navLink}>
+                    {item.label}
+                  </a>
                 ))}
               </div>
               <div className={styles.navToggles}>

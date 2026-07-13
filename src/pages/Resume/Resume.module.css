@@ -111,10 +111,11 @@
 }
 
 .navLink {
+  display: inline-block;
   font-size: 10px;
   color: rgba(225, 224, 204, 0.8);
   white-space: nowrap;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 @media (min-width: 640px) { .navLink { font-size: var(--font-size-xs); } }
@@ -122,6 +123,7 @@
 
 .navLink:hover {
   color: #e1e0cc;
+  transform: scale(1.08);
 }
 
 .langToggle, .themeToggle {
@@ -143,6 +145,7 @@
 .langToggle:hover, .themeToggle:hover {
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.08);
 }
 
 .icon {
