@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
-import { motion, useScroll } from 'motion/react';
+import { motion, useScroll, useMotionValue } from 'motion/react';
 import { ArrowRight, Check } from 'lucide-react';
 import WordsPullUp from '../../components/Resume/WordsPullUp';
 import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle';
 import AnimatedLetter from '../../components/Resume/AnimatedLetter';
 import ScrollReveal from '../../components/ScrollReveal/ScrollReveal';
 import Magnet from '../../components/Magnet/Magnet';
+import { DockItem } from '../../components/DockItem/DockItem';
 import Contact from '../../pages/Contact';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useTheme } from '../../hooks/useTheme';
@@ -72,6 +73,31 @@ const Resume: React.FC = () => {
   const t = dictionary[lang];
 
   const aboutRef = useRef<HTMLDivElement>(null);
+  
+  const mouseX = useMotionValue(Infinity);
+  const mouseY = useMotionValue(Infinity);
+  const [isDesktop, setIsDesktop] = React.useState(true);
+
+  React.useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (window.innerWidth >= 768) {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+      }
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [mouseX, mouseY]);
+
   const { scrollYProgress } = useScroll({
     target: aboutRef,
     offset: ['start 80%', 'end center'],
@@ -102,24 +128,27 @@ const Resume: React.FC = () => {
             <nav className={styles.navBar}>
               <div className={styles.navLinks}>
                 {t.nav.map((item) => (
-                  <a key={item.label} href={item.href} className={styles.navLink}>
+                  <DockItem key={item.label} mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop} as="a" href={item.href} className={styles.navLink}>
                     {item.label}
-                  </a>
+                  </DockItem>
                 ))}
               </div>
               <div className={styles.navToggles}>
-                <button
-                  className={styles.langToggle}
-                  onClick={toggleLang}
-                  aria-label={`Switch to ${lang === 'en' ? 'Thai' : 'English'}`}
-                >
-                  {lang === 'en' ? 'EN' : 'TH'}
-                </button>
-                <button
-                  className={styles.themeToggle}
-                  onClick={toggleTheme}
-                  aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-                >
+                <DockItem mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop}>
+                  <button
+                    className={styles.langToggle}
+                    onClick={toggleLang}
+                    aria-label={`Switch to ${lang === 'en' ? 'Thai' : 'English'}`}
+                  >
+                    {lang === 'en' ? 'EN' : 'TH'}
+                  </button>
+                </DockItem>
+                <DockItem mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop}>
+                  <button
+                    className={styles.themeToggle}
+                    onClick={toggleTheme}
+                    aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                  >
                   <span key={theme} className={styles.icon}>
                     {theme === 'dark' ? (
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -139,7 +168,8 @@ const Resume: React.FC = () => {
                       </svg>
                     )}
                   </span>
-                </button>
+                  </button>
+                </DockItem>
               </div>
             </nav>
           </div>
