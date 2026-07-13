@@ -25,7 +25,11 @@ const RESUME_SECTIONS: Section[] = [
 
 const scrollDuration = 1.25;
 const navigationSettleMs = 1300;
-const easeOutQuint = (x: number): number => 1 - Math.pow(1 - x, 5);
+
+const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(max, val));
+
+// Expo easing for premium feel
+const easeOutExpo = (t: number) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 
 interface SectionNavProps {
   isResumeRoute?: boolean;
@@ -159,7 +163,7 @@ function SectionNav({ isResumeRoute = false }: SectionNavProps) {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (id === 'hero') {
       if (lenis) {
-        lenis.scrollTo(0, { duration: scrollDuration, immediate: reduce, easing: easeOutQuint });
+        lenis.scrollTo(0, { duration: scrollDuration, immediate: reduce, easing: easeOutExpo });
       } else {
         window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
       }
@@ -185,7 +189,7 @@ function SectionNav({ isResumeRoute = false }: SectionNavProps) {
         const pinOffset = hasPinStack ? window.innerHeight * 0.02 : 72;
         const finalScrollY = Math.max(0, targetScrollY - pinOffset);
 
-        lenis.scrollTo(finalScrollY, { duration: scrollDuration, immediate: reduce, easing: easeOutQuint });
+        lenis.scrollTo(finalScrollY, { duration: scrollDuration, immediate: reduce, easing: easeOutExpo });
       } else {
         el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
       }
@@ -204,7 +208,7 @@ function SectionNav({ isResumeRoute = false }: SectionNavProps) {
   const scrollToTop = () => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (lenis) {
-      lenis.scrollTo(0, { duration: scrollDuration, immediate: reduce, easing: easeOutQuint });
+      lenis.scrollTo(0, { duration: scrollDuration, immediate: reduce, easing: easeOutExpo });
     } else {
       window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
     }

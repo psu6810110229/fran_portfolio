@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useMotionValue } from 'motion/react';
+import { useLenis } from 'lenis/react';
 import { ArrowRight, Check } from 'lucide-react';
 import WordsPullUp from '../../components/Resume/WordsPullUp';
 import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle';
@@ -98,6 +99,18 @@ const Resume: React.FC = () => {
     };
   }, [mouseX, mouseY]);
 
+  const lenis = useLenis();
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      if (lenis) {
+        lenis.scrollTo(href, { duration: 1.5, easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) });
+      } else {
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   const { scrollYProgress } = useScroll({
     target: aboutRef,
     offset: ['start 80%', 'end center'],
@@ -128,7 +141,7 @@ const Resume: React.FC = () => {
             <nav className={styles.navBar}>
               <div className={styles.navLinks}>
                 {t.nav.map((item) => (
-                  <DockItem key={item.label} mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop} as="a" href={item.href} className={styles.navLink}>
+                  <DockItem key={item.label} mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop} as="a" href={item.href} className={styles.navLink} onClick={(e: any) => handleNavClick(e, item.href)}>
                     {item.label}
                   </DockItem>
                 ))}
