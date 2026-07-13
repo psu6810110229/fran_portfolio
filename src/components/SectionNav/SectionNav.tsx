@@ -8,7 +8,7 @@ interface Section {
   observeIds: string[];
 }
 
-const SECTIONS: Section[] = [
+const MAIN_SECTIONS: Section[] = [
   { id: 'hero',           label: 'Hero',   observeIds: ['hero'] },
   { id: 'about',          label: 'About',  observeIds: ['about', 'skills'] },
   { id: 'project-9tours', label: '9tours', observeIds: ['project-9tours'] },
@@ -16,11 +16,20 @@ const SECTIONS: Section[] = [
   { id: 'contact',        label: 'Contact',observeIds: ['contact'] },
 ];
 
+const RESUME_SECTIONS: Section[] = [
+  { id: 'hero',           label: 'Hero',        observeIds: ['hero'] },
+  { id: 'about',          label: 'My Story',    observeIds: ['about'] },
+  { id: 'features',       label: 'Methodology', observeIds: ['features'] },
+  { id: 'contact',        label: 'Contact',     observeIds: ['contact'] },
+];
+
 const scrollDuration = 1.25;
 const navigationSettleMs = 1300;
 const easeOutQuint = (x: number): number => 1 - Math.pow(1 - x, 5);
 
 function SectionNav() {
+  const isResumeRoute = window.location.pathname === '/resume';
+  const SECTIONS = isResumeRoute ? RESUME_SECTIONS : MAIN_SECTIONS;
   const lenis = useLenis();
   const [active, setActive] = useState('hero');
   const [scrolled, setScrolled] = useState(false);

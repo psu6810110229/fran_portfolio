@@ -76,22 +76,36 @@
   padding: var(--space-2) var(--space-4);
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  max-width: 900px;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
   gap: var(--space-3);
 }
 
 @media (min-width: 640px) {
-  .navBar { gap: var(--space-6); }
+  .navLinks { gap: var(--space-6); }
 }
 @media (min-width: 768px) {
   .navBar {
     padding: var(--space-2) var(--space-8);
     border-bottom-left-radius: 1.5rem;
     border-bottom-right-radius: 1.5rem;
-    gap: var(--space-12);
   }
+  .navLinks { gap: var(--space-12); }
 }
 @media (min-width: 1024px) {
-  .navBar { gap: 3.5rem; }
+  .navLinks { gap: 3.5rem; }
+}
+
+.navToggles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .navLink {
@@ -106,6 +120,39 @@
 
 .navLink:hover {
   color: #e1e0cc;
+}
+
+.langToggle, .themeToggle {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fdf8f4;
+  border-radius: var(--radius-full);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.langToggle:hover, .themeToggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: iconSwap 0.3s ease;
+}
+
+@keyframes iconSwap {
+  from { transform: rotate(-45deg) scale(0.6); opacity: 0; }
+  to   { transform: rotate(0deg)   scale(1);   opacity: 1; }
 }
 
 /* ── Hero Content ── */

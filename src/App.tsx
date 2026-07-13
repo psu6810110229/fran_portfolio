@@ -37,7 +37,6 @@ function App() {
   const isResumeRoute = window.location.pathname === '/resume';
 
   useEffect(() => {
-    if (isResumeRoute) return;
     const updateTheme = () => setTheme(getCurrentTheme());
     const observer = new MutationObserver(updateTheme);
 
@@ -45,47 +44,51 @@ function App() {
     updateTheme();
 
     return () => observer.disconnect();
-  }, [isResumeRoute]);
-
-  if (isResumeRoute) {
-    return <Resume />;
-  }
+  }, []);
 
   const content = (
     <LanguageProvider>
       <div className={styles.screen}>
-        <Grainient
-          className={styles.grainient}
-          color1="#b8641a"
-          color2={theme === 'dark' ? '#131110' : '#faf8f5'}
-          color3="#6f3f1a"
-          timeSpeed={1.2}
-          colorBalance={-0.1}
-          warpStrength={4}
-          warpFrequency={2.9}
-          warpSpeed={2}
-          warpAmplitude={50}
-          blendAngle={180}
-          blendSoftness={0}
-          rotationAmount={500}
-          noiseScale={0}
-          grainAmount={0}
-          grainScale={0.2}
-          grainAnimated={false}
-          contrast={1.55}
-          gamma={1}
-          saturation={0.65}
-          centerX={0}
-          centerY={0}
-          zoom={0.9}
-        />
-        <Navbar />
-        <main className={styles.main}>
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Contact />
+        {!isResumeRoute && (
+          <Grainient
+            className={styles.grainient}
+            color1="#b8641a"
+            color2={theme === 'dark' ? '#131110' : '#faf8f5'}
+            color3="#6f3f1a"
+            timeSpeed={1.2}
+            colorBalance={-0.1}
+            warpStrength={4}
+            warpFrequency={2.9}
+            warpSpeed={2}
+            warpAmplitude={50}
+            blendAngle={180}
+            blendSoftness={0}
+            rotationAmount={500}
+            noiseScale={0}
+            grainAmount={0}
+            grainScale={0.2}
+            grainAnimated={false}
+            contrast={1.55}
+            gamma={1}
+            saturation={0.65}
+            centerX={0}
+            centerY={0}
+            zoom={0.9}
+          />
+        )}
+        {!isResumeRoute && <Navbar />}
+        <main className={isResumeRoute ? '' : styles.main}>
+          {isResumeRoute ? (
+            <Resume />
+          ) : (
+            <>
+              <Hero />
+              <About />
+              <Skills />
+              <Projects />
+              <Contact />
+            </>
+          )}
         </main>
         <SectionNav />
       </div>
