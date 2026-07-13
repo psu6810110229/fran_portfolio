@@ -28,7 +28,7 @@ export function DockItem({ mouseX, mouseY, isDesktop, as = 'div', children, clas
   });
 
   const scaleSync = useTransform(distance, [0, 140], [1.15, 1], { clamp: true });
-  const scale = useSpring(scaleSync, { mass: 0.1, stiffness: 400, damping: 20 });
+  const scale = useSpring(scaleSync, { mass: 0.1, stiffness: 900, damping: 30 });
 
   const props = {
     ref,
