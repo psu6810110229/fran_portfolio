@@ -66,8 +66,8 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
 
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
     const isDesktop = window.innerWidth >= 768;
-    const startPoint = isDesktop ? 'top 95%' : 'top 85%';
-    const endPoint = isDesktop ? 'bottom 70%' : 'bottom 50%';
+    const startPoint = isDesktop ? 'top 100%' : 'top 90%';
+    const endPoint = isDesktop ? 'bottom 85%' : 'bottom 75%';
 
     gsap.fromTo(
       el,
