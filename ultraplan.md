@@ -3,21 +3,16 @@
 ## Outcome
 Plan the architecture and implementation of a new interactive `/resume` route tailored for the NEW Academy event STAFF application. The page will highlight Fran's soft skills, systematic thinking, and Open House experience as an interactive resume. It strictly adheres to the "Prisma" cinematic landing page design spec (React + Vite + TypeScript + Tailwind CSS + Framer Motion).
 
-## User Review Required
-> [!IMPORTANT]
-> The Prisma design spec requires Tailwind CSS, Framer Motion, and different fonts/colors than the main portfolio site (which uses CSS Modules and a strict "Ember Workshop" theme).
-> **Question 1:** Should I install `tailwindcss` and `framer-motion` for this route, and is it acceptable for the `/resume` route to diverge from the `global.css` design tokens?
-
-> [!WARNING]
-> The Prisma reference includes specific video URLs for backgrounds. 
-> **Question 2:** Should I use those exact Prisma URLs, or do you have alternative video assets for Fran's resume?
-
 ## Phase 1: Dependency & Architecture Setup
-**Goal:** Configure the route and isolated styling ecosystem without breaking the main site.
+**Goal:** Configure the route and isolated styling ecosystem without breaking the main site's CSS Modules ("Ember Workshop" theme).
 **Steps:**
-1. Install `tailwindcss`, `framer-motion`, and `lucide-react` (if approved).
-2. Configure Tailwind (`tailwind.config.js`) to include the Prisma color palette (`#000`, `#101010`, `#212121`, `#E1E0CC`, `#DEDBC8`) and fonts (Almarai, Instrument Serif).
-3. Update `index.html` to load the Google Fonts.
+1. Install `tailwindcss`, `framer-motion`, and `lucide-react`.
+2. **Tailwind Isolation Strategy:**
+   - Configure `tailwind.config.js` to disable global preflight (`corePlugins: { preflight: false }`) so it doesn't break the main portfolio site's base styles.
+   - Wrap the entire `/resume` route in a container with a specific ID (e.g., `<div id="prisma-root">`).
+   - Define a custom Tailwind base layer scoped to `#prisma-root` for necessary resets (since preflight is disabled).
+   - Configure Tailwind to include the Prisma color palette (`#000`, `#101010`, `#212121`, `#E1E0CC`, `#DEDBC8`) and fonts (Almarai, Instrument Serif).
+3. Update `index.html` to load the Google Fonts (Almarai, Instrument Serif).
 4. Add global utility classes (`.noise-overlay`, `.bg-noise`) to `index.css`.
 5. Create `src/pages/Resume/Resume.tsx` and route `/resume` in `App.tsx`.
 
@@ -29,18 +24,18 @@ Plan the architecture and implementation of a new interactive `/resume` route ta
 3. Create `AnimatedLetter` component with `useScroll` for scroll-linked character opacity reveal (0.2 to 1).
 
 ## Phase 3: Content Mapping & Layout Implementation
-**Goal:** Inject the NEW Academy persona content into the Prisma sections.
+**Goal:** Inject the NEW Academy persona content into the Prisma sections, mapping exactly to the PRISM reference.
 **Steps:**
 
 ### 1. HERO Section
-- **Visuals:** Full viewport height, video background, `.noise-overlay`, black gradient overlay.
+- **Visuals:** Full viewport height, video background (URL: `https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4`), `.noise-overlay`, black gradient overlay.
 - **Navbar:** "My Story", "Methodology", "Experience", "Skills", "Contact".
 - **Content:** Bottom-aligned 12-column grid.
-- **Heading:** "Patcharapon" (using `WordsPullUp` with asterisk).
+- **Heading:** "Patcharapon" (using `WordsPullUp`). The superscript asterisk (*) will be placed precisely on the final letter "**n**" of "Patcharapon".
 - **Description:** "A Year 2 Computer Engineering student at PSU. Highly logical, systematic, yet approachable. I build rigorous systems with an empathetic touch, ready to support the next generation of engineers."
 - **CTA:** "View Application" button with ArrowRight icon.
 
-### 4. ABOUT Section
+### 2. ABOUT Section
 - **Visuals:** `bg-black`, padded, inner card `bg-[#101010]`.
 - **Top Label:** "Systematic Thinker"
 - **Heading (WordsPullUpMultiStyle):**
@@ -50,13 +45,28 @@ Plan the architecture and implementation of a new interactive `/resume` route ta
 - **Body (Scroll Reveal):**
   - "As a Computer Engineering student, I thrive under pressure and solve problems methodically. But beyond the code, my experience hosting Open Houses has taught me the value of empathy and clear communication when engaging with youth."
 
-### 5. FEATURES Section
+### 3. FEATURES Section
 - **Visuals:** min-h-screen `bg-black`, `.bg-noise` overlay, 4-column card grid.
-- **Header:** "Rigorous execution. Empathetic support."
-- **Card 1 (Video):** Looping background video. Text: "Under pressure."
-- **Card 2 (Methodology):** "01. Systematic Approach." Checklist: Root cause analysis, Edge-case planning, Calm execution under stress.
-- **Card 3 (Communication):** "02. Youth Engagement." Checklist: Active listening, Distilling complex ideas, Approachable mentorship.
-- **Card 4 (Experience):** "03. Open House." Checklist: Guided lab tours, Live technical demos, Crowd management.
+- **Header:** "Rigorous execution. Empathetic support." (WordsPullUpMultiStyle)
+- **Card 1 (Video):** Looping background video (URL: `https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260406_133058_0504132a-0cf3-4450-a370-8ea3b05c95d4.mp4`). Bottom text: "Under pressure."
+- **Card 2 (Methodology):** 
+  - Number: "01"
+  - Title: "Systematic Approach."
+  - Icon: Small top image using `https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171918_4a5edc79-d78f-4637-ac8b-53c43c220606.png&w=1280&q=85`
+  - Checklist Items (with green `lucide-react` Check icons): Root cause analysis, Edge-case planning, Calm execution under stress.
+  - Action: "Learn more" link with `-45deg` rotated ArrowRight.
+- **Card 3 (Communication):** 
+  - Number: "02"
+  - Title: "Youth Engagement."
+  - Icon: Small top image using `https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171741_ed9845ab-f5b2-4018-8ce7-07cc01823522.png&w=1280&q=85`
+  - Checklist Items (with green `lucide-react` Check icons): Active listening, Distilling complex ideas, Approachable mentorship.
+  - Action: "Learn more" link with `-45deg` rotated ArrowRight.
+- **Card 4 (Experience):** 
+  - Number: "03"
+  - Title: "Open House."
+  - Icon: Small top image using `https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171809_f56666dc-c099-4778-ad82-9ad4f209567b.png&w=1280&q=85`
+  - Checklist Items (with green `lucide-react` Check icons): Guided lab tours, Live technical demos, Crowd management.
+  - Action: "Learn more" link with `-45deg` rotated ArrowRight.
 
 ## Verification Plan
 - **Automated:** `npm run build`, `tsc -b`.
