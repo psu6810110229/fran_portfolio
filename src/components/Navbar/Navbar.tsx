@@ -29,7 +29,7 @@ function DockItem({ mouseX, isDesktop, as = 'div', children, className }: { mous
     return val - bounds.x - bounds.width / 2;
   });
 
-  const scaleSync = useTransform(distance, [-100, 0, 100], [1, 1.3, 1]);
+  const scaleSync = useTransform(distance, [-200, 0, 200], [1, 1.3, 1]);
   const scale = useSpring(scaleSync, { mass: 0.1, stiffness: 200, damping: 15 });
 
   const props = {
