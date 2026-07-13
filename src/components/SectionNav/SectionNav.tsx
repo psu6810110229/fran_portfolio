@@ -27,8 +27,11 @@ const scrollDuration = 1.25;
 const navigationSettleMs = 1300;
 const easeOutQuint = (x: number): number => 1 - Math.pow(1 - x, 5);
 
-function SectionNav() {
-  const isResumeRoute = window.location.pathname === '/resume';
+interface SectionNavProps {
+  isResumeRoute?: boolean;
+}
+
+function SectionNav({ isResumeRoute = false }: SectionNavProps) {
   const SECTIONS = isResumeRoute ? RESUME_SECTIONS : MAIN_SECTIONS;
   const lenis = useLenis();
   const [active, setActive] = useState('hero');

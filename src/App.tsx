@@ -34,7 +34,7 @@ function App() {
   const [theme, setTheme] = useState<Theme>(getCurrentTheme);
   const useSmoothScroll = !shouldReduceMotion;
 
-  const isResumeRoute = window.location.pathname === '/resume';
+  const isResumeRoute = window.location.pathname.includes('/resume');
 
   useEffect(() => {
     const updateTheme = () => setTheme(getCurrentTheme());
@@ -90,7 +90,7 @@ function App() {
             </>
           )}
         </main>
-        <SectionNav />
+        <SectionNav isResumeRoute={isResumeRoute} />
       </div>
     </LanguageProvider>
   );
