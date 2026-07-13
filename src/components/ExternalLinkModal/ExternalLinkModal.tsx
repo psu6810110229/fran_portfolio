@@ -13,7 +13,7 @@ interface ExternalLinkModalProps {
 
 const contentData = {
   Email: {
-    preview: '/previews/email.webp',
+    preview: '/previews/email.png',
     en: {
       title: 'Send an Email',
       desc: 'You are about to open your default email client to send an email.',
@@ -24,7 +24,7 @@ const contentData = {
     },
   },
   LinkedIn: {
-    preview: '/previews/linkedin.webp',
+    preview: '/previews/linkedin.png',
     en: {
       title: 'Visit LinkedIn',
       desc: 'You are about to view my professional profile on LinkedIn.',
@@ -35,7 +35,7 @@ const contentData = {
     },
   },
   GitHub: {
-    preview: '/previews/github.webp',
+    preview: '/previews/github.png',
     en: {
       title: 'Visit GitHub',
       desc: 'You are about to explore my open-source projects and code.',
@@ -46,7 +46,7 @@ const contentData = {
     },
   },
   YouTube: {
-    preview: '/previews/youtube.webp',
+    preview: '/previews/youtube.png',
     en: {
       title: 'Visit YouTube',
       desc: 'You are about to view my YouTube channel.',
@@ -57,7 +57,7 @@ const contentData = {
     },
   },
   Instagram: {
-    preview: '/previews/instagram.webp',
+    preview: '/previews/instagram.png',
     en: {
       title: 'Visit Instagram',
       desc: 'You are about to view my Instagram profile.',
@@ -68,7 +68,7 @@ const contentData = {
     },
   },
   Facebook: {
-    preview: '/previews/facebook.webp',
+    preview: '/previews/facebook.png',
     en: {
       title: 'Visit Facebook',
       desc: 'You are about to view my Facebook profile.',
