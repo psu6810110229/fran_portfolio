@@ -105,7 +105,13 @@ const Resume: React.FC = () => {
             <nav className={styles.navBar}>
               <div className={styles.navLinks}>
                 {t.nav.map((item) => (
-                  <Magnet key={item.label} padding={20} disabled={false} magnetStrength={0.5}>
+                  <Magnet
+                    key={item.label}
+                    padding={20}
+                    disabled={false}
+                    magnetStrength={4}
+                    activeTransition="transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)"
+                  >
                     <a href={item.href} className={styles.navLink}>
                       {item.label}
                     </a>
@@ -167,7 +173,12 @@ const Resume: React.FC = () => {
               >
                 {t.heroDesc}
               </motion.p>
-              <Magnet padding={20} disabled={false} magnetStrength={0.5}>
+              <Magnet
+                padding={30}
+                disabled={false}
+                magnetStrength={3}
+                activeTransition="transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)"
+              >
                 <motion.a
                   href="#contact"
                   initial={{ y: 20, opacity: 0 }}
