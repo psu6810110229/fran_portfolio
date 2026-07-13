@@ -17,7 +17,7 @@
 .modal {
   background: var(--color-surface);
   border: 1px solid var(--color-border-soft);
-  border-radius: 28px;
+  border-radius: 24px;
   overflow: hidden;
   width: 100%;
   max-width: 600px;
@@ -28,7 +28,7 @@
 
 .previewCol {
   width: 100%;
-  height: 220px;
+  height: 140px;
   background: var(--color-surface-alt);
   position: relative;
   overflow: hidden;
@@ -46,29 +46,29 @@
 }
 
 .contentCol {
-  padding: var(--space-6) var(--space-6) var(--space-8);
+  padding: var(--space-5) var(--space-5) var(--space-6);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .textContent {
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .title {
   font-family: var(--font-heading);
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--color-text);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
   letter-spacing: -0.02em;
 }
 
 .desc {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
-  line-height: 1.6;
+  line-height: 1.5;
   font-weight: 400;
 }
 
@@ -126,6 +126,20 @@
   .contentCol {
     width: 55%;
     padding: var(--space-8);
+  }
+
+  .textContent {
+    margin-bottom: var(--space-8);
+  }
+
+  .title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-2);
+  }
+
+  .desc {
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
   }
 
   .actions {
