@@ -19,7 +19,7 @@ const dictionary = {
       { label: 'Contact', href: '#contact' }
     ],
     heroDesc: 'A Year 2 Computer Engineering student at PSU. Highly logical, systematic, yet approachable. I build rigorous systems with an empathetic touch, ready to support the next generation of engineers.',
-    viewApp: 'View Application',
+    viewApp: 'Get in Touch',
     aboutBadge: 'Systematic Thinker',
     about1: 'I am Fran, ',
     about2: 'a builder of logical systems. ',
@@ -44,7 +44,7 @@ const dictionary = {
       { label: 'ติดต่อ', href: '#contact' }
     ],
     heroDesc: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ปี 2 ม.สงขลานครินทร์ มีความสามารถในการคิดวิเคราะห์อย่างเป็นระบบแต่ก็เข้าถึงง่าย ผมสร้างระบบที่รัดกุมพร้อมกับความเข้าใจผู้อื่น พร้อมสนับสนุนวิศวกรรุ่นใหม่',
-    viewApp: 'ดูใบสมัคร',
+    viewApp: 'ติดต่อพูดคุย',
     aboutBadge: 'นักคิดอย่างเป็นระบบ',
     about1: 'ผมชื่อฟราน, ',
     about2: 'นักสร้างระบบเชิงตรรกะ ',

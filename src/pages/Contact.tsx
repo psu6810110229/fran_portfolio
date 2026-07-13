@@ -1,8 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { motion } from 'motion/react';
+import { Github, Linkedin, Facebook, Instagram, Youtube } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
-import githubIcon from '../assets/icons/github.svg';
-import linkedinIcon from '../assets/icons/linkedin.svg';
 import styles from './Contact.module.css';
 
 const content = {
@@ -122,11 +121,20 @@ function Contact() {
                 {submitStatus === 'submitting' ? 'Sending...' : c.btn}
               </button>
               <div className={styles.inlineLinks}>
+                <a href="https://youtube.com/@your_channel" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="YouTube">
+                  <Youtube size={17} strokeWidth={2} />
+                </a>
+                <a href="https://instagram.com/your_handle" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="Instagram">
+                  <Instagram size={17} strokeWidth={2} />
+                </a>
+                <a href="https://facebook.com/your_profile" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="Facebook">
+                  <Facebook size={17} strokeWidth={2} />
+                </a>
                 <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="GitHub">
-                  <img src={githubIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
+                  <Github size={17} strokeWidth={2} />
                 </a>
                 <a href="https://www.linkedin.com/in/patcharapon-matsuden-864883413" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="LinkedIn">
-                  <img src={linkedinIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
+                  <Linkedin size={17} strokeWidth={2} />
                 </a>
                 {resumeUrl && (
                   <a href={resumeUrl} target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="Resume">
