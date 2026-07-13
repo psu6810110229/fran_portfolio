@@ -1,11 +1,13 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useScroll } from 'motion/react';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, Mail } from 'lucide-react';
 import WordsPullUp from '../../components/Resume/WordsPullUp';
 import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle';
 import AnimatedLetter from '../../components/Resume/AnimatedLetter';
 import Magnet from '../../components/Magnet/Magnet';
 import Contact from '../../pages/Contact';
+import ExternalLinkModal, { type ExternalLinkType } from '../../components/ExternalLinkModal/ExternalLinkModal';
+import { GithubIcon, LinkedinIcon } from '../../components/Icons/SocialIcons';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useTheme } from '../../hooks/useTheme';
 import styles from './Resume.module.css';
@@ -67,6 +69,17 @@ const Resume: React.FC = () => {
   const { lang, toggleLang } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const t = dictionary[lang];
+
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<ExternalLinkType>('Email');
+  const [modalLink, setModalLink] = useState('');
+
+  const handleOpenModal = (type: ExternalLinkType, link: string) => {
+    setModalType(type);
+    setModalLink(link);
+    setIsModalOpen(true);
+  };
 
   const aboutRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -231,9 +244,38 @@ const Resume: React.FC = () => {
           >
             <span className={styles.aboutContactLabel}>{lang === 'en' ? 'Get in Touch' : 'ติดต่อพูดคุย'}</span>
             <div className={styles.aboutSocials}>
-              <a href="mailto:patcharapon.fran@gmail.com" className={styles.aboutSocialLink}>Email</a>
-              <a href="https://www.linkedin.com/in/patcharapon-matsuden-864883413" target="_blank" rel="noreferrer" className={styles.aboutSocialLink}>LinkedIn</a>
-              <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer" className={styles.aboutSocialLink}>GitHub</a>
+              <Magnet padding={20} disabled={false} magnetStrength={3} activeTransition="transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)">
+                <motion.button 
+                  whileTap={{ scale: 0.85 }} 
+                  className={styles.aboutSocialLink}
+                  onClick={() => handleOpenModal('Email', 'mailto:patcharapon.fran@gmail.com')}
+                  aria-label="Email"
+                >
+                  <Mail size={24} strokeWidth={1.5} />
+                </motion.button>
+              </Magnet>
+              
+              <Magnet padding={20} disabled={false} magnetStrength={3} activeTransition="transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)">
+                <motion.button 
+                  whileTap={{ scale: 0.85 }} 
+                  className={styles.aboutSocialLink}
+                  onClick={() => handleOpenModal('LinkedIn', 'https://www.linkedin.com/in/patcharapon-matsuden-864883413')}
+                  aria-label="LinkedIn"
+                >
+                  <LinkedinIcon size={24} strokeWidth="1.5" />
+                </motion.button>
+              </Magnet>
+
+              <Magnet padding={20} disabled={false} magnetStrength={3} activeTransition="transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)">
+                <motion.button 
+                  whileTap={{ scale: 0.85 }} 
+                  className={styles.aboutSocialLink}
+                  onClick={() => handleOpenModal('GitHub', 'https://github.com/psu6810110229')}
+                  aria-label="GitHub"
+                >
+                  <GithubIcon size={24} strokeWidth="1.5" />
+                </motion.button>
+              </Magnet>
             </div>
           </motion.div>
         </div>
@@ -338,6 +380,15 @@ const Resume: React.FC = () => {
 
       {/* SECTION 4: CONTACT */}
       <Contact />
+
+      {/* External Link Modal */}
+      <ExternalLinkModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        link={modalLink}
+        type={modalType}
+        lang={lang}
+      />
     </div>
   );
 };

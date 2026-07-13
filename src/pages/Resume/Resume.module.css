@@ -374,10 +374,15 @@
 
 .aboutSocialLink {
   font-size: var(--font-size-sm);
-  font-weight: 500;
   color: var(--color-accent);
   transition: opacity 0.2s ease;
-  text-decoration: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .aboutSocialLink:hover {
