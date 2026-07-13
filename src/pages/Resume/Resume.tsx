@@ -197,8 +197,8 @@ const Resume: React.FC = () => {
           <ScrollReveal
             baseOpacity={0}
             enableBlur={true}
-            baseRotation={5}
-            blurStrength={10}
+            baseRotation={0}
+            blurStrength={1}
             textClassName={styles.aboutRevealText}
           >
             {t.aboutFull}
