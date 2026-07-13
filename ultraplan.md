@@ -1,163 +1,63 @@
-# Phase 1 — Projects 2.0, 9tours Case Study, Media Optimisation
-
-Branch: `chore/impeccable-redesign`
-Merge target: `dev`
+# Ultraplan: `/resume` Route (NEW Academy STAFF Application)
 
 ## Outcome
-Redesign the Projects section into a plain-language case study focusing on 9tours. Demonstrate product ownership, full-stack collaboration, and project management skills without compromising the "Ember Workshop" aesthetic. Heavy media is optimized and deferred to a deep-dive reader.
+Plan the architecture and implementation of a new interactive `/resume` route tailored for the NEW Academy event STAFF application. The page will highlight Fran's soft skills, systematic thinking, and Open House experience as an interactive resume. It strictly adheres to the "Prisma" cinematic landing page design spec (React + Vite + TypeScript + Tailwind CSS + Framer Motion).
 
-## Current code grounding
-- Types/Data: `src/types/index.ts`, `src/data/projects.ts`
-- Pages/Styles: `src/pages/Projects.tsx`, `src/pages/Projects.module.css`
-- Assets: `src/assets/9tours/`
-- Design docs/tokens: `PRODUCT.md`, `DESIGN.md`, `PROJECTS_2_0_BRIEF.md`, `AGENTS.md`, `src/styles/global.css`
+## User Review Required
+> [!IMPORTANT]
+> The Prisma design spec requires Tailwind CSS, Framer Motion, and different fonts/colors than the main portfolio site (which uses CSS Modules and a strict "Ember Workshop" theme).
+> **Question 1:** Should I install `tailwindcss` and `framer-motion` for this route, and is it acceptable for the `/resume` route to diverge from the `global.css` design tokens?
 
----
+> [!WARNING]
+> The Prisma reference includes specific video URLs for backgrounds. 
+> **Question 2:** Should I use those exact Prisma URLs, or do you have alternative video assets for Fran's resume?
 
-## Sprint 1 — Phase 0: Media optimisation
+## Phase 1: Dependency & Architecture Setup
+**Goal:** Configure the route and isolated styling ecosystem without breaking the main site.
+**Steps:**
+1. Install `tailwindcss`, `framer-motion`, and `lucide-react` (if approved).
+2. Configure Tailwind (`tailwind.config.js`) to include the Prisma color palette (`#000`, `#101010`, `#212121`, `#E1E0CC`, `#DEDBC8`) and fonts (Almarai, Instrument Serif).
+3. Update `index.html` to load the Google Fonts.
+4. Add global utility classes (`.noise-overlay`, `.bg-noise`) to `index.css`.
+5. Create `src/pages/Resume/Resume.tsx` and route `/resume` in `App.tsx`.
 
-**Goal**
-Compress 154MB of raw 9tours media into web-friendly sizes before any UI work.
+## Phase 2: Core Components & Framer Motion
+**Goal:** Scaffold the base Framer Motion utility components.
+**Steps:**
+1. Create `WordsPullUp` component for staggered y:20 -> 0 animation (with `showAsterisk` support).
+2. Create `WordsPullUpMultiStyle` component for segmented styled text animations.
+3. Create `AnimatedLetter` component with `useScroll` for scroll-linked character opacity reveal (0.2 to 1).
 
-**Expected file surfaces**
-- `src/assets/9tours/*`
+## Phase 3: Content Mapping & Layout Implementation
+**Goal:** Inject the NEW Academy persona content into the Prisma sections.
+**Steps:**
 
-**Work**
-1. Compress `user_flow.mp4` to a manageable size (< 5MB) using `ffmpeg` (H.264).
-2. Extract a poster image for the video for click-to-play usage.
-3. Convert `Screenshot (452-467).png` to WebP format, capping width at 1600px.
-4. Generate small thumbnails for the inline preview block.
+### 1. HERO Section
+- **Visuals:** Full viewport height, video background, `.noise-overlay`, black gradient overlay.
+- **Navbar:** "My Story", "Methodology", "Experience", "Skills", "Contact".
+- **Content:** Bottom-aligned 12-column grid.
+- **Heading:** "Patcharapon" (using `WordsPullUp` with asterisk).
+- **Description:** "A Year 2 Computer Engineering student at PSU. Highly logical, systematic, yet approachable. I build rigorous systems with an empathetic touch, ready to support the next generation of engineers."
+- **CTA:** "View Application" button with ArrowRight icon.
 
-**Focused checks**
-- `npm run build`
-- verify folder size is drastically reduced (from 154MB).
-- browser visual QA 1440p: check image crispness on high-DPI screens.
-- ensure no broken asset imports across the app.
+### 4. ABOUT Section
+- **Visuals:** `bg-black`, padded, inner card `bg-[#101010]`.
+- **Top Label:** "Systematic Thinker"
+- **Heading (WordsPullUpMultiStyle):**
+  - "I am Fran," (Almarai)
+  - "a builder of logical systems." (Instrument Serif italic)
+  - "I balance engineering precision with a soft, approachable demeanor." (Almarai)
+- **Body (Scroll Reveal):**
+  - "As a Computer Engineering student, I thrive under pressure and solve problems methodically. But beyond the code, my experience hosting Open Houses has taught me the value of empathy and clear communication when engaging with youth."
 
-**Commit**
-- Example: `chore(media): compress 9tours video and convert screenshots to webp`
-- Commit: media weights verified; push branch
+### 5. FEATURES Section
+- **Visuals:** min-h-screen `bg-black`, `.bg-noise` overlay, 4-column card grid.
+- **Header:** "Rigorous execution. Empathetic support."
+- **Card 1 (Video):** Looping background video. Text: "Under pressure."
+- **Card 2 (Methodology):** "01. Systematic Approach." Checklist: Root cause analysis, Edge-case planning, Calm execution under stress.
+- **Card 3 (Communication):** "02. Youth Engagement." Checklist: Active listening, Distilling complex ideas, Approachable mentorship.
+- **Card 4 (Experience):** "03. Open House." Checklist: Guided lab tours, Live technical demos, Crowd management.
 
----
-
-## Sprint 2 — Phase 1: Data + types
-
-**Goal**
-Extend the Project type and populate real case-study data for 9tours.
-
-**Expected file surfaces**
-- `src/types/index.ts`
-- `src/data/projects.ts`
-
-**Work**
-1. Add case-study fields (problem, role, built, issue, decisions, result) to the `Project` type.
-2. Populate `projects.ts` with the approved EN/TH copy from the brief.
-3. Ensure `githubUrl` points strictly to the team repo (`psu6810110712/9Tours`).
-4. Remove the placeholder `liveUrl` for 9tours to ensure no live demo is promised.
-
-**Focused checks**
-- `tsc -b` (ensure strict typings pass, no `any`).
-- `npm run build`
-
-**Commit**
-- Example: `feat(data): extend project schema and add 9tours case study copy`
-- Commit: types strict; push branch
-
----
-
-## Sprint 3 — Phase 2: Inline preview block
-
-**Goal**
-Replace the current bento cells with the single featured preview block for 9tours.
-
-**Expected file surfaces**
-- `src/pages/Projects.tsx`
-- `src/pages/Projects.module.css`
-
-**Work**
-1. Implement CSS Grid for the featured block (hero screen, 2-3 thumbnails, stack badges, actions).
-2. Integrate one-line problem, role, and result text in `Satoshi`.
-3. Wire up "Read the full case" and "View team code" (ghost/ember) buttons.
-4. Retain Gear Rental and MinusOnMine as secondary compact cards below the feature block.
-
-**Focused checks**
-- `npm run build`
-- browser visual QA 1440p/laptop/tablet/mobile: ensure the block stacks cleanly.
-- verify inline value is completely readable without opening the case reader.
-- verify both EN/TH languages render without breaking the grid.
-
-**Commit**
-- Example: `feat(ui): implement 9tours inline preview block`
-- Commit: responsive matrix verified; push branch
-
----
-
-## Sprint 4 — Phase 3 & 4: Case reader component & motion
-
-**Goal**
-Build the deep-dive, full-screen case reader modal with strict a11y and CSS-only motion.
-
-**Expected file surfaces**
-- `src/components/CaseReader/CaseReader.tsx`
-- `src/components/CaseReader/CaseReader.module.css`
-
-**Work**
-1. Build a React Portal overlay to `document.body` (`z-index: 100`).
-2. Implement strict keyboard a11y: Escape to close, focus trap (Tab/Shift+Tab), focus restoration, body scroll lock.
-3. Map the 10-beat narrative structure utilizing `Syne` (headings) and `Satoshi` (body).
-4. Integrate the click-to-play optimized video and "View all screens" gallery launcher.
-5. Implement CSS-only motion: "lamp-up" entrance, staggered section fade/translates (using progressive enhancement).
-6. Apply `prefers-reduced-motion: reduce` fallbacks (instant/crossfade) to all animations.
-
-**Focused checks**
-- keyboard/screen-reader QA: verify focus trap, `role="dialog"`, `aria-modal="true"`.
-- OS reduced motion toggle: verify animations disable gracefully.
-- mobile visual QA: verify full-screen reader usability on 375px.
-
-**Commit**
-- Example: `feat(ui): build accessible case reader overlay with motion`
-- Commit: a11y and motion fallbacks verified; push branch
-
----
-
-## Sprint 5 — Phase 5 & 6: Bilingual & final audit
-
-**Goal**
-Perfect EN/TH language switching, ensure WCAG AA contrast, and perform final ops checks.
-
-**Expected file surfaces**
-- `src/pages/Projects.tsx`
-- `src/components/CaseReader/CaseReader.tsx`
-- `src/styles/global.css`
-
-**Work**
-1. Audit natural-sounding Thai copy and ensure IBM Plex Sans Thai swaps correctly via `[data-lang="th"]`.
-2. Verify WCAG AA contrast ratios (≥4.5:1 for body) in both dark and light themes (specifically checking `#978b7f` and `#8a8077`).
-3. Verify non-JS / headless rendering: ensure inline preview remains fully readable without JS.
-
-**Focused checks**
-- `npm run build`
-- Lighthouse accessibility and performance scan.
-- verify headless/JS-disabled states.
-
-**Commit**
-- Example: `chore(audit): finalise bilingual copy and accessibility contrast`
-- Commit: QA signed off; push branch
-
----
-
-## Integration gate
-- `npm run build`
-- `tsc -b`
-- end-to-end local test: inline preview → open case reader → play video → close reader.
-- manual responsive/design review against `PRODUCT.md` and `DESIGN.md`.
-- No new NPM packages added (strict enforcement).
-
-## Merge / rollback
-- Merge non-FF to `dev` for daily review.
-- Rollback: Revert UI changes, restore old `projects.ts` data, drop `CaseReader` component.
-
-## Phase acceptance
-- Case reader is fully accessible via keyboard.
-- Media size is successfully reduced, no large autoplay videos block rendering.
-- Code firmly adheres to CSS Modules without new styling dependencies.
+## Verification Plan
+- **Automated:** `npm run build`, `tsc -b`.
+- **Manual:** Verify `/resume` route renders independently without Tailwind bleeding into `Projects.tsx`. Verify animations trigger on scroll.
