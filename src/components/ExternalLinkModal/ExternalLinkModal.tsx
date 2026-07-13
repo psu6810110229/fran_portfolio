@@ -13,7 +13,7 @@ interface ExternalLinkModalProps {
 
 const contentData = {
   Email: {
-    preview: 'https://placehold.co/600x400/1c1916/d4651a?text=Email+Preview',
+    preview: '/previews/email.webp',
     en: {
       title: 'Send an Email',
       desc: 'You are about to open your default email client to send an email.',
@@ -24,7 +24,7 @@ const contentData = {
     },
   },
   LinkedIn: {
-    preview: 'https://placehold.co/600x400/1c1916/d4651a?text=LinkedIn+Preview',
+    preview: '/previews/linkedin.webp',
     en: {
       title: 'Visit LinkedIn',
       desc: 'You are about to view my professional profile on LinkedIn.',
@@ -35,7 +35,7 @@ const contentData = {
     },
   },
   GitHub: {
-    preview: 'https://placehold.co/600x400/1c1916/d4651a?text=GitHub+Preview',
+    preview: '/previews/github.webp',
     en: {
       title: 'Visit GitHub',
       desc: 'You are about to explore my open-source projects and code.',
@@ -46,7 +46,7 @@ const contentData = {
     },
   },
   YouTube: {
-    preview: 'https://placehold.co/600x400/1c1916/d4651a?text=YouTube+Preview',
+    preview: '/previews/youtube.webp',
     en: {
       title: 'Visit YouTube',
       desc: 'You are about to view my YouTube channel.',
@@ -57,7 +57,7 @@ const contentData = {
     },
   },
   Instagram: {
-    preview: 'https://placehold.co/600x400/1c1916/d4651a?text=Instagram+Preview',
+    preview: '/previews/instagram.webp',
     en: {
       title: 'Visit Instagram',
       desc: 'You are about to view my Instagram profile.',
@@ -68,7 +68,7 @@ const contentData = {
     },
   },
   Facebook: {
-    preview: 'https://placehold.co/600x400/1c1916/d4651a?text=Facebook+Preview',
+    preview: '/previews/facebook.webp',
     en: {
       title: 'Visit Facebook',
       desc: 'You are about to view my Facebook profile.',
