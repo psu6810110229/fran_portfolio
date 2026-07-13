@@ -67,6 +67,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
     const isDesktop = window.innerWidth >= 768;
     const startPoint = isDesktop ? 'top 95%' : 'top 85%';
+    const endPoint = isDesktop ? 'bottom 70%' : 'bottom 50%';
 
     gsap.fromTo(
       el,
@@ -78,7 +79,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
           trigger: el,
           scroller,
           start: startPoint,
-          end: rotationEnd,
+          end: rotationEnd === 'bottom 50%' ? endPoint : rotationEnd,
           scrub: true
         }
       }
@@ -97,7 +98,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
           trigger: el,
           scroller,
           start: startPoint,
-          end: wordAnimationEnd,
+          end: wordAnimationEnd === 'bottom 50%' ? endPoint : wordAnimationEnd,
           scrub: true
         }
       }
@@ -115,7 +116,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
             trigger: el,
             scroller,
             start: startPoint,
-            end: wordAnimationEnd,
+            end: wordAnimationEnd === 'bottom 50%' ? endPoint : wordAnimationEnd,
             scrub: true
           }
         }
