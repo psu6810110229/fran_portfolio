@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { FileText } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../hooks/useLanguage';
 import { YoutubeIcon, InstagramIcon, FacebookIcon, GithubIcon, LinkedinIcon } from '../components/Icons/SocialIcons';
@@ -138,7 +139,7 @@ function Contact() {
                 </a>
                 {resumeUrl && (
                   <a href={resumeUrl} target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="Resume">
-                    {lang === 'th' ? 'เรซูเม่' : 'CV'}
+                    <FileText className={styles.socialIcon} />
                   </a>
                 )}
               </div>
