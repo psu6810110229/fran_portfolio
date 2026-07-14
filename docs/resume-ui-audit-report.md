@@ -50,7 +50,7 @@ Viewport ที่ใช้ตรวจจาก source:
 - ถ้า `Code = 1` แต่ `Visual = 0` ให้ mark เป็น `รอแก้ไขภายหลัง` และยังไม่นับรวม
 - เป้าหมายสุดท้ายคือ `20/20` ไม่ใช่แค่ build ผ่าน
 
-สถานะปัจจุบันยังไม่มีการยืนยัน visual จึงยังไม่นับข้อใดเป็น overall pass แม้บางข้อมี code score เป็น 1
+สถานะปัจจุบันยืนยัน manual/visual เฉพาะ Phase 1 แล้ว; ข้ออื่นที่ยังไม่มีการตรวจจากผู้ใช้ยังไม่นับเป็น overall pass
 
 | # | Acceptance criterion | Code score | Visual score | Current status / evidence |
 |---:|---|:---:|:---:|---|
@@ -59,12 +59,12 @@ Viewport ที่ใช้ตรวจจาก source:
 | 3 | CSS Module keys ที่ JSX เรียกใช้มีอยู่จริงทุก key | 1 | รอผู้ใช้ตรวจ | Contact ใช้ CSS Module keys ที่มีอยู่จริง และ browser smoke ยืนยันว่า route render ได้ |
 | 4 | ไม่มี `any`, unused import/value หรือ type mismatch ใน dependency chain ของ `/resume` | 1 | รอผู้ใช้ตรวจ | dependency chain ที่ตรวจแล้วไม่มี `any`, unused values/imports หรือ type mismatch |
 | 5 | Path matching แสดง Resume เฉพาะ `/resume` และ `/resume/` | 0 | รอผู้ใช้ตรวจ | `includes('/resume')` match กว้างเกินไป |
-| 6 | Hero/About/Features/Contact มี semantic landmarks และ heading hierarchy ที่ถูกต้อง | 1 | รอผู้ใช้ตรวจ | Browser DOM ยืนยัน 1 `h1`, section `h2`s และ labelled landmarks ครบ 4 sections |
-| 7 | Keyboard flow มี visible focus, logical order และไม่เกิด focus trap | 1 | รอผู้ใช้ตรวจ | Global `:focus-visible` มีอยู่; browser smoke ยืนยัน modal Tab/Shift+Tab flow ไม่หลุดออกนอก dialog |
-| 8 | External-link modal มี dialog semantics, Escape close, focus in/out และ labelled relationship | 1 | รอผู้ใช้ตรวจ | Browser smoke ยืนยัน `role="dialog"`, labelled relationship, Escape close, focus in/out และ body scroll cleanup |
-| 9 | EN/TH switching เปลี่ยน content, `lang` attribute และ persistence สอดคล้องกัน | 1 | รอผู้ใช้ตรวจ | `LanguageProvider` อัปเดต `data-lang`, `document.lang` และ localStorage; Resume copy ถูกปรับให้เป็น Year 2 และ bilingual |
+| 6 | Hero/About/Features/Contact มี semantic landmarks และ heading hierarchy ที่ถูกต้อง | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; browser DOM ยืนยัน 1 `h1`, section `h2`s และ labelled landmarks ครบ 4 sections |
+| 7 | Keyboard flow มี visible focus, logical order และไม่เกิด focus trap | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; global `:focus-visible` และ modal Tab/Shift+Tab flow ผ่านการตรวจ |
+| 8 | External-link modal มี dialog semantics, Escape close, focus in/out และ labelled relationship | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; `role="dialog"`, labelled relationship, Escape close, focus in/out และ body scroll cleanup ผ่าน |
+| 9 | EN/TH switching เปลี่ยน content, `lang` attribute และ persistence สอดคล้องกัน | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; `LanguageProvider` และ Year 2 bilingual Resume copy ผ่านการตรวจ |
 | 10 | Theme switching/persistence ทำงานผ่าน token layer โดยไม่ทำให้ route แตก | 1 | รอผู้ใช้ตรวจ | `useTheme` และ `data-theme` wiring มีอยู่; hardcoded colors ต้องเก็บให้ครบ |
-| 11 | Section navigation target/active state/cleanup ทำงานกับ 4 sections ของ Resume | 1 | รอผู้ใช้ตรวจ | มี observer, cleanup, `aria-current` และ target list ครบ; ต้องยืนยันด้วย browser interaction |
+| 11 | Section navigation target/active state/cleanup ทำงานกับ 4 sections ของ Resume | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; observer, cleanup, `aria-current` และ target list ผ่านการตรวจ |
 | 12 | Reduced-motion ปิด scroll-linked blur และ pointer-driven motion ที่ไม่จำเป็น | 0 | รอผู้ใช้ตรวจ | GSAP ScrollReveal/DockItem/Magnet ยังทำงานโดยไม่มี reduce branch ครบ |
 | 13 | Media มี alt/aria/fallback ที่เหมาะสม | 0 | รอผู้ใช้ตรวจ | feature images มี alt ตามเนื้อหาและ decorative videos มี `aria-hidden`; poster/static fallback ยังไม่มี |
 | 14 | Media loading ไม่บล็อก first impression และมี lazy/preload strategy | 0 | รอผู้ใช้ตรวจ | remote autoplay videos 2 จุดและ remote images 3 จุดโหลดโดยไม่มี policy ชัดเจน |
@@ -72,11 +72,11 @@ Viewport ที่ใช้ตรวจจาก source:
 | 16 | iPad Air portrait 820×1180 ใช้ layout ที่อ่านง่าย ไม่ถูกบีบแบบ desktop | 0 | รอผู้ใช้ตรวจ | breakpoint 768px เปิด hero row/2-column features เร็วเกินไป |
 | 17 | iPad Air landscape และ desktop 1280px มี grid/hero/section nav ที่เสถียร | 1 | รอผู้ใช้ตรวจ | มี explicit tablet/desktop breakpoints และ 4-column grid; ต้องยืนยันจาก screenshot |
 | 18 | Dynamic viewport และ touch targets ไม่ทำให้ใช้งานยาก | 0 | รอผู้ใช้ตรวจ | `100vh`, fixed heights และ 36×36/38×34 controls ยังเสี่ยง |
-| 19 | User flow ตรงกับ interview: story → evidence → social contact โดยไม่มี placeholder action | 1 | รอผู้ใช้ตรวจ | Year 2/Open House story copy อัปเดตแล้ว, feature links ไปยัง About/Contact และ social modal มี complete keyboard flow |
+| 19 | User flow ตรงกับ interview: story → evidence → social contact โดยไม่มี placeholder action | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; Year 2/Open House story, real feature links และ social modal flow ผ่านการตรวจ |
 | 20 | Code maintainability พร้อมต่อยอด: CSS tokens, CSS-only styling, no dead code และ animation ownership ชัด | 0 | รอผู้ใช้ตรวจ | hardcoded drift, inline styles, dead code และ 4 animation systems อยู่ใน route chain |
 
 **Current code score: 12/20**<br>
-**Current overall score: 0/20** เพราะ visual score ยังรอการตรวจของผู้ใช้และทุกข้อที่ Code/Visual ไม่ครบคู่ยังไม่นับผ่าน
+**Current overall score: 6/20** เพราะ Phase 1 ทั้ง 6 ข้อที่ตรวจโดยผู้ใช้มี Code/Visual ครบคู่; ข้ออื่นยังไม่นับผ่าน
 
 ## P0 Sprint 0A verification
 
@@ -104,7 +104,7 @@ Remaining failures are intentionally uncredited: exact route matching, reduced-m
 
 ## P1 Sprint 1A/1B verification
 
-Phase 1 structure and flow work is verified on `feat/resume-p1-structure-flow`. The scorecard above credits only the checks below; Visual scores remain `รอผู้ใช้ตรวจ`.
+Phase 1 structure and flow work is verified on `feat/resume-p1-structure-flow`. The user has approved the Phase 1 manual test, so Visual score `1` is recorded only for the six Phase 1 criteria that also have Code score `1`.
 
 Verified changes:
 
@@ -127,7 +127,8 @@ Remaining Phase 1 failures:
 
 - Media still needs poster/static fallback and loading-policy work; Code item #13 remains 0.
 - Exact `/resume` path matching, reduced-motion branches, responsive behavior, media performance, and design-system cleanup remain for later phases.
-- Visual score remains `รอผู้ใช้ตรวจ`; this Phase 1 work does not claim overall 20/20.
+- Visual score is `1` only for Phase 1 items #6, #7, #8, #9, #11, and #19; all other Visual scores remain `รอผู้ใช้ตรวจ`.
+- This Phase 1 approval does not claim overall 20/20.
 
 ## Anti-patterns verdict (baseline before P1)
 
