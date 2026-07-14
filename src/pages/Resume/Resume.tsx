@@ -77,23 +77,23 @@ const Resume: React.FC = () => {
 
   const mouseX = useMotionValue(Infinity);
   const mouseY = useMotionValue(Infinity);
-  const [isDesktop, setIsDesktop] = React.useState(false);
+  const [enableDockEffect, setEnableDockEffect] = React.useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
 
   React.useEffect(() => {
-    const desktopQuery = window.matchMedia('(min-width: 1024px)');
+    const pointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const updateMediaState = () => {
-      setIsDesktop(desktopQuery.matches && !reducedMotionQuery.matches);
+      setEnableDockEffect(pointerQuery.matches && !reducedMotionQuery.matches);
       setPrefersReducedMotion(reducedMotionQuery.matches);
     };
 
     updateMediaState();
-    desktopQuery.addEventListener('change', updateMediaState);
+    pointerQuery.addEventListener('change', updateMediaState);
     reducedMotionQuery.addEventListener('change', updateMediaState);
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (desktopQuery.matches && !reducedMotionQuery.matches) {
+      if (pointerQuery.matches && !reducedMotionQuery.matches) {
         mouseX.set(e.clientX);
         mouseY.set(e.clientY);
       }
@@ -102,7 +102,7 @@ const Resume: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove);
     
     return () => {
-      desktopQuery.removeEventListener('change', updateMediaState);
+      pointerQuery.removeEventListener('change', updateMediaState);
       reducedMotionQuery.removeEventListener('change', updateMediaState);
       window.removeEventListener('mousemove', handleMouseMove);
     };
@@ -149,13 +149,13 @@ const Resume: React.FC = () => {
             <nav className={styles.navBar}>
               <div className={styles.navLinks}>
                 {t.nav.map((item) => (
-                  <DockItem key={item.label} mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop} as="a" href={item.href} className={styles.navLink} onClick={(e) => handleNavClick(e, item.href)}>
+                  <DockItem key={item.label} mouseX={mouseX} mouseY={mouseY} isDesktop={enableDockEffect} as="a" href={item.href} className={styles.navLink} onClick={(e) => handleNavClick(e, item.href)}>
                     {item.label}
                   </DockItem>
                 ))}
               </div>
               <div className={styles.navToggles}>
-                <DockItem mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop}>
+                <DockItem mouseX={mouseX} mouseY={mouseY} isDesktop={enableDockEffect}>
                   <button
                     className={styles.langToggle}
                     onClick={toggleLang}
@@ -164,7 +164,7 @@ const Resume: React.FC = () => {
                     {lang === 'en' ? 'EN' : 'TH'}
                   </button>
                 </DockItem>
-                <DockItem mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop}>
+                <DockItem mouseX={mouseX} mouseY={mouseY} isDesktop={enableDockEffect}>
                   <button
                     className={styles.themeToggle}
                     onClick={toggleTheme}
@@ -305,7 +305,6 @@ const Resume: React.FC = () => {
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
               <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171918_4a5edc79-d78f-4637-ac8b-53c43c220606.png&w=1280&q=85" alt={t.card2Title} loading="lazy" decoding="async" className={styles.cardIcon} />
-              <div className={styles.cardNumber}>01</div>
               <h3 className={styles.cardTitle}>{t.card2Title}</h3>
               <ul className={styles.cardList}>
                 {t.card2Items.map((item, i) => (
@@ -323,7 +322,6 @@ const Resume: React.FC = () => {
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
               <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171741_ed9845ab-f5b2-4018-8ce7-07cc01823522.png&w=1280&q=85" alt={t.card3Title} loading="lazy" decoding="async" className={styles.cardIcon} />
-              <div className={styles.cardNumber}>02</div>
               <h3 className={styles.cardTitle}>{t.card3Title}</h3>
               <ul className={styles.cardList}>
                 {t.card3Items.map((item, i) => (
@@ -341,7 +339,6 @@ const Resume: React.FC = () => {
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
               <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171809_f56666dc-c099-4778-ad82-9ad4f209567b.png&w=1280&q=85" alt={t.card4Title} loading="lazy" decoding="async" className={styles.cardIcon} />
-              <div className={styles.cardNumber}>03</div>
               <h3 className={styles.cardTitle}>{t.card4Title}</h3>
               <ul className={styles.cardList}>
                 {t.card4Items.map((item, i) => (

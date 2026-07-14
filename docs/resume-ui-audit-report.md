@@ -65,13 +65,13 @@ Viewport ที่ใช้ตรวจจาก source:
 | 9 | EN/TH switching เปลี่ยน content, `lang` attribute และ persistence สอดคล้องกัน | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; `LanguageProvider` และ Year 2 bilingual Resume copy ผ่านการตรวจ |
 | 10 | Theme switching/persistence ทำงานผ่าน token layer โดยไม่ทำให้ route แตก | 1 | รอผู้ใช้ตรวจ | `useTheme` และ `data-theme` wiring มีอยู่; hardcoded colors ต้องเก็บให้ครบ |
 | 11 | Section navigation target/active state/cleanup ทำงานกับ 4 sections ของ Resume | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; observer, cleanup, `aria-current` และ target list ผ่านการตรวจ |
-| 12 | Reduced-motion ปิด scroll-linked blur และ pointer-driven motion ที่ไม่จำเป็น | 1 | รอผู้ใช้ตรวจ | ScrollReveal, DockItem, Magnet, Resume motion และ video autoplay มี reduced-motion branch ที่ผ่าน browser verification |
+| 12 | Reduced-motion ปิด scroll-linked blur และ pointer-driven motion ที่ไม่จำเป็น | 1 | 0 | Code ผ่าน browser verification; Phase 2 visual review ถูกผู้ใช้ reject และรอตรวจใหม่ |
 | 13 | Media มี alt/aria/fallback ที่เหมาะสม | 0 | รอผู้ใช้ตรวจ | feature images มี alt ตามเนื้อหาและ decorative videos มี `aria-hidden`; poster/static fallback ยังไม่มี |
-| 14 | Media loading ไม่บล็อก first impression และมี lazy/preload strategy | 1 | รอผู้ใช้ตรวจ | Hero video uses `preload="metadata"`; below-fold video uses `preload="none"`; feature images use `loading="lazy"`/`decoding="async"` |
-| 15 | 375px EN/TH ไม่มี horizontal overflow และ nav ใช้งานได้ | 1 | รอผู้ใช้ตรวจ | Browser matrix ยืนยัน EN/TH ที่ 375px มี document/body `scrollWidth` เท่ากับ viewport และ nav overflow อยู่ภายใน navLinks |
-| 16 | iPad Air portrait 820×1180 ใช้ layout ที่อ่านง่าย ไม่ถูกบีบแบบ desktop | 1 | รอผู้ใช้ตรวจ | Browser matrix ยืนยัน hero/features/contact เป็น stacked tablet state ที่ 820×1180 |
-| 17 | iPad Air landscape และ desktop 1280px มี grid/hero/section nav ที่เสถียร | 1 | รอผู้ใช้ตรวจ | Browser matrix ยืนยัน hero row, 4-column grid, contact row และ section controls ที่ 1180×820/1280×800 |
-| 18 | Dynamic viewport และ touch targets ไม่ทำให้ใช้งานยาก | 1 | รอผู้ใช้ตรวจ | `svh` replaces fixed viewport sizing; browser matrix ยืนยัน visible section controls ที่ 44–48px |
+| 14 | Media loading ไม่บล็อก first impression และมี lazy/preload strategy | 1 | 0 | Code loading policy ผ่าน; Phase 2 visual review ถูกผู้ใช้ reject และรอตรวจใหม่ |
+| 15 | 375px EN/TH ไม่มี horizontal overflow และ nav ใช้งานได้ | 1 | 0 | Remediation browser matrix ยืนยัน 375px `scrollWidth` เท่ากับ viewport และ Dynamic Island nav อยู่ใน hero; รอผู้ใช้ตรวจใหม่ |
+| 16 | iPad Air portrait 820×1180 ใช้ layout ที่อ่านง่าย ไม่ถูกบีบแบบ desktop | 1 | 0 | Remediation ใช้ stacked hero, compact SectionNav FAB และ feature composition แบบ lead card + 2 columns; รอผู้ใช้ตรวจใหม่ |
+| 17 | iPad Air landscape และ desktop 1280px มี grid/hero/section nav ที่เสถียร | 1 | 0 | Remediation browser matrix ยืนยัน hero corners, title placement และ 4-column grid ที่ 1180×820/1280×800; รอผู้ใช้ตรวจใหม่ |
+| 18 | Dynamic viewport และ touch targets ไม่ทำให้ใช้งานยาก | 1 | 0 | Hero ใช้ bounded `100dvh` frame และ visible controls 44–48px; Phase 2 visual review ถูกผู้ใช้ reject และรอตรวจใหม่ |
 | 19 | User flow ตรงกับ interview: story → evidence → social contact โดยไม่มี placeholder action | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; Year 2/Open House story, real feature links และ social modal flow ผ่านการตรวจ |
 | 20 | Code maintainability พร้อมต่อยอด: CSS tokens, CSS-only styling, no dead code และ animation ownership ชัด | 0 | รอผู้ใช้ตรวจ | hardcoded drift, inline styles, dead code และ 4 animation systems อยู่ใน route chain |
 
@@ -127,18 +127,21 @@ Remaining Phase 1 failures:
 
 - Media still needs poster/static fallback; Code item #13 remains 0. Loading policy is covered in P2.
 - Exact `/resume` path matching, media poster/static fallback, and design-system cleanup remain for later phases.
-- Visual score is `1` only for Phase 1 items #6, #7, #8, #9, #11, and #19; all other Visual scores remain `รอผู้ใช้ตรวจ`.
+- Visual score is `1` only for Phase 1 items #6, #7, #8, #9, #11, and #19; Phase 2 items #12 and #14–#18 are `0` after rejection, while the remaining items stay `รอผู้ใช้ตรวจ`.
 - This Phase 1 approval does not claim overall 20/20.
 
 ## P2 Responsive and media verification
 
-Phase 2 responsive architecture is implemented on `feat/resume-p2-responsive-media`. Code items #12 and #14–#18 are marked `1` from the verification gate above. Visual scores remain `รอผู้ใช้ตรวจ` until the user approves the Phase 2 viewport/manual test.
+Phase 2 responsive architecture is implemented on `feat/resume-p2-responsive-media`. Code items #12 and #14–#18 remain `1` from the verification gate. The user rejected the first Phase 2 visual review, so those Visual scores are `0` until the remediation passes a new manual review.
 
 Verified changes:
 
 - 375px EN/TH navigation is contained inside a horizontally scrollable nav region, while the document remains free of horizontal overflow.
-- Desktop hero behavior now begins at 1024px; 820px portrait remains a stacked tablet state, while 1180px landscape and 1280px use the existing desktop row/grid direction.
-- Hero and feature sections use `svh`-based sizing; Contact fields/actions stay stacked through tablet portrait and become rows at desktop width.
+- Desktop hero behavior begins at 1024px; 820px portrait remains stacked, while 1180px landscape and 1280px use the existing desktop hero direction.
+- Hero uses a padded `100dvh` frame so its rounded edges remain visible; feature sections use intrinsic content height to avoid the former empty viewport gap.
+- The top navigation is a compact full-pill Dynamic Island, with Dock magnification on fine pointers and press feedback on touch devices.
+- iPad portrait uses a full-width media/lead card followed by two balanced cards; non-sequential `01/02/03` markers were removed.
+- Section navigation stays in compact FAB mode through 1023px so its desktop rail does not overlap iPad portrait content.
 - Section navigation touch targets are 44–48px on visible controls.
 - Reduced-motion disables Resume pointer scaling, Magnet movement, ScrollReveal GSAP effects, video autoplay, and video preloading.
 - Hero media uses metadata preload; below-fold video uses no preload; feature images use lazy loading and async decoding.
@@ -148,15 +151,18 @@ Verification evidence:
 - `git diff --check` passes.
 - `npm run lint` passes.
 - `npm run build` passes; only the existing Vite chunk-size warning remains.
-- Browser matrix loaded `/resume` and `/resume/` at 375×812, 820×1180, 1180×820, and 1280×800; every route returned HTTP 200 with no console/runtime errors.
+- Remediation browser matrix loaded `/resume` and `/resume/` at 375×812, 820×1180, 1180×820, and 1280×800; every route returned HTTP 200 with no console/runtime errors.
 - 375px EN/TH document and body `scrollWidth` both equal the viewport width.
-- 820px uses stacked hero/features/contact; 1180px and 1280px use row hero/contact and four feature columns.
+- Hero title does not intersect the Dynamic Island and remains inside the hero at all four viewports; every hero bottom edge is inside the viewport frame.
+- The measured About-to-Features gap is 68px at 375px and 92px at 820px.
+- 820px uses a stacked hero and intentional 1+2 feature composition; 1180px and 1280px use row hero/contact and four feature columns.
 - Reduced-motion browser context verified both videos have `autoplay=false` and `preload="none"`.
 
 Remaining Phase 2 failures:
 
 - Code item #13 remains 0 because media still lacks poster/static fallback coverage.
-- Visual score remains `รอผู้ใช้ตรวจ` for all Phase 2 items; this does not claim overall 20/20.
+- The first manual review failed because the title was clipped behind the top nav, hero edges were cut off, iPad SectionNav overlaid content, section spacing produced a large blank area, and the portrait feature cards were oversized.
+- Those failures have been remediated and browser-rendered, but Visual score remains `0` until the user rechecks and approves. This does not claim overall 20/20.
 
 ## Anti-patterns verdict (baseline before P1)
 
@@ -164,9 +170,9 @@ Remaining Phase 2 failures:
 
 สิ่งที่พบจริง:
 
-- `featuresGrid` ใช้การ์ดขนาดใกล้เคียงกัน 3 ใบซ้ำโครงสร้าง icon + number + heading + bullet list; visual structure นี้ยังเก็บไว้สำหรับ phase polish (`src/pages/Resume/Resume.tsx:288-338`)
+- `featuresGrid` ยังใช้การ์ด 3 ใบที่ซ้ำโครงสร้าง icon + heading + bullet list; tablet remediation ปรับ composition แล้ว แต่ visual structure หลักยังเก็บไว้สำหรับ phase polish (`src/pages/Resume/Resume.tsx:288-338`)
 - ก่อน P1 เนื้อหา Features เน้น “coding / teamwork / open house” แบบคำกว้าง ๆ; P1 ปรับ copy ให้เป็น Year 2 และ Open House 2026 แล้ว แต่ visual evidence ยังเป็นงาน phase ถัดไป
-- `01/02/03` ถูกใช้เป็นเลขนำการ์ด ทั้งที่ section นี้ไม่ใช่ขั้นตอนที่ผู้ใช้ต้องทำตาม
+- Phase 2 remediation ลบเลขนำ `01/02/03` แล้ว เพราะ section นี้ไม่ใช่ขั้นตอนแบบลำดับ
 - มี noise, gradient overlay, blur reveal และ cursor/magnet interaction หลายชั้น แต่ยังไม่มี narrative asset จาก Open House ที่เป็นแกนของความ immersive
 
 สิ่งที่ควรรักษาไว้:

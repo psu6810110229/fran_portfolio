@@ -178,7 +178,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .nav {
     right: calc(env(safe-area-inset-right, 0px) + 18px);
     top: auto;
@@ -543,7 +543,7 @@
   }
 }
 
-@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
   .fab,
   .mark,
   .list,
