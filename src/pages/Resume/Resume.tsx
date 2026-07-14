@@ -77,15 +77,23 @@ const Resume: React.FC = () => {
 
   const mouseX = useMotionValue(Infinity);
   const mouseY = useMotionValue(Infinity);
-  const [isDesktop, setIsDesktop] = React.useState(true);
+  const [isDesktop, setIsDesktop] = React.useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
 
   React.useEffect(() => {
-    const handleResize = () => setIsDesktop(window.innerWidth >= 768);
-    handleResize();
-    window.addEventListener('resize', handleResize);
+    const desktopQuery = window.matchMedia('(min-width: 1024px)');
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updateMediaState = () => {
+      setIsDesktop(desktopQuery.matches && !reducedMotionQuery.matches);
+      setPrefersReducedMotion(reducedMotionQuery.matches);
+    };
+
+    updateMediaState();
+    desktopQuery.addEventListener('change', updateMediaState);
+    reducedMotionQuery.addEventListener('change', updateMediaState);
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (window.innerWidth >= 768) {
+      if (desktopQuery.matches && !reducedMotionQuery.matches) {
         mouseX.set(e.clientX);
         mouseY.set(e.clientY);
       }
@@ -94,7 +102,8 @@ const Resume: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove);
     
     return () => {
-      window.removeEventListener('resize', handleResize);
+      desktopQuery.removeEventListener('change', updateMediaState);
+      reducedMotionQuery.removeEventListener('change', updateMediaState);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [mouseX, mouseY]);
@@ -103,17 +112,18 @@ const Resume: React.FC = () => {
   const handleNavClick = (e: React.MouseEvent<HTMLElement>, href: string) => {
     if (href.startsWith('#')) {
       e.preventDefault();
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (lenis) {
-        lenis.scrollTo(href, { duration: 1.5, easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) });
+        lenis.scrollTo(href, { duration: 1.5, immediate: reduce, easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) });
       } else {
-        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+        document.querySelector(href)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
       }
     }
   };
 
   const cardVariants = {
     hidden: { scale: 0.95, opacity: 0 },
-    visible: { scale: 1, opacity: 1, transition: { ease: [0.22, 1, 0.36, 1] as const, duration: 0.8 } },
+    visible: { scale: 1, opacity: 1, transition: { ease: [0.22, 1, 0.36, 1] as const, duration: prefersReducedMotion ? 0 : 0.8 } },
   };
 
   return (
@@ -122,10 +132,11 @@ const Resume: React.FC = () => {
       <section id="hero" aria-labelledby="resume-hero-title" className={styles.heroSection}>
         <div className={styles.heroInner}>
           <video
-            autoPlay
+            autoPlay={!prefersReducedMotion}
             loop
             muted
             playsInline
+            preload={prefersReducedMotion ? 'none' : 'metadata'}
             aria-hidden="true"
             tabIndex={-1}
             className={styles.videoBg}
@@ -196,18 +207,18 @@ const Resume: React.FC = () => {
             </div>
             <div className={styles.heroRight}>
               <motion.p
-                initial={{ y: 20, opacity: 0 }}
+                initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5, ease: [0.16, 1, 0.3, 1] as const, duration: 0.8 }}
+                transition={{ delay: prefersReducedMotion ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] as const, duration: prefersReducedMotion ? 0 : 0.8 }}
                 className={styles.heroDesc}
               >
                 {t.heroDesc}
               </motion.p>
               <motion.a
                 href="#about"
-                initial={{ y: 20, opacity: 0 }}
+                initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.7, ease: [0.16, 1, 0.3, 1] as const, duration: 0.8 }}
+                transition={{ delay: prefersReducedMotion ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] as const, duration: prefersReducedMotion ? 0 : 0.8 }}
                 className={styles.ctaButton}
                 onClick={(e) => handleNavClick(e, '#about')}
               >
@@ -268,7 +279,7 @@ const Resume: React.FC = () => {
           />
 
           <motion.div
-            initial="hidden"
+            initial={prefersReducedMotion ? false : 'hidden'}
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
             variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
@@ -276,10 +287,11 @@ const Resume: React.FC = () => {
           >
             <motion.div variants={cardVariants} className={styles.cardVideo}>
               <video
-                autoPlay
+                autoPlay={!prefersReducedMotion}
                 loop
                 muted
                 playsInline
+                preload="none"
                 aria-hidden="true"
                 tabIndex={-1}
                 className={styles.cardVideoInner}
@@ -292,7 +304,7 @@ const Resume: React.FC = () => {
             </motion.div>
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
-              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171918_4a5edc79-d78f-4637-ac8b-53c43c220606.png&w=1280&q=85" alt={t.card2Title} className={styles.cardIcon} />
+              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171918_4a5edc79-d78f-4637-ac8b-53c43c220606.png&w=1280&q=85" alt={t.card2Title} loading="lazy" decoding="async" className={styles.cardIcon} />
               <div className={styles.cardNumber}>01</div>
               <h3 className={styles.cardTitle}>{t.card2Title}</h3>
               <ul className={styles.cardList}>
@@ -310,7 +322,7 @@ const Resume: React.FC = () => {
             </motion.div>
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
-              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171741_ed9845ab-f5b2-4018-8ce7-07cc01823522.png&w=1280&q=85" alt={t.card3Title} className={styles.cardIcon} />
+              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171741_ed9845ab-f5b2-4018-8ce7-07cc01823522.png&w=1280&q=85" alt={t.card3Title} loading="lazy" decoding="async" className={styles.cardIcon} />
               <div className={styles.cardNumber}>02</div>
               <h3 className={styles.cardTitle}>{t.card3Title}</h3>
               <ul className={styles.cardList}>
@@ -328,7 +340,7 @@ const Resume: React.FC = () => {
             </motion.div>
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
-              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171809_f56666dc-c099-4778-ad82-9ad4f209567b.png&w=1280&q=85" alt={t.card4Title} className={styles.cardIcon} />
+              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171809_f56666dc-c099-4778-ad82-9ad4f209567b.png&w=1280&q=85" alt={t.card4Title} loading="lazy" decoding="async" className={styles.cardIcon} />
               <div className={styles.cardNumber}>03</div>
               <h3 className={styles.cardTitle}>{t.card4Title}</h3>
               <ul className={styles.cardList}>
