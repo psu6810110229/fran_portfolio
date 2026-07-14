@@ -34,11 +34,49 @@ Viewport ที่ใช้ตรวจจาก source:
 | 1 | Accessibility | 1/4 | Heading semantics ไม่ถูกต้อง และ external-link modal ไม่มี dialog/focus behavior ที่จำเป็น |
 | 2 | Performance | 1/4 | วิดีโอ remote autoplay 2 จุดและภาพ remote 3 จุดโหลดโดยไม่มี poster/lazy strategy |
 | 3 | Responsive Design | 1/4 | Header มีความเสี่ยง overflow ที่ 375px และ breakpoint 768px ทำให้ iPad Air portrait ใช้ desktop hero layout เร็วเกินไป |
-| 4 | Theming | 2/4 | มี token system ที่ดี แต่ Resume hardcode สี/ขนาดหลายจุดและ detector พบ drift จาก DESIGN.md |
+| 4 | Theming | 1/4 | มี token system แต่ Contact CSS module ไม่ตรงกับ JSX และ Resume hardcode สี/ขนาดหลายจุด |
 | 5 | Anti-Patterns | 2/4 | โทนสีมีเอกลักษณ์ แต่ Features ยังเป็น repeated feature-card grid พร้อม placeholder links และ copy แบบ template |
-| **Total** |  | **7/20** | **Poor — ต้องแก้ blocking และ major issues ก่อน polish** |
+| **Total** |  | **6/20** | **Poor — ต้องแก้ blocking และ major issues ก่อน polish** |
 
-คะแนนนี้เป็นคะแนนของ implementation ปัจจุบัน ไม่ใช่คะแนนศักยภาพของ visual direction ใน interview report
+คะแนนนี้เป็น health score ของ implementation ปัจจุบัน ไม่ใช่คะแนนศักยภาพของ visual direction ใน interview report และไม่ใช่ acceptance score 20 ข้อด้านล่าง
+
+## 20-point acceptance scorecard
+
+กติกาการให้คะแนน:
+
+- `Code score`: ผมให้ `1` เฉพาะเมื่อ implementation/behavior ตรวจยืนยันได้จาก code และ verification gate; ถ้ายังมี bug หรือยังไม่มีหลักฐาน ให้ `0`
+- `Visual score`: ผู้ใช้เป็นผู้ตรวจจาก screenshot/การใช้งานจริง ให้ `1` เมื่อผ่าน และ `0` เมื่อไม่ผ่าน
+- ข้อหนึ่งจะนับว่าผ่านก็ต่อเมื่อ `Code = 1` และ `Visual = 1`
+- ถ้า `Code = 1` แต่ `Visual = 0` ให้ mark เป็น `รอแก้ไขภายหลัง` และยังไม่นับรวม
+- เป้าหมายสุดท้ายคือ `20/20` ไม่ใช่แค่ build ผ่าน
+
+สถานะปัจจุบันยังไม่มีการยืนยัน visual จึงยังไม่นับข้อใดเป็น overall pass แม้บางข้อมี code score เป็น 1
+
+| # | Acceptance criterion | Code score | Visual score | Current status / evidence |
+|---:|---|:---:|:---:|---|
+| 1 | `npm run build` ผ่านและสร้าง production bundle ได้ | 0 | รอผู้ใช้ตรวจ | Build ปัจจุบันล้มเหลวจาก TypeScript errors |
+| 2 | `npm run lint` ผ่านทั้ง repository และ dependency chain ของ `/resume` สะอาด | 0 | รอผู้ใช้ตรวจ | พบ 15 errors และ 2 warnings |
+| 3 | CSS Module keys ที่ JSX เรียกใช้มีอยู่จริงทุก key | 0 | รอผู้ใช้ตรวจ | Contact เรียก `contactSection/header/secTitle/title/subtitle/formContainer` แต่ CSS exports คนละชื่อ |
+| 4 | ไม่มี `any`, unused import/value หรือ type mismatch ใน dependency chain ของ `/resume` | 0 | รอผู้ใช้ตรวจ | พบ `any`, unused values และ `DockItem` event handler mismatch |
+| 5 | Path matching แสดง Resume เฉพาะ `/resume` และ `/resume/` | 0 | รอผู้ใช้ตรวจ | `includes('/resume')` match กว้างเกินไป |
+| 6 | Hero/About/Features/Contact มี semantic landmarks และ heading hierarchy ที่ถูกต้อง | 0 | รอผู้ใช้ตรวจ | Hero/section titles เป็น `div`; ScrollReveal ใช้ `h2` ครอบ `p` |
+| 7 | Keyboard flow มี visible focus, logical order และไม่เกิด focus trap | 0 | รอผู้ใช้ตรวจ | Global focus มี แต่ external modal ยังไม่จัดการ focus lifecycle |
+| 8 | External-link modal มี dialog semantics, Escape close, focus in/out และ labelled relationship | 0 | รอผู้ใช้ตรวจ | ปัจจุบันเป็น motion div ไม่มี `role="dialog"`/focus management |
+| 9 | EN/TH switching เปลี่ยน content, `lang` attribute และ persistence สอดคล้องกัน | 1 | รอผู้ใช้ตรวจ | `LanguageProvider` อัปเดต `data-lang`, `document.lang` และ localStorage; content freshness ยังเป็นงานถัดไป |
+| 10 | Theme switching/persistence ทำงานผ่าน token layer โดยไม่ทำให้ route แตก | 1 | รอผู้ใช้ตรวจ | `useTheme` และ `data-theme` wiring มีอยู่; hardcoded colors ต้องเก็บให้ครบ |
+| 11 | Section navigation target/active state/cleanup ทำงานกับ 4 sections ของ Resume | 1 | รอผู้ใช้ตรวจ | มี observer, cleanup, `aria-current` และ target list ครบ; ต้องยืนยันด้วย browser interaction |
+| 12 | Reduced-motion ปิด scroll-linked blur และ pointer-driven motion ที่ไม่จำเป็น | 0 | รอผู้ใช้ตรวจ | GSAP ScrollReveal/DockItem/Magnet ยังทำงานโดยไม่มี reduce branch ครบ |
+| 13 | Media มี alt/aria/fallback ที่เหมาะสม | 0 | รอผู้ใช้ตรวจ | feature images ใช้ `alt="Icon"`; videos ไม่มี poster/`aria-hidden`/fallback |
+| 14 | Media loading ไม่บล็อก first impression และมี lazy/preload strategy | 0 | รอผู้ใช้ตรวจ | remote autoplay videos 2 จุดและ remote images 3 จุดโหลดโดยไม่มี policy ชัดเจน |
+| 15 | 375px EN/TH ไม่มี horizontal overflow และ nav ใช้งานได้ | 0 | รอผู้ใช้ตรวจ | nowrap nav + 4 links + 2 toggles มีความเสี่ยงเกินความกว้าง |
+| 16 | iPad Air portrait 820×1180 ใช้ layout ที่อ่านง่าย ไม่ถูกบีบแบบ desktop | 0 | รอผู้ใช้ตรวจ | breakpoint 768px เปิด hero row/2-column features เร็วเกินไป |
+| 17 | iPad Air landscape และ desktop 1280px มี grid/hero/section nav ที่เสถียร | 1 | รอผู้ใช้ตรวจ | มี explicit tablet/desktop breakpoints และ 4-column grid; ต้องยืนยันจาก screenshot |
+| 18 | Dynamic viewport และ touch targets ไม่ทำให้ใช้งานยาก | 0 | รอผู้ใช้ตรวจ | `100vh`, fixed heights และ 36×36/38×34 controls ยังเสี่ยง |
+| 19 | User flow ตรงกับ interview: story → evidence → social contact โดยไม่มี placeholder action | 0 | รอผู้ใช้ตรวจ | generic feature cards, stale Year 1, `href="#"` และ social modal เพิ่ม friction |
+| 20 | Code maintainability พร้อมต่อยอด: CSS tokens, CSS-only styling, no dead code และ animation ownership ชัด | 0 | รอผู้ใช้ตรวจ | hardcoded drift, inline styles, dead code และ 4 animation systems อยู่ใน route chain |
+
+**Current code score: 4/20**<br>
+**Current overall score: 0/20** เพราะ visual score ยังรอการตรวจของผู้ใช้และทุกข้อที่ Code/Visual ไม่ครบคู่ยังไม่นับผ่าน
 
 ## Anti-patterns verdict
 
@@ -61,7 +99,7 @@ Viewport ที่ใช้ตรวจจาก source:
 ## Executive summary
 
 - Audit Health Score: **7/20 — Poor**
-- Issues: **1 P0, 8 P1, 5 P2, 2 P3**
+- Issues: **1 P0, 9 P1, 5 P2, 2 P3**
 - Route ตอบ HTTP 200 แต่ยัง build production ไม่ได้
 - User flow ปัจจุบันยังไม่ตอบเป้าหมายจาก interview ที่ต้องการให้ผู้ชมเห็นศักยภาพในการสมัคร Staff และติดต่อผ่าน social ได้ง่าย
 - ความเสี่ยง responsive สูงสุดอยู่ที่ 375px header และ 820px iPad Air portrait
@@ -69,10 +107,11 @@ Viewport ที่ใช้ตรวจจาก source:
 Top issues:
 
 1. `npm run build` ล้มเหลวจาก TypeScript errors รวมถึง Resume โดยตรง (`src/pages/Resume/Resume.tsx:7-144`)
-2. Hero/About/Features ไม่มี heading semantics ที่ถูกต้อง และ `ScrollReveal` สร้าง `<h2><p>...</p></h2>` (`src/components/ScrollReveal/ScrollReveal.tsx:118-119`)
-3. Mobile navbar มีเนื้อหาหลายรายการแบบ `white-space: nowrap` และไม่มี fallback เมื่อความกว้างไม่พอ (`src/pages/Resume/Resume.module.css:62-151`)
-4. iPad Air portrait เข้า breakpoint `min-width: 768px` ทำให้ hero เป็น row และ features เป็น 2 columns ทั้งที่พื้นที่แนวตั้ง/แนวนอนยังจำกัด (`src/pages/Resume/Resume.module.css:164-229`, `452-514`)
-5. Social contact ถูกซ่อนหลัง icon-only links และ confirmation modal; modal ไม่มี focus management หรือ keyboard close (`src/pages/Contact.tsx:119-141`, `src/components/ExternalLinkModal/ExternalLinkModal.tsx:95-160`)
+2. Contact JSX กับ CSS Module เป็นคนละ contract ทำให้ class สำคัญหลายตัวกลายเป็น `undefined` และ Contact render แบบไม่มี intended styling (`src/pages/Contact.tsx:80-97`, `src/pages/Contact.module.css:1-57`)
+3. Hero/About/Features ไม่มี heading semantics ที่ถูกต้อง และ `ScrollReveal` สร้าง `<h2><p>...</p></h2>` (`src/components/ScrollReveal/ScrollReveal.tsx:118-119`)
+4. Mobile navbar มีเนื้อหาหลายรายการแบบ `white-space: nowrap` และไม่มี fallback เมื่อความกว้างไม่พอ (`src/pages/Resume/Resume.module.css:62-151`)
+5. iPad Air portrait เข้า breakpoint `min-width: 768px` ทำให้ hero เป็น row และ features เป็น 2 columns ทั้งที่พื้นที่แนวตั้ง/แนวนอนยังจำกัด (`src/pages/Resume/Resume.module.css:164-229`, `452-514`)
+6. Social contact ถูกซ่อนหลัง icon-only links และ confirmation modal; modal ไม่มี focus management หรือ keyboard close (`src/pages/Contact.tsx:119-141`, `src/components/ExternalLinkModal/ExternalLinkModal.tsx:95-160`)
 
 ## Detailed findings
 
@@ -88,6 +127,15 @@ Top issues:
 - **Suggested command:** `$impeccable harden /resume`
 
 ### P1 — Major
+
+#### [P1] Contact JSX และ CSS Module ใช้ class contract คนละชุด
+
+- **Location:** `src/pages/Contact.tsx:80-97`; `src/pages/Contact.module.css:1-57`
+- **Category:** Bug / Responsive / UX
+- **Impact:** JSX เรียก `contactSection`, `header`, `secTitle`, `title`, `subtitle` และ `formContainer` แต่ CSS มี `.cta`, `.heading` และ `.sub` แทน; ใน Vite CSS Module key ที่ไม่มีจะกลายเป็น `undefined` ทำให้ section divider, heading typography, subtitle และ form container ไม่ได้รับ style ที่ตั้งใจ หน้า Contact ซึ่งเป็นปลายทางของ `/resume` จึงเสีย visual hierarchy โดยตรง
+- **Evidence:** รายการ `styles.*` จาก JSX ไม่ตรงกับ selector ใน CSS; TypeScript build ไม่ตรวจ contract นี้เพราะไม่มี generated CSS-module typings
+- **Recommendation:** เลือกชื่อชุดเดียวแล้วแก้ JSX/CSS ให้ตรงกัน จากนั้นเพิ่ม smoke assertion หรือ CSS-module typing เพื่อไม่ให้ mismatch กลับมาอีก
+- **Suggested command:** `$impeccable harden /resume`
 
 #### [P1] Heading hierarchy และ semantic structure ไม่สื่อสารเนื้อหา
 
@@ -295,6 +343,75 @@ Hero: ตัวตน + ความพร้อมทำงานกับผ�
 4. ทดสอบจริงที่ 375px, 820×1180, 1180×820 และ 1280px ด้วย browser screenshot/interaction pass
 5. รัน audit ซ้ำหลัง fixes ก่อน deploy
 
+## Score-driven implementation plan
+
+### Git flow ที่ต้องใช้
+
+- `main` เป็น production branch และห้ามแตะในงานนี้
+- `dev` เป็น integration branch สำหรับงาน Resume
+- `feat/resume-audit-report` เป็น branch เอกสารที่ใช้อยู่ในปัจจุบัน; ไม่ควรนำไปใช้พัฒนา UI ต่อโดยตรง
+- เมื่อเริ่ม implementation ให้แตก branch ใหม่จาก `dev` แยกตาม phase และอย่าแก้หลาย phase ใน branch เดียว
+- ทุก sprint ต้อง commit เฉพาะ scope ของ sprint ด้วย commit message ที่บอกผลลัพธ์
+- หลัง gate ผ่าน ให้หยุดเพื่อขออนุมัติ merge เข้า `dev`; audit นี้ไม่ทำ merge หรือ push
+
+โครงสร้างที่แนะนำ:
+
+```text
+main (protected)
+  ↑ approved merge only
+dev
+  ├─ feat/resume-p0-foundation
+  ├─ feat/resume-p1-structure-flow
+  ├─ feat/resume-p2-responsive-media
+  └─ feat/resume-p3-final-polish
+```
+
+ตัวอย่าง commit ที่ควรใช้:
+
+- `fix: restore Contact CSS module contract`
+- `fix: repair Resume TypeScript build`
+- `fix: add semantic headings to Resume`
+- `fix: harden social link dialog`
+- `fix: adapt Resume layout for iPad Air`
+- `perf: defer Resume media and motion`
+- `refactor: remove dead Resume dependencies`
+
+### Phase / sprint breakdown
+
+| Phase | Sprint | Branch | งานหลัก | Code score gate |
+|---|---|---|---|---|
+| P0 Release unblock | 0A | `feat/resume-p0-foundation` | แก้ TypeScript, lint, CSS-module mismatch, `any`, unused code | #1–#4 = 1 |
+| P0 Release unblock | 0B | `feat/resume-p0-foundation` | exact route matching, `/resume` smoke path, regression check | #5 = 1 และ #1–#4 ยังเป็น 1 |
+| P1 Structure + flow | 1A | `feat/resume-p1-structure-flow` | semantic headings, landmarks, alt strategy, bilingual copy contract | #6, #9, #13 = 1 |
+| P1 Structure + flow | 1B | `feat/resume-p1-structure-flow` | remove placeholder links, dialog focus lifecycle, section navigation | #7, #8, #11, #19 = 1 |
+| P2 Device + media | 2A | `feat/resume-p2-responsive-media` | 375px, EN/TH nav, iPad Air portrait/landscape, desktop regression | #15–#18 = 1 |
+| P2 Device + media | 2B | `feat/resume-p2-responsive-media` | poster/lazy strategy, decorative media semantics, reduced motion | #12, #14 = 1 |
+| P3 Final quality | 3A | `feat/resume-p3-final-polish` | token cleanup, CSS-only styling, animation ownership, final dead-code sweep | #10, #20 = 1 |
+| P3 Final quality | 3B | `feat/resume-p3-final-polish` | full regression, update scorecard, user visual sign-off | all Code = 1; user fills all Visual scores |
+
+### Verification gate at the end of every sprint
+
+ต้องรันครบทุกครั้งก่อน commit/merge decision:
+
+1. `git diff --check`
+2. `npm run lint`
+3. `npm run build`
+4. เปิด dev/preview server แล้วตรวจ `GET /resume` และ `GET /resume/` ได้ HTTP 200
+5. Smoke interaction: hero anchor → About, section nav → ทุก section, EN/TH toggle, theme toggle, social link flow, modal close, back-to-top
+6. ตรวจ console/runtime error และตรวจว่าไม่มี horizontal overflow ที่ 375px
+7. เมื่อถึง phase responsive ให้ capture 375×812, 820×1180, 1180×820 และ 1280×800 เพื่อให้ผู้ใช้ให้ Visual score
+
+ปัจจุบัน repository ยังไม่มี `smoke:resume` script และ Playwright browser executable ในเครื่องนี้ยังไม่พร้อม ดังนั้นรอบวางแผนใช้ checklist ข้างต้นเป็น manual smoke gate ก่อน หากจะทำเป็น automated script ให้เพิ่มใน sprint P0 โดยไม่ติดตั้ง library ใหม่โดยไม่ได้รับอนุญาต
+
+### Definition of done ต่อ scorecard
+
+- Code score ขยับจาก `0 → 1` ได้เมื่อ fix มี test/evidence ตาม gate ไม่ใช่แค่ code ดูถูกต้อง
+- Visual score ขยับจาก `รอผู้ใช้ตรวจ → 1` เมื่อผู้ใช้ตรวจภาพและ interaction ที่ viewport ของ phase นั้นแล้ว
+- ถ้า Code = 1 แต่ Visual = 0 ให้คง Code = 1, Visual = 0 และ status เป็น `รอแก้ไขภายหลัง`; overall ข้อนั้นยังไม่ผ่าน
+- ถ้า Visual = 1 แต่ Code = 0 ให้ถือว่า implementation ยังไม่ผ่านและห้ามนับคะแนน
+- Phase ถัดไปเริ่มได้เมื่อ phase ก่อนหน้าผ่าน Code gate และไม่มี P0/P1 ค้างโดยไม่มี owner
+- เป้าหมาย release คือ Code 20/20 + Visual 20/20 = **20/20 overall**
+
 ## Positive findings to preserve
 
 - Route isolation ใน `App.tsx` ชัดเจน: `/resume` ไม่โหลด Grainient และ Navbar หลักของ portfolio
@@ -320,3 +437,5 @@ Hero: ตัวตน + ความพร้อมทำงานกับผ�
 หน้า `/resume` มีทิศทาง visual ที่ต่อยอดเป็น premium + emotional ได้จริง แต่ implementation ปัจจุบันยังไม่ควรนำไป production เพราะ build ไม่ผ่าน และ narrative/interaction ยังไม่พาผู้ชมไปสู่เป้าหมายสมัคร Staff อย่างตรงจุด
 
 ลำดับที่ปลอดภัยคือ **แก้ release blockers → จัด semantic/content/user flow → แก้ responsive สำหรับ 375px และ iPad Air → วาง media จริง → ค่อย polish motion และ micro detail** เพื่อให้ผลจาก interview ถูกแปลงเป็นประสบการณ์ที่วัดผลได้ ไม่ใช่เพิ่ม effect ก่อนแก้โครงสร้าง
+
+สถานะล่าสุดของ scorecard คือ **Code 4/20, Overall 0/20**; คะแนนนี้ตั้งใจให้เป็น backlog ที่ตรวจซ้ำได้ทุก sprint จนกว่าจะครบ 20/20
