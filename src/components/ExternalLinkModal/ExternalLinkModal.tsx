@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './ExternalLinkModal.module.css';
 
@@ -97,6 +97,7 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
   const common = commonStrings[lang];
 
   const [isMobile, setIsMobile] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -104,6 +105,50 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const dialog = dialogRef.current;
+    const focusableSelector = 'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])';
+
+    dialog?.focus();
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== 'Tab' || !dialog) return;
+
+      const focusable = Array.from(dialog.querySelectorAll<HTMLElement>(focusableSelector));
+      if (focusable.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+      previousFocus?.focus();
+    };
+  }, [isOpen, onClose]);
 
   // Define animations based on device type
   const mobileAnimation = {
@@ -133,7 +178,13 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
           transition={{ duration: 0.2 }}
         >
           <motion.div
+            ref={dialogRef}
             className={styles.modal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="external-link-title"
+            aria-describedby="external-link-description"
+            tabIndex={-1}
             {...animationProps}
           >
             <div className={styles.previewCol}>
@@ -141,8 +192,8 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
             </div>
             <div className={styles.contentCol}>
               <div className={styles.textContent}>
-                <h3 className={styles.title}>{c.title}</h3>
-                <p className={styles.desc}>{c.desc}</p>
+                <h3 id="external-link-title" className={styles.title}>{c.title}</h3>
+                <p id="external-link-description" className={styles.desc}>{c.desc}</p>
               </div>
               <div className={styles.actions}>
                 <button type="button" onClick={onClose} className={styles.btnStay}>

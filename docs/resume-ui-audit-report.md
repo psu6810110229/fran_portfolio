@@ -54,28 +54,28 @@ Viewport ที่ใช้ตรวจจาก source:
 
 | # | Acceptance criterion | Code score | Visual score | Current status / evidence |
 |---:|---|:---:|:---:|---|
-| 1 | `npm run build` ผ่านและสร้าง production bundle ได้ | 0 | รอผู้ใช้ตรวจ | Build ปัจจุบันล้มเหลวจาก TypeScript errors |
-| 2 | `npm run lint` ผ่านทั้ง repository และ dependency chain ของ `/resume` สะอาด | 0 | รอผู้ใช้ตรวจ | พบ 15 errors และ 2 warnings |
-| 3 | CSS Module keys ที่ JSX เรียกใช้มีอยู่จริงทุก key | 0 | รอผู้ใช้ตรวจ | Contact เรียก `contactSection/header/secTitle/title/subtitle/formContainer` แต่ CSS exports คนละชื่อ |
-| 4 | ไม่มี `any`, unused import/value หรือ type mismatch ใน dependency chain ของ `/resume` | 0 | รอผู้ใช้ตรวจ | พบ `any`, unused values และ `DockItem` event handler mismatch |
+| 1 | `npm run build` ผ่านและสร้าง production bundle ได้ | 1 | รอผู้ใช้ตรวจ | `npm run build` ผ่าน; Vite สร้าง production bundle ได้ |
+| 2 | `npm run lint` ผ่านทั้ง repository และ dependency chain ของ `/resume` สะอาด | 1 | รอผู้ใช้ตรวจ | `npm run lint` ผ่านโดยไม่มี error หรือ warning |
+| 3 | CSS Module keys ที่ JSX เรียกใช้มีอยู่จริงทุก key | 1 | รอผู้ใช้ตรวจ | Contact ใช้ CSS Module keys ที่มีอยู่จริง และ browser smoke ยืนยันว่า route render ได้ |
+| 4 | ไม่มี `any`, unused import/value หรือ type mismatch ใน dependency chain ของ `/resume` | 1 | รอผู้ใช้ตรวจ | dependency chain ที่ตรวจแล้วไม่มี `any`, unused values/imports หรือ type mismatch |
 | 5 | Path matching แสดง Resume เฉพาะ `/resume` และ `/resume/` | 0 | รอผู้ใช้ตรวจ | `includes('/resume')` match กว้างเกินไป |
-| 6 | Hero/About/Features/Contact มี semantic landmarks และ heading hierarchy ที่ถูกต้อง | 0 | รอผู้ใช้ตรวจ | Hero/section titles เป็น `div`; ScrollReveal ใช้ `h2` ครอบ `p` |
-| 7 | Keyboard flow มี visible focus, logical order และไม่เกิด focus trap | 0 | รอผู้ใช้ตรวจ | Global focus มี แต่ external modal ยังไม่จัดการ focus lifecycle |
-| 8 | External-link modal มี dialog semantics, Escape close, focus in/out และ labelled relationship | 0 | รอผู้ใช้ตรวจ | ปัจจุบันเป็น motion div ไม่มี `role="dialog"`/focus management |
-| 9 | EN/TH switching เปลี่ยน content, `lang` attribute และ persistence สอดคล้องกัน | 1 | รอผู้ใช้ตรวจ | `LanguageProvider` อัปเดต `data-lang`, `document.lang` และ localStorage; content freshness ยังเป็นงานถัดไป |
+| 6 | Hero/About/Features/Contact มี semantic landmarks และ heading hierarchy ที่ถูกต้อง | 1 | รอผู้ใช้ตรวจ | Browser DOM ยืนยัน 1 `h1`, section `h2`s และ labelled landmarks ครบ 4 sections |
+| 7 | Keyboard flow มี visible focus, logical order และไม่เกิด focus trap | 1 | รอผู้ใช้ตรวจ | Global `:focus-visible` มีอยู่; browser smoke ยืนยัน modal Tab/Shift+Tab flow ไม่หลุดออกนอก dialog |
+| 8 | External-link modal มี dialog semantics, Escape close, focus in/out และ labelled relationship | 1 | รอผู้ใช้ตรวจ | Browser smoke ยืนยัน `role="dialog"`, labelled relationship, Escape close, focus in/out และ body scroll cleanup |
+| 9 | EN/TH switching เปลี่ยน content, `lang` attribute และ persistence สอดคล้องกัน | 1 | รอผู้ใช้ตรวจ | `LanguageProvider` อัปเดต `data-lang`, `document.lang` และ localStorage; Resume copy ถูกปรับให้เป็น Year 2 และ bilingual |
 | 10 | Theme switching/persistence ทำงานผ่าน token layer โดยไม่ทำให้ route แตก | 1 | รอผู้ใช้ตรวจ | `useTheme` และ `data-theme` wiring มีอยู่; hardcoded colors ต้องเก็บให้ครบ |
 | 11 | Section navigation target/active state/cleanup ทำงานกับ 4 sections ของ Resume | 1 | รอผู้ใช้ตรวจ | มี observer, cleanup, `aria-current` และ target list ครบ; ต้องยืนยันด้วย browser interaction |
 | 12 | Reduced-motion ปิด scroll-linked blur และ pointer-driven motion ที่ไม่จำเป็น | 0 | รอผู้ใช้ตรวจ | GSAP ScrollReveal/DockItem/Magnet ยังทำงานโดยไม่มี reduce branch ครบ |
-| 13 | Media มี alt/aria/fallback ที่เหมาะสม | 0 | รอผู้ใช้ตรวจ | feature images ใช้ `alt="Icon"`; videos ไม่มี poster/`aria-hidden`/fallback |
+| 13 | Media มี alt/aria/fallback ที่เหมาะสม | 0 | รอผู้ใช้ตรวจ | feature images มี alt ตามเนื้อหาและ decorative videos มี `aria-hidden`; poster/static fallback ยังไม่มี |
 | 14 | Media loading ไม่บล็อก first impression และมี lazy/preload strategy | 0 | รอผู้ใช้ตรวจ | remote autoplay videos 2 จุดและ remote images 3 จุดโหลดโดยไม่มี policy ชัดเจน |
 | 15 | 375px EN/TH ไม่มี horizontal overflow และ nav ใช้งานได้ | 0 | รอผู้ใช้ตรวจ | nowrap nav + 4 links + 2 toggles มีความเสี่ยงเกินความกว้าง |
 | 16 | iPad Air portrait 820×1180 ใช้ layout ที่อ่านง่าย ไม่ถูกบีบแบบ desktop | 0 | รอผู้ใช้ตรวจ | breakpoint 768px เปิด hero row/2-column features เร็วเกินไป |
 | 17 | iPad Air landscape และ desktop 1280px มี grid/hero/section nav ที่เสถียร | 1 | รอผู้ใช้ตรวจ | มี explicit tablet/desktop breakpoints และ 4-column grid; ต้องยืนยันจาก screenshot |
 | 18 | Dynamic viewport และ touch targets ไม่ทำให้ใช้งานยาก | 0 | รอผู้ใช้ตรวจ | `100vh`, fixed heights และ 36×36/38×34 controls ยังเสี่ยง |
-| 19 | User flow ตรงกับ interview: story → evidence → social contact โดยไม่มี placeholder action | 0 | รอผู้ใช้ตรวจ | generic feature cards, stale Year 1, `href="#"` และ social modal เพิ่ม friction |
+| 19 | User flow ตรงกับ interview: story → evidence → social contact โดยไม่มี placeholder action | 1 | รอผู้ใช้ตรวจ | Year 2/Open House story copy อัปเดตแล้ว, feature links ไปยัง About/Contact และ social modal มี complete keyboard flow |
 | 20 | Code maintainability พร้อมต่อยอด: CSS tokens, CSS-only styling, no dead code และ animation ownership ชัด | 0 | รอผู้ใช้ตรวจ | hardcoded drift, inline styles, dead code และ 4 animation systems อยู่ใน route chain |
 
-**Current code score: 8/20**<br>
+**Current code score: 12/20**<br>
 **Current overall score: 0/20** เพราะ visual score ยังรอการตรวจของผู้ใช้และทุกข้อที่ Code/Visual ไม่ครบคู่ยังไม่นับผ่าน
 
 ## P0 Sprint 0A verification
@@ -100,16 +100,43 @@ Verification evidence:
 
 Visual score: `รอผู้ใช้ตรวจ`
 
-Remaining failures are intentionally uncredited: semantic heading/landmark work, modal focus lifecycle, reduced-motion coverage, media loading policy, mobile and iPad responsive behavior, exact route matching, user-flow/content corrections, and broader design-system drift remain for later phases or user visual review.
+Remaining failures are intentionally uncredited: exact route matching, reduced-motion coverage, media fallback/loading policy, mobile and iPad responsive behavior, and broader design-system drift remain for later phases or user visual review.
 
-## Anti-patterns verdict
+## P1 Sprint 1A/1B verification
+
+Phase 1 structure and flow work is verified on `feat/resume-p1-structure-flow`. The scorecard above credits only the checks below; Visual scores remain `รอผู้ใช้ตรวจ`.
+
+Verified changes:
+
+- Hero/About/Features/Contact now expose semantic section labels and heading hierarchy while preserving the motion wrappers.
+- Resume feature links now point to real About/Contact destinations; no `href="#"` remains in the Resume route.
+- Resume copy now reflects Year 2 and the Open House 2026 story in both EN and TH dictionaries.
+- External-link modal now has dialog semantics, labelled relationships, Escape close, focus trap, focus restoration, and body scroll cleanup.
+- Section navigation buttons have explicit button types and valid `aria-current="location"` semantics.
+
+Verification evidence:
+
+- `npm run lint` passes.
+- `npm run build` passes.
+- `git diff --check` passes.
+- Browser smoke loaded `/resume` and `/resume/` with HTTP 200 and no console/runtime errors.
+- Browser DOM smoke found 1 `h1`, 3 `h2`s, 4 labelled Resume sections, 0 placeholder `href="#"` links, and 6 SectionNav buttons.
+- Browser keyboard smoke verified modal focus entry, Tab/Shift+Tab containment, Escape close, focus restoration, and body overflow cleanup.
+
+Remaining Phase 1 failures:
+
+- Media still needs poster/static fallback and loading-policy work; Code item #13 remains 0.
+- Exact `/resume` path matching, reduced-motion branches, responsive behavior, media performance, and design-system cleanup remain for later phases.
+- Visual score remains `รอผู้ใช้ตรวจ`; this Phase 1 work does not claim overall 20/20.
+
+## Anti-patterns verdict (baseline before P1)
 
 **ไม่ใช่ AI-generated แบบเต็มรูปแบบ แต่ยังมีจุดที่ทำให้รู้สึกเป็น template อยู่ชัดเจน**
 
 สิ่งที่พบจริง:
 
-- `featuresGrid` ใช้การ์ดขนาดใกล้เคียงกัน 3 ใบซ้ำโครงสร้าง icon + number + heading + bullet list + `Learn more` ที่ `href="#"` (`src/pages/Resume/Resume.tsx:288-338`)
-- เนื้อหา Features เน้น “coding / teamwork / open house” แบบคำกว้าง ๆ แต่ยังไม่แสดงเหตุการณ์จริง วิธีคิด หรือหลักฐานที่เหมาะกับการสมัคร Staff
+- `featuresGrid` ใช้การ์ดขนาดใกล้เคียงกัน 3 ใบซ้ำโครงสร้าง icon + number + heading + bullet list; visual structure นี้ยังเก็บไว้สำหรับ phase polish (`src/pages/Resume/Resume.tsx:288-338`)
+- ก่อน P1 เนื้อหา Features เน้น “coding / teamwork / open house” แบบคำกว้าง ๆ; P1 ปรับ copy ให้เป็น Year 2 และ Open House 2026 แล้ว แต่ visual evidence ยังเป็นงาน phase ถัดไป
 - `01/02/03` ถูกใช้เป็นเลขนำการ์ด ทั้งที่ section นี้ไม่ใช่ขั้นตอนที่ผู้ใช้ต้องทำตาม
 - มี noise, gradient overlay, blur reveal และ cursor/magnet interaction หลายชั้น แต่ยังไม่มี narrative asset จาก Open House ที่เป็นแกนของความ immersive
 
@@ -121,6 +148,8 @@ Remaining failures are intentionally uncredited: semantic heading/landmark work,
 - social icons มีพื้นที่กด 52×52px ใน Contact
 
 ## Executive summary
+
+ข้อความสรุปและ detailed findings ด้านล่างเป็น baseline จากก่อน P0/P1; current scorecard และ verification sections ด้านบนเป็นสถานะล่าสุดและ supersede เฉพาะรายการที่ระบุว่าแก้แล้ว
 
 - Audit Health Score: **7/20 — Poor**
 - Issues: **1 P0, 9 P1, 5 P2, 2 P3**
@@ -137,7 +166,7 @@ Top issues:
 5. iPad Air portrait เข้า breakpoint `min-width: 768px` ทำให้ hero เป็น row และ features เป็น 2 columns ทั้งที่พื้นที่แนวตั้ง/แนวนอนยังจำกัด (`src/pages/Resume/Resume.module.css:164-229`, `452-514`)
 6. Social contact ถูกซ่อนหลัง icon-only links และ confirmation modal; modal ไม่มี focus management หรือ keyboard close (`src/pages/Contact.tsx:119-141`, `src/components/ExternalLinkModal/ExternalLinkModal.tsx:95-160`)
 
-## Detailed findings
+## Detailed findings (baseline before P0/P1)
 
 ### P0 — Blocking
 

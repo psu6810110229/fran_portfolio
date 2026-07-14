@@ -79,6 +79,7 @@ function Contact({ resumeUrl }: { resumeUrl?: string }) {
   return (
     <motion.section 
       id="contact" 
+      aria-labelledby="contact-title"
       className={styles.cta}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -88,7 +89,7 @@ function Contact({ resumeUrl }: { resumeUrl?: string }) {
       <div className={styles.inner}>
         <div>
           <span>{c.secTitle}</span>
-          <h2 className={styles.heading}>{c.title}</h2>
+          <h2 id="contact-title" className={styles.heading}>{c.title}</h2>
           <p className={styles.sub}>{c.subtitle}</p>
         </div>
 

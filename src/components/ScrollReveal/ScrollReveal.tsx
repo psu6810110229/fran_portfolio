@@ -30,7 +30,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   rotationEnd = 'bottom 50%',
   wordAnimationEnd = 'bottom 50%'
 }) => {
-  const containerRef = useRef<HTMLHeadingElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const splitText = useMemo(() => {
     const text = typeof children === 'string' ? children : '';
@@ -129,9 +129,9 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
 
   return (
-    <h2 ref={containerRef} className={`${styles.scrollReveal} ${containerClassName}`}>
+    <div ref={containerRef} className={`${styles.scrollReveal} ${containerClassName}`}>
       <p className={`${styles.scrollRevealText} ${textClassName}`}>{splitText}</p>
-    </h2>
+    </div>
   );
 };
 

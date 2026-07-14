@@ -10,10 +10,12 @@ interface TextSegment {
 interface WordsPullUpMultiStyleProps {
   segments: TextSegment[];
   containerClassName?: string;
+  as?: 'div' | 'h2';
+  id?: string;
 }
 
-const WordsPullUpMultiStyle: React.FC<WordsPullUpMultiStyleProps> = ({ segments, containerClassName = '' }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+const WordsPullUpMultiStyle: React.FC<WordsPullUpMultiStyleProps> = ({ segments, containerClassName = '', as = 'div', id }) => {
+  const containerRef = useRef<HTMLElement | null>(null);
   const isInView = useInView(containerRef, { once: true, margin: '-50px' });
 
   const containerVariants = {
@@ -39,14 +41,8 @@ const WordsPullUpMultiStyle: React.FC<WordsPullUpMultiStyleProps> = ({ segments,
     segment.text.split(' ').map((word) => ({ word, className: segment.className || '' }))
   );
 
-  return (
-    <motion.div
-      ref={containerRef}
-      variants={containerVariants}
-      initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
-      className={`${styles.container} ${containerClassName}`}
-    >
+  const content = (
+    <>
       {wordsWithStyles.map((item, i) => (
         <motion.span
           key={i}
@@ -56,8 +52,20 @@ const WordsPullUpMultiStyle: React.FC<WordsPullUpMultiStyleProps> = ({ segments,
           {item.word}
         </motion.span>
       ))}
-    </motion.div>
+    </>
   );
+
+  const motionProps = {
+    ref: (element: HTMLElement | null) => { containerRef.current = element; },
+    variants: containerVariants,
+    initial: 'hidden',
+    animate: isInView ? 'visible' : 'hidden',
+    className: `${styles.container} ${containerClassName}`,
+    id,
+  };
+
+  if (as === 'h2') return <motion.h2 {...motionProps}>{content}</motion.h2>;
+  return <motion.div {...motionProps}>{content}</motion.div>;
 };
 
 export default WordsPullUpMultiStyle;

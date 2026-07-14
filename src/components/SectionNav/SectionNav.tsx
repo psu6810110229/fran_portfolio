@@ -253,10 +253,11 @@ function SectionNav({ isResumeRoute = false }: SectionNavProps) {
         {SECTIONS.map(({ id, label }) => (
           <li key={id} className={styles.item}>
             <button
+              type="button"
               className={`${styles.dot} ${active === id ? styles.dotActive : ''} ${selected === id ? styles.dotSelected : ''}`}
               onClick={() => scrollTo(id)}
               aria-label={`Go to ${label}`}
-              aria-current={active === id ? 'true' : undefined}
+              aria-current={active === id ? 'location' : undefined}
             >
             </button>
             <span className={styles.tooltip}>{label}</span>
@@ -265,6 +266,7 @@ function SectionNav({ isResumeRoute = false }: SectionNavProps) {
       </ul>
 
       <button
+        type="button"
         className={`${styles.topBtn} ${scrolled ? styles.topBtnVisible : ''}`}
         onClick={scrollToTop}
         aria-label="Back to top"

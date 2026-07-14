@@ -6,10 +6,12 @@ interface WordsPullUpProps {
   text: string;
   className?: string;
   showAsterisk?: boolean;
+  as?: 'div' | 'h1' | 'h2';
+  id?: string;
 }
 
-const WordsPullUp: React.FC<WordsPullUpProps> = ({ text, className = '', showAsterisk = false }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+const WordsPullUp: React.FC<WordsPullUpProps> = ({ text, className = '', showAsterisk = false, as = 'div', id }) => {
+  const containerRef = useRef<HTMLElement | null>(null);
   const isInView = useInView(containerRef, { once: true, margin: '-50px' });
   const words = text.split(' ');
 
@@ -32,14 +34,8 @@ const WordsPullUp: React.FC<WordsPullUpProps> = ({ text, className = '', showAst
     },
   };
 
-  return (
-    <motion.div
-      ref={containerRef}
-      variants={containerVariants}
-      initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
-      className={`${styles.container} ${className}`}
-    >
+  const content = (
+    <>
       {words.map((word, i) => {
         const isLastWord = i === words.length - 1;
         if (showAsterisk && isLastWord) {
@@ -71,8 +67,21 @@ const WordsPullUp: React.FC<WordsPullUpProps> = ({ text, className = '', showAst
           </motion.span>
         );
       })}
-    </motion.div>
+    </>
   );
+
+  const motionProps = {
+    ref: (element: HTMLElement | null) => { containerRef.current = element; },
+    variants: containerVariants,
+    initial: 'hidden',
+    animate: isInView ? 'visible' : 'hidden',
+    className: `${styles.container} ${className}`,
+    id,
+  };
+
+  if (as === 'h1') return <motion.h1 {...motionProps}>{content}</motion.h1>;
+  if (as === 'h2') return <motion.h2 {...motionProps}>{content}</motion.h2>;
+  return <motion.div {...motionProps}>{content}</motion.div>;
 };
 
 export default WordsPullUp;

@@ -19,24 +19,26 @@ const dictionary = {
       { label: 'Methodology', href: '#features' },
       { label: 'Contact', href: '#contact' }
     ],
-    heroDesc: 'A Year 1 Computer Engineering student at PSU, passionate about web development and creating user-friendly digital experiences.',
+    heroDesc: 'A Year 2 Computer Engineering student at PSU who learns by building real products and working closely with people.',
     viewApp: 'Explore My Story',
     aboutBadge: 'Web Developer',
     about1a: 'Hi, I am ',
     about1b: 'Fran. ',
-    about2: 'A Computer Engineering student ',
-    about3: 'who enjoys learning new technologies and getting hands-on with real projects.',
-    aboutFull: 'Currently studying Computer Engineering, which trains me to think analytically and solve problems methodically. Beyond coding, organizing events like the university Open House has helped me develop teamwork and communication skills, which I believe are just as important.',
-    feat1: 'Learning & Development. ',
-    feat2: 'Team Collaboration.',
+    about2: 'A Year 2 Computer Engineering student at PSU ',
+    about3: 'who learns by building real products and working with people.',
+    aboutFull: 'I am a Year 2 Computer Engineering student at PSU. Organizing Hat Yai Open House 2026 taught me to prepare equipment, coordinate people, and stay calm when problems appeared. I am still growing, but I take responsibility for the next step and learn from the people around me.',
+    feat1: 'What I am learning. ',
+    feat2: 'How I work with people.',
     card1Label: 'Skills Learned',
-    card2Title: 'Coding & Problem Solving',
-    card2Items: ['Analytical thinking', 'Writing clean code', 'Eager to learn new tech'],
-    card3Title: 'Teamwork & Communication',
-    card3Items: ['Active listening', 'Clear communication', 'Supporting team members'],
-    card4Title: 'Open House Activity',
-    card4Items: ['Guiding high school students', 'Lab tours assistance', 'Event preparation'],
-    learnMore: 'Learn more'
+    card2Title: 'Thinking & Learning',
+    card2Items: ['Breaking problems into steps', 'Building and testing as I learn', 'Turning feedback into improvements'],
+    card3Title: 'Working With People',
+    card3Items: ['Listening before acting', 'Keeping teammates updated', 'Helping people find the next step'],
+    card4Title: 'Hat Yai Open House 2026',
+    card4Items: ['Preparing rooms and equipment', 'Guiding visiting students', 'Helping with queues and unexpected issues'],
+    card2Link: 'Read my story',
+    card3Link: 'Start a conversation',
+    card4Link: 'Read my story'
   },
   th: {
     nav: [
@@ -45,24 +47,26 @@ const dictionary = {
       { label: 'วิธีการทำงาน', href: '#features' },
       { label: 'ติดต่อ', href: '#contact' }
     ],
-    heroDesc: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ปี 1 ม.สงขลานครินทร์ ที่หลงใหลในการพัฒนาเว็บไซต์และชื่นชอบการสร้างประสบการณ์ที่ดีให้กับผู้ใช้งาน',
+    heroDesc: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 ม.สงขลานครินทร์ ที่เรียนรู้จากการลงมือสร้างผลงานจริงและการทำงานร่วมกับผู้คน',
     viewApp: 'ไปกันต่อ',
     aboutBadge: 'นักพัฒนาเว็บไซต์',
     about1a: 'สวัสดีครับ ',
     about1b: 'ผมฟาน ',
-    about2: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ ',
-    about3: 'ที่สนุกกับการเรียนรู้เทคโนโลยีใหม่ๆ และชอบลงมือทำโปรเจกต์',
-    aboutFull: 'ปัจจุบันผมกำลังศึกษาในสาขาวิศวกรรมคอมพิวเตอร์ ซึ่งช่วยฝึกให้ผมคิดวิเคราะห์และแก้ปัญหาอย่างเป็นระบบ นอกจากเรื่องเรียนแล้ว ผมยังมีโอกาสจัดกิจกรรมอย่าง Open House ที่ช่วยฝึกทักษะการสื่อสารและการทำงานเป็นทีม ซึ่งผมมองว่าสำคัญไม่แพ้กันครับ',
-    feat1: 'การเรียนรู้และพัฒนา ',
-    feat2: 'การทำกิจกรรมร่วมกับทีม',
+    about2: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 มหาวิทยาลัยสงขลานครินทร์ ',
+    about3: 'ที่เรียนรู้จากการลงมือทำและการทำงานร่วมกับผู้คน',
+    aboutFull: 'ผมเป็นนักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 มหาวิทยาลัยสงขลานครินทร์ การจัดงาน Open House หาดใหญ่ 2026 สอนให้ผมเตรียมอุปกรณ์ ประสานงานกับผู้คน และรับมือกับปัญหาที่เกิดขึ้นหน้างาน ผมยังคงพัฒนาตัวเอง แต่พร้อมรับผิดชอบขั้นตอนถัดไปและเรียนรู้จากคนรอบตัวครับ',
+    feat1: 'สิ่งที่กำลังเรียนรู้ ',
+    feat2: 'และวิธีทำงานร่วมกับผู้คน',
     card1Label: 'ทักษะที่ได้เรียนรู้',
-    card2Title: 'ด้านการเขียนโค้ด',
-    card2Items: ['วิเคราะห์และแก้ปัญหา', 'เขียนโค้ดที่เป็นระเบียบ', 'พร้อมเรียนรู้เทคโนโลยีใหม่ๆ'],
-    card3Title: 'ด้านการทำงานเป็นทีม',
-    card3Items: ['รับฟังความคิดเห็น', 'สื่อสารให้เข้าใจง่าย', 'ช่วยเหลือเพื่อนร่วมทีม'],
-    card4Title: 'กิจกรรม Open House',
-    card4Items: ['แนะนำน้องๆ มัธยม', 'พาทัวร์ห้องปฏิบัติการ', 'ช่วยจัดเตรียมงาน'],
-    learnMore: 'เรียนรู้เพิ่มเติม'
+    card2Title: 'การคิดและการเรียนรู้',
+    card2Items: ['แบ่งปัญหาเป็นขั้นตอน', 'ลงมือทำและตรวจสอบงาน', 'นำคำแนะนำไปปรับปรุง'],
+    card3Title: 'การทำงานร่วมกับผู้คน',
+    card3Items: ['รับฟังก่อนลงมือทำ', 'สื่อสารสถานะให้ทีมรู้', 'ช่วยให้ทีมเห็นขั้นตอนถัดไป'],
+    card4Title: 'งาน Open House หาดใหญ่ 2026',
+    card4Items: ['เตรียมอุปกรณ์และตรวจความพร้อม', 'แนะนำน้องๆ และพาชมห้องแล็บ', 'ช่วยจัดคิวและรับมือกับปัญหาหน้างาน'],
+    card2Link: 'อ่านเรื่องราวของผม',
+    card3Link: 'เริ่มพูดคุยกัน',
+    card4Link: 'อ่านเรื่องราวของผม'
   }
 };
 
@@ -115,13 +119,15 @@ const Resume: React.FC = () => {
   return (
     <div className={styles.page}>
       {/* SECTION 1: HERO */}
-      <section id="hero" className={styles.heroSection}>
+      <section id="hero" aria-labelledby="resume-hero-title" className={styles.heroSection}>
         <div className={styles.heroInner}>
           <video
             autoPlay
             loop
             muted
             playsInline
+            aria-hidden="true"
+            tabIndex={-1}
             className={styles.videoBg}
             src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
           />
@@ -183,6 +189,8 @@ const Resume: React.FC = () => {
               <WordsPullUp
                 text="Patcharapon"
                 showAsterisk={true}
+                as="h1"
+                id="resume-hero-title"
                 className={styles.heroTitle}
               />
             </div>
@@ -201,6 +209,7 @@ const Resume: React.FC = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.7, ease: [0.16, 1, 0.3, 1] as const, duration: 0.8 }}
                 className={styles.ctaButton}
+                onClick={(e) => handleNavClick(e, '#about')}
               >
                 <span className={styles.ctaText}>{t.viewApp}</span>
                 <div className={styles.ctaIconBox}>
@@ -213,12 +222,14 @@ const Resume: React.FC = () => {
       </section>
 
       {/* SECTION 2: ABOUT */}
-      <section id="about" className={styles.aboutSection}>
+      <section id="about" aria-labelledby="resume-about-title" className={styles.aboutSection}>
         <div className={styles.aboutInner}>
 
           
           <WordsPullUpMultiStyle
             key={lang}
+            as="h2"
+            id="resume-about-title"
             containerClassName={styles.aboutTitle}
             segments={[
               { text: t.about1a, className: styles.aboutTitleNormal },
@@ -241,12 +252,14 @@ const Resume: React.FC = () => {
       </section>
 
       {/* SECTION 3: FEATURES */}
-      <section id="features" className={styles.featuresSection}>
+      <section id="features" aria-labelledby="resume-features-title" className={styles.featuresSection}>
         <div className={styles.featuresBgNoise} />
         
         <div className={styles.featuresInner}>
           <WordsPullUpMultiStyle
             key={lang}
+            as="h2"
+            id="resume-features-title"
             containerClassName={styles.featuresTitle}
             segments={[
               { text: t.feat1, className: styles.featuresTitlePrimary },
@@ -267,6 +280,8 @@ const Resume: React.FC = () => {
                 loop
                 muted
                 playsInline
+                aria-hidden="true"
+                tabIndex={-1}
                 className={styles.cardVideoInner}
                 src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260406_133058_0504132a-0cf3-4450-a370-8ea3b05c95d4.mp4"
               />
@@ -277,7 +292,7 @@ const Resume: React.FC = () => {
             </motion.div>
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
-              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171918_4a5edc79-d78f-4637-ac8b-53c43c220606.png&w=1280&q=85" alt="Icon" className={styles.cardIcon} />
+              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171918_4a5edc79-d78f-4637-ac8b-53c43c220606.png&w=1280&q=85" alt={t.card2Title} className={styles.cardIcon} />
               <div className={styles.cardNumber}>01</div>
               <h3 className={styles.cardTitle}>{t.card2Title}</h3>
               <ul className={styles.cardList}>
@@ -288,14 +303,14 @@ const Resume: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              <a href="#" className={styles.cardLink}>
-                {t.learnMore}
+              <a href="#about" onClick={(e) => handleNavClick(e, '#about')} className={styles.cardLink}>
+                {t.card2Link}
                 <ArrowRight className={styles.cardLinkIcon} />
               </a>
             </motion.div>
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
-              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171741_ed9845ab-f5b2-4018-8ce7-07cc01823522.png&w=1280&q=85" alt="Icon" className={styles.cardIcon} />
+              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171741_ed9845ab-f5b2-4018-8ce7-07cc01823522.png&w=1280&q=85" alt={t.card3Title} className={styles.cardIcon} />
               <div className={styles.cardNumber}>02</div>
               <h3 className={styles.cardTitle}>{t.card3Title}</h3>
               <ul className={styles.cardList}>
@@ -306,14 +321,14 @@ const Resume: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              <a href="#" className={styles.cardLink}>
-                {t.learnMore}
+              <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className={styles.cardLink}>
+                {t.card3Link}
                 <ArrowRight className={styles.cardLinkIcon} />
               </a>
             </motion.div>
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
-              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171809_f56666dc-c099-4778-ad82-9ad4f209567b.png&w=1280&q=85" alt="Icon" className={styles.cardIcon} />
+              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171809_f56666dc-c099-4778-ad82-9ad4f209567b.png&w=1280&q=85" alt={t.card4Title} className={styles.cardIcon} />
               <div className={styles.cardNumber}>03</div>
               <h3 className={styles.cardTitle}>{t.card4Title}</h3>
               <ul className={styles.cardList}>
@@ -324,8 +339,8 @@ const Resume: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              <a href="#" className={styles.cardLink}>
-                {t.learnMore}
+              <a href="#about" onClick={(e) => handleNavClick(e, '#about')} className={styles.cardLink}>
+                {t.card4Link}
                 <ArrowRight className={styles.cardLinkIcon} />
               </a>
             </motion.div>
