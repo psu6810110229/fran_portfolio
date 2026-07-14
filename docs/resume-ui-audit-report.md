@@ -65,18 +65,18 @@ Viewport ที่ใช้ตรวจจาก source:
 | 9 | EN/TH switching เปลี่ยน content, `lang` attribute และ persistence สอดคล้องกัน | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; `LanguageProvider` และ Year 2 bilingual Resume copy ผ่านการตรวจ |
 | 10 | Theme switching/persistence ทำงานผ่าน token layer โดยไม่ทำให้ route แตก | 1 | รอผู้ใช้ตรวจ | `useTheme` และ `data-theme` wiring มีอยู่; hardcoded colors ต้องเก็บให้ครบ |
 | 11 | Section navigation target/active state/cleanup ทำงานกับ 4 sections ของ Resume | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; observer, cleanup, `aria-current` และ target list ผ่านการตรวจ |
-| 12 | Reduced-motion ปิด scroll-linked blur และ pointer-driven motion ที่ไม่จำเป็น | 1 | 0 | Code ผ่าน browser verification; Phase 2 visual review ถูกผู้ใช้ reject และรอตรวจใหม่ |
+| 12 | Reduced-motion ปิด scroll-linked blur และ pointer-driven motion ที่ไม่จำเป็น | 1 | 1 | ผู้ใช้ approve Phase 2 manual test หลัง remediation; reduced-motion behavior ผ่าน browser verification |
 | 13 | Media มี alt/aria/fallback ที่เหมาะสม | 0 | รอผู้ใช้ตรวจ | feature images มี alt ตามเนื้อหาและ decorative videos มี `aria-hidden`; poster/static fallback ยังไม่มี |
-| 14 | Media loading ไม่บล็อก first impression และมี lazy/preload strategy | 1 | 0 | Code loading policy ผ่าน; Phase 2 visual review ถูกผู้ใช้ reject และรอตรวจใหม่ |
-| 15 | 375px EN/TH ไม่มี horizontal overflow และ nav ใช้งานได้ | 1 | 0 | Remediation browser matrix ยืนยัน 375px `scrollWidth` เท่ากับ viewport และ Dynamic Island nav อยู่ใน hero; รอผู้ใช้ตรวจใหม่ |
-| 16 | iPad Air portrait 820×1180 ใช้ layout ที่อ่านง่าย ไม่ถูกบีบแบบ desktop | 1 | 0 | Remediation ใช้ stacked hero, compact SectionNav FAB และ feature composition แบบ lead card + 2 columns; รอผู้ใช้ตรวจใหม่ |
-| 17 | iPad Air landscape และ desktop 1280px มี grid/hero/section nav ที่เสถียร | 1 | 0 | Remediation browser matrix ยืนยัน hero corners, title placement และ 4-column grid ที่ 1180×820/1280×800; รอผู้ใช้ตรวจใหม่ |
-| 18 | Dynamic viewport และ touch targets ไม่ทำให้ใช้งานยาก | 1 | 0 | Hero ใช้ bounded `100dvh` frame และ visible controls 44–48px; Phase 2 visual review ถูกผู้ใช้ reject และรอตรวจใหม่ |
+| 14 | Media loading ไม่บล็อก first impression และมี lazy/preload strategy | 1 | 1 | ผู้ใช้ approve Phase 2 manual test; loading policy ผ่าน browser verification |
+| 15 | 375px EN/TH ไม่มี horizontal overflow และ nav ใช้งานได้ | 1 | 1 | ผู้ใช้ approve Phase 2 manual test หลัง remediation; 375px ไม่มี document overflow และ Dynamic Island nav ใช้งานได้ |
+| 16 | iPad Air portrait 820×1180 ใช้ layout ที่อ่านง่าย ไม่ถูกบีบแบบ desktop | 1 | 1 | ผู้ใช้ approve Phase 2 manual test หลัง remediation; stacked hero, compact FAB และ feature composition แบบ lead card + 2 columns ผ่าน |
+| 17 | iPad Air landscape และ desktop 1280px มี grid/hero/section nav ที่เสถียร | 1 | 1 | ผู้ใช้ approve Phase 2 manual test หลัง remediation; hero corners, title placement และ desktop grid ผ่าน |
+| 18 | Dynamic viewport และ touch targets ไม่ทำให้ใช้งานยาก | 1 | 1 | ผู้ใช้ approve Phase 2 manual test; bounded `100dvh` hero และ visible controls 44–48px ผ่าน |
 | 19 | User flow ตรงกับ interview: story → evidence → social contact โดยไม่มี placeholder action | 1 | 1 | ผู้ใช้ approve Phase 1 manual test; Year 2/Open House story, real feature links และ social modal flow ผ่านการตรวจ |
 | 20 | Code maintainability พร้อมต่อยอด: CSS tokens, CSS-only styling, no dead code และ animation ownership ชัด | 0 | รอผู้ใช้ตรวจ | hardcoded drift, inline styles, dead code และ 4 animation systems อยู่ใน route chain |
 
 **Current code score: 17/20**<br>
-**Current overall score: 6/20** เพราะ Phase 1 ทั้ง 6 ข้อที่ตรวจโดยผู้ใช้มี Code/Visual ครบคู่; ข้ออื่นยังไม่นับผ่าน
+**Current overall score: 12/20** เพราะ Phase 1 และ Phase 2 มี 12 ข้อที่ Code/Visual ผ่านครบคู่; ข้ออื่นยังไม่นับผ่าน
 
 ## P0 Sprint 0A verification
 
@@ -127,12 +127,12 @@ Remaining Phase 1 failures:
 
 - Media still needs poster/static fallback; Code item #13 remains 0. Loading policy is covered in P2.
 - Exact `/resume` path matching, media poster/static fallback, and design-system cleanup remain for later phases.
-- Visual score is `1` only for Phase 1 items #6, #7, #8, #9, #11, and #19; Phase 2 items #12 and #14–#18 are `0` after rejection, while the remaining items stay `รอผู้ใช้ตรวจ`.
+- Visual score is `1` for Phase 1 items #6, #7, #8, #9, #11, and #19; Phase 2 items #12 and #14–#18 are also `1` after the user approved the remediation. Remaining items stay `รอผู้ใช้ตรวจ`.
 - This Phase 1 approval does not claim overall 20/20.
 
 ## P2 Responsive and media verification
 
-Phase 2 responsive architecture is implemented on `feat/resume-p2-responsive-media`. Code items #12 and #14–#18 remain `1` from the verification gate. The user rejected the first Phase 2 visual review, so those Visual scores are `0` until the remediation passes a new manual review.
+Phase 2 responsive architecture is implemented on `feat/resume-p2-responsive-media`. Code items #12 and #14–#18 remain `1` from the verification gate. The user approved the remediated Phase 2 manual review, so those Visual scores are now `1`.
 
 Verified changes:
 
@@ -162,7 +162,7 @@ Remaining Phase 2 failures:
 
 - Code item #13 remains 0 because media still lacks poster/static fallback coverage.
 - The first manual review failed because the title was clipped behind the top nav, hero edges were cut off, iPad SectionNav overlaid content, section spacing produced a large blank area, and the portrait feature cards were oversized.
-- Those failures have been remediated and browser-rendered, but Visual score remains `0` until the user rechecks and approves. This does not claim overall 20/20.
+- Those failures were remediated, browser-rendered, and approved by the user. Overall remains 12/20 because unimplemented or unreviewed criteria are still uncredited; this does not claim overall 20/20.
 
 ## Anti-patterns verdict (baseline before P1)
 
