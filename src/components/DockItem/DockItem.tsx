@@ -9,11 +9,14 @@ interface DockItemProps {
   children: React.ReactNode;
   className?: string;
   href?: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
 export function DockItem({ mouseX, mouseY, isDesktop, as = 'div', children, className, href, onClick }: DockItemProps) {
-  const ref = useRef<any>(null);
+  const elementRef = useRef<HTMLElement | null>(null);
+  const ref = (element: HTMLElement | null) => {
+    elementRef.current = element;
+  };
   
   const distance = useTransform(() => {
     if (!isDesktop) return Infinity;
@@ -21,7 +24,7 @@ export function DockItem({ mouseX, mouseY, isDesktop, as = 'div', children, clas
     const y = mouseY.get();
     if (x === Infinity || y === Infinity) return Infinity;
     
-    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, y: 0, width: 0, height: 0 };
+    const bounds = elementRef.current?.getBoundingClientRect() ?? { x: 0, y: 0, width: 0, height: 0 };
     const dx = x - (bounds.x + bounds.width / 2);
     const dy = y - (bounds.y + bounds.height / 2);
     return Math.sqrt(dx * dx + dy * dy);

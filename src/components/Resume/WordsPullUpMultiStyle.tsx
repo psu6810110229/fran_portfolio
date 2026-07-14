@@ -31,7 +31,7 @@ const WordsPullUpMultiStyle: React.FC<WordsPullUpMultiStyleProps> = ({ segments,
     visible: {
       y: 0,
       opacity: 1,
-      transition: { ease: [0.16, 1, 0.3, 1] as any, duration: 0.8 },
+      transition: { ease: [0.16, 1, 0.3, 1] as const, duration: 0.8 },
     },
   };
 

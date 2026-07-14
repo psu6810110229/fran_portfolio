@@ -1,12 +1,10 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useMotionValue } from 'motion/react';
+import React from 'react';
+import { motion, useMotionValue } from 'motion/react';
 import { useLenis } from 'lenis/react';
 import { ArrowRight, Check } from 'lucide-react';
 import WordsPullUp from '../../components/Resume/WordsPullUp';
 import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle';
-import AnimatedLetter from '../../components/Resume/AnimatedLetter';
 import ScrollReveal from '../../components/ScrollReveal/ScrollReveal';
-import Magnet from '../../components/Magnet/Magnet';
 import { DockItem } from '../../components/DockItem/DockItem';
 import Contact from '../../pages/Contact';
 import { useLanguage } from '../../hooks/useLanguage';
@@ -73,8 +71,6 @@ const Resume: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const t = dictionary[lang];
 
-  const aboutRef = useRef<HTMLDivElement>(null);
-  
   const mouseX = useMotionValue(Infinity);
   const mouseY = useMotionValue(Infinity);
   const [isDesktop, setIsDesktop] = React.useState(true);
@@ -100,7 +96,7 @@ const Resume: React.FC = () => {
   }, [mouseX, mouseY]);
 
   const lenis = useLenis();
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLElement>, href: string) => {
     if (href.startsWith('#')) {
       e.preventDefault();
       if (lenis) {
@@ -111,14 +107,9 @@ const Resume: React.FC = () => {
     }
   };
 
-  const { scrollYProgress } = useScroll({
-    target: aboutRef,
-    offset: ['start 80%', 'end center'],
-  });
-
   const cardVariants = {
     hidden: { scale: 0.95, opacity: 0 },
-    visible: { scale: 1, opacity: 1, transition: { ease: [0.22, 1, 0.36, 1] as any, duration: 0.8 } },
+    visible: { scale: 1, opacity: 1, transition: { ease: [0.22, 1, 0.36, 1] as const, duration: 0.8 } },
   };
 
   return (
@@ -141,7 +132,7 @@ const Resume: React.FC = () => {
             <nav className={styles.navBar}>
               <div className={styles.navLinks}>
                 {t.nav.map((item) => (
-                  <DockItem key={item.label} mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop} as="a" href={item.href} className={styles.navLink} onClick={(e: any) => handleNavClick(e, item.href)}>
+                  <DockItem key={item.label} mouseX={mouseX} mouseY={mouseY} isDesktop={isDesktop} as="a" href={item.href} className={styles.navLink} onClick={(e) => handleNavClick(e, item.href)}>
                     {item.label}
                   </DockItem>
                 ))}
@@ -199,7 +190,7 @@ const Resume: React.FC = () => {
               <motion.p
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5, ease: [0.16, 1, 0.3, 1] as any, duration: 0.8 }}
+                transition={{ delay: 0.5, ease: [0.16, 1, 0.3, 1] as const, duration: 0.8 }}
                 className={styles.heroDesc}
               >
                 {t.heroDesc}
@@ -208,7 +199,7 @@ const Resume: React.FC = () => {
                 href="#about"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.7, ease: [0.16, 1, 0.3, 1] as any, duration: 0.8 }}
+                transition={{ delay: 0.7, ease: [0.16, 1, 0.3, 1] as const, duration: 0.8 }}
                 className={styles.ctaButton}
               >
                 <span className={styles.ctaText}>{t.viewApp}</span>

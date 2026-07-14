@@ -110,14 +110,14 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
     initial: { y: '100vh' },
     animate: { y: 0 },
     exit: { y: '100vh' },
-    transition: { type: 'spring', bounce: 0.15, duration: 0.5 }
+    transition: { type: 'spring' as const, bounce: 0.15, duration: 0.5 }
   };
 
   const desktopAnimation = {
     initial: { opacity: 0, scale: 0.98 },
     animate: { opacity: 1, scale: 1 },
     exit: { opacity: 0, scale: 0.98 },
-    transition: { duration: 0.2, ease: 'easeOut' }
+    transition: { duration: 0.2, ease: 'easeOut' as const }
   };
 
   const animationProps = isMobile ? mobileAnimation : desktopAnimation;

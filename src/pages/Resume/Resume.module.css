@@ -45,7 +45,7 @@
   opacity: 0.15;
   mix-blend-mode: overlay;
   pointer-events: none;
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAGFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMXkcwAAAABnRSTlMA/wD/AP8A/wD/AM8f+gIAAAAySURBVHjaY2BgYEAAQ0MDAyMDIwMDMwMDYwMDAzMDIyMDKwMDMyMDIyMDQwMDAzMDIwMDBAB/3ARs7EAAAAASUVORK5CYII=");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2'%3E%3Crect width='1' height='1' fill='%23ffffff'/%3E%3C/svg%3E");
   background-repeat: repeat;
   transform: translateZ(0);
   will-change: transform;
@@ -416,7 +416,7 @@
   inset: 0;
   opacity: 0.05;
   pointer-events: none;
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAGFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMXkcwAAAABnRSTlMA/wD/AP8A/wD/AM8f+gIAAAAySURBVHjaY2BgYEAAQ0MDAyMDIwMDMwMDYwMDAzMDIyMDKwMDMyMDIyMDQwMDAzMDIwMDBAB/3ARs7EAAAAASUVORK5CYII=");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2'%3E%3Crect width='1' height='1' fill='%23ffffff'/%3E%3C/svg%3E");
   background-repeat: repeat;
   transform: translateZ(0);
   will-change: transform;

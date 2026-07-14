@@ -26,8 +26,6 @@ const RESUME_SECTIONS: Section[] = [
 const scrollDuration = 1.25;
 const navigationSettleMs = 1300;
 
-const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(max, val));
-
 // Expo easing for premium feel
 const easeOutExpo = (t: number) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 
@@ -107,7 +105,7 @@ function SectionNav({ isResumeRoute = false }: SectionNavProps) {
         window.clearTimeout(selectedTimerRef.current);
       }
     };
-  }, []);
+  }, [SECTIONS]);
 
   useEffect(() => {
     if (!expanded) return;

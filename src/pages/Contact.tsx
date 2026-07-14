@@ -71,7 +71,7 @@ function Contact({ resumeUrl }: { resumeUrl?: string }) {
       } else {
         setSubmitStatus('error');
       }
-    } catch (err) {
+    } catch {
       setSubmitStatus('error');
     }
   };
@@ -79,20 +79,20 @@ function Contact({ resumeUrl }: { resumeUrl?: string }) {
   return (
     <motion.section 
       id="contact" 
-      className={styles.contactSection}
+      className={styles.cta}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6 }}
     >
       <div className={styles.inner}>
-        <div className={styles.header}>
-          <span className={styles.secTitle}>{c.secTitle}</span>
-          <h2 className={styles.title}>{c.title}</h2>
-          <p className={styles.subtitle}>{c.subtitle}</p>
+        <div>
+          <span>{c.secTitle}</span>
+          <h2 className={styles.heading}>{c.title}</h2>
+          <p className={styles.sub}>{c.subtitle}</p>
         </div>
 
-        <div className={styles.formContainer}>
+        <div>
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.nameRow}>
               <div className={styles.fieldGroup}>

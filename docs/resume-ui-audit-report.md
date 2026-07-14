@@ -75,8 +75,32 @@ Viewport ที่ใช้ตรวจจาก source:
 | 19 | User flow ตรงกับ interview: story → evidence → social contact โดยไม่มี placeholder action | 0 | รอผู้ใช้ตรวจ | generic feature cards, stale Year 1, `href="#"` และ social modal เพิ่ม friction |
 | 20 | Code maintainability พร้อมต่อยอด: CSS tokens, CSS-only styling, no dead code และ animation ownership ชัด | 0 | รอผู้ใช้ตรวจ | hardcoded drift, inline styles, dead code และ 4 animation systems อยู่ใน route chain |
 
-**Current code score: 4/20**<br>
+**Current code score: 8/20**<br>
 **Current overall score: 0/20** เพราะ visual score ยังรอการตรวจของผู้ใช้และทุกข้อที่ Code/Visual ไม่ครบคู่ยังไม่นับผ่าน
+
+## P0 Sprint 0A verification
+
+The acceptance scorecard above was recorded before Sprint 0A. The current code score is updated only for checks verified in this sprint:
+
+| Code item | Code score | Evidence |
+|---:|:---:|---|
+| 1. Production build | 1 | `npm run build` passes; Vite emits the production bundle. |
+| 2. Repository lint | 1 | `npm run lint` passes with no errors or warnings. |
+| 3. Contact JSX/CSS Module contract | 1 | Contact now uses existing CSS Module keys; browser smoke check confirms the route renders. |
+| 4. `/resume` dependency-chain types/dead code | 1 | Removed `any`, unused values/imports, and type mismatches in the verified chain. |
+| 5. Exact `/resume` path matching | 0 | Not part of Sprint 0A; the existing broader path match remains. |
+| 6–20. Remaining code checks | 0 | Not implemented or not verified in this sprint. |
+
+Verification evidence:
+
+- `GET /resume` → HTTP 200
+- `GET /resume/` → HTTP 200
+- Playwright smoke check loaded both paths with no console or runtime errors.
+- `git diff --check` passes.
+
+Visual score: `รอผู้ใช้ตรวจ`
+
+Remaining failures are intentionally uncredited: semantic heading/landmark work, modal focus lifecycle, reduced-motion coverage, media loading policy, mobile and iPad responsive behavior, exact route matching, user-flow/content corrections, and broader design-system drift remain for later phases or user visual review.
 
 ## Anti-patterns verdict
 
