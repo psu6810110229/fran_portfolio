@@ -14,7 +14,105 @@ import openHouseStationSetup from '../../assets/open-house-station-setup.webp';
 import openHouseStudentGroups from '../../assets/open-house-student-groups.webp';
 import openHouseStaffStage from '../../assets/open-house-staff-stage.webp';
 import openHouseGroupPhoto from '../../assets/open-house-group-photo.webp';
+import psuHeroVideo from '../../assets/resume/hero/psu.mp4';
+import psuHeroPoster from '../../assets/resume/hero/psu-poster.jpg';
+import eventHeroVideo from '../../assets/resume/hero/event.mp4';
+import eventHeroPoster from '../../assets/resume/hero/event-poster.jpg';
+import labHeroVideo from '../../assets/resume/hero/lab.mp4';
+import labHeroPoster from '../../assets/resume/hero/lab-poster.jpg';
+import hatyaiHeroVideo from '../../assets/resume/hero/hatyai.mp4';
+import hatyaiHeroPoster from '../../assets/resume/hero/hatyai-poster.jpg';
 import styles from './Resume.module.css';
+
+interface HeroScene {
+  id: string;
+  video: string;
+  poster: string;
+  copy: {
+    en: HeroSceneCopy;
+    th: HeroSceneCopy;
+  };
+}
+
+interface HeroSceneCopy {
+  label: string;
+  title: string;
+  description: string;
+}
+
+const heroScenes: HeroScene[] = [
+  {
+    id: 'psu',
+    video: psuHeroVideo,
+    poster: psuHeroPoster,
+    copy: {
+      en: {
+        label: 'PSU Campus',
+        title: 'Learning by building',
+        description: 'Computer Engineering is where I turn curiosity into things I can test, improve, and share.',
+      },
+      th: {
+        label: 'มหาวิทยาลัยสงขลานครินทร์',
+        title: 'เรียนรู้ด้วยการลงมือสร้าง',
+        description: 'วิศวกรรมคอมพิวเตอร์คือพื้นที่ที่ผมเปลี่ยนความสงสัยให้กลายเป็นสิ่งที่ทดลอง ปรับปรุง และแบ่งปันได้',
+      },
+    },
+  },
+  {
+    id: 'event',
+    video: eventHeroVideo,
+    poster: eventHeroPoster,
+    copy: {
+      en: {
+        label: 'Event Setup',
+        title: 'Ready before it starts',
+        description: 'I prepare the equipment, check the details, and keep the team moving before people arrive.',
+      },
+      th: {
+        label: 'เบื้องหลังงานอีเวนต์',
+        title: 'พร้อมก่อนงานเริ่ม',
+        description: 'ผมเตรียมอุปกรณ์ เช็กทุกรายละเอียด และประสานทีมให้หน้างานเดินต่อได้อย่างราบรื่น',
+      },
+    },
+  },
+  {
+    id: 'lab',
+    video: labHeroVideo,
+    poster: labHeroPoster,
+    copy: {
+      en: {
+        label: 'Engineering Lab',
+        title: 'Making technology understandable',
+        description: 'I turn engineering demos into conversations visitors can follow, try, and enjoy.',
+      },
+      th: {
+        label: 'ห้องแล็บวิศวกรรม',
+        title: 'ทำให้เทคโนโลยีเข้าใจง่าย',
+        description: 'ผมเปลี่ยนเดโมทางวิศวกรรมให้เป็นบทสนทนาที่ผู้มาเยือนติดตาม ทดลอง และสนุกไปด้วยกันได้',
+      },
+    },
+  },
+  {
+    id: 'hatyai',
+    video: hatyaiHeroVideo,
+    poster: hatyaiHeroPoster,
+    copy: {
+      en: {
+        label: 'Hat Yai After Hours',
+        title: 'Still moving',
+        description: 'From campus to the city, I keep learning, building, and carrying the next idea with me.',
+      },
+      th: {
+        label: 'หาดใหญ่ยามค่ำคืน',
+        title: 'ยังคงเดินต่อ',
+        description: 'จากมหาวิทยาลัยสู่เมืองที่คุ้นเคย ผมยังเรียนรู้ สร้าง และพกไอเดียถัดไปติดตัวเสมอ',
+      },
+    },
+  },
+];
+
+const HERO_CROSSFADE_SECONDS = 0.8;
+const HERO_CROSSFADE_MS = HERO_CROSSFADE_SECONDS * 1000;
 
 interface ActivitySlide {
   src: string;
@@ -133,9 +231,9 @@ const dictionary = {
   },
   th: {
     nav: [
-      { label: 'กลับสู่พอร์ตโฟลิโอ', href: '/' },
-      { label: 'เรื่องราวของฉัน', href: '#about' },
-      { label: 'วิธีการทำงาน', href: '#features' },
+      { label: 'ไปยังหน้าพอร์ตโฟลิโอ', href: '/' },
+      { label: 'รู้จักผมมากขึ้น', href: '#about' },
+      { label: 'ผมเคยทำอะไรบ้าง', href: '#features' },
       { label: 'ติดต่อ', href: '#contact' }
     ],
     heroDesc: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 ม.สงขลานครินทร์ ที่เรียนรู้จากการลงมือสร้างผลงานจริงและการทำงานร่วมกับผู้คน',
@@ -180,12 +278,14 @@ const Resume: React.FC = () => {
   const { lang, toggleLang } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const t = dictionary[lang];
+  const [activeHeroScene, setActiveHeroScene] = React.useState(0);
   const [activeSlide, setActiveSlide] = React.useState(0);
   const [slideDirection, setSlideDirection] = React.useState(1);
   const [isGalleryInView, setIsGalleryInView] = React.useState(false);
   const [isPageVisible, setIsPageVisible] = React.useState(true);
   const [isAutoPlayPaused, setIsAutoPlayPaused] = React.useState(false);
   const galleryRef = React.useRef<HTMLDivElement>(null);
+  const heroVideoRefs = React.useRef<Array<HTMLVideoElement | null>>([]);
 
   const mouseX = useMotionValue(Infinity);
   const mouseY = useMotionValue(Infinity);
@@ -241,6 +341,33 @@ const Resume: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
+    const activeVideo = heroVideoRefs.current[activeHeroScene];
+
+    if (prefersReducedMotion || !isPageVisible) {
+      heroVideoRefs.current.forEach((video) => video?.pause());
+      return;
+    }
+
+    if (activeVideo) {
+      if (activeVideo.ended || activeVideo.currentTime >= activeVideo.duration - HERO_CROSSFADE_SECONDS) {
+        activeVideo.currentTime = 0;
+      }
+      void activeVideo.play().catch(() => undefined);
+    }
+
+    const pauseTimer = window.setTimeout(() => {
+      heroVideoRefs.current.forEach((video, index) => {
+        if (video && index !== activeHeroScene) {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+    }, HERO_CROSSFADE_MS);
+
+    return () => window.clearTimeout(pauseTimer);
+  }, [activeHeroScene, isPageVisible, prefersReducedMotion]);
+
+  React.useEffect(() => {
     if (!isGalleryInView || !isPageVisible || isAutoPlayPaused || prefersReducedMotion) return;
 
     const timer = window.setTimeout(() => {
@@ -281,22 +408,48 @@ const Resume: React.FC = () => {
     setActiveSlide((current) => (current + 1) % activitySlides.length);
   };
 
+  const showNextHeroScene = (sceneIndex: number) => {
+    setActiveHeroScene((current) => (
+      current === sceneIndex ? (current + 1) % heroScenes.length : current
+    ));
+  };
+
+  const handleHeroTimeUpdate = (event: React.SyntheticEvent<HTMLVideoElement>, sceneIndex: number) => {
+    if (prefersReducedMotion || sceneIndex !== activeHeroScene) return;
+
+    const video = event.currentTarget;
+    if (Number.isFinite(video.duration) && video.duration - video.currentTime <= HERO_CROSSFADE_SECONDS) {
+      showNextHeroScene(sceneIndex);
+    }
+  };
+
+  const activeHeroCopy = heroScenes[activeHeroScene].copy[lang];
+
   return (
     <div className={styles.page}>
       {/* SECTION 1: HERO */}
       <section id="hero" aria-labelledby="resume-hero-title" className={styles.heroSection}>
         <div className={styles.heroInner}>
-          <video
-            autoPlay={!prefersReducedMotion}
-            loop
-            muted
-            playsInline
-            preload={prefersReducedMotion ? 'none' : 'metadata'}
-            aria-hidden="true"
-            tabIndex={-1}
-            className={styles.videoBg}
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
-          />
+          <div className={styles.videoStage} aria-hidden="true">
+            {heroScenes.map((scene, index) => (
+              <video
+                key={scene.id}
+                ref={(video) => {
+                  heroVideoRefs.current[index] = video;
+                }}
+                autoPlay={index === 0 && !prefersReducedMotion}
+                muted
+                playsInline
+                preload={index === activeHeroScene || index === (activeHeroScene + 1) % heroScenes.length ? 'auto' : 'metadata'}
+                tabIndex={-1}
+                className={`${styles.videoBg} ${index === activeHeroScene ? styles.videoActive : styles.videoInactive}`}
+                src={scene.video}
+                poster={scene.poster}
+                onTimeUpdate={(event) => handleHeroTimeUpdate(event, index)}
+                onEnded={() => showNextHeroScene(index)}
+              />
+            ))}
+          </div>
           <div className={styles.noiseOverlay} />
           <div className={styles.gradientOverlay} />
 
@@ -353,7 +506,7 @@ const Resume: React.FC = () => {
           <div className={styles.heroContent}>
             <div className={styles.heroLeft}>
               <WordsPullUp
-                text="Patcharapon"
+                text="FRAN Patcharapon"
                 showAsterisk={true}
                 as="h1"
                 id="resume-hero-title"
@@ -361,14 +514,20 @@ const Resume: React.FC = () => {
               />
             </div>
             <div className={styles.heroRight}>
-              <motion.p
-                initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: prefersReducedMotion ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] as const, duration: prefersReducedMotion ? 0 : 0.8 }}
-                className={styles.heroDesc}
-              >
-                {t.heroDesc}
-              </motion.p>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={`${lang}-${heroScenes[activeHeroScene].id}`}
+                  initial={prefersReducedMotion ? false : { x: 14, opacity: 0, filter: 'blur(4px)' }}
+                  animate={{ x: 0, opacity: 1, filter: 'blur(0px)' }}
+                  exit={prefersReducedMotion ? undefined : { x: -10, opacity: 0, filter: 'blur(3px)' }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] as const }}
+                  className={styles.heroCopy}
+                >
+                  <p className={styles.heroSceneLabel}>{activeHeroCopy.label}</p>
+                  <h2 className={styles.heroSceneTitle}>{activeHeroCopy.title}</h2>
+                  <p className={styles.heroDesc}>{activeHeroCopy.description}</p>
+                </motion.div>
+              </AnimatePresence>
               <motion.a
                 href="#about"
                 initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
