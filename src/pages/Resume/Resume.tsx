@@ -1,7 +1,7 @@
 import React from 'react';
-import { motion, useMotionValue } from 'motion/react';
+import { AnimatePresence, motion, useMotionValue } from 'motion/react';
 import { useLenis } from 'lenis/react';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Pause, Play } from 'lucide-react';
 import WordsPullUp from '../../components/Resume/WordsPullUp';
 import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle';
 import ScrollReveal from '../../components/ScrollReveal/ScrollReveal';
@@ -9,7 +9,83 @@ import { DockItem } from '../../components/DockItem/DockItem';
 import Contact from '../../pages/Contact';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useTheme } from '../../hooks/useTheme';
+import openHouseSpeaking from '../../assets/open-house-speaking.webp';
+import openHouseStationSetup from '../../assets/open-house-station-setup.webp';
+import openHouseStudentGroups from '../../assets/open-house-student-groups.webp';
+import openHouseStaffStage from '../../assets/open-house-staff-stage.webp';
+import openHouseGroupPhoto from '../../assets/open-house-group-photo.webp';
 import styles from './Resume.module.css';
+
+interface ActivitySlide {
+  src: string;
+  alt: {
+    en: string;
+    th: string;
+  };
+}
+
+const activitySlides: ActivitySlide[] = [
+  {
+    src: openHouseSpeaking,
+    alt: {
+      en: 'Fran holding a microphone while speaking with students during the Open House activities.',
+      th: 'ฟานถือไมค์พูดคุยกับนักเรียนระหว่างกิจกรรม Open House',
+    },
+  },
+  {
+    src: openHouseStationSetup,
+    alt: {
+      en: 'Fran preparing materials at the Engineering station with teammates.',
+      th: 'ฟานเตรียมอุปกรณ์ที่ฐานวิศวกรรมร่วมกับเพื่อนในทีม',
+    },
+  },
+  {
+    src: openHouseStudentGroups,
+    alt: {
+      en: 'Fran looking after student groups during the Open House activities.',
+      th: 'ฟานดูแลกลุ่มนักเรียนระหว่างกิจกรรม Open House',
+    },
+  },
+  {
+    src: openHouseStaffStage,
+    alt: {
+      en: 'Staff from different faculties seated on stage in front of the students.',
+      th: 'สตาฟจากหลายคณะนั่งอยู่บนเวทีต่อหน้านักเรียนที่เข้าร่วมงาน',
+    },
+  },
+  {
+    src: openHouseGroupPhoto,
+    alt: {
+      en: 'Staff and around 400 students posing together at the end of the event.',
+      th: 'ทีมสตาฟและนักเรียนประมาณ 400 คนถ่ายภาพร่วมกันหลังจบกิจกรรม',
+    },
+  },
+];
+
+const SLIDE_AUTO_ADVANCE_MS = 5000;
+
+const slideVariants = {
+  enter: (direction: number) => ({
+    opacity: 0,
+    x: direction * 28,
+    scale: 1.025,
+    filter: 'blur(6px)',
+  }),
+  center: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: { duration: 0.36, ease: [0.22, 1, 0.36, 1] as const },
+  },
+  exit: (direction: number) => ({
+    opacity: 0,
+    x: direction * -20,
+    scale: 0.99,
+    filter: 'blur(4px)',
+    transition: { duration: 0.24, ease: [0.25, 1, 0.5, 1] as const },
+  }),
+};
 
 const dictionary = {
   en: {
@@ -27,18 +103,33 @@ const dictionary = {
     about2: 'A Year 2 Computer Engineering student at PSU ',
     about3: 'who learns by building real products and working with people.',
     aboutFull: 'I am a Year 2 Computer Engineering student at PSU. Organizing Hat Yai Open House 2026 taught me to prepare equipment, coordinate people, and stay calm when problems appeared. I am still growing, but I take responsibility for the next step and learn from the people around me.',
-    feat1: 'What I am learning. ',
-    feat2: 'How I work with people.',
-    card1Label: 'Skills Learned',
-    card2Title: 'Thinking & Learning',
-    card2Items: ['Breaking problems into steps', 'Building and testing as I learn', 'Turning feedback into improvements'],
-    card3Title: 'Working With People',
-    card3Items: ['Listening before acting', 'Keeping teammates updated', 'Helping people find the next step'],
-    card4Title: 'Hat Yai Open House 2026',
-    card4Items: ['Preparing rooms and equipment', 'Guiding visiting students', 'Helping with queues and unexpected issues'],
-    card2Link: 'Read my story',
-    card3Link: 'Start a conversation',
-    card4Link: 'Read my story'
+    feat1: 'What I’ve done, ',
+    feat2: 'and what it taught me.',
+    activityTitle: 'Hat Yai Open House 2026',
+    activityMeta: 'Staff and Engineering Station Mentor · 4 July 2026',
+    galleryLabel: 'Hat Yai Open House activity photos',
+    previousSlide: 'View previous photo',
+    nextSlide: 'View next photo',
+    pauseSlides: 'Pause automatic photo changes',
+    resumeSlides: 'Resume automatic photo changes',
+    card2Title: 'At the engineering station',
+    card2Items: [
+      'I arranged the station, prepared equipment, and checked that everything was ready.',
+      'I helped with morning activities, then joined three other staff at Engineering.',
+      'I explained activities, answered study questions, and shared my Computer Engineering experience.',
+    ],
+    card3Title: 'On stage',
+    card3Items: [
+      'I spoke to 400 students about PSU Engineering, Computer Engineering, and career paths.',
+      'I wrote the talk myself, using three clear points that students could follow.',
+      'Preparation helped me speak comfortably to a large group while still sounding like myself.',
+    ],
+    card4Title: 'Working with the team',
+    card4Items: [
+      'Around 20 staff joined; three to four of us looked after Engineering all day.',
+      'We ran separate stations, followed one schedule, and kept each other updated.',
+      'The day taught me to notice changes and adjust with the team.',
+    ],
   },
   th: {
     nav: [
@@ -55,18 +146,33 @@ const dictionary = {
     about2: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 มหาวิทยาลัยสงขลานครินทร์ ',
     about3: 'ที่เรียนรู้จากการลงมือทำและการทำงานร่วมกับผู้คน',
     aboutFull: 'ผมเป็นนักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 มหาวิทยาลัยสงขลานครินทร์ การจัดงาน Open House หาดใหญ่ 2026 สอนให้ผมเตรียมอุปกรณ์ ประสานงานกับผู้คน และรับมือกับปัญหาที่เกิดขึ้นหน้างาน ผมยังคงพัฒนาตัวเอง แต่พร้อมรับผิดชอบขั้นตอนถัดไปและเรียนรู้จากคนรอบตัวครับ',
-    feat1: 'สิ่งที่กำลังเรียนรู้ ',
-    feat2: 'และวิธีทำงานร่วมกับผู้คน',
-    card1Label: 'ทักษะที่ได้เรียนรู้',
-    card2Title: 'การคิดและการเรียนรู้',
-    card2Items: ['แบ่งปัญหาเป็นขั้นตอน', 'ลงมือทำและตรวจสอบงาน', 'นำคำแนะนำไปปรับปรุง'],
-    card3Title: 'การทำงานร่วมกับผู้คน',
-    card3Items: ['รับฟังก่อนลงมือทำ', 'สื่อสารสถานะให้ทีมรู้', 'ช่วยให้ทีมเห็นขั้นตอนถัดไป'],
-    card4Title: 'งาน Open House หาดใหญ่ 2026',
-    card4Items: ['เตรียมอุปกรณ์และตรวจความพร้อม', 'แนะนำน้องๆ และพาชมห้องแล็บ', 'ช่วยจัดคิวและรับมือกับปัญหาหน้างาน'],
-    card2Link: 'อ่านเรื่องราวของผม',
-    card3Link: 'เริ่มพูดคุยกัน',
-    card4Link: 'อ่านเรื่องราวของผม'
+    feat1: 'งานที่ผมเคยลงมือทำ ',
+    feat2: 'และสิ่งที่ได้เรียนรู้',
+    activityTitle: 'หาดใหญ่ Open House 2026',
+    activityMeta: 'สตาฟและพี่เลี้ยงประจำฐานวิศวกรรม · 4 กรกฎาคม 2569',
+    galleryLabel: 'ภาพกิจกรรมหาดใหญ่ Open House',
+    previousSlide: 'ดูภาพก่อนหน้า',
+    nextSlide: 'ดูภาพถัดไป',
+    pauseSlides: 'หยุดการเปลี่ยนภาพอัตโนมัติ',
+    resumeSlides: 'เล่นภาพอัตโนมัติต่อ',
+    card2Title: 'ที่ฐานวิศวกรรม',
+    card2Items: [
+      'ก่อนเริ่มงาน ผมจัดพื้นที่ เตรียมอุปกรณ์ และเช็กของที่ต้องใช้ให้พร้อม เพื่อไม่ให้กิจกรรมต้องหยุดกลางคัน',
+      'ช่วงเช้าผมช่วยกิจกรรมรวม แล้วช่วงบ่ายกลับมาประจำฐานวิศวกรรมกับเพื่อนสตาฟอีก 3–4 คน',
+      'ที่ฐาน ผมอธิบายกิจกรรม ตอบคำถามเรื่องการเรียน และเล่าประสบการณ์จริงในฐานะนักศึกษาวิศวกรรมคอมพิวเตอร์',
+    ],
+    card3Title: 'ตอนขึ้นเวที',
+    card3Items: [
+      'ผมขึ้นเวทีพูดกับนักเรียนประมาณ 400 คน เรื่องวิศวะ ม.อ. การเรียนวิศวะคอม และเส้นทางหลังเรียนจบ',
+      'ผมเขียนเนื้อหาเอง เริ่มจากสามประเด็นหลัก แล้วค่อยอธิบายทีละส่วนด้วยภาษาที่น้อง ๆ ตามได้ทัน',
+      'ผมได้รู้ว่า เมื่อเตรียมตัวดีและพูดเรื่องที่สนใจ ผมคุยกับคนกลุ่มใหญ่ได้โดยยังเป็นตัวเอง',
+    ],
+    card4Title: 'ตอนทำงานกับทีม',
+    card4Items: [
+      'วันนั้นมีสตาฟราว 20 คนจากหลายคณะ ส่วนฐานวิศวะมีผมกับเพื่อน 3–4 คนดูแลร่วมกันตลอดวัน',
+      'แม้ประจำคนละฐาน ทุกคนเดินตามตารางเดียวกัน เราจึงคอยอัปเดตกันก่อนเริ่มกิจกรรมแต่ละช่วง',
+      'ผมชอบแผนที่ชัดเจน แต่งานนี้สอนให้สังเกตสิ่งที่เปลี่ยน และปรับตัวไปพร้อมกับทีม',
+    ],
   }
 };
 
@@ -74,6 +180,12 @@ const Resume: React.FC = () => {
   const { lang, toggleLang } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const t = dictionary[lang];
+  const [activeSlide, setActiveSlide] = React.useState(0);
+  const [slideDirection, setSlideDirection] = React.useState(1);
+  const [isGalleryInView, setIsGalleryInView] = React.useState(false);
+  const [isPageVisible, setIsPageVisible] = React.useState(true);
+  const [isAutoPlayPaused, setIsAutoPlayPaused] = React.useState(false);
+  const galleryRef = React.useRef<HTMLDivElement>(null);
 
   const mouseX = useMotionValue(Infinity);
   const mouseY = useMotionValue(Infinity);
@@ -108,6 +220,37 @@ const Resume: React.FC = () => {
     };
   }, [mouseX, mouseY]);
 
+  React.useEffect(() => {
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsGalleryInView(entry.isIntersecting && entry.intersectionRatio >= 0.55),
+      { threshold: 0.55 },
+    );
+
+    observer.observe(gallery);
+    return () => observer.disconnect();
+  }, []);
+
+  React.useEffect(() => {
+    const updateVisibility = () => setIsPageVisible(document.visibilityState === 'visible');
+    updateVisibility();
+    document.addEventListener('visibilitychange', updateVisibility);
+    return () => document.removeEventListener('visibilitychange', updateVisibility);
+  }, []);
+
+  React.useEffect(() => {
+    if (!isGalleryInView || !isPageVisible || isAutoPlayPaused || prefersReducedMotion) return;
+
+    const timer = window.setTimeout(() => {
+      setSlideDirection(1);
+      setActiveSlide((current) => (current + 1) % activitySlides.length);
+    }, SLIDE_AUTO_ADVANCE_MS);
+
+    return () => window.clearTimeout(timer);
+  }, [activeSlide, isAutoPlayPaused, isGalleryInView, isPageVisible, prefersReducedMotion]);
+
   const lenis = useLenis();
   const handleNavClick = (e: React.MouseEvent<HTMLElement>, href: string) => {
     if (href.startsWith('#')) {
@@ -124,6 +267,18 @@ const Resume: React.FC = () => {
   const cardVariants = {
     hidden: { scale: 0.95, opacity: 0 },
     visible: { scale: 1, opacity: 1, transition: { ease: [0.22, 1, 0.36, 1] as const, duration: prefersReducedMotion ? 0 : 0.8 } },
+  };
+
+  const showPreviousSlide = () => {
+    setIsAutoPlayPaused(true);
+    setSlideDirection(-1);
+    setActiveSlide((current) => (current - 1 + activitySlides.length) % activitySlides.length);
+  };
+
+  const showNextSlide = () => {
+    setIsAutoPlayPaused(true);
+    setSlideDirection(1);
+    setActiveSlide((current) => (current + 1) % activitySlides.length);
   };
 
   return (
@@ -278,6 +433,11 @@ const Resume: React.FC = () => {
             ]}
           />
 
+          <div className={styles.activityHeader}>
+            <h3 className={styles.activityTitle}>{t.activityTitle}</h3>
+            <p className={styles.activityMeta}>{t.activityMeta}</p>
+          </div>
+
           <motion.div
             initial={prefersReducedMotion ? false : 'hidden'}
             whileInView="visible"
@@ -285,73 +445,111 @@ const Resume: React.FC = () => {
             variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
             className={styles.featuresGrid}
           >
-            <motion.div variants={cardVariants} className={styles.cardVideo}>
-              <video
-                autoPlay={!prefersReducedMotion}
-                loop
-                muted
-                playsInline
-                preload="none"
-                aria-hidden="true"
-                tabIndex={-1}
-                className={styles.cardVideoInner}
-                src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260406_133058_0504132a-0cf3-4450-a370-8ea3b05c95d4.mp4"
-              />
-              <div className={styles.cardVideoOverlay} />
-              <div className={styles.cardVideoLabel}>
-                {t.card1Label}
+            <motion.div
+              ref={galleryRef}
+              variants={cardVariants}
+              className={styles.cardGallery}
+              role="region"
+              aria-roledescription="carousel"
+              aria-label={t.galleryLabel}
+            >
+              {prefersReducedMotion ? (
+                <img
+                  src={activitySlides[activeSlide].src}
+                  alt={activitySlides[activeSlide].alt[lang]}
+                  loading="lazy"
+                  decoding="async"
+                  className={styles.cardGalleryImage}
+                />
+              ) : (
+                <AnimatePresence initial={false} custom={slideDirection}>
+                  <motion.img
+                    key={activitySlides[activeSlide].src}
+                    src={activitySlides[activeSlide].src}
+                    alt={activitySlides[activeSlide].alt[lang]}
+                    loading="lazy"
+                    decoding="async"
+                    className={styles.cardGalleryImage}
+                    custom={slideDirection}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                  />
+                </AnimatePresence>
+              )}
+              <div className={styles.galleryControls}>
+                <span
+                  className={styles.galleryCount}
+                  aria-live={isAutoPlayPaused || prefersReducedMotion ? 'polite' : 'off'}
+                >
+                  {String(activeSlide + 1).padStart(2, '0')} / {String(activitySlides.length).padStart(2, '0')}
+                </span>
+                <span className={styles.galleryDivider} aria-hidden="true" />
+                <button
+                  type="button"
+                  className={styles.galleryButton}
+                  onClick={showPreviousSlide}
+                  aria-label={t.previousSlide}
+                >
+                  <ArrowLeft aria-hidden="true" />
+                </button>
+                {!prefersReducedMotion && (
+                  <button
+                    type="button"
+                    className={styles.galleryButton}
+                    onClick={() => setIsAutoPlayPaused((paused) => !paused)}
+                    aria-label={isAutoPlayPaused ? t.resumeSlides : t.pauseSlides}
+                    aria-pressed={isAutoPlayPaused}
+                  >
+                    {isAutoPlayPaused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className={styles.galleryButton}
+                  onClick={showNextSlide}
+                  aria-label={t.nextSlide}
+                >
+                  <ArrowRight aria-hidden="true" />
+                </button>
               </div>
             </motion.div>
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
-              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171918_4a5edc79-d78f-4637-ac8b-53c43c220606.png&w=1280&q=85" alt={t.card2Title} loading="lazy" decoding="async" className={styles.cardIcon} />
-              <h3 className={styles.cardTitle}>{t.card2Title}</h3>
+              <h4 className={styles.cardTitle}>{t.card2Title}</h4>
               <ul className={styles.cardList}>
                 {t.card2Items.map((item, i) => (
                   <li key={i} className={styles.cardListItem}>
-                    <Check className={styles.cardListIcon} />
+                    <span className={styles.cardListMarker} aria-hidden="true" />
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-              <a href="#about" onClick={(e) => handleNavClick(e, '#about')} className={styles.cardLink}>
-                {t.card2Link}
-                <ArrowRight className={styles.cardLinkIcon} />
-              </a>
             </motion.div>
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
-              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171741_ed9845ab-f5b2-4018-8ce7-07cc01823522.png&w=1280&q=85" alt={t.card3Title} loading="lazy" decoding="async" className={styles.cardIcon} />
-              <h3 className={styles.cardTitle}>{t.card3Title}</h3>
+              <h4 className={styles.cardTitle}>{t.card3Title}</h4>
               <ul className={styles.cardList}>
                 {t.card3Items.map((item, i) => (
                   <li key={i} className={styles.cardListItem}>
-                    <Check className={styles.cardListIcon} />
+                    <span className={styles.cardListMarker} aria-hidden="true" />
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-              <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className={styles.cardLink}>
-                {t.card3Link}
-                <ArrowRight className={styles.cardLinkIcon} />
-              </a>
             </motion.div>
 
             <motion.div variants={cardVariants} className={styles.cardStandard}>
-              <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171809_f56666dc-c099-4778-ad82-9ad4f209567b.png&w=1280&q=85" alt={t.card4Title} loading="lazy" decoding="async" className={styles.cardIcon} />
-              <h3 className={styles.cardTitle}>{t.card4Title}</h3>
+              <h4 className={styles.cardTitle}>{t.card4Title}</h4>
               <ul className={styles.cardList}>
                 {t.card4Items.map((item, i) => (
                   <li key={i} className={styles.cardListItem}>
-                    <Check className={styles.cardListIcon} />
+                    <span className={styles.cardListMarker} aria-hidden="true" />
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-              <a href="#about" onClick={(e) => handleNavClick(e, '#about')} className={styles.cardLink}>
-                {t.card4Link}
-                <ArrowRight className={styles.cardLinkIcon} />
-              </a>
             </motion.div>
           </motion.div>
         </div>
