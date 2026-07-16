@@ -139,7 +139,7 @@
   .modal {
     flex-direction: row;
     height: 320px;
-    max-width: 600px;
+    max-width: 680px;
   }
 
   .lineModal {
@@ -183,13 +183,13 @@
 
   .actions {
     flex-direction: row-reverse;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: flex-start;
   }
   
   .btnStay, .btnGo {
     width: auto;
-    padding: 12px 28px;
+    padding: 12px 20px;
     flex-shrink: 0;
   }
 }
