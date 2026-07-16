@@ -2,9 +2,10 @@ import { useState, type FormEvent } from 'react';
 import { FileText } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../hooks/useLanguage';
-import { YoutubeIcon, InstagramIcon, FacebookIcon, GithubIcon, LinkedinIcon } from '../components/Icons/SocialIcons';
+import { LineIcon, InstagramIcon, FacebookIcon, GithubIcon, LinkedinIcon } from '../components/Icons/SocialIcons';
 import ExternalLinkModal, { type ExternalLinkType } from '../components/ExternalLinkModal/ExternalLinkModal';
 import Magnet from '../components/Magnet/Magnet';
+import lineQr from '../assets/line-qr.jpg';
 import styles from './Contact.module.css';
 
 const content = {
@@ -117,8 +118,8 @@ function Contact({ resumeUrl }: { resumeUrl?: string }) {
               </button>
               <div className={styles.inlineLinks}>
                 <Magnet padding={10} disabled={false} magnetStrength={2}>
-                  <a href="https://www.youtube.com/@farnpatcharapon5393" onClick={(e) => handleOpenModal(e, 'YouTube', 'https://www.youtube.com/@farnpatcharapon5393')} className={styles.socialButton} aria-label="YouTube">
-                    <YoutubeIcon className={styles.socialIcon} />
+                  <a href={lineQr} onClick={(e) => handleOpenModal(e, 'Line', lineQr)} className={styles.socialButton} aria-label="LINE">
+                    <LineIcon className={styles.socialIcon} />
                   </a>
                 </Magnet>
                 <Magnet padding={10} disabled={false} magnetStrength={2}>

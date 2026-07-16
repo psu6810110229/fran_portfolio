@@ -30,6 +30,7 @@
   --color-accent:       #d4651a;
   --color-accent-hover: #e07030;
   --color-accent-dark:  #c4551a;
+  --color-qr-surface:   #ffffff;
 
   /* Typography */
   --font-heading: 'Syne', 'IBM Plex Sans Thai', sans-serif;

@@ -144,6 +144,7 @@
   font-size: var(--font-size-base);
   font-weight: 600;
   align-self: flex-start;
+  white-space: nowrap;
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 

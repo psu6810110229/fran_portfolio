@@ -4,10 +4,10 @@ interface IconProps extends SVGProps<SVGSVGElement> {
   size?: number | string;
 }
 
-export const YoutubeIcon = ({ size = 24, className = '', ...props }: IconProps) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
-    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
-    <path d="m10 15 5-3-5-3v6z" />
+export const LineIcon = ({ size = 24, className = '', ...props }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <path d="M20.5 11.1c0 4.1-3.8 7.4-8.5 7.4-.7 0-1.4-.1-2.1-.2L5.5 21l1.2-4.1c-2-1.4-3.2-3.5-3.2-5.8C3.5 7 7.3 3.7 12 3.7s8.5 3.3 8.5 7.4Z" />
+    <text x="12" y="13.25" fill="currentColor" stroke="none" fontSize="5.25" fontWeight="700" textAnchor="middle">LINE</text>
   </svg>
 );
 
