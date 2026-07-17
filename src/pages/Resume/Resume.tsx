@@ -295,7 +295,19 @@ const Resume: React.FC = () => {
   const [enableDockEffect, setEnableDockEffect] = React.useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
   const [isCriticalVideoSettled, setIsCriticalVideoSettled] = React.useState(false);
-  const splash = useResumeSplash({ isCriticalVideoSettled });
+  const splash = useResumeSplash({ 
+    isCriticalVideoSettled,
+    posterUrl: heroScenes[0].poster
+  });
+
+  React.useEffect(() => {
+    const firstVideo = heroVideoRefs.current[0];
+    if (firstVideo && splash.isReadyToPlayVideo && !prefersReducedMotion && activeHeroScene === 0) {
+      if (firstVideo.paused) {
+        firstVideo.play().catch(() => undefined);
+      }
+    }
+  }, [splash.isReadyToPlayVideo, prefersReducedMotion, activeHeroScene]);
 
   const markHeroVideoReady = React.useCallback((index: number) => {
     setReadyHeroVideos((current) => {
@@ -504,7 +516,7 @@ const Resume: React.FC = () => {
                       markHeroVideoReady(index);
                     }
                   }}
-                  autoPlay={index === 0 && !prefersReducedMotion}
+                  autoPlay={false}
                   muted
                   playsInline
                   preload="auto"

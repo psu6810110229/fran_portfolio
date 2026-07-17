@@ -7,6 +7,7 @@
   overflow: hidden;
   background: var(--color-bg);
   color: var(--color-accent);
+  will-change: clip-path, opacity;
 }
 
 .status {
@@ -35,6 +36,7 @@
   display: grid;
   place-items: center;
   white-space: nowrap;
+  will-change: transform, filter, opacity;
 }
 
 .progress {
