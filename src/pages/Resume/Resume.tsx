@@ -2,7 +2,6 @@ import React from 'react';
 import { AnimatePresence, motion, useMotionValue } from 'motion/react';
 import { useLenis } from 'lenis/react';
 import { ArrowLeft, ArrowRight, Pause, Play } from 'lucide-react';
-import WordsPullUp from '../../components/Resume/WordsPullUp';
 import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle';
 import ScrollReveal from '../../components/ScrollReveal/ScrollReveal';
 import { DockItem } from '../../components/DockItem/DockItem';
@@ -36,8 +35,7 @@ interface HeroScene {
 
 interface HeroSceneCopy {
   label: string;
-  title: string;
-  description: string;
+  description: [string, string];
 }
 
 const heroScenes: HeroScene[] = [
@@ -47,14 +45,12 @@ const heroScenes: HeroScene[] = [
     poster: psuHeroPoster,
     copy: {
       en: {
-        label: 'PSU Campus',
-        title: 'Learning by building',
-        description: 'Computer Engineering is where I turn curiosity into things I can test, improve, and share.',
+        label: 'Building products',
+        description: ['I turn ideas into digital products,', 'from first sketch to real-world use.'],
       },
       th: {
-        label: 'มหาวิทยาลัยสงขลานครินทร์',
-        title: 'เรียนรู้ด้วยการลงมือสร้าง',
-        description: 'วิศวกรรมคอมพิวเตอร์คือพื้นที่ที่ผมเปลี่ยนความสงสัยให้กลายเป็นสิ่งที่ทดลอง ปรับปรุง และแบ่งปันได้',
+        label: 'สร้างโปรดักต์',
+        description: ['ผมเปลี่ยนไอเดียให้เป็นโปรดักต์ดิจิทัล', 'ตั้งแต่ภาพแรกจนเปิดใช้ได้จริง'],
       },
     },
   },
@@ -64,14 +60,12 @@ const heroScenes: HeroScene[] = [
     poster: eventHeroPoster,
     copy: {
       en: {
-        label: 'Event Setup',
-        title: 'Ready before it starts',
-        description: 'I prepare the equipment, check the details, and keep the team moving before people arrive.',
+        label: 'Working with people',
+        description: ['I work with people and details,', 'so good ideas reach the people they serve.'],
       },
       th: {
-        label: 'เบื้องหลังงานอีเวนต์',
-        title: 'พร้อมก่อนงานเริ่ม',
-        description: 'ผมเตรียมอุปกรณ์ เช็กทุกรายละเอียด และประสานทีมให้หน้างานเดินต่อได้อย่างราบรื่น',
+        label: 'ทำงานกับผู้คน',
+        description: ['ผมทำงานกับผู้คนและรายละเอียด', 'เพื่อให้ไอเดียไปถึงคนใช้จริง'],
       },
     },
   },
@@ -81,14 +75,12 @@ const heroScenes: HeroScene[] = [
     poster: labHeroPoster,
     copy: {
       en: {
-        label: 'Engineering Lab',
-        title: 'Making technology understandable',
-        description: 'I turn engineering demos into conversations visitors can follow, try, and enjoy.',
+        label: 'Making ideas clear',
+        description: ['I make complex ideas easier to use,', 'then improve them through real feedback.'],
       },
       th: {
-        label: 'ห้องแล็บวิศวกรรม',
-        title: 'ทำให้เทคโนโลยีเข้าใจง่าย',
-        description: 'ผมเปลี่ยนเดโมทางวิศวกรรมให้เป็นบทสนทนาที่ผู้มาเยือนติดตาม ทดลอง และสนุกไปด้วยกันได้',
+        label: 'ทำเรื่องยากให้ง่าย',
+        description: ['ผมทำเรื่องยากให้เข้าใจและใช้ง่าย', 'แล้วค่อยปรับจากเสียงของคนใช้'],
       },
     },
   },
@@ -98,14 +90,12 @@ const heroScenes: HeroScene[] = [
     poster: hatyaiHeroPoster,
     copy: {
       en: {
-        label: 'Hat Yai After Hours',
-        title: 'Still moving',
-        description: 'From campus to the city, I keep learning, building, and carrying the next idea with me.',
+        label: 'Staying curious',
+        description: ['I keep looking for better ways to build,', 'with curiosity beyond the screen.'],
       },
       th: {
-        label: 'หาดใหญ่ยามค่ำคืน',
-        title: 'ยังคงเดินต่อ',
-        description: 'จากมหาวิทยาลัยสู่เมืองที่คุ้นเคย ผมยังเรียนรู้ สร้าง และพกไอเดียถัดไปติดตัวเสมอ',
+        label: 'เก็บไอเดียรอบตัว',
+        description: ['ผมเก็บไอเดียจากโลกรอบตัว', 'แล้วพากลับมาสร้างต่อบนหน้าจอ'],
       },
     },
   },
@@ -505,27 +495,60 @@ const Resume: React.FC = () => {
 
           <div className={styles.heroContent}>
             <div className={styles.heroLeft}>
-              <WordsPullUp
-                text="FRAN Patcharapon"
-                showAsterisk={true}
-                as="h1"
+              <motion.h1
                 id="resume-hero-title"
                 className={styles.heroTitle}
-              />
+                initial={prefersReducedMotion ? false : { y: 24, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={prefersReducedMotion
+                  ? { duration: 0 }
+                  : { type: 'spring', stiffness: 170, damping: 25, mass: 1 }}
+              >
+                <motion.span
+                  className={styles.heroNameFirst}
+                  initial={prefersReducedMotion ? false : { y: 18, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                transition={prefersReducedMotion
+                  ? { duration: 0 }
+                  : { delay: 0.16, type: 'spring', stiffness: 165, damping: 24, mass: 0.9 }}
+                >
+                  FRAN
+                </motion.span>
+                <motion.span
+                  className={styles.heroNameLast}
+                  aria-label="Patcharapon"
+                  initial={prefersReducedMotion ? false : { y: 18, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                transition={prefersReducedMotion
+                  ? { duration: 0 }
+                  : { delay: 0.34, type: 'spring', stiffness: 165, damping: 24, mass: 0.9 }}
+                >
+                  {Array.from('Patcharapon').map((character, index) => (
+                    <span key={`${character}-${index}`} aria-hidden="true" className={styles.heroNameCharacter}>
+                      {character}
+                    </span>
+                  ))}
+                </motion.span>
+              </motion.h1>
             </div>
             <div className={styles.heroRight}>
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={`${lang}-${heroScenes[activeHeroScene].id}`}
-                  initial={prefersReducedMotion ? false : { x: 14, opacity: 0, filter: 'blur(4px)' }}
-                  animate={{ x: 0, opacity: 1, filter: 'blur(0px)' }}
-                  exit={prefersReducedMotion ? undefined : { x: -10, opacity: 0, filter: 'blur(3px)' }}
-                  transition={{ duration: prefersReducedMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] as const }}
+                  initial={prefersReducedMotion ? false : { y: 22, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={prefersReducedMotion ? undefined : { y: -18, opacity: 0 }}
+                  transition={prefersReducedMotion
+                    ? { duration: 0 }
+                    : { type: 'spring', stiffness: 260, damping: 28, mass: 0.72 }}
                   className={styles.heroCopy}
                 >
                   <p className={styles.heroSceneLabel}>{activeHeroCopy.label}</p>
-                  <h2 className={styles.heroSceneTitle}>{activeHeroCopy.title}</h2>
-                  <p className={styles.heroDesc}>{activeHeroCopy.description}</p>
+                  <p className={styles.heroDesc}>
+                    {activeHeroCopy.description.map((line) => (
+                      <span key={line}>{line}</span>
+                    ))}
+                  </p>
                 </motion.div>
               </AnimatePresence>
               <motion.a
