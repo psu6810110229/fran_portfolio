@@ -271,6 +271,9 @@ const Resume: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const t = dictionary[lang];
   const [activeHeroScene, setActiveHeroScene] = React.useState(0);
+  const [readyHeroVideos, setReadyHeroVideos] = React.useState<boolean[]>(
+    () => heroScenes.map(() => false),
+  );
   const [activeSlide, setActiveSlide] = React.useState(0);
   const [slideDirection, setSlideDirection] = React.useState(1);
   const [isGalleryInView, setIsGalleryInView] = React.useState(false);
@@ -285,6 +288,15 @@ const Resume: React.FC = () => {
   const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
   const [isCriticalVideoSettled, setIsCriticalVideoSettled] = React.useState(false);
   const splash = useResumeSplash({ isCriticalVideoSettled });
+
+  const markHeroVideoReady = React.useCallback((index: number) => {
+    setReadyHeroVideos((current) => {
+      if (current[index]) return current;
+      return current.map((isReady, sceneIndex) => sceneIndex === index || isReady);
+    });
+
+    if (index === 0) setIsCriticalVideoSettled(true);
+  }, []);
 
   React.useEffect(() => {
     const pointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -434,27 +446,37 @@ const Resume: React.FC = () => {
         <div className={styles.heroInner}>
           <div className={styles.videoStage} aria-hidden="true">
             {heroScenes.map((scene, index) => (
-              <video
+              <div
                 key={scene.id}
-                ref={(video) => {
-                  heroVideoRefs.current[index] = video;
-                  if (index === 0 && video && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-                    setIsCriticalVideoSettled(true);
-                  }
-                }}
-                autoPlay={index === 0 && !prefersReducedMotion}
-                muted
-                playsInline
-                preload={index === activeHeroScene || index === (activeHeroScene + 1) % heroScenes.length ? 'auto' : 'metadata'}
-                tabIndex={-1}
-                className={`${styles.videoBg} ${index === activeHeroScene ? styles.videoActive : styles.videoInactive}`}
-                src={scene.video}
-                poster={scene.poster}
-                onLoadedData={index === 0 ? () => setIsCriticalVideoSettled(true) : undefined}
-                onError={index === 0 ? () => setIsCriticalVideoSettled(true) : undefined}
-                onTimeUpdate={(event) => handleHeroTimeUpdate(event, index)}
-                onEnded={() => showNextHeroScene(index)}
-              />
+                className={`${styles.videoScene} ${index === activeHeroScene ? styles.videoActive : styles.videoInactive}`}
+              >
+                <img
+                  src={scene.poster}
+                  alt=""
+                  className={styles.videoPoster}
+                  draggable={false}
+                />
+                <video
+                  ref={(video) => {
+                    heroVideoRefs.current[index] = video;
+                    if (video && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+                      markHeroVideoReady(index);
+                    }
+                  }}
+                  autoPlay={index === 0 && !prefersReducedMotion}
+                  muted
+                  playsInline
+                  preload={index === activeHeroScene || index === (activeHeroScene + 1) % heroScenes.length ? 'auto' : 'metadata'}
+                  tabIndex={-1}
+                  className={`${styles.videoBg} ${readyHeroVideos[index] ? styles.videoReady : ''}`}
+                  src={scene.video}
+                  poster={scene.poster}
+                  onLoadedData={() => markHeroVideoReady(index)}
+                  onError={index === 0 ? () => setIsCriticalVideoSettled(true) : undefined}
+                  onTimeUpdate={(event) => handleHeroTimeUpdate(event, index)}
+                  onEnded={() => showNextHeroScene(index)}
+                />
+              </div>
             ))}
           </div>
           <div className={styles.noiseOverlay} />
