@@ -5,6 +5,8 @@ import { ArrowLeft, ArrowRight, Pause, Play } from 'lucide-react';
 import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle';
 import ScrollReveal from '../../components/ScrollReveal/ScrollReveal';
 import { DockItem } from '../../components/DockItem/DockItem';
+import { useResumeSplash } from '../../hooks/useResumeSplash';
+import ResumeSplash from './ResumeSplash';
 import Contact from '../../pages/Contact';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useTheme } from '../../hooks/useTheme';
@@ -281,6 +283,8 @@ const Resume: React.FC = () => {
   const mouseY = useMotionValue(Infinity);
   const [enableDockEffect, setEnableDockEffect] = React.useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
+  const [isCriticalVideoSettled, setIsCriticalVideoSettled] = React.useState(false);
+  const splash = useResumeSplash({ isCriticalVideoSettled });
 
   React.useEffect(() => {
     const pointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -417,6 +421,14 @@ const Resume: React.FC = () => {
 
   return (
     <div className={styles.page}>
+      {splash.shouldRender && (
+        <ResumeSplash
+          isVisible={splash.isVisible}
+          progress={splash.progress}
+          prefersReducedMotion={splash.prefersReducedMotion}
+          onExitComplete={splash.completeExit}
+        />
+      )}
       {/* SECTION 1: HERO */}
       <section id="hero" aria-labelledby="resume-hero-title" className={styles.heroSection}>
         <div className={styles.heroInner}>
@@ -426,6 +438,9 @@ const Resume: React.FC = () => {
                 key={scene.id}
                 ref={(video) => {
                   heroVideoRefs.current[index] = video;
+                  if (index === 0 && video && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+                    setIsCriticalVideoSettled(true);
+                  }
                 }}
                 autoPlay={index === 0 && !prefersReducedMotion}
                 muted
@@ -435,6 +450,8 @@ const Resume: React.FC = () => {
                 className={`${styles.videoBg} ${index === activeHeroScene ? styles.videoActive : styles.videoInactive}`}
                 src={scene.video}
                 poster={scene.poster}
+                onLoadedData={index === 0 ? () => setIsCriticalVideoSettled(true) : undefined}
+                onError={index === 0 ? () => setIsCriticalVideoSettled(true) : undefined}
                 onTimeUpdate={(event) => handleHeroTimeUpdate(event, index)}
                 onEnded={() => showNextHeroScene(index)}
               />
@@ -498,7 +515,7 @@ const Resume: React.FC = () => {
               <motion.h1
                 id="resume-hero-title"
                 className={styles.heroTitle}
-                initial={prefersReducedMotion ? false : { y: 24, opacity: 0 }}
+                initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 24, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
@@ -506,7 +523,7 @@ const Resume: React.FC = () => {
               >
                 <motion.span
                   className={styles.heroNameFirst}
-                  initial={prefersReducedMotion ? false : { y: 18, opacity: 0 }}
+                  initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 18, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
@@ -517,7 +534,7 @@ const Resume: React.FC = () => {
                 <motion.span
                   className={styles.heroNameLast}
                   aria-label="Patcharapon"
-                  initial={prefersReducedMotion ? false : { y: 18, opacity: 0 }}
+                  initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 18, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
@@ -535,7 +552,7 @@ const Resume: React.FC = () => {
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={`${lang}-${heroScenes[activeHeroScene].id}`}
-                  initial={prefersReducedMotion ? false : { y: 22, opacity: 0 }}
+                  initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 22, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={prefersReducedMotion ? undefined : { y: -18, opacity: 0 }}
                   transition={prefersReducedMotion
@@ -553,7 +570,7 @@ const Resume: React.FC = () => {
               </AnimatePresence>
               <motion.a
                 href="#about"
-                initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
+                initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: prefersReducedMotion ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] as const, duration: prefersReducedMotion ? 0 : 0.8 }}
                 className={styles.ctaButton}
