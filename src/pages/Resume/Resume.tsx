@@ -592,9 +592,17 @@ const Resume: React.FC = () => {
             className={styles.navContainer}
             initial={prefersReducedMotion ? false : { x: "-50%", y: -30, opacity: 0 }}
             animate={prefersReducedMotion ? { x: "-50%", y: 0, opacity: 1 } : (splash.isVisible ? { x: "-50%", y: -30, opacity: 0 } : { x: "-50%", y: 0, opacity: 1 })}
-            transition={{ type: 'spring', stiffness: 120, damping: 20, delay: 0.1 }}
+            transition={{ 
+              y: { type: 'spring', stiffness: 120, damping: 20, delay: 0.1 },
+              opacity: { duration: 0.2, delay: 0.1, ease: 'linear' }
+            }}
           >
-            <nav className={styles.navBar}>
+            <motion.nav 
+              className={styles.navBar}
+              initial={prefersReducedMotion ? false : { backdropFilter: 'blur(0px) saturate(100%)', backgroundColor: 'rgba(19, 17, 16, 0)' }}
+              animate={prefersReducedMotion ? { backdropFilter: 'blur(8px) saturate(115%)', backgroundColor: 'rgba(19, 17, 16, 0.42)' } : (splash.isVisible ? { backdropFilter: 'blur(0px) saturate(100%)', backgroundColor: 'rgba(19, 17, 16, 0)' } : { backdropFilter: 'blur(8px) saturate(115%)', backgroundColor: 'rgba(19, 17, 16, 0.42)' })}
+              transition={{ delay: 0.5, duration: 0.6, ease: 'easeInOut' }}
+            >
               <div className={styles.navLinks}>
                 {t.nav.map((item) => (
                   <DockItem key={item.label} mouseX={mouseX} mouseY={mouseY} isDesktop={enableDockEffect} as="a" href={item.href} className={styles.navLink} onClick={(e) => handleNavClick(e, item.href)}>
@@ -640,7 +648,7 @@ const Resume: React.FC = () => {
                   </button>
                 </DockItem>
               </div>
-            </nav>
+            </motion.nav>
           </motion.div>
 
           <div className={styles.heroContent}>
