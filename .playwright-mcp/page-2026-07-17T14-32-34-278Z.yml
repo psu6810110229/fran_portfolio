@@ -1,0 +1,476 @@
+- generic [ref=f5e3]:
+  - navigation "Main navigation" [ref=f5e4]:
+    - generic [ref=f5e5]:
+      - link "fran." [ref=f5e6] [cursor=pointer]:
+        - /url: "#hero"
+        - generic [ref=f5e7]:
+          - generic [ref=f5e8]:
+            - generic [ref=f5e9]: f
+            - generic [ref=f5e10]: r
+            - generic [ref=f5e11]: a
+            - generic [ref=f5e12]: "n"
+            - generic [ref=f5e13]: .
+          - generic [ref=f5e14]: fran.
+      - generic [ref=f5e15]:
+        - list [ref=f5e16]:
+          - listitem [ref=f5e17]:
+            - link "about" [ref=f5e18] [cursor=pointer]:
+              - /url: "#about"
+              - generic [ref=f5e19]:
+                - generic [ref=f5e20]:
+                  - generic [ref=f5e21]: a
+                  - generic [ref=f5e22]: b
+                  - generic [ref=f5e23]: o
+                  - generic [ref=f5e24]: u
+                  - generic [ref=f5e25]: t
+                - generic [ref=f5e26]: about
+          - listitem [ref=f5e27]:
+            - link "work" [ref=f5e28] [cursor=pointer]:
+              - /url: "#projects"
+              - generic [ref=f5e29]:
+                - generic [ref=f5e30]:
+                  - generic [ref=f5e31]: w
+                  - generic [ref=f5e32]: o
+                  - generic [ref=f5e33]: r
+                  - generic [ref=f5e34]: k
+                - generic [ref=f5e35]: work
+          - listitem [ref=f5e36]:
+            - link "contact" [ref=f5e37] [cursor=pointer]:
+              - /url: "#contact"
+              - generic [ref=f5e38]:
+                - generic [ref=f5e39]:
+                  - generic [ref=f5e40]: c
+                  - generic [ref=f5e41]: o
+                  - generic [ref=f5e42]: "n"
+                  - generic [ref=f5e43]: t
+                  - generic [ref=f5e44]: a
+                  - generic [ref=f5e45]: c
+                  - generic [ref=f5e46]: t
+                - generic [ref=f5e47]: contact
+          - listitem [ref=f5e48]:
+            - link "community work" [ref=f5e49] [cursor=pointer]:
+              - /url: /resume
+              - generic [ref=f5e50]:
+                - generic [ref=f5e51]:
+                  - generic [ref=f5e52]: c
+                  - generic [ref=f5e53]: o
+                  - generic [ref=f5e54]: m
+                  - generic [ref=f5e55]: m
+                  - generic [ref=f5e56]: u
+                  - generic [ref=f5e57]: "n"
+                  - generic [ref=f5e58]: i
+                  - generic [ref=f5e59]: t
+                  - generic [ref=f5e60]: "y"
+                - generic [ref=f5e62]:
+                  - generic [ref=f5e63]: w
+                  - generic [ref=f5e64]: o
+                  - generic [ref=f5e65]: r
+                  - generic [ref=f5e66]: k
+                - generic [ref=f5e67]: community work
+        - button "Switch to Thai" [ref=f5e68] [cursor=pointer]: EN
+        - button "Switch to dark mode" [ref=f5e69] [cursor=pointer]
+  - main [ref=f5e73]:
+    - generic [ref=f5e75]:
+      - img "Fran" [ref=f5e78]
+      - generic [ref=f5e80]:
+        - paragraph [ref=f5e81]: Hi, I'm Fran.
+        - heading [level=1] [ref=f5e82]:
+          - text: A developer who turns ideasinto
+          - emphasis [ref=f5e83]: real products
+          - text: .
+        - paragraph [ref=f5e84]: First-year Computer Engineering student at PSU, building clean web interfaces with React and TypeScript.
+        - generic [ref=f5e85]:
+          - link "View Projects" [ref=f5e86] [cursor=pointer]:
+            - /url: "#projects"
+          - link "Say hello" [ref=f5e87] [cursor=pointer]:
+            - /url: "#contact"
+          - link "GitHub" [ref=f5e89] [cursor=pointer]:
+            - /url: https://github.com/psu6810110229
+          - link "LinkedIn" [ref=f5e91] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/patcharapon-matsuden-864883413
+    - generic [ref=f5e94]:
+      - generic [ref=f5e97]:
+        - generic [ref=f5e98]:
+          - generic [ref=f5e99]: A
+          - generic [ref=f5e100]: b
+          - generic [ref=f5e101]: o
+          - generic [ref=f5e102]: u
+          - generic [ref=f5e103]: t
+        - generic [ref=f5e104]: About
+      - generic [ref=f5e106]:
+        - generic [ref=f5e107]:
+          - paragraph [ref=f5e108]:
+            - generic [ref=f5e109]:
+              - generic [ref=f5e110]:
+                - generic [ref=f5e111]: I
+                - generic [ref=f5e112]: "'"
+                - generic [ref=f5e113]: m
+              - generic [ref=f5e115]: a
+              - generic [ref=f5e118]:
+                - generic [ref=f5e119]: f
+                - generic [ref=f5e120]: i
+                - generic [ref=f5e121]: r
+                - generic [ref=f5e122]: s
+                - generic [ref=f5e123]: t
+                - generic [ref=f5e124]: "-"
+                - generic [ref=f5e125]: "y"
+                - generic [ref=f5e126]: e
+                - generic [ref=f5e127]: a
+                - generic [ref=f5e128]: r
+              - generic [ref=f5e130]:
+                - generic [ref=f5e131]: C
+                - generic [ref=f5e132]: o
+                - generic [ref=f5e133]: m
+                - generic [ref=f5e134]: p
+                - generic [ref=f5e135]: u
+                - generic [ref=f5e136]: t
+                - generic [ref=f5e137]: e
+                - generic [ref=f5e138]: r
+              - generic [ref=f5e140]:
+                - generic [ref=f5e141]: E
+                - generic [ref=f5e142]: "n"
+                - generic [ref=f5e143]: g
+                - generic [ref=f5e144]: i
+                - generic [ref=f5e145]: "n"
+                - generic [ref=f5e146]: e
+                - generic [ref=f5e147]: e
+                - generic [ref=f5e148]: r
+                - generic [ref=f5e149]: i
+                - generic [ref=f5e150]: "n"
+                - generic [ref=f5e151]: g
+              - generic [ref=f5e153]:
+                - generic [ref=f5e154]: s
+                - generic [ref=f5e155]: t
+                - generic [ref=f5e156]: u
+                - generic [ref=f5e157]: d
+                - generic [ref=f5e158]: e
+                - generic [ref=f5e159]: "n"
+                - generic [ref=f5e160]: t
+              - generic [ref=f5e162]:
+                - generic [ref=f5e163]: a
+                - generic [ref=f5e164]: t
+              - generic [ref=f5e166]:
+                - generic [ref=f5e167]: P
+                - generic [ref=f5e168]: r
+                - generic [ref=f5e169]: i
+                - generic [ref=f5e170]: "n"
+                - generic [ref=f5e171]: c
+                - generic [ref=f5e172]: e
+              - generic [ref=f5e174]:
+                - generic [ref=f5e175]: o
+                - generic [ref=f5e176]: f
+              - generic [ref=f5e178]:
+                - generic [ref=f5e179]: S
+                - generic [ref=f5e180]: o
+                - generic [ref=f5e181]: "n"
+                - generic [ref=f5e182]: g
+                - generic [ref=f5e183]: k
+                - generic [ref=f5e184]: l
+                - generic [ref=f5e185]: a
+              - generic [ref=f5e187]:
+                - generic [ref=f5e188]: U
+                - generic [ref=f5e189]: "n"
+                - generic [ref=f5e190]: i
+                - generic [ref=f5e191]: v
+                - generic [ref=f5e192]: e
+                - generic [ref=f5e193]: r
+                - generic [ref=f5e194]: s
+                - generic [ref=f5e195]: i
+                - generic [ref=f5e196]: t
+                - generic [ref=f5e197]: "y"
+              - generic [ref=f5e199]:
+                - generic [ref=f5e200]: w
+                - generic [ref=f5e201]: h
+                - generic [ref=f5e202]: o
+              - generic [ref=f5e204]:
+                - generic [ref=f5e205]: b
+                - generic [ref=f5e206]: u
+                - generic [ref=f5e207]: i
+                - generic [ref=f5e208]: l
+                - generic [ref=f5e209]: d
+                - generic [ref=f5e210]: s
+              - generic [ref=f5e212]:
+                - generic [ref=f5e213]: w
+                - generic [ref=f5e214]: e
+                - generic [ref=f5e215]: b
+              - generic [ref=f5e217]:
+                - generic [ref=f5e218]: p
+                - generic [ref=f5e219]: r
+                - generic [ref=f5e220]: o
+                - generic [ref=f5e221]: d
+                - generic [ref=f5e222]: u
+                - generic [ref=f5e223]: c
+                - generic [ref=f5e224]: t
+                - generic [ref=f5e225]: s
+              - generic [ref=f5e227]: I'm a first-year Computer Engineering student at Prince of Songkla University who builds web products
+            - generic [ref=f5e228]:
+              - generic [ref=f5e229]:
+                - generic [ref=f5e230]: e
+                - generic [ref=f5e231]: "n"
+                - generic [ref=f5e232]: d
+              - generic [ref=f5e234]:
+                - generic [ref=f5e235]: t
+                - generic [ref=f5e236]: o
+              - generic [ref=f5e238]:
+                - generic [ref=f5e239]: e
+                - generic [ref=f5e240]: "n"
+                - generic [ref=f5e241]: d
+              - generic [ref=f5e242]: end to end
+            - generic [ref=f5e243]:
+              - generic [ref=f5e244]: .
+              - generic [ref=f5e246]: .
+          - paragraph [ref=f5e247]: I take an idea, plan it, design the interface, and write the front-end and the APIs behind it, thinking about the person using the product rather than only the screen. I've led a team build from first sketch to a working result, and I'm now looking for an internship to keep building with people who do this every day.
+        - list [ref=f5e248]:
+          - listitem [ref=f5e249]:
+            - generic [ref=f5e250]: "01"
+            - generic [ref=f5e251]:
+              - generic [ref=f5e252]: Plan
+              - paragraph [ref=f5e253]: Turn a rough idea into a clear scope and a path to build it.
+          - listitem [ref=f5e254]:
+            - generic [ref=f5e255]: "02"
+            - generic [ref=f5e256]:
+              - generic [ref=f5e257]: Build
+              - paragraph [ref=f5e258]: Write the front-end and the APIs behind it. Across the stack, not just the screen.
+          - listitem [ref=f5e259]:
+            - generic [ref=f5e260]: "03"
+            - generic [ref=f5e261]:
+              - generic [ref=f5e262]: Ship
+              - paragraph [ref=f5e263]: Debug, deliver, and keep a team moving to something that works.
+    - generic [ref=f5e265]:
+      - generic [ref=f5e266]: Stack
+      - generic [ref=f5e269]:
+        - generic [ref=f5e270]:
+          - generic [ref=f5e271]: Frontend
+          - generic [ref=f5e272]:
+            - generic [ref=f5e275]:
+              - generic [ref=f5e276]: 
+              - text: React
+            - generic [ref=f5e279]:
+              - generic [ref=f5e280]: 
+              - text: TypeScript
+            - generic [ref=f5e283]:
+              - generic [ref=f5e284]: 
+              - text: JavaScript
+            - generic [ref=f5e287]:
+              - generic [ref=f5e288]: 
+              - text: HTML
+            - generic [ref=f5e291]:
+              - generic [ref=f5e292]: 
+              - text: CSS
+            - generic [ref=f5e295]:
+              - generic [ref=f5e296]: 
+              - text: Tailwind
+            - generic [ref=f5e299]:
+              - generic [ref=f5e300]: 
+              - text: Vite
+        - generic [ref=f5e301]:
+          - generic [ref=f5e302]: Backend
+          - generic [ref=f5e303]:
+            - generic [ref=f5e306]:
+              - generic [ref=f5e307]: 
+              - text: Supabase
+            - generic [ref=f5e310]:
+              - generic [ref=f5e311]: 
+              - text: Firebase
+            - generic [ref=f5e314]:
+              - generic [ref=f5e315]: 
+              - text: MySQL
+            - generic [ref=f5e318]:
+              - generic [ref=f5e319]: 
+              - text: Redis
+        - generic [ref=f5e320]:
+          - generic [ref=f5e321]: DevOps & Tools
+          - generic [ref=f5e322]:
+            - generic [ref=f5e325]:
+              - generic [ref=f5e326]: 
+              - text: Git
+            - generic [ref=f5e329]:
+              - generic [ref=f5e330]: 
+              - text: GitHub
+            - generic [ref=f5e333]:
+              - generic [ref=f5e334]: 
+              - text: Docker
+            - generic [ref=f5e337]:
+              - generic [ref=f5e338]: 
+              - text: AWS EC2
+            - generic [ref=f5e339]: Capacitor
+            - generic [ref=f5e343]: PWA
+    - generic [ref=f5e348]:
+      - generic [ref=f5e349]: Projects
+      - generic [ref=f5e353]:
+        - article [ref=f5e356]:
+          - heading "9Tours — Online Tour Booking" [level=2] [ref=f5e357]
+          - paragraph [ref=f5e358]: "People booking a tour want it done in a few taps: pick a trip, choose a date, pay, done. No dead ends, no guessing whether it went through."
+          - generic [ref=f5e359]:
+            - button "9tours — watch video preview" [ref=f5e360] [cursor=pointer]:
+              - img "9tours app screen" [ref=f5e362]
+              - generic [ref=f5e363]:
+                - paragraph [ref=f5e364]: "Browse, book, pay, confirm: one booking flow, plus the admin side that runs it."
+                - generic [ref=f5e365]: Watch the preview
+            - 'button "Open case reader: 9tours" [ref=f5e367] [cursor=pointer]':
+              - generic [ref=f5e368]: My role
+              - generic [ref=f5e369]: Group lead & project manager
+              - list [ref=f5e370]:
+                - listitem [ref=f5e371]: Group lead and project manager, from wireframe to production
+                - listitem [ref=f5e372]: Solved a booking race condition across the front-end and API
+                - listitem [ref=f5e373]: Built the booking flow and admin side with the team
+              - generic [ref=f5e375]:
+                - paragraph [ref=f5e376]: Every tour booking tap resolves for real.
+                - paragraph [ref=f5e377]: Real-time architecture that fixes race conditions so users can trust the booking state within seconds.
+          - generic [ref=f5e378]:
+            - button "9tours Booking flow screenshot" [ref=f5e379] [cursor=pointer]:
+              - generic [ref=f5e381]:
+                - generic [ref=f5e382]: Booking flow
+                - generic [ref=f5e383]: Mapped the tour path from browse to confirm.
+            - button "9tours Admin panel screenshot" [ref=f5e384] [cursor=pointer]:
+              - generic [ref=f5e386]:
+                - generic [ref=f5e387]: Admin panel
+                - generic [ref=f5e388]: One panel for the people running tours and bookings.
+            - generic [ref=f5e389]:
+              - generic [ref=f5e391]:
+                - generic [ref=f5e392]: "0"
+                - generic [ref=f5e393]: API endpoints
+              - generic [ref=f5e395]:
+                - generic [ref=f5e396]: "0"
+                - generic [ref=f5e397]: automated tests
+              - generic [ref=f5e399]:
+                - generic [ref=f5e400]: "0"
+                - generic [ref=f5e401]: pages built
+          - generic [ref=f5e402]:
+            - generic [ref=f5e403]:
+              - generic [ref=f5e404]: React
+              - generic [ref=f5e407]: TypeScript
+              - generic [ref=f5e410]: CSS
+              - generic [ref=f5e413]: SQL
+              - generic [ref=f5e416]: Git
+            - generic [ref=f5e419]:
+              - link "View the code" [ref=f5e420] [cursor=pointer]:
+                - /url: https://github.com/psu6810110712/9Tours
+              - button "Read the full case" [ref=f5e422] [cursor=pointer]
+          - generic: Scroll for next
+        - article [ref=f5e425]:
+          - heading "GO-OUT — Shared Savings Tracker" [level=2] [ref=f5e426]
+          - paragraph [ref=f5e427]: Saving money together for a big goal can lose momentum when everyone tracks it alone, but sharing a real bank account creates privacy and trust concerns.
+          - generic [ref=f5e428]:
+            - button "GO-OUT — watch video preview" [ref=f5e429] [cursor=pointer]:
+              - img "GO-OUT app screen" [ref=f5e431]
+              - generic [ref=f5e432]:
+                - paragraph [ref=f5e433]: "A savings scoreboard for small groups: progress shared, money details private."
+                - generic [ref=f5e434]: Watch the preview
+            - 'button "Open case reader: GO-OUT" [ref=f5e436] [cursor=pointer]':
+              - generic [ref=f5e437]: What it does
+              - generic [ref=f5e438]: Shared savings tracker for small groups
+              - list [ref=f5e439]:
+                - listitem [ref=f5e440]: Create a project room for one shared saving goal
+                - listitem [ref=f5e441]: Track each member through separate personal buckets
+                - listitem [ref=f5e442]: Show progress without connecting to real bank accounts
+                - listitem [ref=f5e443]: Keep each update traceable in a shared history
+                - listitem [ref=f5e444]: Sync progress across devices in real time
+              - generic [ref=f5e446]:
+                - paragraph [ref=f5e447]: Savings stays smooth everywhere.
+                - paragraph [ref=f5e448]: Offline-first PWA architecture with real-time Supabase sync for a tracker that keeps up across devices.
+          - generic [ref=f5e449]:
+            - button "GO-OUT Saving plan screenshot" [ref=f5e450] [cursor=pointer]:
+              - generic [ref=f5e452]:
+                - generic [ref=f5e453]: Saving plan
+                - generic [ref=f5e454]: Built rules for fixed and flexible saving rhythms.
+            - button "GO-OUT Project room screenshot" [ref=f5e455] [cursor=pointer]:
+              - generic [ref=f5e457]:
+                - generic [ref=f5e458]: Project room
+                - generic [ref=f5e459]: Separated shared progress from private money details.
+            - generic [ref=f5e460]:
+              - generic [ref=f5e462]:
+                - generic [ref=f5e463]: "0"
+                - generic [ref=f5e464]: people
+              - generic [ref=f5e466]:
+                - generic [ref=f5e467]: "0"
+                - generic [ref=f5e468]: money states
+              - generic [ref=f5e470]:
+                - generic [ref=f5e471]: "0"
+                - generic [ref=f5e472]: codebase
+          - generic [ref=f5e473]:
+            - generic [ref=f5e474]:
+              - generic [ref=f5e475]: React
+              - generic [ref=f5e478]: TypeScript
+              - generic [ref=f5e481]: Vite
+              - generic [ref=f5e484]: Supabase
+              - generic [ref=f5e487]: Capacitor
+              - generic [ref=f5e490]: PWA
+              - generic [ref=f5e493]: FCM
+            - generic [ref=f5e496]:
+              - link "View the code" [ref=f5e497] [cursor=pointer]:
+                - /url: https://github.com/psu6810110229/Project_Saving
+              - button "Read the full case" [ref=f5e499] [cursor=pointer]
+      - generic [ref=f5e501]:
+        - generic [ref=f5e502]: More projects
+        - generic [ref=f5e503]:
+          - generic [ref=f5e504]:
+            - button "Gear Rental — open preview gallery" [ref=f5e505] [cursor=pointer]:
+              - img "Gear Rental" [ref=f5e506]
+              - generic [ref=f5e507]: ▶
+            - generic [ref=f5e508]:
+              - heading "Gear Rental" [level=3] [ref=f5e509]
+              - paragraph [ref=f5e510]: Full-stack gear-rental system for the PSU photo club — React front-end with a NestJS + PostgreSQL API. Role-based JWT access, booking-overlap detection, and an audit log. A paired warmup project before 9tours.
+              - generic [ref=f5e511]:
+                - generic [ref=f5e512]: React
+                - generic [ref=f5e515]: TypeScript
+                - generic [ref=f5e518]: SQL
+                - generic [ref=f5e521]: Docker
+              - generic [ref=f5e524]:
+                - link "GitHub" [ref=f5e525] [cursor=pointer]:
+                  - /url: https://github.com/psu6810110229/mini_project
+                - button "More details" [ref=f5e527] [cursor=pointer]
+          - note [ref=f5e528]:
+            - generic [ref=f5e529]: Coming soon
+            - generic [ref=f5e530]: Next project in progress…
+    - region [ref=f5e531]:
+      - generic [ref=f5e532]:
+        - generic [ref=f5e533]:
+          - text: Contact
+          - heading "Get in touch" [level=2] [ref=f5e534]
+          - paragraph [ref=f5e535]: Have a project in mind or just want to say hi? I'm always open to new opportunities.
+        - generic [ref=f5e537]:
+          - generic [ref=f5e538]:
+            - generic [ref=f5e539]:
+              - generic [ref=f5e540]: Name
+              - textbox "Name" [ref=f5e541]
+            - generic [ref=f5e542]:
+              - generic [ref=f5e543]: Email
+              - textbox "Email" [ref=f5e544]
+          - generic [ref=f5e545]:
+            - generic [ref=f5e546]: Message
+            - textbox "Message" [ref=f5e547]
+          - generic [ref=f5e548]:
+            - button "Send Message" [ref=f5e549] [cursor=pointer]
+            - generic [ref=f5e550]:
+              - link "LINE" [ref=f5e553] [cursor=pointer]:
+                - /url: /src/assets/line-qr.jpg
+                - img [ref=f5e554]:
+                  - generic [ref=f5e556]: LINE
+              - link "Instagram" [ref=f5e559] [cursor=pointer]:
+                - /url: https://www.instagram.com/fran_patchara?igsh=ZXVpYm5iejJnNmF4
+              - link "Facebook" [ref=f5e565] [cursor=pointer]:
+                - /url: https://www.facebook.com/share/16zrE22rYU/
+              - link "GitHub" [ref=f5e570] [cursor=pointer]:
+                - /url: https://github.com/psu6810110229
+              - link "LinkedIn" [ref=f5e576] [cursor=pointer]:
+                - /url: https://www.linkedin.com/in/patcharapon-matsuden-864883413
+      - generic [ref=f5e581]: © 2026 Fran
+  - navigation "Section navigation" [ref=f5e584]:
+    - list [ref=f5e585]:
+      - listitem [ref=f5e586]:
+        - button "Go to Hero" [ref=f5e587] [cursor=pointer]
+        - generic: Hero
+      - listitem [ref=f5e588]:
+        - button "Go to About" [ref=f5e589] [cursor=pointer]
+        - generic: About
+      - listitem [ref=f5e590]:
+        - button "Go to 9tours" [ref=f5e591] [cursor=pointer]
+        - generic: 9tours
+      - listitem [ref=f5e592]:
+        - button "Go to GO-OUT" [ref=f5e593] [cursor=pointer]
+        - generic: GO-OUT
+      - listitem [ref=f5e594]:
+        - button "Go to Contact" [ref=f5e595] [cursor=pointer]
+        - generic: Contact
+    - button "Back to top"

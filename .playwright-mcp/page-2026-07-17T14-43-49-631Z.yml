@@ -1,0 +1,223 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - main [ref=e4]:
+      - generic [ref=e5]:
+        - region [ref=e6]:
+          - generic [ref=e7]:
+            - navigation [ref=e12]:
+              - generic [ref=e13]:
+                - link "Back to Portfolio" [ref=e14] [cursor=pointer]:
+                  - /url: /
+                - link "My Story" [ref=e15] [cursor=pointer]:
+                  - /url: "#about"
+                - link "Methodology" [ref=e16] [cursor=pointer]:
+                  - /url: "#features"
+                - link "Contact" [ref=e17] [cursor=pointer]:
+                  - /url: "#contact"
+              - generic [ref=e18]:
+                - button "Switch to Thai" [ref=e20] [cursor=pointer]: EN
+                - button "Switch to dark mode" [ref=e22] [cursor=pointer]
+            - generic [ref=e26]:
+              - heading "FRAN Patcharapon" [level=1] [ref=e28]:
+                - generic [ref=e29]: FRAN
+                - generic "Patcharapon" [ref=e30]:
+                  - generic [ref=e31]: P
+                  - generic [ref=e32]: a
+                  - generic [ref=e33]: t
+                  - generic [ref=e34]: c
+                  - generic [ref=e35]: h
+                  - generic [ref=e36]: a
+                  - generic [ref=e37]: r
+                  - generic [ref=e38]: a
+                  - generic [ref=e39]: p
+                  - generic [ref=e40]: o
+                  - generic [ref=e41]: "n"
+              - generic [ref=e42]:
+                - generic [ref=e43]:
+                  - paragraph [ref=e44]: Passing it forward
+                  - paragraph [ref=e45]:
+                    - generic [ref=e46]: What I learn becomes more meaningful
+                    - generic [ref=e47]: when it helps someone take their next step.
+                - link "Explore My Story" [ref=e48] [cursor=pointer]:
+                  - /url: "#about"
+        - region [ref=e53]:
+          - generic [ref=e54]:
+            - heading "Hi, I am Fran. A Year 2 Computer Engineering student at PSU who learns by building real products and working with people." [level=2] [ref=e55]:
+              - generic [ref=e56]: Hi,
+              - generic [ref=e57]: I
+              - generic [ref=e58]: am
+              - generic [ref=e59]: Fran.
+              - generic [ref=e60]: A
+              - generic [ref=e61]: Year
+              - generic [ref=e62]: "2"
+              - generic [ref=e63]: Computer
+              - generic [ref=e64]: Engineering
+              - generic [ref=e65]: student
+              - generic [ref=e66]: at
+              - generic [ref=e67]: PSU
+              - generic [ref=e68]: who
+              - generic [ref=e69]: learns
+              - generic [ref=e70]: by
+              - generic [ref=e71]: building
+              - generic [ref=e72]: real
+              - generic [ref=e73]: products
+              - generic [ref=e74]: and
+              - generic [ref=e75]: working
+              - generic [ref=e76]: with
+              - generic [ref=e77]: people.
+            - paragraph [ref=e79]:
+              - generic [ref=e80]: I
+              - generic [ref=e81]: am
+              - generic [ref=e82]: a
+              - generic [ref=e83]: Year
+              - generic [ref=e84]: "2"
+              - generic [ref=e85]: Computer
+              - generic [ref=e86]: Engineering
+              - generic [ref=e87]: student
+              - generic [ref=e88]: at
+              - generic [ref=e89]: PSU
+              - generic [ref=e90]: .
+              - generic [ref=e91]: Organizing
+              - generic [ref=e92]: Hat
+              - generic [ref=e93]: Yai
+              - generic [ref=e94]: Open
+              - generic [ref=e95]: House
+              - generic [ref=e96]: "2026"
+              - generic [ref=e97]: taught
+              - generic [ref=e98]: me
+              - generic [ref=e99]: to
+              - generic [ref=e100]: prepare
+              - generic [ref=e101]: equipment
+              - generic [ref=e102]: ","
+              - generic [ref=e103]: coordinate
+              - generic [ref=e104]: people
+              - generic [ref=e105]: ","
+              - generic [ref=e106]: and
+              - generic [ref=e107]: stay
+              - generic [ref=e108]: calm
+              - generic [ref=e109]: when
+              - generic [ref=e110]: problems
+              - generic [ref=e111]: appeared
+              - generic [ref=e112]: .
+              - generic [ref=e113]: I
+              - generic [ref=e114]: am
+              - generic [ref=e115]: still
+              - generic [ref=e116]: growing
+              - generic [ref=e117]: ","
+              - generic [ref=e118]: but
+              - generic [ref=e119]: I
+              - generic [ref=e120]: take
+              - generic [ref=e121]: responsibility
+              - generic [ref=e122]: for
+              - generic [ref=e123]: the
+              - generic [ref=e124]: next
+              - generic [ref=e125]: step
+              - generic [ref=e126]: and
+              - generic [ref=e127]: learn
+              - generic [ref=e128]: from
+              - generic [ref=e129]: the
+              - generic [ref=e130]: people
+              - generic [ref=e131]: around
+              - generic [ref=e132]: me
+              - generic [ref=e133]: .
+        - region [ref=e134]:
+          - generic [ref=e135]:
+            - heading "What I’ve done, and what it taught me." [level=2] [ref=e136]:
+              - generic [ref=e137]: What
+              - generic [ref=e138]: I’ve
+              - generic [ref=e139]: done,
+              - generic [ref=e140]: and
+              - generic [ref=e141]: what
+              - generic [ref=e142]: it
+              - generic [ref=e143]: taught
+              - generic [ref=e144]: me.
+            - generic [ref=e145]:
+              - heading "Hat Yai Open House 2026" [level=3] [ref=e146]
+              - paragraph [ref=e147]: Staff and Engineering Station Mentor · 4 July 2026
+            - generic [ref=e148]:
+              - region "Hat Yai Open House activity photos" [ref=e149]:
+                - img "Fran holding a microphone while speaking with students during the Open House activities." [ref=e150]
+                - generic [ref=e151]:
+                  - generic [ref=e152]: 01 / 05
+                  - button "View previous photo" [ref=e154] [cursor=pointer]
+                  - button "Pause automatic photo changes" [ref=e157] [cursor=pointer]
+                  - button "View next photo" [ref=e161] [cursor=pointer]
+              - generic [ref=e164]:
+                - heading "At the engineering station" [level=4] [ref=e165]
+                - list [ref=e166]:
+                  - listitem [ref=e167]:
+                    - generic [ref=e169]: I arranged the station, prepared equipment, and checked that everything was ready.
+                  - listitem [ref=e170]:
+                    - generic [ref=e172]: I helped with morning activities, then joined three other staff at Engineering.
+                  - listitem [ref=e173]:
+                    - generic [ref=e175]: I explained activities, answered study questions, and shared my Computer Engineering experience.
+              - generic [ref=e176]:
+                - heading "On stage" [level=4] [ref=e177]
+                - list [ref=e178]:
+                  - listitem [ref=e179]:
+                    - generic [ref=e181]: I spoke to 400 students about PSU Engineering, Computer Engineering, and career paths.
+                  - listitem [ref=e182]:
+                    - generic [ref=e184]: I wrote the talk myself, using three clear points that students could follow.
+                  - listitem [ref=e185]:
+                    - generic [ref=e187]: Preparation helped me speak comfortably to a large group while still sounding like myself.
+              - generic [ref=e188]:
+                - heading "Working with the team" [level=4] [ref=e189]
+                - list [ref=e190]:
+                  - listitem [ref=e191]:
+                    - generic [ref=e193]: Around 20 staff joined; three to four of us looked after Engineering all day.
+                  - listitem [ref=e194]:
+                    - generic [ref=e196]: We ran separate stations, followed one schedule, and kept each other updated.
+                  - listitem [ref=e197]:
+                    - generic [ref=e199]: The day taught me to notice changes and adjust with the team.
+        - region [ref=e200]:
+          - generic [ref=e201]:
+            - generic [ref=e202]:
+              - text: Contact
+              - heading "Get in touch" [level=2] [ref=e203]
+              - paragraph [ref=e204]: Have a project in mind or just want to say hi? I'm always open to new opportunities.
+            - generic [ref=e206]:
+              - generic [ref=e207]:
+                - generic [ref=e208]:
+                  - generic [ref=e209]: Name
+                  - textbox "Name" [ref=e210]
+                - generic [ref=e211]:
+                  - generic [ref=e212]: Email
+                  - textbox "Email" [ref=e213]
+              - generic [ref=e214]:
+                - generic [ref=e215]: Message
+                - textbox "Message" [ref=e216]
+              - generic [ref=e217]:
+                - button "Send Message" [ref=e218] [cursor=pointer]
+                - generic [ref=e219]:
+                  - link "LINE" [ref=e222] [cursor=pointer]:
+                    - /url: /src/assets/line-qr.jpg?t=1784298831481
+                    - img [ref=e223]:
+                      - generic [ref=e225]: LINE
+                  - link "Instagram" [ref=e228] [cursor=pointer]:
+                    - /url: https://www.instagram.com/fran_patchara?igsh=ZXVpYm5iejJnNmF4
+                  - link "Facebook" [ref=e234] [cursor=pointer]:
+                    - /url: https://www.facebook.com/share/16zrE22rYU/
+                  - link "GitHub" [ref=e239] [cursor=pointer]:
+                    - /url: https://github.com/psu6810110229
+                  - link "LinkedIn" [ref=e245] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/in/patcharapon-matsuden-864883413
+          - generic [ref=e250]: © 2026 Fran
+    - navigation "Section navigation" [ref=e253]:
+      - list [ref=e254]:
+        - listitem [ref=e255]:
+          - button "Go to Hero" [ref=e256] [cursor=pointer]
+          - generic: Hero
+        - listitem [ref=e257]:
+          - button "Go to My Story" [ref=e258] [cursor=pointer]
+          - generic: My Story
+        - listitem [ref=e259]:
+          - button "Go to Methodology" [ref=e260] [cursor=pointer]
+          - generic: Methodology
+        - listitem [ref=e261]:
+          - button "Go to Contact" [ref=e262] [cursor=pointer]
+          - generic: Contact
+      - button "Back to top"
+  - generic [ref=e263]:
+    - status [ref=e264]: Loading Fran's resume
+    - generic "FRAN" [ref=e265]
+    - generic [ref=e267]: 100%

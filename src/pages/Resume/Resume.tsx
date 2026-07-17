@@ -17,13 +17,13 @@ import openHouseStudentGroups from '../../assets/open-house-student-groups.webp'
 import openHouseStaffStage from '../../assets/open-house-staff-stage.webp';
 import openHouseGroupPhoto from '../../assets/open-house-group-photo.webp';
 import psuHeroVideo from '../../assets/resume/hero/psu-v2.mp4';
-import psuHeroPoster from '../../assets/resume/hero/psu-v2-poster.png';
+import psuHeroPoster from '../../assets/resume/hero/psu-v2-poster.webp';
 import projectHeroVideo from '../../assets/resume/hero/project-v2.mp4';
-import projectHeroPoster from '../../assets/resume/hero/project-v2-poster.png';
+import projectHeroPoster from '../../assets/resume/hero/project-v2-poster.webp';
 import openHouseHeroVideo from '../../assets/resume/hero/openhouse-v2.mp4';
-import openHouseHeroPoster from '../../assets/resume/hero/openhouse-v2-poster.png';
+import openHouseHeroPoster from '../../assets/resume/hero/openhouse-v2-poster.webp';
 import roomHeroVideo from '../../assets/resume/hero/room-v2.mp4';
-import roomHeroPoster from '../../assets/resume/hero/room-v2-poster.png';
+import roomHeroPoster from '../../assets/resume/hero/room-v2-poster.webp';
 import styles from './Resume.module.css';
 
 interface HeroScene {
@@ -519,10 +519,10 @@ const Resume: React.FC = () => {
                   autoPlay={false}
                   muted
                   playsInline
-                  preload="auto"
+                  preload={index === activeHeroScene || index === nextHeroScene ? 'auto' : 'none'}
                   tabIndex={-1}
                   className={`${styles.videoBg} ${readyHeroVideos[index] ? styles.videoReady : ''}`}
-                  src={scene.video}
+                  src={prefersReducedMotion ? undefined : scene.video}
                   poster={scene.poster}
                   onLoadedData={() => markHeroVideoReady(index)}
                   onError={index === 0 ? () => setIsCriticalVideoSettled(true) : undefined}
