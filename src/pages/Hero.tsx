@@ -1,7 +1,6 @@
-﻿import { useLanguage } from '../hooks/useLanguage';
+import { useLanguage } from '../hooks/useLanguage';
 import franImg from '../assets/fran-profile.jpg';
-import githubIcon from '../assets/icons/github.svg';
-import linkedinIcon from '../assets/icons/linkedin.svg';
+import { GithubIcon, LinkedinIcon } from '../components/Icons/SocialIcons';
 import styles from './Hero.module.css';
 
 const content = {
@@ -65,10 +64,10 @@ function Hero() {
               <span>{c.btnGhost}</span>
             </a>
             <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="GitHub">
-              <img src={githubIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
+              <GithubIcon className={styles.socialIcon} />
             </a>
             <a href="https://www.linkedin.com/in/patcharapon-matsuden-864883413" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="LinkedIn">
-              <img src={linkedinIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
+              <LinkedinIcon className={styles.socialIcon} />
             </a>
           </div>
         </div>

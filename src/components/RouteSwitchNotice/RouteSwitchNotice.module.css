@@ -6,7 +6,7 @@
   width: min(30rem, calc(100vw - 2rem));
   max-height: calc(100dvh - 2rem);
   overflow-y: auto;
-  padding: var(--space-6);
+  padding: var(--space-5);
   border: none;
   border-radius: var(--radius-activity-card);
   background: var(--color-surface);
@@ -15,11 +15,9 @@
 }
 
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--space-3);
-  margin-bottom: calc(var(--space-2) * -1);
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
 }
 
 .closeButton {
@@ -44,6 +42,7 @@
 .title {
   max-width: 28rem;
   margin-top: 0;
+  padding-right: var(--space-5);
   font-family: var(--font-heading);
   font-size: clamp(1.25rem, 1.05rem + 0.55vw, 1.5rem);
   font-weight: 700;
