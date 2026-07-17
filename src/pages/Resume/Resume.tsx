@@ -590,8 +590,8 @@ const Resume: React.FC = () => {
 
           <motion.div 
             className={styles.navContainer}
-            initial={prefersReducedMotion ? false : { y: -30, opacity: 0 }}
-            animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.isVisible ? { y: -30, opacity: 0 } : { y: 0, opacity: 1 })}
+            initial={prefersReducedMotion ? false : { x: "-50%", y: -30, opacity: 0 }}
+            animate={prefersReducedMotion ? { x: "-50%", y: 0, opacity: 1 } : (splash.isVisible ? { x: "-50%", y: -30, opacity: 0 } : { x: "-50%", y: 0, opacity: 1 })}
             transition={{ type: 'spring', stiffness: 120, damping: 20, delay: 0.1 }}
           >
             <nav className={styles.navBar}>
