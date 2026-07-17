@@ -82,7 +82,7 @@
 
 .returnButton {
   background: var(--color-accent);
-  color: var(--color-text);
+  color: #ffffff;
 }
 
 .returnButton:hover {
