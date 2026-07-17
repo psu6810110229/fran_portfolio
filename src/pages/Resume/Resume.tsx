@@ -208,23 +208,22 @@ const heroTextVariants = {
   hidden: { 
     y: 30, 
     opacity: 0, 
-    filter: 'blur(8px)' 
+    filter: 'blur(12px)' 
   },
   visible: { 
     y: 0, 
     opacity: 1, 
     filter: 'blur(0px)',
     transition: { 
-      type: 'spring', 
-      stiffness: 280, 
-      damping: 24, 
-      mass: 0.8 
+      y: { type: 'spring', stiffness: 280, damping: 24, mass: 0.8 },
+      opacity: { duration: 0.5, ease: 'easeOut' },
+      filter: { duration: 0.5, ease: 'easeOut' }
     }
   },
   exit: { 
     y: -20, 
     opacity: 0, 
-    filter: 'blur(6px)',
+    filter: 'blur(8px)',
     transition: { duration: 0.25, ease: 'easeIn' }
   }
 };
