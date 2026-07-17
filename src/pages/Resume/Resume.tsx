@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimatePresence, motion, useMotionValue } from 'motion/react';
+import { AnimatePresence, motion, useMotionValue, type Variants } from 'motion/react';
 import { useLenis } from 'lenis/react';
 import { ArrowLeft, ArrowRight, Pause, Play } from 'lucide-react';
 import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle';
@@ -188,7 +188,7 @@ const slideVariants = {
   }),
 };
 
-const heroCopyVariants = {
+const heroCopyVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -204,7 +204,7 @@ const heroCopyVariants = {
   },
 };
 
-const heroTextVariants = {
+const heroTextVariants: Variants = {
   hidden: { 
     y: 30, 
     opacity: 0, 
