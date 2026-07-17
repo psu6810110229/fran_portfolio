@@ -34,7 +34,8 @@ function App() {
   const [theme, setTheme] = useState<Theme>(getCurrentTheme);
   const useSmoothScroll = !shouldReduceMotion;
 
-  const isResumeRoute = window.location.pathname.includes('/resume');
+  const normalizedPath = window.location.pathname.replace(/\/+$/, '') || '/';
+  const isResumeRoute = normalizedPath === '/resume';
 
   useEffect(() => {
     const updateTheme = () => setTheme(getCurrentTheme());

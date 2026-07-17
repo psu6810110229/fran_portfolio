@@ -5,6 +5,8 @@ import { ArrowLeft, ArrowRight, Pause, Play } from 'lucide-react';
 import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle';
 import ScrollReveal from '../../components/ScrollReveal/ScrollReveal';
 import { DockItem } from '../../components/DockItem/DockItem';
+import { useResumeSplash } from '../../hooks/useResumeSplash';
+import ResumeSplash from './ResumeSplash';
 import Contact from '../../pages/Contact';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useTheme } from '../../hooks/useTheme';
@@ -13,20 +15,21 @@ import openHouseStationSetup from '../../assets/open-house-station-setup.webp';
 import openHouseStudentGroups from '../../assets/open-house-student-groups.webp';
 import openHouseStaffStage from '../../assets/open-house-staff-stage.webp';
 import openHouseGroupPhoto from '../../assets/open-house-group-photo.webp';
-import psuHeroVideo from '../../assets/resume/hero/psu.mp4';
-import psuHeroPoster from '../../assets/resume/hero/psu-poster.jpg';
-import eventHeroVideo from '../../assets/resume/hero/event.mp4';
-import eventHeroPoster from '../../assets/resume/hero/event-poster.jpg';
-import labHeroVideo from '../../assets/resume/hero/lab.mp4';
-import labHeroPoster from '../../assets/resume/hero/lab-poster.jpg';
-import hatyaiHeroVideo from '../../assets/resume/hero/hatyai.mp4';
-import hatyaiHeroPoster from '../../assets/resume/hero/hatyai-poster.jpg';
+import psuHeroVideo from '../../assets/resume/hero/psu-v2.mp4';
+import psuHeroPoster from '../../assets/resume/hero/psu-v2-poster.png';
+import projectHeroVideo from '../../assets/resume/hero/project-v2.mp4';
+import projectHeroPoster from '../../assets/resume/hero/project-v2-poster.png';
+import openHouseHeroVideo from '../../assets/resume/hero/openhouse-v2.mp4';
+import openHouseHeroPoster from '../../assets/resume/hero/openhouse-v2-poster.png';
+import roomHeroVideo from '../../assets/resume/hero/room-v2.mp4';
+import roomHeroPoster from '../../assets/resume/hero/room-v2-poster.png';
 import styles from './Resume.module.css';
 
 interface HeroScene {
   id: string;
   video: string;
   poster: string;
+  clipEnd: number;
   copy: {
     en: HeroSceneCopy;
     th: HeroSceneCopy;
@@ -40,62 +43,66 @@ interface HeroSceneCopy {
 
 const heroScenes: HeroScene[] = [
   {
+    id: 'open-house',
+    video: openHouseHeroVideo,
+    poster: openHouseHeroPoster,
+    clipEnd: 5.25,
+    copy: {
+      en: {
+        label: 'Passing it forward',
+        description: ['What I learn becomes more meaningful', 'when it helps someone take their next step.'],
+      },
+      th: {
+        label: 'ส่งต่อสิ่งที่เรียนรู้',
+        description: ['สิ่งที่ผมเรียนรู้มีความหมายมากขึ้น', 'เมื่อมันช่วยให้ใครสักคนก้าวต่อไป'],
+      },
+    },
+  },
+  {
+    id: 'project',
+    video: projectHeroVideo,
+    poster: projectHeroPoster,
+    clipEnd: 7.333,
+    copy: {
+      en: {
+        label: 'Building together',
+        description: ['Ideas become real through quiet iteration,', 'shared attention, and friends who build together.'],
+      },
+      th: {
+        label: 'สร้างไปด้วยกัน',
+        description: ['ไอเดียค่อย ๆ กลายเป็นของจริงจากการลงมือทำ', 'ความใส่ใจ และเพื่อนที่ช่วยกันสร้าง'],
+      },
+    },
+  },
+  {
     id: 'psu',
     video: psuHeroVideo,
     poster: psuHeroPoster,
+    clipEnd: 5.375,
     copy: {
       en: {
-        label: 'Building products',
-        description: ['I turn ideas into digital products,', 'from first sketch to real-world use.'],
+        label: 'Learning in motion',
+        description: ['University gives every day a new direction,', 'and I keep moving, learning, and building.'],
       },
       th: {
-        label: 'สร้างโปรดักต์',
-        description: ['ผมเปลี่ยนไอเดียให้เป็นโปรดักต์ดิจิทัล', 'ตั้งแต่ภาพแรกจนเปิดใช้ได้จริง'],
+        label: 'เรียนรู้ระหว่างทาง',
+        description: ['มหาวิทยาลัยทำให้ทุกวันมีเส้นทางใหม่', 'และผมยังเดินต่อ เรียนรู้ และลงมือสร้าง'],
       },
     },
   },
   {
-    id: 'event',
-    video: eventHeroVideo,
-    poster: eventHeroPoster,
+    id: 'room',
+    video: roomHeroVideo,
+    poster: roomHeroPoster,
+    clipEnd: 8.75,
     copy: {
       en: {
-        label: 'Working with people',
-        description: ['I work with people and details,', 'so good ideas reach the people they serve.'],
+        label: 'After hours · Home',
+        description: ['Curiosity needs patience, balance, and care,', 'even in the smallest world I build.'],
       },
       th: {
-        label: 'ทำงานกับผู้คน',
-        description: ['ผมทำงานกับผู้คนและรายละเอียด', 'เพื่อให้ไอเดียไปถึงคนใช้จริง'],
-      },
-    },
-  },
-  {
-    id: 'lab',
-    video: labHeroVideo,
-    poster: labHeroPoster,
-    copy: {
-      en: {
-        label: 'Making ideas clear',
-        description: ['I make complex ideas easier to use,', 'then improve them through real feedback.'],
-      },
-      th: {
-        label: 'ทำเรื่องยากให้ง่าย',
-        description: ['ผมทำเรื่องยากให้เข้าใจและใช้ง่าย', 'แล้วค่อยปรับจากเสียงของคนใช้'],
-      },
-    },
-  },
-  {
-    id: 'hatyai',
-    video: hatyaiHeroVideo,
-    poster: hatyaiHeroPoster,
-    copy: {
-      en: {
-        label: 'Staying curious',
-        description: ['I keep looking for better ways to build,', 'with curiosity beyond the screen.'],
-      },
-      th: {
-        label: 'เก็บไอเดียรอบตัว',
-        description: ['ผมเก็บไอเดียจากโลกรอบตัว', 'แล้วพากลับมาสร้างต่อบนหน้าจอ'],
+        label: 'หลังจบวัน · ห้องของผม',
+        description: ['ความอยากรู้เติบโตจากความอดทน สมดุล', 'และความใส่ใจ แม้ในโลกใบเล็กของผม'],
       },
     },
   },
@@ -221,13 +228,12 @@ const dictionary = {
   },
   th: {
     nav: [
-      { label: 'ไปยังหน้าพอร์ตโฟลิโอ', href: '/' },
-      { label: 'รู้จักผมมากขึ้น', href: '#about' },
+      { label: 'พอร์ตโฟลิโอ', href: '/' },
       { label: 'ผมเคยทำอะไรบ้าง', href: '#features' },
       { label: 'ติดต่อ', href: '#contact' }
     ],
     heroDesc: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 ม.สงขลานครินทร์ ที่เรียนรู้จากการลงมือสร้างผลงานจริงและการทำงานร่วมกับผู้คน',
-    viewApp: 'ไปกันต่อ',
+    viewApp: 'รู้จักผมมากขึ้น',
     aboutBadge: 'นักพัฒนาเว็บไซต์',
     about1a: 'สวัสดีครับ ',
     about1b: 'ผมฟาน ',
@@ -269,6 +275,10 @@ const Resume: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const t = dictionary[lang];
   const [activeHeroScene, setActiveHeroScene] = React.useState(0);
+  const [outgoingHeroScene, setOutgoingHeroScene] = React.useState<number | null>(null);
+  const [readyHeroVideos, setReadyHeroVideos] = React.useState<boolean[]>(
+    () => heroScenes.map(() => false),
+  );
   const [activeSlide, setActiveSlide] = React.useState(0);
   const [slideDirection, setSlideDirection] = React.useState(1);
   const [isGalleryInView, setIsGalleryInView] = React.useState(false);
@@ -276,11 +286,24 @@ const Resume: React.FC = () => {
   const [isAutoPlayPaused, setIsAutoPlayPaused] = React.useState(false);
   const galleryRef = React.useRef<HTMLDivElement>(null);
   const heroVideoRefs = React.useRef<Array<HTMLVideoElement | null>>([]);
+  const heroTransitionLockRef = React.useRef(false);
+  const heroTransitionTimerRef = React.useRef<number | null>(null);
 
   const mouseX = useMotionValue(Infinity);
   const mouseY = useMotionValue(Infinity);
   const [enableDockEffect, setEnableDockEffect] = React.useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
+  const [isCriticalVideoSettled, setIsCriticalVideoSettled] = React.useState(false);
+  const splash = useResumeSplash({ isCriticalVideoSettled });
+
+  const markHeroVideoReady = React.useCallback((index: number) => {
+    setReadyHeroVideos((current) => {
+      if (current[index]) return current;
+      return current.map((isReady, sceneIndex) => sceneIndex === index || isReady);
+    });
+
+    if (index === 0) setIsCriticalVideoSettled(true);
+  }, []);
 
   React.useEffect(() => {
     const pointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -330,6 +353,12 @@ const Resume: React.FC = () => {
     return () => document.removeEventListener('visibilitychange', updateVisibility);
   }, []);
 
+  React.useEffect(() => () => {
+    if (heroTransitionTimerRef.current !== null) {
+      window.clearTimeout(heroTransitionTimerRef.current);
+    }
+  }, []);
+
   React.useEffect(() => {
     const activeVideo = heroVideoRefs.current[activeHeroScene];
 
@@ -339,7 +368,7 @@ const Resume: React.FC = () => {
     }
 
     if (activeVideo) {
-      if (activeVideo.ended || activeVideo.currentTime >= activeVideo.duration - HERO_CROSSFADE_SECONDS) {
+      if (activeVideo.ended || activeVideo.currentTime >= heroScenes[activeHeroScene].clipEnd) {
         activeVideo.currentTime = 0;
       }
       void activeVideo.play().catch(() => undefined);
@@ -399,16 +428,27 @@ const Resume: React.FC = () => {
   };
 
   const showNextHeroScene = (sceneIndex: number) => {
-    setActiveHeroScene((current) => (
-      current === sceneIndex ? (current + 1) % heroScenes.length : current
-    ));
+    if (heroTransitionLockRef.current || sceneIndex !== activeHeroScene) return;
+
+    heroTransitionLockRef.current = true;
+    setOutgoingHeroScene(sceneIndex);
+    setActiveHeroScene((sceneIndex + 1) % heroScenes.length);
+
+    heroTransitionTimerRef.current = window.setTimeout(() => {
+      setReadyHeroVideos((current) => (
+        current.map((isReady, index) => index === sceneIndex ? false : isReady)
+      ));
+      setOutgoingHeroScene(null);
+      heroTransitionLockRef.current = false;
+      heroTransitionTimerRef.current = null;
+    }, HERO_CROSSFADE_MS);
   };
 
   const handleHeroTimeUpdate = (event: React.SyntheticEvent<HTMLVideoElement>, sceneIndex: number) => {
     if (prefersReducedMotion || sceneIndex !== activeHeroScene) return;
 
     const video = event.currentTarget;
-    if (Number.isFinite(video.duration) && video.duration - video.currentTime <= HERO_CROSSFADE_SECONDS) {
+    if (video.currentTime >= heroScenes[sceneIndex].clipEnd - HERO_CROSSFADE_SECONDS) {
       showNextHeroScene(sceneIndex);
     }
   };
@@ -417,28 +457,66 @@ const Resume: React.FC = () => {
 
   return (
     <div className={styles.page}>
+      {splash.shouldRender && (
+        <ResumeSplash
+          isVisible={splash.isVisible}
+          progress={splash.progress}
+          prefersReducedMotion={splash.prefersReducedMotion}
+          onExitComplete={splash.completeExit}
+        />
+      )}
       {/* SECTION 1: HERO */}
       <section id="hero" aria-labelledby="resume-hero-title" className={styles.heroSection}>
         <div className={styles.heroInner}>
           <div className={styles.videoStage} aria-hidden="true">
-            {heroScenes.map((scene, index) => (
-              <video
-                key={scene.id}
-                ref={(video) => {
-                  heroVideoRefs.current[index] = video;
-                }}
-                autoPlay={index === 0 && !prefersReducedMotion}
-                muted
-                playsInline
-                preload={index === activeHeroScene || index === (activeHeroScene + 1) % heroScenes.length ? 'auto' : 'metadata'}
-                tabIndex={-1}
-                className={`${styles.videoBg} ${index === activeHeroScene ? styles.videoActive : styles.videoInactive}`}
-                src={scene.video}
-                poster={scene.poster}
-                onTimeUpdate={(event) => handleHeroTimeUpdate(event, index)}
-                onEnded={() => showNextHeroScene(index)}
-              />
-            ))}
+            {heroScenes.map((scene, index) => {
+              const nextHeroScene = (activeHeroScene + 1) % heroScenes.length;
+              const shouldRender = index === activeHeroScene
+                || index === nextHeroScene
+                || index === outgoingHeroScene;
+
+              if (!shouldRender) return null;
+
+              const sceneStateClass = index === activeHeroScene
+                ? styles.videoActive
+                : index === outgoingHeroScene
+                  ? styles.videoOutgoing
+                  : styles.videoInactive;
+
+              return (
+                <div
+                  key={scene.id}
+                  className={`${styles.videoScene} ${sceneStateClass}`}
+                >
+                <img
+                  src={scene.poster}
+                  alt=""
+                  className={styles.videoPoster}
+                  draggable={false}
+                />
+                <video
+                  ref={(video) => {
+                    heroVideoRefs.current[index] = video;
+                    if (video && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+                      markHeroVideoReady(index);
+                    }
+                  }}
+                  autoPlay={index === 0 && !prefersReducedMotion}
+                  muted
+                  playsInline
+                  preload="auto"
+                  tabIndex={-1}
+                  className={`${styles.videoBg} ${readyHeroVideos[index] ? styles.videoReady : ''}`}
+                  src={scene.video}
+                  poster={scene.poster}
+                  onLoadedData={() => markHeroVideoReady(index)}
+                  onError={index === 0 ? () => setIsCriticalVideoSettled(true) : undefined}
+                  onTimeUpdate={(event) => handleHeroTimeUpdate(event, index)}
+                  onEnded={() => showNextHeroScene(index)}
+                />
+                </div>
+              );
+            })}
           </div>
           <div className={styles.noiseOverlay} />
           <div className={styles.gradientOverlay} />
@@ -498,7 +576,7 @@ const Resume: React.FC = () => {
               <motion.h1
                 id="resume-hero-title"
                 className={styles.heroTitle}
-                initial={prefersReducedMotion ? false : { y: 24, opacity: 0 }}
+                initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 24, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
@@ -506,7 +584,7 @@ const Resume: React.FC = () => {
               >
                 <motion.span
                   className={styles.heroNameFirst}
-                  initial={prefersReducedMotion ? false : { y: 18, opacity: 0 }}
+                  initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 18, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
@@ -517,7 +595,7 @@ const Resume: React.FC = () => {
                 <motion.span
                   className={styles.heroNameLast}
                   aria-label="Patcharapon"
-                  initial={prefersReducedMotion ? false : { y: 18, opacity: 0 }}
+                  initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 18, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
@@ -535,7 +613,7 @@ const Resume: React.FC = () => {
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={`${lang}-${heroScenes[activeHeroScene].id}`}
-                  initial={prefersReducedMotion ? false : { y: 22, opacity: 0 }}
+                  initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 22, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={prefersReducedMotion ? undefined : { y: -18, opacity: 0 }}
                   transition={prefersReducedMotion
@@ -553,7 +631,7 @@ const Resume: React.FC = () => {
               </AnimatePresence>
               <motion.a
                 href="#about"
-                initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
+                initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: prefersReducedMotion ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] as const, duration: prefersReducedMotion ? 0 : 0.8 }}
                 className={styles.ctaButton}

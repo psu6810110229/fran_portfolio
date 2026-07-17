@@ -62,6 +62,7 @@
   --activity-tablet-gallery-width-portrait: 680px;
   --activity-tablet-gallery-width-landscape: 906px;
   --activity-desktop-row-height-max: 23.25rem;
+  --z-route-splash: 100;
 
   /* Motion */
   --duration-fast: 140ms;
