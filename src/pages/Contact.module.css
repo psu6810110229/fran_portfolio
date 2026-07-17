@@ -49,8 +49,9 @@
 .sub {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
-  margin-top: calc(var(--space-1) * -1);
+  margin-top: var(--space-3);
   margin-bottom: var(--space-4);
+  line-height: 1.6;
   white-space: pre-line;
 }
 
