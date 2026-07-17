@@ -591,7 +591,7 @@ const Resume: React.FC = () => {
           <motion.div 
             className={styles.navContainer}
             initial={prefersReducedMotion ? false : { y: -30, opacity: 0 }}
-            animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.suppressHeroEntrance ? { y: -30, opacity: 0 } : { y: 0, opacity: 1 })}
+            animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.isVisible ? { y: -30, opacity: 0 } : { y: 0, opacity: 1 })}
             transition={{ type: 'spring', stiffness: 120, damping: 20, delay: 0.1 }}
           >
             <nav className={styles.navBar}>
@@ -649,7 +649,7 @@ const Resume: React.FC = () => {
                 id="resume-hero-title"
                 className={styles.heroTitle}
                 initial={prefersReducedMotion ? false : { y: 24, opacity: 0 }}
-                animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.suppressHeroEntrance ? { y: 24, opacity: 0 } : { y: 0, opacity: 1 })}
+                animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.isVisible ? { y: 24, opacity: 0 } : { y: 0, opacity: 1 })}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
                   : { type: 'spring', stiffness: 170, damping: 25, mass: 1 }}
@@ -657,7 +657,7 @@ const Resume: React.FC = () => {
                 <motion.span
                   className={styles.heroNameFirst}
                   initial={prefersReducedMotion ? false : { y: 18, opacity: 0 }}
-                  animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.suppressHeroEntrance ? { y: 18, opacity: 0 } : { y: 0, opacity: 1 })}
+                  animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.isVisible ? { y: 18, opacity: 0 } : { y: 0, opacity: 1 })}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
                   : { delay: 0.16, type: 'spring', stiffness: 165, damping: 24, mass: 0.9 }}
@@ -668,7 +668,7 @@ const Resume: React.FC = () => {
                   className={styles.heroNameLast}
                   aria-label="Patcharapon"
                   initial={prefersReducedMotion ? false : { y: 18, opacity: 0 }}
-                  animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.suppressHeroEntrance ? { y: 18, opacity: 0 } : { y: 0, opacity: 1 })}
+                  animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.isVisible ? { y: 18, opacity: 0 } : { y: 0, opacity: 1 })}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
                   : { delay: 0.34, type: 'spring', stiffness: 165, damping: 24, mass: 0.9 }}
@@ -687,7 +687,7 @@ const Resume: React.FC = () => {
                   key={`${lang}-${heroScenes[activeHeroScene].id}`}
                   variants={prefersReducedMotion ? undefined : heroCopyVariants}
                   initial={prefersReducedMotion ? false : "hidden"}
-                  animate={prefersReducedMotion ? "visible" : (splash.suppressHeroEntrance ? "hidden" : "visible")}
+                  animate={prefersReducedMotion ? "visible" : (splash.isVisible ? "hidden" : "visible")}
                   exit={prefersReducedMotion ? undefined : "exit"}
                   className={styles.heroCopy}
                 >
@@ -713,7 +713,7 @@ const Resume: React.FC = () => {
               <motion.a
                 href="#about"
                 initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
-                animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.suppressHeroEntrance ? { y: 20, opacity: 0 } : { y: 0, opacity: 1 })}
+                animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.isVisible ? { y: 20, opacity: 0 } : { y: 0, opacity: 1 })}
                 transition={{ delay: prefersReducedMotion ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] as const, duration: prefersReducedMotion ? 0 : 0.8 }}
                 className={styles.ctaButton}
                 onClick={(e) => handleNavClick(e, '#about')}
