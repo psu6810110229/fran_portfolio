@@ -118,6 +118,7 @@ interface ActivitySlide {
     en: string;
     th: string;
   };
+  objectPosition?: string;
 }
 
 const activitySlides: ActivitySlide[] = [
@@ -141,6 +142,7 @@ const activitySlides: ActivitySlide[] = [
       en: 'Fran looking after student groups during the Open House activities.',
       th: 'ฟานดูแลกลุ่มนักเรียนระหว่างกิจกรรม Open House',
     },
+    objectPosition: 'center 20%',
   },
   {
     src: openHouseStaffStage,
@@ -166,20 +168,23 @@ const slideVariants = {
     x: direction * 28,
     scale: 1.025,
     filter: 'blur(6px)',
+    zIndex: 1,
   }),
   center: {
     opacity: 1,
     x: 0,
     scale: 1,
     filter: 'blur(0px)',
+    zIndex: 1,
     transition: { duration: 0.36, ease: [0.22, 1, 0.36, 1] as const },
   },
   exit: (direction: number) => ({
-    opacity: 0,
+    opacity: 1,
     x: direction * -20,
-    scale: 0.99,
+    scale: 1,
     filter: 'blur(4px)',
-    transition: { duration: 0.24, ease: [0.25, 1, 0.5, 1] as const },
+    zIndex: 0,
+    transition: { duration: 0.36, ease: [0.22, 1, 0.36, 1] as const },
   }),
 };
 
@@ -194,11 +199,15 @@ const dictionary = {
     heroDesc: 'A Year 2 Computer Engineering student at PSU who learns by building real products and working closely with people.',
     viewApp: 'Explore My Story',
     aboutBadge: 'Web Developer',
-    about1a: 'Hi, I am ',
-    about1b: 'Fran. ',
-    about2: 'A Year 2 Computer Engineering student at PSU ',
-    about3: 'who learns by building real products and working with people.',
-    aboutFull: 'I am a Year 2 Computer Engineering student at PSU. Organizing Hat Yai Open House 2026 taught me to prepare equipment, coordinate people, and stay calm when problems appeared. I am still growing, but I take responsibility for the next step and learn from the people around me.',
+    aboutHeroSegments: [
+      { text: 'Hi, I am ' },
+      { text: 'Fran', className: 'highlight' },
+      { text: ', a ' },
+      { text: 'Year 2 Computer Engineering student', className: 'underline' },
+      { text: ' at PSU who believes in learning by ' },
+      { text: 'doing.', className: 'highlight' }
+    ],
+    aboutSub: 'Organizing Hat Yai Open House 2026 taught me to prepare, coordinate, and solve problems on the spot. I am always growing, ready to take responsibility for the next step, and learn from everyone around me.',
     feat1: 'What I’ve done, ',
     feat2: 'and what it taught me.',
     activityTitle: 'Hat Yai Open House 2026',
@@ -236,11 +245,14 @@ const dictionary = {
     heroDesc: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 ม.สงขลานครินทร์ ที่เรียนรู้จากการลงมือสร้างผลงานจริงและการทำงานร่วมกับผู้คน',
     viewApp: 'รู้จักผมมากขึ้น',
     aboutBadge: 'นักพัฒนาเว็บไซต์',
-    about1a: 'สวัสดีครับ ',
-    about1b: 'ผมฟาน ',
-    about2: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 มหาวิทยาลัยสงขลานครินทร์ ',
-    about3: 'ที่เรียนรู้จากการลงมือทำและการทำงานร่วมกับผู้คน',
-    aboutFull: 'ผมเป็นนักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 มหาวิทยาลัยสงขลานครินทร์ การจัดงาน Open House หาดใหญ่ 2026 สอนให้ผมเตรียมอุปกรณ์ ประสานงานกับผู้คน และรับมือกับปัญหาที่เกิดขึ้นหน้างาน ผมยังคงพัฒนาตัวเอง แต่พร้อมรับผิดชอบขั้นตอนถัดไปและเรียนรู้จากคนรอบตัวครับ',
+    aboutHeroSegments: [
+      { text: 'สวัสดีครับ ' },
+      { text: 'ผมฟาน ', className: 'highlight' },
+      { text: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ปี 2 ', className: 'underline' },
+      { text: 'ม.สงขลานครินทร์ ผู้เชื่อมั่นในการเรียนรู้ผ่าน' },
+      { text: 'การลงมือทำ', className: 'highlight' }
+    ],
+    aboutSub: 'การจัดงาน Open House หาดใหญ่ 2026 สอนให้ผมรู้จักเตรียมพร้อม ประสานงาน และแก้ปัญหาเฉพาะหน้า ผมพร้อมรับผิดชอบในก้าวถัดไป และเรียนรู้จากทุกคนรอบตัวครับ',
     feat1: 'งานที่ผมเคยลงมือทำ ',
     feat2: 'และสิ่งที่ได้เรียนรู้',
     activityTitle: 'หาดใหญ่ Open House 2026',
@@ -667,27 +679,32 @@ const Resume: React.FC = () => {
         <div className={styles.aboutInner}>
 
           
-          <WordsPullUpMultiStyle
-            key={lang}
-            as="h2"
-            id="resume-about-title"
-            containerClassName={styles.aboutTitle}
-            segments={[
-              { text: t.about1a, className: styles.aboutTitleNormal },
-              { text: t.about1b, className: styles.aboutTitleHighlight },
-              { text: t.about2, className: styles.aboutTitleItalic },
-              { text: t.about3, className: styles.aboutTitleNormal },
-            ]}
+          <ScrollReveal
+            baseOpacity={0.15}
+            enableBlur={true}
+            baseRotation={0}
+            blurStrength={4}
+            textClassName={styles.aboutRevealText}
+            rotationEnd="bottom 60%"
+            wordAnimationEnd="bottom 60%"
+            segments={t.aboutHeroSegments.map((seg: { text: string; className?: string }) => {
+              let cls = '';
+              if (seg.className === 'highlight') cls = styles.highlight;
+              if (seg.className === 'underline') cls = styles.underline;
+              return { text: seg.text, className: cls };
+            })}
           />
 
           <ScrollReveal
-            baseOpacity={0}
+            baseOpacity={0.15}
             enableBlur={true}
             baseRotation={0}
-            blurStrength={1}
-            textClassName={styles.aboutRevealText}
+            blurStrength={4}
+            textClassName={styles.aboutRevealSubText}
+            rotationEnd="bottom 70%"
+            wordAnimationEnd="bottom 70%"
           >
-            {t.aboutFull}
+            {t.aboutSub}
           </ScrollReveal>
         </div>
       </section>
@@ -735,6 +752,7 @@ const Resume: React.FC = () => {
                   loading="lazy"
                   decoding="async"
                   className={styles.cardGalleryImage}
+                  style={{ objectPosition: activitySlides[activeSlide].objectPosition }}
                 />
               ) : (
                 <AnimatePresence initial={false} custom={slideDirection}>
@@ -745,6 +763,7 @@ const Resume: React.FC = () => {
                     loading="lazy"
                     decoding="async"
                     className={styles.cardGalleryImage}
+                    style={{ objectPosition: activitySlides[activeSlide].objectPosition }}
                     custom={slideDirection}
                     variants={slideVariants}
                     initial="enter"

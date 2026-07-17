@@ -542,38 +542,54 @@
   .aboutBadge { font-size: var(--font-size-xs); }
 }
 
-.aboutTitle {
-  font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 4vw, 3.75rem);
-  line-height: 1.4;
-  max-width: 56rem;
-  margin: 0 auto 3rem auto;
-  color: var(--color-text);
-}
-
-.aboutTitleNormal {
-  font-weight: 700;
-}
-
-.aboutTitleHighlight {
-  color: var(--color-accent);
-  font-weight: 700;
-}
-
-.aboutTitleItalic {
-  font-style: italic;
-  font-weight: 400;
-}
-
 .aboutRevealText {
+  font-family: var(--font-heading);
   color: var(--color-text);
-  font-size: var(--font-size-xs);
-  line-height: 1.6;
-  max-width: 42rem;
+  font-size: clamp(1.75rem, 4vw, 3.5rem);
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  max-width: 64rem;
+  margin: 0;
+  text-wrap: pretty;
 }
 
-@media (min-width: 640px) { .aboutRevealText { font-size: var(--font-size-sm); } }
-@media (min-width: 768px) { .aboutRevealText { font-size: var(--font-size-base); } }
+.highlight {
+  color: var(--color-accent);
+}
+
+.underline {
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+}
+
+.aboutRevealSubText {
+  font-family: var(--font-body);
+  color: var(--color-text-sub);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+  max-width: 48rem;
+  margin: 2rem 0 0 0;
+  text-wrap: pretty;
+}
+
+/* Tablet Portrait Optimization for About Section */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .aboutInner {
+    padding: 5rem 3rem;
+  }
+  
+  .aboutRevealText {
+    font-size: clamp(2.25rem, 5.5vw, 3rem);
+  }
+  
+  .aboutRevealSubText {
+    font-size: 1.25rem;
+    margin-top: 2.5rem;
+  }
+}
 
 .aboutContact {
   margin-top: var(--space-8);
@@ -756,8 +772,9 @@
 
 @media (min-width: 768px) and (max-width: 1279px) {
   .cardGallery {
-    width: min(100%, var(--activity-tablet-gallery-width-portrait));
-    height: var(--activity-tablet-row-height);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
     max-width: none;
     justify-self: center;
   }
@@ -765,8 +782,9 @@
 
 @media (min-width: 768px) and (max-width: 1279px) and (orientation: landscape) {
   .cardGallery {
-    width: min(100%, var(--activity-tablet-gallery-width-landscape));
-    aspect-ratio: 16 / 9;
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    height: auto;
   }
 }
 

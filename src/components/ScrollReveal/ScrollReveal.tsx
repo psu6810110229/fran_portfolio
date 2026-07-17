@@ -5,8 +5,14 @@ import styles from './ScrollReveal.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
+interface TextSegment {
+  text: string;
+  className?: string;
+}
+
 interface ScrollRevealProps {
-  children: ReactNode;
+  children?: ReactNode;
+  segments?: TextSegment[];
   scrollContainerRef?: RefObject<HTMLElement>;
   enableBlur?: boolean;
   baseOpacity?: number;
@@ -20,6 +26,7 @@ interface ScrollRevealProps {
 
 const ScrollReveal: React.FC<ScrollRevealProps> = ({
   children,
+  segments,
   scrollContainerRef,
   enableBlur = true,
   baseOpacity = 0.1,
@@ -33,32 +40,37 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const splitText = useMemo(() => {
-    const text = typeof children === 'string' ? children : '';
+    const processSegments: TextSegment[] = segments || [{ text: typeof children === 'string' ? children : '' }];
     
-    // Use Intl.Segmenter to properly split words for Thai and other languages
-    if (typeof Intl !== 'undefined' && Intl.Segmenter) {
-      const segmenter = new Intl.Segmenter(undefined, { granularity: 'word' });
-      const segments = Array.from(segmenter.segment(text));
-      return segments.map((seg, index) => {
-        if (seg.segment.match(/^\s+$/)) return <span key={index}>{seg.segment}</span>;
+    let elementIndex = 0;
+    return processSegments.map((seg) => {
+      // Use Intl.Segmenter to properly split words for Thai and other languages
+      if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+        const segmenter = new Intl.Segmenter(undefined, { granularity: 'word' });
+        const intlSegments = Array.from(segmenter.segment(seg.text));
+        return intlSegments.map((wordSeg) => {
+          const key = elementIndex++;
+          if (wordSeg.segment.match(/^\s+$/)) return <span key={key}>{wordSeg.segment}</span>;
+          return (
+            <span className={`${styles.word} ${seg.className || ''}`.trim()} key={key}>
+              {wordSeg.segment}
+            </span>
+          );
+        });
+      }
+
+      // Fallback for older browsers
+      return seg.text.split(/(\s+)/).map((word) => {
+        const key = elementIndex++;
+        if (word.match(/^\s+$/)) return <span key={key}>{word}</span>;
         return (
-          <span className={styles.word} key={index}>
-            {seg.segment}
+          <span className={`${styles.word} ${seg.className || ''}`.trim()} key={key}>
+            {word}
           </span>
         );
       });
-    }
-
-    // Fallback for older browsers
-    return text.split(/(\s+)/).map((word, index) => {
-      if (word.match(/^\s+$/)) return <span key={index}>{word}</span>;
-      return (
-        <span className={styles.word} key={index}>
-          {word}
-        </span>
-      );
     });
-  }, [children]);
+  }, [children, segments]);
 
   useEffect(() => {
     const el = containerRef.current;
