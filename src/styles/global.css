@@ -16,10 +16,10 @@
 /* ── CSS Variables (dark default) ── */
 :root {
   --color-bg:           #131110;
-  --color-surface:      #161412;
-  --color-surface-alt:  #1a1816;
-  --color-border:       #1e1c18;
-  --color-border-soft:  #1a1816;
+  --color-surface:      #1b1917;
+  --color-surface-alt:  #1f1d1a;
+  --color-border:       #24211e;
+  --color-border-soft:  #1e1c19;
 
   --color-text:         #f0e8e0;
   --color-text-sub:     #d0c8c0;
@@ -84,10 +84,10 @@
 /* ── Light mode overrides (must come after :root) ── */
 [data-theme="light"] {
   --color-bg:           #faf8f5;
-  --color-surface:      #f0ebe4;
-  --color-surface-alt:  #ede8e1;
-  --color-border:       #e0d8d0;
-  --color-border-soft:  #e8e2da;
+  --color-surface:      #ffffff;
+  --color-surface-alt:  #f3efe9;
+  --color-border:       #e4ddd5;
+  --color-border-soft:  #ebe5df;
 
   --color-text:         #1a1614;
   --color-text-sub:     #3a3430;
