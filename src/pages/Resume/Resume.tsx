@@ -188,6 +188,47 @@ const slideVariants = {
   }),
 };
 
+const heroCopyVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    },
+  },
+  exit: {
+    transition: {
+      staggerChildren: 0.04,
+      staggerDirection: -1,
+    },
+  },
+};
+
+const heroTextVariants = {
+  hidden: { 
+    y: 30, 
+    opacity: 0, 
+    filter: 'blur(8px)' 
+  },
+  visible: { 
+    y: 0, 
+    opacity: 1, 
+    filter: 'blur(0px)',
+    transition: { 
+      type: 'spring', 
+      stiffness: 280, 
+      damping: 24, 
+      mass: 0.8 
+    }
+  },
+  exit: { 
+    y: -20, 
+    opacity: 0, 
+    filter: 'blur(6px)',
+    transition: { duration: 0.25, ease: 'easeIn' }
+  }
+};
+
 const dictionary = {
   en: {
     nav: [
@@ -640,20 +681,29 @@ const Resume: React.FC = () => {
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={`${lang}-${heroScenes[activeHeroScene].id}`}
-                  initial={prefersReducedMotion ? false : { y: 22, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={prefersReducedMotion ? undefined : { y: -18, opacity: 0 }}
-                  transition={prefersReducedMotion
-                    ? { duration: 0 }
-                    : { type: 'spring', stiffness: 260, damping: 28, mass: 0.72 }}
+                  variants={prefersReducedMotion ? undefined : heroCopyVariants}
+                  initial={prefersReducedMotion ? false : "hidden"}
+                  animate="visible"
+                  exit={prefersReducedMotion ? undefined : "exit"}
                   className={styles.heroCopy}
                 >
-                  <p className={styles.heroSceneLabel}>{activeHeroCopy.label}</p>
-                  <p className={styles.heroDesc}>
+                  <div className={styles.heroSceneLabel} style={{ overflow: 'hidden', paddingBottom: '4px' }}>
+                    <motion.div variants={prefersReducedMotion ? undefined : heroTextVariants}>
+                      {activeHeroCopy.label}
+                    </motion.div>
+                  </div>
+                  <div className={styles.heroDesc}>
                     {activeHeroCopy.description.map((line) => (
-                      <span key={line}>{line}</span>
+                      <span key={line} style={{ display: 'block', overflow: 'hidden', paddingBottom: '2px' }}>
+                        <motion.span 
+                          variants={prefersReducedMotion ? undefined : heroTextVariants}
+                          style={{ display: 'block' }}
+                        >
+                          {line}
+                        </motion.span>
+                      </span>
                     ))}
-                  </p>
+                  </div>
                 </motion.div>
               </AnimatePresence>
               <motion.a
