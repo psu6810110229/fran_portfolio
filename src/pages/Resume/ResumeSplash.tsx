@@ -10,11 +10,6 @@ interface ResumeSplashProps {
   onExitComplete: () => void;
 }
 
-const fragments = [
-  { x: -92, y: -58 }, { x: 76, y: -48 }, { x: -110, y: 8 },
-  { x: 104, y: 14 }, { x: -72, y: 70 }, { x: 88, y: 66 },
-];
-
 const ResumeSplash = ({ isVisible, progress, prefersReducedMotion, onExitComplete }: ResumeSplashProps) => {
   useEffect(() => {
     const root = document.querySelector<HTMLElement>('#root');
@@ -35,19 +30,17 @@ const ResumeSplash = ({ isVisible, progress, prefersReducedMotion, onExitComplet
           transition={{ duration: prefersReducedMotion ? 0.15 : 0.46, ease: [0.22, 1, 0.36, 1] }}>
           <span className={styles.status} role="status">Loading Fran&apos;s resume</span>
           <div className={styles.word} aria-label="FRAN">
-            {prefersReducedMotion ? <span className={styles.staticWord}>FRAN</span> : fragments.map((offset, index) => (
-              <motion.span key={index} aria-hidden="true" className={styles.fragment}
-                initial={{ x: offset.x, y: offset.y, opacity: 0 }} animate={{ x: 0, y: 0, opacity: 1 }}
-                exit={{
-                  x: offset.x,
-                  y: offset.y,
-                  opacity: 0,
-                  transition: { duration: 0.46, delay: index * 0.02, ease: [0.22, 1, 0.36, 1] },
-                }}
-                transition={{ duration: 1.2, delay: index * 0.045, ease: [0.22, 1, 0.36, 1] }}>
-                FRAN
-              </motion.span>
-            ))}
+            <motion.span
+              aria-hidden="true"
+              className={styles.staticWord}
+              initial={prefersReducedMotion ? false : { y: 12, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 12, opacity: 0 }}
+              transition={prefersReducedMotion
+                ? { duration: 0 }
+                : { duration: 1.2, ease: [0.22, 1, 0.36, 1] }}>
+              FRAN
+            </motion.span>
           </div>
           <span className={styles.progress} aria-hidden="true">{progress}%</span>
         </motion.div>

@@ -6,6 +6,7 @@ import WordsPullUpMultiStyle from '../../components/Resume/WordsPullUpMultiStyle
 import ScrollReveal from '../../components/ScrollReveal/ScrollReveal';
 import { DockItem } from '../../components/DockItem/DockItem';
 import { useResumeSplash } from '../../hooks/useResumeSplash';
+import { recordRouteSwitchIntent } from '../../hooks/useRouteSwitchNotice';
 import ResumeSplash from './ResumeSplash';
 import Contact from '../../pages/Contact';
 import { useLanguage } from '../../hooks/useLanguage';
@@ -407,6 +408,8 @@ const Resume: React.FC = () => {
       } else {
         document.querySelector(href)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
       }
+    } else {
+      recordRouteSwitchIntent(href);
     }
   };
 
@@ -613,7 +616,7 @@ const Resume: React.FC = () => {
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={`${lang}-${heroScenes[activeHeroScene].id}`}
-                  initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 22, opacity: 0 }}
+                  initial={prefersReducedMotion ? false : { y: 22, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={prefersReducedMotion ? undefined : { y: -18, opacity: 0 }}
                   transition={prefersReducedMotion

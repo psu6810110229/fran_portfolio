@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { useLenis } from 'lenis/react';
 import { useTheme } from '../../hooks/useTheme';
 import { useLanguage } from '../../hooks/useLanguage';
+import { recordRouteSwitchIntent } from '../../hooks/useRouteSwitchNotice';
 import VariableProximity from '../VariableProximity/VariableProximity';
 import styles from './Navbar.module.css';
 
@@ -39,6 +40,7 @@ function Navbar() {
         document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
+      if (href === '/resume') recordRouteSwitchIntent(href);
       closeMenu();
     }
   };

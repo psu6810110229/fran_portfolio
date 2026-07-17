@@ -10,7 +10,9 @@ import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import Resume from './pages/Resume/Resume';
 import { LanguageProvider } from './hooks/useLanguage';
+import { useRouteSwitchNotice } from './hooks/useRouteSwitchNotice';
 import SectionNav from './components/SectionNav/SectionNav';
+import RouteSwitchNotice from './components/RouteSwitchNotice/RouteSwitchNotice';
 import styles from './App.module.css';
 
 const scrollDuration = 1.25;
@@ -36,6 +38,7 @@ function App() {
 
   const normalizedPath = window.location.pathname.replace(/\/+$/, '') || '/';
   const isResumeRoute = normalizedPath === '/resume';
+  const routeSwitchNotice = useRouteSwitchNotice(isResumeRoute ? '/resume' : '/');
 
   useEffect(() => {
     const updateTheme = () => setTheme(getCurrentTheme());
@@ -91,6 +94,12 @@ function App() {
             </>
           )}
         </main>
+        <RouteSwitchNotice
+          isOpen={routeSwitchNotice.isOpen}
+          sourcePath={routeSwitchNotice.sourcePath}
+          onClose={routeSwitchNotice.dismiss}
+          onReturn={routeSwitchNotice.returnToSource}
+        />
         <SectionNav isResumeRoute={isResumeRoute} />
       </div>
     </LanguageProvider>
