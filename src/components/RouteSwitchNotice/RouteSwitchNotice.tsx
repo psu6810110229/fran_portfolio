@@ -60,7 +60,6 @@ const RouteSwitchNotice = ({ isOpen, sourcePath, onClose, onReturn }: RouteSwitc
           transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className={styles.header}>
-            <span className={styles.eyebrow}>{copy.eyebrow}</span>
             <button type="button" className={styles.closeButton} onClick={onClose} aria-label={lang === 'th' ? 'ปิดการแจ้งเตือน' : 'Close notification'}>
               ×
             </button>

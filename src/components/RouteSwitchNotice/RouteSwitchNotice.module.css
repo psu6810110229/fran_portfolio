@@ -7,7 +7,7 @@
   max-height: calc(100dvh - 2rem);
   overflow-y: auto;
   padding: var(--space-5);
-  border: 1px solid var(--color-border-soft);
+  border: none;
   border-radius: var(--radius-activity-card);
   background: var(--color-surface);
   color: var(--color-text);
@@ -15,29 +15,23 @@
 }
 
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-}
-
-.eyebrow {
-  color: var(--color-accent);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  line-height: 1.25;
-  text-transform: uppercase;
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
 }
 
 .closeButton {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: var(--radius-full);
   background: transparent;
   color: var(--color-text-dim);
   font-size: 1.25rem;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .closeButton:hover {
@@ -47,21 +41,22 @@
 
 .title {
   max-width: 28rem;
-  margin-top: var(--space-3);
+  margin-top: 0;
+  padding-right: var(--space-5);
   font-family: var(--font-heading);
   font-size: clamp(1.25rem, 1.05rem + 0.55vw, 1.5rem);
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.18;
+  line-height: 1.25;
   text-wrap: balance;
 }
 
 .message {
   max-width: 28rem;
-  margin-top: var(--space-3);
-  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+  color: var(--color-text-sub);
   font-size: var(--font-size-sm);
-  line-height: 1.5;
+  line-height: 1.6;
   text-wrap: pretty;
 }
 
@@ -69,24 +64,25 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-top: var(--space-5);
+  gap: var(--space-4);
+  margin-top: var(--space-6);
 }
 
 .returnButton,
 .stayButton {
   min-height: 2.75rem;
-  padding: 0.6875rem 1rem;
+  padding: 0.6875rem 1.25rem;
   border-radius: var(--radius-full);
   font-size: var(--font-size-xs);
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
 .returnButton {
   background: var(--color-accent);
-  color: var(--color-text);
+  color: #ffffff;
 }
 
 .returnButton:hover {
@@ -94,13 +90,14 @@
 }
 
 .stayButton {
-  background: var(--color-surface-alt);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-sub);
+  background: transparent;
+  border: none;
+  color: var(--color-text-dim);
+  padding: 0.6875rem 0.5rem;
 }
 
 .stayButton:hover {
-  background: var(--color-border);
+  background: var(--color-surface-alt);
   color: var(--color-text);
 }
 

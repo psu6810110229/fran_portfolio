@@ -16,10 +16,10 @@
 /* ── CSS Variables (dark default) ── */
 :root {
   --color-bg:           #131110;
-  --color-surface:      #161412;
-  --color-surface-alt:  #1a1816;
-  --color-border:       #1e1c18;
-  --color-border-soft:  #1a1816;
+  --color-surface:      #1b1917;
+  --color-surface-alt:  #1f1d1a;
+  --color-border:       #24211e;
+  --color-border-soft:  #1e1c19;
 
   --color-text:         #f0e8e0;
   --color-text-sub:     #d0c8c0;
@@ -30,6 +30,10 @@
   --color-accent:       #d4651a;
   --color-accent-hover: #e07030;
   --color-accent-dark:  #c4551a;
+  
+  --color-error:        #e05252;
+  --color-error-soft:   color-mix(in srgb, #e05252 15%, transparent);
+  --color-accent-soft:  color-mix(in srgb, var(--color-accent) 15%, transparent);
   --color-qr-surface:   #ffffff;
 
   /* Typography */
@@ -73,6 +77,7 @@
   --radius-sm:  0.25rem;
   --radius-md:  0.5rem;
   --radius-lg:  0.875rem;
+  --radius-xl:  1.5rem;
   --radius-activity-card: 1rem;
   --radius-full: 9999px;
 
@@ -84,10 +89,10 @@
 /* ── Light mode overrides (must come after :root) ── */
 [data-theme="light"] {
   --color-bg:           #faf8f5;
-  --color-surface:      #f0ebe4;
-  --color-surface-alt:  #ede8e1;
-  --color-border:       #e0d8d0;
-  --color-border-soft:  #e8e2da;
+  --color-surface:      #ffffff;
+  --color-surface-alt:  #f3efe9;
+  --color-border:       #e4ddd5;
+  --color-border-soft:  #ebe5df;
 
   --color-text:         #1a1614;
   --color-text-sub:     #3a3430;
@@ -98,6 +103,9 @@
   --color-accent:       #c4551a;
   --color-accent-hover: #d4651a;
   --color-accent-dark:  #b04010;
+
+  --color-error:        #d32f2f;
+  --color-error-soft:   color-mix(in srgb, #d32f2f 10%, transparent);
 
   --shadow-activity-card: 0 8px 24px rgb(56 39 29 / 12%);
   --shadow-gallery-controls: 0 4px 12px rgb(56 39 29 / 18%);

@@ -17,13 +17,13 @@ import openHouseStudentGroups from '../../assets/open-house-student-groups.webp'
 import openHouseStaffStage from '../../assets/open-house-staff-stage.webp';
 import openHouseGroupPhoto from '../../assets/open-house-group-photo.webp';
 import psuHeroVideo from '../../assets/resume/hero/psu-v2.mp4';
-import psuHeroPoster from '../../assets/resume/hero/psu-v2-poster.png';
+import psuHeroPoster from '../../assets/resume/hero/psu-v2-poster.webp';
 import projectHeroVideo from '../../assets/resume/hero/project-v2.mp4';
-import projectHeroPoster from '../../assets/resume/hero/project-v2-poster.png';
+import projectHeroPoster from '../../assets/resume/hero/project-v2-poster.webp';
 import openHouseHeroVideo from '../../assets/resume/hero/openhouse-v2.mp4';
-import openHouseHeroPoster from '../../assets/resume/hero/openhouse-v2-poster.png';
+import openHouseHeroPoster from '../../assets/resume/hero/openhouse-v2-poster.webp';
 import roomHeroVideo from '../../assets/resume/hero/room-v2.mp4';
-import roomHeroPoster from '../../assets/resume/hero/room-v2-poster.png';
+import roomHeroPoster from '../../assets/resume/hero/room-v2-poster.webp';
 import styles from './Resume.module.css';
 
 interface HeroScene {
@@ -118,6 +118,7 @@ interface ActivitySlide {
     en: string;
     th: string;
   };
+  objectPosition?: string;
 }
 
 const activitySlides: ActivitySlide[] = [
@@ -141,6 +142,7 @@ const activitySlides: ActivitySlide[] = [
       en: 'Fran looking after student groups during the Open House activities.',
       th: 'ฟานดูแลกลุ่มนักเรียนระหว่างกิจกรรม Open House',
     },
+    objectPosition: 'center 20%',
   },
   {
     src: openHouseStaffStage,
@@ -166,21 +168,64 @@ const slideVariants = {
     x: direction * 28,
     scale: 1.025,
     filter: 'blur(6px)',
+    zIndex: 1,
   }),
   center: {
     opacity: 1,
     x: 0,
     scale: 1,
     filter: 'blur(0px)',
+    zIndex: 1,
     transition: { duration: 0.36, ease: [0.22, 1, 0.36, 1] as const },
   },
   exit: (direction: number) => ({
-    opacity: 0,
+    opacity: 1,
     x: direction * -20,
-    scale: 0.99,
+    scale: 1,
     filter: 'blur(4px)',
-    transition: { duration: 0.24, ease: [0.25, 1, 0.5, 1] as const },
+    zIndex: 0,
+    transition: { duration: 0.36, ease: [0.22, 1, 0.36, 1] as const },
   }),
+};
+
+const heroCopyVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    },
+  },
+  exit: {
+    transition: {
+      staggerChildren: 0.04,
+      staggerDirection: -1,
+    },
+  },
+};
+
+const heroTextVariants = {
+  hidden: { 
+    y: 30, 
+    opacity: 0, 
+    filter: 'blur(12px)' 
+  },
+  visible: { 
+    y: 0, 
+    opacity: 1, 
+    filter: 'blur(0px)',
+    transition: { 
+      y: { type: 'spring', stiffness: 280, damping: 24, mass: 0.8 },
+      opacity: { duration: 0.5, ease: 'easeOut' },
+      filter: { duration: 0.5, ease: 'easeOut' }
+    }
+  },
+  exit: { 
+    y: -20, 
+    opacity: 0, 
+    filter: 'blur(8px)',
+    transition: { duration: 0.25, ease: 'easeIn' }
+  }
 };
 
 const dictionary = {
@@ -194,11 +239,15 @@ const dictionary = {
     heroDesc: 'A Year 2 Computer Engineering student at PSU who learns by building real products and working closely with people.',
     viewApp: 'Explore My Story',
     aboutBadge: 'Web Developer',
-    about1a: 'Hi, I am ',
-    about1b: 'Fran. ',
-    about2: 'A Year 2 Computer Engineering student at PSU ',
-    about3: 'who learns by building real products and working with people.',
-    aboutFull: 'I am a Year 2 Computer Engineering student at PSU. Organizing Hat Yai Open House 2026 taught me to prepare equipment, coordinate people, and stay calm when problems appeared. I am still growing, but I take responsibility for the next step and learn from the people around me.',
+    aboutHeroSegments: [
+      { text: 'Hi, I am ' },
+      { text: 'Fran', className: 'highlight' },
+      { text: ', a ' },
+      { text: 'Year 2 Computer Engineering student', className: 'underline' },
+      { text: ' at PSU who believes in learning by ' },
+      { text: 'doing.', className: 'highlight' }
+    ],
+    aboutSub: 'Organizing Hat Yai Open House 2026 taught me to prepare, coordinate, and solve problems on the spot. I am always growing, ready to take responsibility for the next step, and learn from everyone around me.',
     feat1: 'What I’ve done, ',
     feat2: 'and what it taught me.',
     activityTitle: 'Hat Yai Open House 2026',
@@ -236,11 +285,14 @@ const dictionary = {
     heroDesc: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 ม.สงขลานครินทร์ ที่เรียนรู้จากการลงมือสร้างผลงานจริงและการทำงานร่วมกับผู้คน',
     viewApp: 'รู้จักผมมากขึ้น',
     aboutBadge: 'นักพัฒนาเว็บไซต์',
-    about1a: 'สวัสดีครับ ',
-    about1b: 'ผมฟาน ',
-    about2: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 มหาวิทยาลัยสงขลานครินทร์ ',
-    about3: 'ที่เรียนรู้จากการลงมือทำและการทำงานร่วมกับผู้คน',
-    aboutFull: 'ผมเป็นนักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 มหาวิทยาลัยสงขลานครินทร์ การจัดงาน Open House หาดใหญ่ 2026 สอนให้ผมเตรียมอุปกรณ์ ประสานงานกับผู้คน และรับมือกับปัญหาที่เกิดขึ้นหน้างาน ผมยังคงพัฒนาตัวเอง แต่พร้อมรับผิดชอบขั้นตอนถัดไปและเรียนรู้จากคนรอบตัวครับ',
+    aboutHeroSegments: [
+      { text: 'สวัสดีครับ ' },
+      { text: 'ผมฟาน ', className: 'highlight' },
+      { text: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ปี 2 ', className: 'underline' },
+      { text: 'ม.สงขลานครินทร์ ผู้เชื่อมั่นในการเรียนรู้ผ่าน' },
+      { text: 'การลงมือทำ', className: 'highlight' }
+    ],
+    aboutSub: 'การจัดงาน Open House หาดใหญ่ 2026 สอนให้ผมรู้จักเตรียมพร้อม ประสานงาน และแก้ปัญหาเฉพาะหน้า ผมพร้อมรับผิดชอบในก้าวถัดไป และเรียนรู้จากทุกคนรอบตัวครับ',
     feat1: 'งานที่ผมเคยลงมือทำ ',
     feat2: 'และสิ่งที่ได้เรียนรู้',
     activityTitle: 'หาดใหญ่ Open House 2026',
@@ -295,7 +347,19 @@ const Resume: React.FC = () => {
   const [enableDockEffect, setEnableDockEffect] = React.useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
   const [isCriticalVideoSettled, setIsCriticalVideoSettled] = React.useState(false);
-  const splash = useResumeSplash({ isCriticalVideoSettled });
+  const splash = useResumeSplash({ 
+    isCriticalVideoSettled,
+    posterUrl: heroScenes[0].poster
+  });
+
+  React.useEffect(() => {
+    const firstVideo = heroVideoRefs.current[0];
+    if (firstVideo && splash.isReadyToPlayVideo && !prefersReducedMotion && activeHeroScene === 0) {
+      if (firstVideo.paused) {
+        firstVideo.play().catch(() => undefined);
+      }
+    }
+  }, [splash.isReadyToPlayVideo, prefersReducedMotion, activeHeroScene]);
 
   const markHeroVideoReady = React.useCallback((index: number) => {
     setReadyHeroVideos((current) => {
@@ -504,13 +568,13 @@ const Resume: React.FC = () => {
                       markHeroVideoReady(index);
                     }
                   }}
-                  autoPlay={index === 0 && !prefersReducedMotion}
+                  autoPlay={false}
                   muted
                   playsInline
-                  preload="auto"
+                  preload={index === activeHeroScene || index === nextHeroScene ? 'auto' : 'none'}
                   tabIndex={-1}
                   className={`${styles.videoBg} ${readyHeroVideos[index] ? styles.videoReady : ''}`}
-                  src={scene.video}
+                  src={prefersReducedMotion ? undefined : scene.video}
                   poster={scene.poster}
                   onLoadedData={() => markHeroVideoReady(index)}
                   onError={index === 0 ? () => setIsCriticalVideoSettled(true) : undefined}
@@ -524,8 +588,21 @@ const Resume: React.FC = () => {
           <div className={styles.noiseOverlay} />
           <div className={styles.gradientOverlay} />
 
-          <div className={styles.navContainer}>
-            <nav className={styles.navBar}>
+          <motion.div 
+            className={styles.navContainer}
+            initial={prefersReducedMotion ? false : { x: "-50%", y: -30, opacity: 0 }}
+            animate={prefersReducedMotion ? { x: "-50%", y: 0, opacity: 1 } : (splash.isVisible ? { x: "-50%", y: -30, opacity: 0 } : { x: "-50%", y: 0, opacity: 1 })}
+            transition={{ 
+              y: { type: 'spring', stiffness: 120, damping: 20, delay: 0.1 },
+              opacity: { duration: 0.2, delay: 0.1, ease: 'linear' }
+            }}
+          >
+            <motion.nav 
+              className={styles.navBar}
+              initial={prefersReducedMotion ? false : { backdropFilter: 'blur(0px) saturate(100%)', backgroundColor: 'rgba(19, 17, 16, 0)' }}
+              animate={prefersReducedMotion ? { backdropFilter: 'blur(8px) saturate(115%)', backgroundColor: 'rgba(19, 17, 16, 0.42)' } : (splash.isVisible ? { backdropFilter: 'blur(0px) saturate(100%)', backgroundColor: 'rgba(19, 17, 16, 0)' } : { backdropFilter: 'blur(8px) saturate(115%)', backgroundColor: 'rgba(19, 17, 16, 0.42)' })}
+              transition={{ delay: 0.5, duration: 0.6, ease: 'easeInOut' }}
+            >
               <div className={styles.navLinks}>
                 {t.nav.map((item) => (
                   <DockItem key={item.label} mouseX={mouseX} mouseY={mouseY} isDesktop={enableDockEffect} as="a" href={item.href} className={styles.navLink} onClick={(e) => handleNavClick(e, item.href)}>
@@ -571,24 +648,24 @@ const Resume: React.FC = () => {
                   </button>
                 </DockItem>
               </div>
-            </nav>
-          </div>
+            </motion.nav>
+          </motion.div>
 
           <div className={styles.heroContent}>
             <div className={styles.heroLeft}>
               <motion.h1
                 id="resume-hero-title"
                 className={styles.heroTitle}
-                initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 24, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                initial={prefersReducedMotion ? false : { y: 24, opacity: 0 }}
+                animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.isVisible ? { y: 24, opacity: 0 } : { y: 0, opacity: 1 })}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
                   : { type: 'spring', stiffness: 170, damping: 25, mass: 1 }}
               >
                 <motion.span
                   className={styles.heroNameFirst}
-                  initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 18, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
+                  initial={prefersReducedMotion ? false : { y: 18, opacity: 0 }}
+                  animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.isVisible ? { y: 18, opacity: 0 } : { y: 0, opacity: 1 })}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
                   : { delay: 0.16, type: 'spring', stiffness: 165, damping: 24, mass: 0.9 }}
@@ -598,8 +675,8 @@ const Resume: React.FC = () => {
                 <motion.span
                   className={styles.heroNameLast}
                   aria-label="Patcharapon"
-                  initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 18, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
+                  initial={prefersReducedMotion ? false : { y: 18, opacity: 0 }}
+                  animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.isVisible ? { y: 18, opacity: 0 } : { y: 0, opacity: 1 })}
                 transition={prefersReducedMotion
                   ? { duration: 0 }
                   : { delay: 0.34, type: 'spring', stiffness: 165, damping: 24, mass: 0.9 }}
@@ -616,27 +693,36 @@ const Resume: React.FC = () => {
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={`${lang}-${heroScenes[activeHeroScene].id}`}
-                  initial={prefersReducedMotion ? false : { y: 22, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={prefersReducedMotion ? undefined : { y: -18, opacity: 0 }}
-                  transition={prefersReducedMotion
-                    ? { duration: 0 }
-                    : { type: 'spring', stiffness: 260, damping: 28, mass: 0.72 }}
+                  variants={prefersReducedMotion ? undefined : heroCopyVariants}
+                  initial={prefersReducedMotion ? false : "hidden"}
+                  animate={prefersReducedMotion ? "visible" : (splash.isVisible ? "hidden" : "visible")}
+                  exit={prefersReducedMotion ? undefined : "exit"}
                   className={styles.heroCopy}
                 >
-                  <p className={styles.heroSceneLabel}>{activeHeroCopy.label}</p>
-                  <p className={styles.heroDesc}>
+                  <div className={styles.heroSceneLabel} style={{ overflow: 'hidden', paddingBottom: '4px' }}>
+                    <motion.div variants={prefersReducedMotion ? undefined : heroTextVariants}>
+                      {activeHeroCopy.label}
+                    </motion.div>
+                  </div>
+                  <div className={styles.heroDesc}>
                     {activeHeroCopy.description.map((line) => (
-                      <span key={line}>{line}</span>
+                      <span key={line} style={{ display: 'block', overflow: 'hidden', paddingBottom: '2px' }}>
+                        <motion.span 
+                          variants={prefersReducedMotion ? undefined : heroTextVariants}
+                          style={{ display: 'block' }}
+                        >
+                          {line}
+                        </motion.span>
+                      </span>
                     ))}
-                  </p>
+                  </div>
                 </motion.div>
               </AnimatePresence>
               <motion.a
                 href="#about"
-                initial={prefersReducedMotion || splash.suppressHeroEntrance ? false : { y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: prefersReducedMotion ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] as const, duration: prefersReducedMotion ? 0 : 0.8 }}
+                initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
+                animate={prefersReducedMotion ? { y: 0, opacity: 1 } : (splash.isVisible ? { y: 20, opacity: 0 } : { y: 0, opacity: 1 })}
+                transition={{ delay: prefersReducedMotion ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] as const, duration: prefersReducedMotion ? 0 : 0.8 }}
                 className={styles.ctaButton}
                 onClick={(e) => handleNavClick(e, '#about')}
               >
@@ -655,27 +741,32 @@ const Resume: React.FC = () => {
         <div className={styles.aboutInner}>
 
           
-          <WordsPullUpMultiStyle
-            key={lang}
-            as="h2"
-            id="resume-about-title"
-            containerClassName={styles.aboutTitle}
-            segments={[
-              { text: t.about1a, className: styles.aboutTitleNormal },
-              { text: t.about1b, className: styles.aboutTitleHighlight },
-              { text: t.about2, className: styles.aboutTitleItalic },
-              { text: t.about3, className: styles.aboutTitleNormal },
-            ]}
+          <ScrollReveal
+            baseOpacity={0.15}
+            enableBlur={true}
+            baseRotation={0}
+            blurStrength={4}
+            textClassName={styles.aboutRevealText}
+            rotationEnd="bottom 60%"
+            wordAnimationEnd="bottom 60%"
+            segments={t.aboutHeroSegments.map((seg: { text: string; className?: string }) => {
+              let cls = '';
+              if (seg.className === 'highlight') cls = styles.highlight;
+              if (seg.className === 'underline') cls = styles.underline;
+              return { text: seg.text, className: cls };
+            })}
           />
 
           <ScrollReveal
-            baseOpacity={0}
+            baseOpacity={0.15}
             enableBlur={true}
             baseRotation={0}
-            blurStrength={1}
-            textClassName={styles.aboutRevealText}
+            blurStrength={4}
+            textClassName={styles.aboutRevealSubText}
+            rotationEnd="bottom 70%"
+            wordAnimationEnd="bottom 70%"
           >
-            {t.aboutFull}
+            {t.aboutSub}
           </ScrollReveal>
         </div>
       </section>
@@ -723,6 +814,7 @@ const Resume: React.FC = () => {
                   loading="lazy"
                   decoding="async"
                   className={styles.cardGalleryImage}
+                  style={{ objectPosition: activitySlides[activeSlide].objectPosition }}
                 />
               ) : (
                 <AnimatePresence initial={false} custom={slideDirection}>
@@ -733,6 +825,7 @@ const Resume: React.FC = () => {
                     loading="lazy"
                     decoding="async"
                     className={styles.cardGalleryImage}
+                    style={{ objectPosition: activitySlides[activeSlide].objectPosition }}
                     custom={slideDirection}
                     variants={slideVariants}
                     initial="enter"
