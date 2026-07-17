@@ -131,7 +131,6 @@ export function useRouteSwitchNotice(currentPath: string): RouteSwitchNoticeStat
   useEffect(() => {
     const now = Date.now();
     const pendingIntent = readIntent();
-    removeIntent();
     writeVisit({ path: currentRoute, enteredAt: now, maxScrollY: window.scrollY, interactionCount: 0 });
 
     if (!pendingIntent || pendingIntent.to !== currentRoute || now - pendingIntent.createdAt > INTENT_MAX_AGE_MS) return;
@@ -139,8 +138,9 @@ export function useRouteSwitchNotice(currentPath: string): RouteSwitchNoticeStat
     const seenId = `${pendingIntent.from}->${pendingIntent.to}`;
     if (readSeenIds().includes(seenId)) return;
 
-    writeSeenId(seenId);
     const noticeTimer = window.setTimeout(() => {
+      removeIntent();
+      writeSeenId(seenId);
       setSourcePath(pendingIntent.from);
       setIsOpen(true);
     }, 0);
