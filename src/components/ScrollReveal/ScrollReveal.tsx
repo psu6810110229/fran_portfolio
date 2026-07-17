@@ -65,9 +65,18 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
     if (!el) return;
 
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isDesktop = window.innerWidth >= 768;
     const startPoint = isDesktop ? 'top 100%' : 'top 90%';
     const endPoint = isDesktop ? 'bottom 85%' : 'bottom 75%';
+
+    const wordElements = el.querySelectorAll(`.${styles.word}`);
+
+    if (reduce) {
+      gsap.set(el, { clearProps: 'all' });
+      gsap.set(wordElements, { opacity: 1, filter: 'none', clearProps: 'willChange' });
+      return;
+    }
 
     gsap.fromTo(
       el,
@@ -84,8 +93,6 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
         }
       }
     );
-
-    const wordElements = el.querySelectorAll(`.${styles.word}`);
 
     gsap.fromTo(
       wordElements,

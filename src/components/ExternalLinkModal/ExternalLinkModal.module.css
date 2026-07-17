@@ -43,8 +43,23 @@
   transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+.linePreview {
+  aspect-ratio: 1;
+  background: var(--color-qr-surface);
+}
+
+.linePreview .previewImage {
+  object-fit: contain;
+  object-position: center;
+  transform: scale(1.16);
+}
+
 .modal:hover .previewImage {
   transform: scale(1.03);
+}
+
+.modal:hover .linePreview .previewImage {
+  transform: scale(1.19);
 }
 
 .contentCol {
@@ -92,6 +107,7 @@
   border: none;
   font-family: inherit;
   width: 100%;
+  white-space: nowrap;
 }
 
 .btnStay {
@@ -123,13 +139,27 @@
   .modal {
     flex-direction: row;
     height: 320px;
-    max-width: 600px;
+    max-width: 680px;
+  }
+
+  .lineModal {
+    height: 360px;
+    max-width: 680px;
   }
   
   .previewCol {
     width: 45%;
     height: 100%;
     aspect-ratio: auto;
+  }
+
+  .linePreview {
+    width: 52%;
+    aspect-ratio: auto;
+  }
+
+  .lineModal .contentCol {
+    width: 48%;
   }
 
   .contentCol {
@@ -153,11 +183,13 @@
 
   .actions {
     flex-direction: row-reverse;
+    flex-wrap: nowrap;
     justify-content: flex-start;
   }
   
   .btnStay, .btnGo {
     width: auto;
-    padding: 12px 28px;
+    padding: 12px 20px;
+    flex-shrink: 0;
   }
 }

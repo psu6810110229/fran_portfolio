@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import lineQr from '../../assets/line-qr.jpg';
 import styles from './ExternalLinkModal.module.css';
 
-export type ExternalLinkType = 'Email' | 'LinkedIn' | 'GitHub' | 'YouTube' | 'Instagram' | 'Facebook';
+export type ExternalLinkType = 'Email' | 'LinkedIn' | 'GitHub' | 'Line' | 'Instagram' | 'Facebook';
 
 interface ExternalLinkModalProps {
   isOpen: boolean;
@@ -46,15 +47,15 @@ const contentData = {
       desc: 'พื้นที่เก็บซอร์สโค้ดของโปรเจกต์ทั้งหมดที่ผมเคยพัฒนา ทั้งงานที่ทำส่งในรายวิชาต่างๆ ของมหาวิทยาลัยและโปรเจกต์ส่วนตัวที่ทำขึ้นเพื่อฝึกฝนทักษะ',
     },
   },
-  YouTube: {
-    preview: '/previews/youtube.png',
+  Line: {
+    preview: lineQr,
     en: {
-      title: 'Visit YouTube',
-      desc: 'A channel dedicated to my video content, featuring showcases of my past collaborative projects along with various video editing works.',
+      title: 'Add me on LINE',
+      desc: 'Scan the QR code with LINE to contact me directly. This is the best channel for work inquiries and quick follow-ups.',
     },
     th: {
-      title: 'เยี่ยมชม YouTube',
-      desc: 'ช่องสำหรับรวบรวมผลงานในรูปแบบวิดีโอ ซึ่งมีทั้งคลิปวิดีโอโปรเจกต์ต่างๆ ที่ผมเคยร่วมทำ และผลงานการตัดต่อวิดีโออื่นๆ ที่ผ่านมา',
+      title: 'เพิ่มเพื่อนทาง LINE',
+      desc: 'สแกน QR Code ผ่านแอป LINE เพื่อติดต่อผมโดยตรง ช่องทางนี้เป็นช่องทางหลักสำหรับพูดคุยเรื่องงานและติดตามรายละเอียดต่าง ๆ',
     },
   },
   Instagram: {
@@ -84,10 +85,14 @@ const contentData = {
 const commonStrings = {
   en: {
     stay: 'Stay on this site',
+    close: 'Close',
+    downloadQr: 'Download QR',
     go: 'Go to link',
   },
   th: {
     stay: 'อยู่เว็บนี้ต่อ',
+    close: 'ปิด',
+    downloadQr: 'ดาวน์โหลด QR',
     go: 'ไปยังลิงก์',
   },
 };
@@ -179,7 +184,7 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
         >
           <motion.div
             ref={dialogRef}
-            className={styles.modal}
+            className={`${styles.modal} ${type === 'Line' ? styles.lineModal : ''}`}
             role="dialog"
             aria-modal="true"
             aria-labelledby="external-link-title"
@@ -187,8 +192,12 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
             tabIndex={-1}
             {...animationProps}
           >
-            <div className={styles.previewCol}>
-              <img src={contentData[type].preview} alt={`${type} preview`} className={styles.previewImage} />
+            <div className={`${styles.previewCol} ${type === 'Line' ? styles.linePreview : ''}`}>
+              <img
+                src={contentData[type].preview}
+                alt={type === 'Line' ? 'LINE QR code for Fran' : `${type} preview`}
+                className={styles.previewImage}
+              />
             </div>
             <div className={styles.contentCol}>
               <div className={styles.textContent}>
@@ -197,17 +206,24 @@ export default function ExternalLinkModal({ isOpen, onClose, link, type, lang }:
               </div>
               <div className={styles.actions}>
                 <button type="button" onClick={onClose} className={styles.btnStay}>
-                  {common.stay}
+                  {type === 'Line' ? common.close : common.stay}
                 </button>
-                <a 
-                  href={link} 
-                  target={type === 'Email' ? '_self' : '_blank'} 
-                  rel="noreferrer" 
-                  className={styles.btnGo}
-                  onClick={onClose}
-                >
-                  {common.go}
-                </a>
+                {type === 'Line' && (
+                  <a href={lineQr} download="fran-line-qr.jpg" className={styles.btnGo}>
+                    {common.downloadQr}
+                  </a>
+                )}
+                {type !== 'Line' && (
+                  <a
+                    href={link}
+                    target={type === 'Email' ? '_self' : '_blank'}
+                    rel="noreferrer"
+                    className={styles.btnGo}
+                    onClick={onClose}
+                  >
+                    {common.go}
+                  </a>
+                )}
               </div>
             </div>
           </motion.div>
