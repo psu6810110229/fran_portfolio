@@ -70,6 +70,7 @@ export const useResumeSplash = ({ isCriticalVideoSettled, posterUrl }: UseResume
 
   useEffect(() => {
     if (exitPhase === 'loading' && isEligible && minimumElapsed && progress >= 100) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setExitPhase('pre-exit');
     }
   }, [exitPhase, isEligible, minimumElapsed, progress]);
