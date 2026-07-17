@@ -29,6 +29,7 @@ interface HeroScene {
   id: string;
   video: string;
   poster: string;
+  clipEnd: number;
   copy: {
     en: HeroSceneCopy;
     th: HeroSceneCopy;
@@ -45,6 +46,7 @@ const heroScenes: HeroScene[] = [
     id: 'open-house',
     video: openHouseHeroVideo,
     poster: openHouseHeroPoster,
+    clipEnd: 5.25,
     copy: {
       en: {
         label: 'Passing it forward',
@@ -60,6 +62,7 @@ const heroScenes: HeroScene[] = [
     id: 'project',
     video: projectHeroVideo,
     poster: projectHeroPoster,
+    clipEnd: 7.333,
     copy: {
       en: {
         label: 'Building together',
@@ -75,6 +78,7 @@ const heroScenes: HeroScene[] = [
     id: 'psu',
     video: psuHeroVideo,
     poster: psuHeroPoster,
+    clipEnd: 5.375,
     copy: {
       en: {
         label: 'Learning in motion',
@@ -90,6 +94,7 @@ const heroScenes: HeroScene[] = [
     id: 'room',
     video: roomHeroVideo,
     poster: roomHeroPoster,
+    clipEnd: 8.75,
     copy: {
       en: {
         label: 'After hours · Home',
@@ -223,13 +228,12 @@ const dictionary = {
   },
   th: {
     nav: [
-      { label: 'ไปยังหน้าพอร์ตโฟลิโอ', href: '/' },
-      { label: 'รู้จักผมมากขึ้น', href: '#about' },
+      { label: 'พอร์ตโฟลิโอ', href: '/' },
       { label: 'ผมเคยทำอะไรบ้าง', href: '#features' },
       { label: 'ติดต่อ', href: '#contact' }
     ],
     heroDesc: 'นักศึกษาวิศวกรรมคอมพิวเตอร์ชั้นปีที่ 2 ม.สงขลานครินทร์ ที่เรียนรู้จากการลงมือสร้างผลงานจริงและการทำงานร่วมกับผู้คน',
-    viewApp: 'ไปกันต่อ',
+    viewApp: 'รู้จักผมมากขึ้น',
     aboutBadge: 'นักพัฒนาเว็บไซต์',
     about1a: 'สวัสดีครับ ',
     about1b: 'ผมฟาน ',
@@ -271,6 +275,7 @@ const Resume: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const t = dictionary[lang];
   const [activeHeroScene, setActiveHeroScene] = React.useState(0);
+  const [outgoingHeroScene, setOutgoingHeroScene] = React.useState<number | null>(null);
   const [readyHeroVideos, setReadyHeroVideos] = React.useState<boolean[]>(
     () => heroScenes.map(() => false),
   );
@@ -281,6 +286,8 @@ const Resume: React.FC = () => {
   const [isAutoPlayPaused, setIsAutoPlayPaused] = React.useState(false);
   const galleryRef = React.useRef<HTMLDivElement>(null);
   const heroVideoRefs = React.useRef<Array<HTMLVideoElement | null>>([]);
+  const heroTransitionLockRef = React.useRef(false);
+  const heroTransitionTimerRef = React.useRef<number | null>(null);
 
   const mouseX = useMotionValue(Infinity);
   const mouseY = useMotionValue(Infinity);
@@ -346,6 +353,12 @@ const Resume: React.FC = () => {
     return () => document.removeEventListener('visibilitychange', updateVisibility);
   }, []);
 
+  React.useEffect(() => () => {
+    if (heroTransitionTimerRef.current !== null) {
+      window.clearTimeout(heroTransitionTimerRef.current);
+    }
+  }, []);
+
   React.useEffect(() => {
     const activeVideo = heroVideoRefs.current[activeHeroScene];
 
@@ -355,7 +368,7 @@ const Resume: React.FC = () => {
     }
 
     if (activeVideo) {
-      if (activeVideo.ended || activeVideo.currentTime >= activeVideo.duration - HERO_CROSSFADE_SECONDS) {
+      if (activeVideo.ended || activeVideo.currentTime >= heroScenes[activeHeroScene].clipEnd) {
         activeVideo.currentTime = 0;
       }
       void activeVideo.play().catch(() => undefined);
@@ -415,16 +428,27 @@ const Resume: React.FC = () => {
   };
 
   const showNextHeroScene = (sceneIndex: number) => {
-    setActiveHeroScene((current) => (
-      current === sceneIndex ? (current + 1) % heroScenes.length : current
-    ));
+    if (heroTransitionLockRef.current || sceneIndex !== activeHeroScene) return;
+
+    heroTransitionLockRef.current = true;
+    setOutgoingHeroScene(sceneIndex);
+    setActiveHeroScene((sceneIndex + 1) % heroScenes.length);
+
+    heroTransitionTimerRef.current = window.setTimeout(() => {
+      setReadyHeroVideos((current) => (
+        current.map((isReady, index) => index === sceneIndex ? false : isReady)
+      ));
+      setOutgoingHeroScene(null);
+      heroTransitionLockRef.current = false;
+      heroTransitionTimerRef.current = null;
+    }, HERO_CROSSFADE_MS);
   };
 
   const handleHeroTimeUpdate = (event: React.SyntheticEvent<HTMLVideoElement>, sceneIndex: number) => {
     if (prefersReducedMotion || sceneIndex !== activeHeroScene) return;
 
     const video = event.currentTarget;
-    if (Number.isFinite(video.duration) && video.duration - video.currentTime <= HERO_CROSSFADE_SECONDS) {
+    if (video.currentTime >= heroScenes[sceneIndex].clipEnd - HERO_CROSSFADE_SECONDS) {
       showNextHeroScene(sceneIndex);
     }
   };
@@ -445,11 +469,25 @@ const Resume: React.FC = () => {
       <section id="hero" aria-labelledby="resume-hero-title" className={styles.heroSection}>
         <div className={styles.heroInner}>
           <div className={styles.videoStage} aria-hidden="true">
-            {heroScenes.map((scene, index) => (
-              <div
-                key={scene.id}
-                className={`${styles.videoScene} ${index === activeHeroScene ? styles.videoActive : styles.videoInactive}`}
-              >
+            {heroScenes.map((scene, index) => {
+              const nextHeroScene = (activeHeroScene + 1) % heroScenes.length;
+              const shouldRender = index === activeHeroScene
+                || index === nextHeroScene
+                || index === outgoingHeroScene;
+
+              if (!shouldRender) return null;
+
+              const sceneStateClass = index === activeHeroScene
+                ? styles.videoActive
+                : index === outgoingHeroScene
+                  ? styles.videoOutgoing
+                  : styles.videoInactive;
+
+              return (
+                <div
+                  key={scene.id}
+                  className={`${styles.videoScene} ${sceneStateClass}`}
+                >
                 <img
                   src={scene.poster}
                   alt=""
@@ -466,7 +504,7 @@ const Resume: React.FC = () => {
                   autoPlay={index === 0 && !prefersReducedMotion}
                   muted
                   playsInline
-                  preload={index === activeHeroScene || index === (activeHeroScene + 1) % heroScenes.length ? 'auto' : 'metadata'}
+                  preload="auto"
                   tabIndex={-1}
                   className={`${styles.videoBg} ${readyHeroVideos[index] ? styles.videoReady : ''}`}
                   src={scene.video}
@@ -476,8 +514,9 @@ const Resume: React.FC = () => {
                   onTimeUpdate={(event) => handleHeroTimeUpdate(event, index)}
                   onEnded={() => showNextHeroScene(index)}
                 />
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
           <div className={styles.noiseOverlay} />
           <div className={styles.gradientOverlay} />
