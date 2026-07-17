@@ -15,14 +15,14 @@ import openHouseStationSetup from '../../assets/open-house-station-setup.webp';
 import openHouseStudentGroups from '../../assets/open-house-student-groups.webp';
 import openHouseStaffStage from '../../assets/open-house-staff-stage.webp';
 import openHouseGroupPhoto from '../../assets/open-house-group-photo.webp';
-import psuHeroVideo from '../../assets/resume/hero/psu.mp4';
-import psuHeroPoster from '../../assets/resume/hero/psu-poster.jpg';
-import eventHeroVideo from '../../assets/resume/hero/event.mp4';
-import eventHeroPoster from '../../assets/resume/hero/event-poster.jpg';
-import labHeroVideo from '../../assets/resume/hero/lab.mp4';
-import labHeroPoster from '../../assets/resume/hero/lab-poster.jpg';
-import hatyaiHeroVideo from '../../assets/resume/hero/hatyai.mp4';
-import hatyaiHeroPoster from '../../assets/resume/hero/hatyai-poster.jpg';
+import psuHeroVideo from '../../assets/resume/hero/psu-v2.mp4';
+import psuHeroPoster from '../../assets/resume/hero/psu-v2-poster.png';
+import projectHeroVideo from '../../assets/resume/hero/project-v2.mp4';
+import projectHeroPoster from '../../assets/resume/hero/project-v2-poster.png';
+import openHouseHeroVideo from '../../assets/resume/hero/openhouse-v2.mp4';
+import openHouseHeroPoster from '../../assets/resume/hero/openhouse-v2-poster.png';
+import roomHeroVideo from '../../assets/resume/hero/room-v2.mp4';
+import roomHeroPoster from '../../assets/resume/hero/room-v2-poster.png';
 import styles from './Resume.module.css';
 
 interface HeroScene {
@@ -42,62 +42,62 @@ interface HeroSceneCopy {
 
 const heroScenes: HeroScene[] = [
   {
+    id: 'open-house',
+    video: openHouseHeroVideo,
+    poster: openHouseHeroPoster,
+    copy: {
+      en: {
+        label: 'Passing it forward',
+        description: ['What I learn becomes more meaningful', 'when it helps someone take their next step.'],
+      },
+      th: {
+        label: 'ส่งต่อสิ่งที่เรียนรู้',
+        description: ['สิ่งที่ผมเรียนรู้มีความหมายมากขึ้น', 'เมื่อมันช่วยให้ใครสักคนก้าวต่อไป'],
+      },
+    },
+  },
+  {
+    id: 'project',
+    video: projectHeroVideo,
+    poster: projectHeroPoster,
+    copy: {
+      en: {
+        label: 'Building together',
+        description: ['Ideas become real through quiet iteration,', 'shared attention, and friends who build together.'],
+      },
+      th: {
+        label: 'สร้างไปด้วยกัน',
+        description: ['ไอเดียค่อย ๆ กลายเป็นของจริงจากการลงมือทำ', 'ความใส่ใจ และเพื่อนที่ช่วยกันสร้าง'],
+      },
+    },
+  },
+  {
     id: 'psu',
     video: psuHeroVideo,
     poster: psuHeroPoster,
     copy: {
       en: {
-        label: 'Building products',
-        description: ['I turn ideas into digital products,', 'from first sketch to real-world use.'],
+        label: 'Learning in motion',
+        description: ['University gives every day a new direction,', 'and I keep moving, learning, and building.'],
       },
       th: {
-        label: 'สร้างโปรดักต์',
-        description: ['ผมเปลี่ยนไอเดียให้เป็นโปรดักต์ดิจิทัล', 'ตั้งแต่ภาพแรกจนเปิดใช้ได้จริง'],
+        label: 'เรียนรู้ระหว่างทาง',
+        description: ['มหาวิทยาลัยทำให้ทุกวันมีเส้นทางใหม่', 'และผมยังเดินต่อ เรียนรู้ และลงมือสร้าง'],
       },
     },
   },
   {
-    id: 'event',
-    video: eventHeroVideo,
-    poster: eventHeroPoster,
+    id: 'room',
+    video: roomHeroVideo,
+    poster: roomHeroPoster,
     copy: {
       en: {
-        label: 'Working with people',
-        description: ['I work with people and details,', 'so good ideas reach the people they serve.'],
+        label: 'After hours · Home',
+        description: ['Curiosity needs patience, balance, and care,', 'even in the smallest world I build.'],
       },
       th: {
-        label: 'ทำงานกับผู้คน',
-        description: ['ผมทำงานกับผู้คนและรายละเอียด', 'เพื่อให้ไอเดียไปถึงคนใช้จริง'],
-      },
-    },
-  },
-  {
-    id: 'lab',
-    video: labHeroVideo,
-    poster: labHeroPoster,
-    copy: {
-      en: {
-        label: 'Making ideas clear',
-        description: ['I make complex ideas easier to use,', 'then improve them through real feedback.'],
-      },
-      th: {
-        label: 'ทำเรื่องยากให้ง่าย',
-        description: ['ผมทำเรื่องยากให้เข้าใจและใช้ง่าย', 'แล้วค่อยปรับจากเสียงของคนใช้'],
-      },
-    },
-  },
-  {
-    id: 'hatyai',
-    video: hatyaiHeroVideo,
-    poster: hatyaiHeroPoster,
-    copy: {
-      en: {
-        label: 'Staying curious',
-        description: ['I keep looking for better ways to build,', 'with curiosity beyond the screen.'],
-      },
-      th: {
-        label: 'เก็บไอเดียรอบตัว',
-        description: ['ผมเก็บไอเดียจากโลกรอบตัว', 'แล้วพากลับมาสร้างต่อบนหน้าจอ'],
+        label: 'หลังจบวัน · ห้องของผม',
+        description: ['ความอยากรู้เติบโตจากความอดทน สมดุล', 'และความใส่ใจ แม้ในโลกใบเล็กของผม'],
       },
     },
   },
