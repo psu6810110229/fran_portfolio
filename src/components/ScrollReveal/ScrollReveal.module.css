@@ -1,0 +1,14 @@
+.scrollReveal {
+  margin: 20px 0;
+}
+
+.scrollRevealText {
+  /* Base styles, can be overridden by textClassName */
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+}
+
+.word {
+  display: inline-block;
+}

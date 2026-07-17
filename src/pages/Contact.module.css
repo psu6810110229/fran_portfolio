@@ -25,7 +25,7 @@
 }
 
 .inner {
-  padding: 64px 5vw;
+  padding: clamp(48px, 8vw, 64px) 5vw;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -49,8 +49,9 @@
 .sub {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
-  margin-top: calc(var(--space-1) * -1);
+  margin-top: var(--space-3);
   margin-bottom: var(--space-4);
+  line-height: 1.6;
   white-space: pre-line;
 }
 
@@ -144,6 +145,7 @@
   font-size: var(--font-size-base);
   font-weight: 600;
   align-self: flex-start;
+  white-space: nowrap;
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
@@ -159,38 +161,43 @@
 .inlineLinks {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  padding-bottom: 4px; /* Prevent clipping */
+}
+
+.inlineLinks::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .socialButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 52px;
+  height: 52px;
   border-radius: var(--radius-full);
-  background: var(--color-surface-alt);
-  border: 1px solid var(--color-border);
+  background: transparent;
   color: var(--color-text-muted);
   flex: 0 0 auto;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .socialButton:hover {
-  background: var(--color-surface);
-  border-color: var(--color-text-muted);
   color: var(--color-text);
+  transform: translateY(-2px);
 }
 
 .socialIcon {
-  width: 17px;
-  height: 17px;
-  opacity: 0.72;
-  filter: invert(82%) sepia(11%) saturate(320%) hue-rotate(345deg) brightness(92%) contrast(86%);
+  width: 28px;
+  height: 28px;
+  opacity: 0.85;
 }
 
 :global([data-theme="light"]) .socialIcon {
-  filter: none;
   opacity: 0.78;
 }
 
@@ -227,7 +234,7 @@
 }
 
 /* ── Tablet+ ── */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .nameRow {
     flex-direction: row;
     gap: var(--space-8);

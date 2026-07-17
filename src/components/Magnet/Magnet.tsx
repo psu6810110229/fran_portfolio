@@ -1,4 +1,4 @@
-import { useEffect, useRef, type HTMLAttributes, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type HTMLAttributes, type ReactNode } from 'react';
 import styles from './Magnet.module.css';
 
 interface MagnetProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
@@ -28,6 +28,15 @@ function Magnet({
 }: MagnetProps) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const innerRef = useRef<HTMLDivElement | null>(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
+    updatePreference();
+    mediaQuery.addEventListener('change', updatePreference);
+    return () => mediaQuery.removeEventListener('change', updatePreference);
+  }, []);
 
   useEffect(() => {
     const resetPosition = () => {
@@ -37,7 +46,7 @@ function Magnet({
       innerRef.current.style.transition = inactiveTransition;
     };
 
-    if (disabled) {
+    if (disabled || prefersReducedMotion) {
       resetPosition();
       return;
     }
@@ -68,7 +77,7 @@ function Magnet({
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [activeTransition, disabled, inactiveTransition, magnetStrength, padding]);
+  }, [activeTransition, disabled, inactiveTransition, magnetStrength, padding, prefersReducedMotion]);
 
   return (
     <div

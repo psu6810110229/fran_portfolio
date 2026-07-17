@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../../hooks/useLanguage';
@@ -24,8 +24,8 @@ function GalleryModal({ images, video, initialIndex, onClose }: Props) {
   const touchStartX = useRef<number | null>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  const prev = () => setIndex((i) => (i - 1 + total) % total);
-  const next = () => setIndex((i) => (i + 1) % total);
+  const prev = useCallback(() => setIndex((i) => (i - 1 + total) % total), [total]);
+  const next = useCallback(() => setIndex((i) => (i + 1) % total), [total]);
 
   // Scroll lock + initial focus + focus restore.
   useEffect(() => {
@@ -54,7 +54,7 @@ function GalleryModal({ images, video, initialIndex, onClose }: Props) {
     };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-  }, [onClose]);
+  }, [next, onClose, prev]);
 
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -63,7 +63,10 @@ function GalleryModal({ images, video, initialIndex, onClose }: Props) {
   const onTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const delta = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(delta) > 50) delta > 0 ? next() : prev();
+    if (Math.abs(delta) > 50) {
+      if (delta > 0) next();
+      else prev();
+    }
     touchStartX.current = null;
   };
 

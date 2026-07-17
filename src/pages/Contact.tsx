@@ -1,24 +1,27 @@
 import { useState, type FormEvent } from 'react';
+import { FileText } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../hooks/useLanguage';
-import githubIcon from '../assets/icons/github.svg';
-import linkedinIcon from '../assets/icons/linkedin.svg';
+import { LineIcon, InstagramIcon, FacebookIcon, GithubIcon, LinkedinIcon } from '../components/Icons/SocialIcons';
+import ExternalLinkModal, { type ExternalLinkType } from '../components/ExternalLinkModal/ExternalLinkModal';
+import Magnet from '../components/Magnet/Magnet';
+import lineQr from '../assets/line-qr.jpg';
 import styles from './Contact.module.css';
 
 const content = {
   en: {
     secTitle: 'Contact',
-    heading: "Let's work together.",
-    sub: 'Always open to new opportunities and conversations.',
+    title: 'Get in touch',
+    subtitle: "Have a project in mind or just want to say hi? I'm always open to new opportunities.",
     labelName: 'Name',
     labelEmail: 'Email',
     labelMessage: 'Message',
-    btn: 'Send',
+    btn: 'Send Message',
   },
   th: {
-    secTitle: 'ติดต่อ',
-    heading: 'ติดต่อผม',
-    sub: 'หากมีข้อสงสัยเกี่ยวกับผลงาน หรือต้องการข้อมูลเพิ่มเติม\nติดต่อผมผ่านฟอร์มนี้ได้เลยครับ',
+    secTitle: 'การติดต่อ',
+    title: 'ติดต่อพูดคุย',
+    subtitle: 'หากคุณมีโปรเจกต์ที่น่าสนใจ หรือแค่อยากทักทาย ผมเปิดรับโอกาสใหม่ๆ เสมอครับ',
     labelName: 'ชื่อ',
     labelEmail: 'อีเมล',
     labelMessage: 'ข้อความ',
@@ -26,89 +29,81 @@ const content = {
   },
 };
 
-// CV not ready yet. When it is: add public/fran-resume.pdf and set this to '/fran-resume.pdf'.
-const resumeUrl: string | null = null;
-const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
-type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error';
-
-interface Web3FormsResponse {
-  success: boolean;
-  message?: string;
-}
-
-function Contact() {
+function Contact({ resumeUrl }: { resumeUrl?: string }) {
   const { lang } = useLanguage();
   const c = content[lang];
-  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle');
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<ExternalLinkType>('LinkedIn');
+  const [modalUrl, setModalUrl] = useState('');
 
+  const web3FormsAccessKey = WEB3FORMS_ACCESS_KEY || '';
+
+  const handleOpenModal = (e: React.MouseEvent, type: ExternalLinkType, url: string) => {
+    e.preventDefault();
+    setModalType(type);
+    setModalUrl(url);
+    setIsModalOpen(true);
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!web3FormsAccessKey) {
       setSubmitStatus('error');
       return;
     }
 
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const fromName = formData.get('fromName')?.toString().trim() ?? '';
-    const fromEmail = formData.get('fromEmail')?.toString().trim() ?? '';
-    const message = formData.get('message')?.toString().trim() ?? '';
-
     setSubmitStatus('submitting');
+    const formData = new FormData(e.currentTarget);
+    formData.append('access_key', web3FormsAccessKey);
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          access_key: web3FormsAccessKey,
-          subject: `Portfolio message from ${fromName}`,
-          name: fromName,
-          email: fromEmail,
-          message,
-        }),
+        body: formData,
       });
 
-      const result = (await response.json()) as Web3FormsResponse;
-
-      if (!response.ok || !result.success) {
-        throw new Error(result.message ?? 'Web3Forms submission failed');
+      if (res.ok) {
+        setSubmitStatus('success');
+        (e.target as HTMLFormElement).reset();
+      } else {
+        setSubmitStatus('error');
       }
-
-      form.reset();
-      setSubmitStatus('success');
     } catch {
       setSubmitStatus('error');
     }
   };
 
   return (
-    <motion.section
-      id="contact"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    <motion.section 
+      id="contact" 
+      aria-labelledby="contact-title"
+      className={styles.cta}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6 }}
     >
-      <div className={styles.cta}>
-        <div className={styles.inner}>
-          <h2 className={styles.heading}>{c.heading}</h2>
-          <p className={styles.sub}>{c.sub}</p>
+      <div className={styles.inner}>
+        <div>
+          <span>{c.secTitle}</span>
+          <h2 id="contact-title" className={styles.heading}>{c.title}</h2>
+          <p className={styles.sub}>{c.subtitle}</p>
+        </div>
 
+        <div>
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.nameRow}>
               <div className={styles.fieldGroup}>
                 <label htmlFor="contact-name">{c.labelName}</label>
-                <input id="contact-name" name="fromName" type="text" autoComplete="name" required />
+                <input type="text" id="contact-name" name="name" required />
               </div>
               <div className={styles.fieldGroup}>
                 <label htmlFor="contact-email">{c.labelEmail}</label>
-                <input id="contact-email" name="fromEmail" type="email" autoComplete="email" required />
+                <input type="email" id="contact-email" name="email" required />
               </div>
             </div>
 
@@ -122,16 +117,37 @@ function Contact() {
                 {submitStatus === 'submitting' ? 'Sending...' : c.btn}
               </button>
               <div className={styles.inlineLinks}>
-                <a href="https://github.com/psu6810110229" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="GitHub">
-                  <img src={githubIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
-                </a>
-                <a href="https://www.linkedin.com/in/patcharapon-matsuden-864883413" target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="LinkedIn">
-                  <img src={linkedinIcon} alt="" aria-hidden="true" className={styles.socialIcon} />
-                </a>
-                {resumeUrl && (
-                  <a href={resumeUrl} target="_blank" rel="noreferrer" className={styles.socialButton} aria-label="Resume">
-                    {lang === 'th' ? 'เรซูเม่' : 'CV'}
+                <Magnet padding={10} disabled={false} magnetStrength={2}>
+                  <a href={lineQr} onClick={(e) => handleOpenModal(e, 'Line', lineQr)} className={styles.socialButton} aria-label="LINE">
+                    <LineIcon className={styles.socialIcon} />
                   </a>
+                </Magnet>
+                <Magnet padding={10} disabled={false} magnetStrength={2}>
+                  <a href="https://www.instagram.com/fran_patchara?igsh=ZXVpYm5iejJnNmF4" onClick={(e) => handleOpenModal(e, 'Instagram', 'https://www.instagram.com/fran_patchara?igsh=ZXVpYm5iejJnNmF4')} className={styles.socialButton} aria-label="Instagram">
+                    <InstagramIcon className={styles.socialIcon} />
+                  </a>
+                </Magnet>
+                <Magnet padding={10} disabled={false} magnetStrength={2}>
+                  <a href="https://www.facebook.com/share/16zrE22rYU/" onClick={(e) => handleOpenModal(e, 'Facebook', 'https://www.facebook.com/share/16zrE22rYU/')} className={styles.socialButton} aria-label="Facebook">
+                    <FacebookIcon className={styles.socialIcon} />
+                  </a>
+                </Magnet>
+                <Magnet padding={10} disabled={false} magnetStrength={2}>
+                  <a href="https://github.com/psu6810110229" onClick={(e) => handleOpenModal(e, 'GitHub', 'https://github.com/psu6810110229')} className={styles.socialButton} aria-label="GitHub">
+                    <GithubIcon className={styles.socialIcon} />
+                  </a>
+                </Magnet>
+                <Magnet padding={10} disabled={false} magnetStrength={2}>
+                  <a href="https://www.linkedin.com/in/patcharapon-matsuden-864883413" onClick={(e) => handleOpenModal(e, 'LinkedIn', 'https://www.linkedin.com/in/patcharapon-matsuden-864883413')} className={styles.socialButton} aria-label="LinkedIn">
+                    <LinkedinIcon className={styles.socialIcon} />
+                  </a>
+                </Magnet>
+                {resumeUrl && (
+                  <Magnet padding={10} disabled={false} magnetStrength={2}>
+                    <a href={resumeUrl} onClick={(e) => handleOpenModal(e, 'Email', resumeUrl)} className={styles.socialButton} aria-label="Resume">
+                      <FileText className={styles.socialIcon} />
+                    </a>
+                  </Magnet>
                 )}
               </div>
             </div>
@@ -141,9 +157,7 @@ function Contact() {
             )}
             {submitStatus === 'error' && (
               <p className={styles.formStatusError}>
-                {web3FormsAccessKey
-                  ? 'Could not send right now. Please try again later.'
-                  : 'Contact form is not configured yet.'}
+                Could not send right now. Please try again later.
               </p>
             )}
           </form>
@@ -155,6 +169,14 @@ function Contact() {
           <span className={styles.copy}>© 2026 Fran</span>
         </div>
       </footer>
+
+      <ExternalLinkModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        type={modalType}
+        link={modalUrl}
+        lang={lang}
+      />
     </motion.section>
   );
 }

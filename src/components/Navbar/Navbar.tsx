@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
+import { useLenis } from 'lenis/react';
 import { useTheme } from '../../hooks/useTheme';
 import { useLanguage } from '../../hooks/useLanguage';
+import { recordRouteSwitchIntent } from '../../hooks/useRouteSwitchNotice';
 import VariableProximity from '../VariableProximity/VariableProximity';
 import styles from './Navbar.module.css';
 
@@ -9,11 +11,13 @@ const navLinks = {
     { label: 'about', href: '#about' },
     { label: 'work', href: '#projects' },
     { label: 'contact', href: '#contact' },
+    { label: 'community work', href: '/resume' },
   ],
   th: [
     { label: 'เกี่ยวกับ', href: '#about' },
     { label: 'ผลงาน', href: '#projects' },
     { label: 'ติดต่อ', href: '#contact' },
+    { label: 'งานด้านสังคมอื่น ๆ', href: '/resume' },
   ],
 };
 
@@ -22,8 +26,24 @@ function Navbar() {
   const { lang, toggleLang } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const lenis = useLenis();
 
   const closeMenu = () => setMenuOpen(false);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      closeMenu();
+      if (lenis) {
+        lenis.scrollTo(href, { duration: 1.5, easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) });
+      } else {
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      if (href === '/resume') recordRouteSwitchIntent(href);
+      closeMenu();
+    }
+  };
 
   return (
     <nav ref={navRef} className={styles.navbar} aria-label="Main navigation">
@@ -42,7 +62,7 @@ function Navbar() {
           <ul className={`${styles.navList} ${menuOpen ? styles.navListOpen : ''}`}>
             {navLinks[lang].map((link) => (
               <li key={link.href}>
-                <a href={link.href} className={styles.navLink} onClick={closeMenu}>
+                <a href={link.href} className={styles.navLink} onClick={(e) => handleNavClick(e, link.href)}>
                   {lang === 'en' ? (
                     <VariableProximity
                       label={link.label}
