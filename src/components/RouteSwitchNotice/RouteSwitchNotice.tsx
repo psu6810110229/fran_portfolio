@@ -19,29 +19,29 @@ const RouteSwitchNotice = ({ isOpen, sourcePath, onClose, onReturn }: RouteSwitc
       ? {
         eyebrow: 'หมายเหตุการนำทาง',
         title: 'กำลังมองหางานด้านสังคมอยู่ไหมครับ?',
-        message: 'หากต้องการกลับไปดูข้อมูลต่อ กด “งานด้านสังคมอื่น ๆ” ที่เมนูด้านบนได้เลยครับ',
-        returnLabel: 'กลับไปดูหน้าเดิม',
+        message: 'หากต้องการกลับไปดูต่อ กด “งานด้านสังคมอื่น ๆ” บนเมนูด้านบนครับ',
+        returnLabel: 'กลับไปงานด้านสังคม',
         stayLabel: 'อยู่หน้านี้ต่อ',
       }
       : {
         eyebrow: 'หมายเหตุการนำทาง',
         title: 'กำลังมองหาพอร์ตโฟลิโออยู่ไหมครับ?',
-        message: 'หากต้องการกลับไปดูข้อมูลต่อ กด “พอร์ตโฟลิโอ” ที่เมนูด้านบนได้เลยครับ',
+        message: 'หากต้องการกลับไปดูต่อ กด “พอร์ตโฟลิโอ” บนเมนูด้านบนครับ',
         returnLabel: 'กลับไปพอร์ตโฟลิโอ',
         stayLabel: 'อยู่หน้านี้ต่อ',
       }
     : isFromResume
       ? {
         eyebrow: 'Navigation note',
-        title: 'Looking for the other work?',
-        message: 'If you were looking for the social work profile, use “Community work” in the top navigation to return.',
-        returnLabel: 'Return to profile',
+        title: 'Looking for community work?',
+        message: 'Return with “Community work” in the top navigation.',
+        returnLabel: 'Back to community work',
         stayLabel: 'Stay here',
       }
       : {
         eyebrow: 'Navigation note',
         title: 'Looking for the portfolio?',
-        message: 'If you were looking for the main portfolio, use “Back to Portfolio” in the top navigation to return.',
+        message: 'Return with “Back to Portfolio” in the top navigation.',
         returnLabel: 'Back to portfolio',
         stayLabel: 'Stay here',
       };

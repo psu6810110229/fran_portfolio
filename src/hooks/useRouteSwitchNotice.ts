@@ -25,9 +25,9 @@ interface RouteSwitchNoticeState {
 const VISIT_KEY = 'routeSwitchNotice:visit:v1';
 const INTENT_KEY = 'routeSwitchNotice:intent:v1';
 const SEEN_KEY = 'routeSwitchNotice:seen:v1';
-const FAST_SWITCH_LIMIT_MS = 7000;
+const UNENGAGED_SWITCH_LIMIT_MS = 180_000;
 const INTENT_MAX_AGE_MS = 5000;
-const NOTICE_DURATION_MS = 6500;
+const NOTICE_DURATION_MS = 16_250;
 const MAX_UNENGAGED_SCROLL_Y = 96;
 
 const isRecord = (value: unknown): value is Record<string, unknown> => (
@@ -109,7 +109,7 @@ export function recordRouteSwitchIntent(destination: string): void {
   const currentVisit = visit?.path === from
     ? visit
     : { path: from, enteredAt: now, maxScrollY: window.scrollY, interactionCount: 0 };
-  const isLikelyAccidental = now - currentVisit.enteredAt <= FAST_SWITCH_LIMIT_MS
+  const isLikelyAccidental = now - currentVisit.enteredAt <= UNENGAGED_SWITCH_LIMIT_MS
     && currentVisit.maxScrollY <= MAX_UNENGAGED_SCROLL_Y
     && currentVisit.interactionCount === 0;
 
